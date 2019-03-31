@@ -8,6 +8,7 @@ public class AurorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AurorApplication.class, args);
+        System.out.println("启动成功\n");
     }
 
 }
