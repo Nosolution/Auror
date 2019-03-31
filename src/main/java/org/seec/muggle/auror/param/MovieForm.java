@@ -3,8 +3,11 @@ package org.seec.muggle.auror.param;
 import java.util.Date;
 
 /**
- * @author fjj
- * @date 2019/3/12 6:20 PM
+ * 电影表单信息
+ *
+ * @author Nosolution
+ * @version 1.0
+ * @since 2019/4/11
  */
 public class MovieForm {
     /**
@@ -48,13 +51,11 @@ public class MovieForm {
      */
     private Date startDate;
     /**
-     * 片长
+     * 片长, 单位: min
      */
     private Integer length;
     /**
      * 描述
-     *
-     * @return
      */
     private String description;
     /**

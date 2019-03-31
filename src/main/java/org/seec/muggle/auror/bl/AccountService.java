@@ -1,6 +1,5 @@
 package org.seec.muggle.auror.bl;
 
-import org.seec.muggle.auror.dao.User;
 import org.seec.muggle.auror.param.UserForm;
 
 public interface AccountService {
@@ -8,16 +7,23 @@ public interface AccountService {
     /**
      * 注册账号
      *
-     * @return
+     * @param userForm 注册表单
      */
-    public String registerAccount(UserForm userForm);
+    public void registerAccount(UserForm userForm);
 
     /**
-     * 用户登录，登录成功会将用户信息保存再session中
+     * 用户登录，登录成功会返回token
      *
-     * @return
+     * @return token
      */
-    public User login(UserForm userForm);
+    public String login(UserForm userForm);
+
+    /**
+     * 退出登录
+     *
+     * @param token header中带有的token(未截取子串)
+     */
+    public void logout(String token);
 
 }
 

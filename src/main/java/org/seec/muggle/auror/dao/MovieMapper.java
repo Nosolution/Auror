@@ -1,7 +1,7 @@
-package org.seec.muggle.auror.data;
+package org.seec.muggle.auror.dao;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.seec.muggle.auror.dao.Movie;
+import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.entity.Movie;
 import org.seec.muggle.auror.param.MovieForm;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author fjj
  * @date 2019/3/12 6:26 PM
  */
-@Mapper
+@DaoMapper
 public interface MovieMapper {
     /**
      * 插入一条电影信息

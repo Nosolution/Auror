@@ -1,7 +1,8 @@
-package org.seec.muggle.auror.data;
+package org.seec.muggle.auror.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.entity.FavoriteRecord;
 import org.seec.muggle.auror.param.DateLikeForm;
 
 import java.util.List;
@@ -10,16 +11,16 @@ import java.util.List;
 /**
  * Created by liying on 2019/3/23.
  */
-@Mapper
-public interface MovieLikeMapper {
-    /**
-     * 插入一条想看记录
-     *
-     * @param movieId
-     * @param userId
-     * @return
-     */
-    int insertOneLike(@Param("movieId") int movieId, @Param("userId") int userId);
+@DaoMapper
+public interface FavoriteRecordMapper extends BaseOperation<FavoriteRecord> {
+//    /**
+//     * 插入一条想看记录
+//     *
+//     * @param movieId
+//     * @param userId
+//     * @return
+//     */
+//    int insertOneLike(@Param("movieId") int movieId, @Param("userId") int userId);
 
     /**
      * 删除一条想看记录
@@ -28,7 +29,7 @@ public interface MovieLikeMapper {
      * @param userId
      * @return
      */
-    int deleteOneLike(@Param("movieId") int movieId, @Param("userId") int userId);
+    int delete(@Param("movieId") int movieId, @Param("userId") int userId);
 
 
     /**
@@ -37,7 +38,7 @@ public interface MovieLikeMapper {
      * @param movieId
      * @return
      */
-    int selectLikeNums(int movieId);
+    int selectFavoriteNums(int movieId);
 
     /**
      * 根据movieId和userId查找记录

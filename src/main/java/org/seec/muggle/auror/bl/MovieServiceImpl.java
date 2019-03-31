@@ -1,9 +1,10 @@
 package org.seec.muggle.auror.bl;
 
 
-import org.seec.muggle.auror.dao.Movie;
-import org.seec.muggle.auror.data.MovieLikeMapper;
-import org.seec.muggle.auror.data.MovieMapper;
+import org.seec.muggle.auror.dao.FavoriteRecordMapper;
+import org.seec.muggle.auror.dao.MovieMapper;
+import org.seec.muggle.auror.entity.FavoriteRecord;
+import org.seec.muggle.auror.entity.Movie;
 import org.seec.muggle.auror.param.DateLikeForm;
 import org.seec.muggle.auror.param.MovieForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieMapper movieMapper;
     @Autowired
-    private MovieLikeMapper movieLikeMapper;
+    private FavoriteRecordMapper favoriteRecordMapper;
 
     /**
      * todo 需要细化exception
@@ -66,6 +67,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public String likeMovie(int userId, int movieId) {
+        FavoriteRecord record = new FavoriteRecord();
+        record.setUserId(userId);
+        record.setMovieId(movieId);
         //todo: user 判空
         if (userLikeTheMovie(userId, movieId)) {
             return ALREADY_LIKE_ERROR_MESSAGE;
@@ -74,7 +78,7 @@ public class MovieServiceImpl implements MovieService {
         }
         try {
             //todo 待考证这些方法成功时的返回值
-            if ((movieLikeMapper.insertOneLike(movieId, userId)) == 1) {
+            if ((favoriteRecordMapper.insert(record)) == 1) {
                 return "Success";
             } else {
                 return "Failure";
@@ -93,7 +97,7 @@ public class MovieServiceImpl implements MovieService {
         }
         try {
             //todo 同上
-            if (movieLikeMapper.deleteOneLike(movieId, userId) == 1) {
+            if (favoriteRecordMapper.delete(movieId, userId) == 1) {
                 return "Success";
             }
             return "Failure";
@@ -106,7 +110,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public int getCountOfLikes(int movieId) {
         try {
-            return movieLikeMapper.selectLikeNums(movieId);
+            return favoriteRecordMapper.selectFavoriteNums(movieId);
         } catch (Exception e) {
             throw e;
         }
@@ -124,14 +128,14 @@ public class MovieServiceImpl implements MovieService {
     public List<DateLikeForm> getLikeNumsGroupByDate(int movieId) {
         //todo movieId为假的情况未考虑
         try {
-            return movieLikeMapper.getDateLikeNum(movieId);
+            return favoriteRecordMapper.getDateLikeNum(movieId);
         } catch (Exception e) {
             throw e;
         }
     }
 
     private boolean userLikeTheMovie(int userId, int movieId) {
-        return movieLikeMapper.selectLikeMovie(movieId, userId) == 0 ? false : true;
+        return favoriteRecordMapper.selectLikeMovie(movieId, userId) == 0 ? false : true;
     }
 
 

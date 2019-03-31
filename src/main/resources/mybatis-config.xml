@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.User" alias="User"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.Role" alias="Role"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.Permission" alias="Permission"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.Movie" alias="Movie"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.FavoriteRecord" alias="FavoriteRecord"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.UserRole" alias="UserRole"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.entity.RolePermission" alias="RolePermission"/>-->
+        <package name="org.seec.muggle.auror.entity"/>
+    </typeAliases>
+</configuration>
