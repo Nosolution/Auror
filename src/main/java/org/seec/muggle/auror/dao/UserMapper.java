@@ -2,7 +2,7 @@ package org.seec.muggle.auror.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.entity.User;
+import org.seec.muggle.auror.po.User;
 
 /**
  * @author huwen

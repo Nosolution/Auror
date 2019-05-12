@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.dao;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.entity.UserRole;
+import org.seec.muggle.auror.po.UserRole;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 import lombok.NonNull;

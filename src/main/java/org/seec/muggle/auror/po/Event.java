@@ -1,9 +1,10 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 优惠券策略
@@ -13,7 +14,7 @@ import java.util.Date;
  * @since 2019/4/14
  */
 @Data
-public class SaleStrategy {
+public class Event {
     //策略id
     private Long id;
     //名称
@@ -28,4 +29,6 @@ public class SaleStrategy {
     private BigDecimal credit;
     //参加条件
     private String participatingCondition;
+    //参加活动的电影
+    private List<Long> movieIncluded;
 }

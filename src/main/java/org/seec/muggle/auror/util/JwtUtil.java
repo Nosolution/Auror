@@ -5,7 +5,7 @@ import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClock;
-import org.seec.muggle.auror.entity.User;
+import org.seec.muggle.auror.po.User;
 import org.seec.muggle.auror.security.JwtUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

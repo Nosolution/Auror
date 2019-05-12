@@ -1,9 +1,9 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * 会员充值订单
@@ -21,9 +21,9 @@ public class MemberOrder {
     //会员id
     private Long memberId;
     //创建时间
-    private Date time;
+    private Timestamp initTime;
     //支付金额
-    private BigDecimal payment;
-    //支付状态
+    private BigDecimal cost;
+    //支付状态 0:未完成, 1:已完成
     private String status;
 }

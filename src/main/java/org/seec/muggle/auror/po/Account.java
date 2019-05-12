@@ -1,11 +1,11 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * 账号基本信息
+ * 账号基本信息, 在目前来说大概用不到
  *
  * @author Nosolution
  * @version 1.0

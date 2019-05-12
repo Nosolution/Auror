@@ -1,9 +1,8 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 会员类
@@ -18,12 +17,12 @@ public class Member {
     private Long id;
     //用户id
     private Long userId;
-    //会员信息
-    private String info;
-    //出生日期
-    private Date birthday;
-    //性别，0为女，1为男
-    private Integer sex;
+    //所属的会员卡id
+    private Long memberCardId;
+    //图片url
+    private String pictureUrl;
     //剩余金额
-    private BigDecimal balance;
+    private BigDecimal credit;
+    //购票折扣率 (0,1)
+    private Double discountRate;
 }

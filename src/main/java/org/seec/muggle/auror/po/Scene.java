@@ -1,8 +1,9 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -23,15 +24,13 @@ public class Scene {
     //电影版本
     private String movieVersion;
     //开始时间
-    private Date startTime;
+    private Timestamp startTime;
     //结束时间
-    private Date endTime;
-    //加个
+    private Timestamp endTime;
+    //价格
     private BigDecimal price;
-    //观众可见时间
+    //观众可见日期
     private Date showTime;
-    //所有座位
+    //所有座位 0: 不可用， 1:可用且可选 2:可用但不可选
     private Integer[][] seats;
-    //可用座位
-    private Integer[][] seatsAvailable;
 }

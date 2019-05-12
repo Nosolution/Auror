@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
@@ -15,6 +15,6 @@ public class Hall {
     private Long id;
     //影厅名称
     private String name;
-    //所有座位
+    //所有座位 0:不可用 1:可用
     private Integer[][] seats;
 }
