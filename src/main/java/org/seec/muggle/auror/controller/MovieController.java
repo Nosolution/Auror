@@ -4,20 +4,21 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.bl.MovieService;
 import org.seec.muggle.auror.param.DirectorVO;
 import org.seec.muggle.auror.param.MovieDetailsVO;
-import org.seec.muggle.auror.param.MovieForm;
 import org.seec.muggle.auror.param.StarringVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author jyh
  * @date 2019-05-22
  */
-@RestController(value = "/movie")
+@RestController
+@RequestMapping(value = "/movie")
+
 public class MovieController {
 
     @Autowired
