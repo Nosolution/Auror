@@ -1,9 +1,9 @@
 package org.seec.muggle.auror.bl;
 
 
-import org.seec.muggle.auror.entity.Movie;
 import org.seec.muggle.auror.param.DateLikeForm;
 import org.seec.muggle.auror.param.MovieForm;
+import org.seec.muggle.auror.po.Movie;
 
 import java.util.List;
 

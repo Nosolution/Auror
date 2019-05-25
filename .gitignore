@@ -1,6 +1,5 @@
-HELP.md
 /target/
-!.mvn/wrapper/maven-wrapper.jar
+
 
 ### STS ###
 .apt_generated
@@ -16,7 +15,7 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-.mvn
+
 
 ### NetBeans ###
 /nbproject/private/
@@ -28,5 +27,6 @@ HELP.md
 
 ### VS Code ###
 .vscode/
-mvnw
-mvnw.cmd
+
+### MAC###
+.DS_Store

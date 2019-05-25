@@ -1,7 +1,6 @@
-package org.seec.muggle.auror.entity;
+package org.seec.muggle.auror.po;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
@@ -13,7 +12,6 @@ import java.sql.Timestamp;
  * @since 2019/4/6
  */
 @Data
-@NoArgsConstructor
 public class FavoriteRecord {
     private Integer id;
     private Integer movieId;

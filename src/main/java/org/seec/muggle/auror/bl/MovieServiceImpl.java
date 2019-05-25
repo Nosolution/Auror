@@ -3,10 +3,10 @@ package org.seec.muggle.auror.bl;
 
 import org.seec.muggle.auror.dao.FavoriteRecordMapper;
 import org.seec.muggle.auror.dao.MovieMapper;
-import org.seec.muggle.auror.entity.FavoriteRecord;
-import org.seec.muggle.auror.entity.Movie;
 import org.seec.muggle.auror.param.DateLikeForm;
 import org.seec.muggle.auror.param.MovieForm;
+import org.seec.muggle.auror.po.FavoriteRecord;
+import org.seec.muggle.auror.po.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

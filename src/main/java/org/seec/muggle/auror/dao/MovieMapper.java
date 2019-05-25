@@ -1,8 +1,8 @@
 package org.seec.muggle.auror.dao;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.entity.Movie;
 import org.seec.muggle.auror.param.MovieForm;
+import org.seec.muggle.auror.po.Movie;
 
 import java.util.List;
 
