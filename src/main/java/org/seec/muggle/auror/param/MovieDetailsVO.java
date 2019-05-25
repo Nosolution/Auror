@@ -24,11 +24,11 @@ public class MovieDetailsVO {
     /**
      * 导演
      */
-    private DirectorVO[] director;
+    private DirectorVO[] directors;
     /**
      * 主演
      */
-    private StarringVO[] starring;
+    private StarringVO[] starrings;
 
     /**
      * 片长, 单位: min
@@ -93,19 +93,19 @@ public class MovieDetailsVO {
     }
 
     public DirectorVO[] getDirector() {
-        return director;
+        return directors;
     }
 
-    public void setDirector(DirectorVO[] director) {
-        this.director = director;
+    public void setDirector(DirectorVO[] directors) {
+        this.directors = directors;
     }
 
     public StarringVO[] getStarring() {
-        return starring;
+        return starrings;
     }
 
     public void setStarring(StarringVO[] starring) {
-        this.starring = starring;
+        this.starrings = starring;
     }
 
     public Integer getLength() {
