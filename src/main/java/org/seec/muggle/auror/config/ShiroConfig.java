@@ -77,7 +77,7 @@ public class ShiroConfig {
 
         filterRuleMap.put("/anon_user/**", "anon");
         filterRuleMap.put("/movie/**", "anon");
-        filterRuleMap.put("/**", "jwtFilter");
+//        filterRuleMap.put("/**", "jwtFilter");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

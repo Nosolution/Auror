@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.param;
+package org.seec.muggle.auror.vo;
 
 import lombok.Data;
 

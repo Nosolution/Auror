@@ -16,5 +16,6 @@ public class Hall {
     //影厅名称
     private String name;
     //所有座位 0:不可用 1:可用
+    // 实现上大概会需要为mybatis自定义解析器
     private Integer[][] seats;
 }

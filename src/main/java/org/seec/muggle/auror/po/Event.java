@@ -28,7 +28,7 @@ public class Event {
     //优惠额度
     private BigDecimal credit;
     //参加条件
-    private String participatingCondition;
+    private int allMovieIncluded; // 0为否, 1为是
     //参加活动的电影
     private List<Long> movieIncluded;
 }

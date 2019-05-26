@@ -2,8 +2,6 @@ package org.seec.muggle.auror.po;
 
 import lombok.Data;
 
-import java.time.Duration;
-
 /**
  * 退票策略
  *
@@ -13,7 +11,7 @@ import java.time.Duration;
  */
 @Data
 public class RefundStrategy {
-    private Duration minDistanceToPlaying;
+    private Integer minDistanceToPlaying; //单位: 小时
     private Double refundRate;
 }
 

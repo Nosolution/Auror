@@ -33,7 +33,7 @@
         GROUP BY DATE(tbr.choose_time)
     </select>
 
-    <resultMap id="DateLikeForm" type="org.seec.muggle.auror.param.DateLikeForm">
+    <resultMap id="DateLikeForm" type="org.seec.muggle.auror.vo.DateLikeForm">
     </resultMap>
 
 </mapper>

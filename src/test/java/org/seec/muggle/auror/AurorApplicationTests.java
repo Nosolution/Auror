@@ -71,8 +71,27 @@ public class AurorApplicationTests {
 
     @Test
     public void getMovieDetail() {
-        ResponseEntity<Map> response = testRestTemplate.getForEntity("/movie/detail/{1}", Map.class);
+        ResponseEntity<Map> response = testRestTemplate.getForEntity("/movie/detail/1", Map.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Map<String, Object> body = response.getBody();
+        assertThat(body).hasSize(9);
+    }
+
+    @Test
+    public void markMovieTest() {
+        Map<String, String> param = new HashMap<>();
+        param.put("userId", "125");
+        param.put("movieId", "1");
+        ResponseEntity<Map> response = testRestTemplate.exchange("/movie/mark", HttpMethod.POST, new HttpEntity<>(param), Map.class);
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        expectSuccess(response);
+        Map<String, String> body = response.getBody();
+        assertThat(body).isNull();
+    }
+
+    private void expectSuccess(ResponseEntity<?> response) {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
+
 
 }

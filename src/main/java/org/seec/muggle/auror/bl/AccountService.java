@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl;
 
-import org.seec.muggle.auror.param.UserForm;
+import org.seec.muggle.auror.vo.UserForm;
 
 public interface AccountService {
 

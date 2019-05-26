@@ -280,3 +280,196 @@ UNLOCK TABLES;
 -- Dump completed on 2019-03-24 22:02:05
 
 
+DROP TABLE IF EXISTS `tbl_scene`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_scene`
+(
+    `id`            int(11)        NOT NULL AUTO_INCREMENT,
+    `movie_id`      int(11)        NOT NULL,
+    `hall_id`       int(11)        NOT NULL,
+    `start_time`    timestamp      NOT NULL,
+    `end_time`      timestamp      NOT NULL,
+    `show_time`     DATE           NOT NULL,
+    `seats`         text           NOT NULL,
+    `movie_version` varchar(30)    NOT NULL,
+    `price`         decimal(10, 2) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_coupon`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_coupon`
+(
+    `id`          int(11)        NOT NULL AUTO_INCREMENT,
+    `user_id`     int(11)        NOT NULL,
+    `event_id`    int(11)        NOT NULL,
+    `name`        varchar(255)   NOT NULL,
+    `description` text,
+    `picture_url` varchar(255)   NOT NULL,
+    `start_time`  timestamp      NOT NULL,
+    `end_time`    timestamp      NOT NULL,
+    `expiration`  int(11)        NOT NULL,
+    `threshold`   decimal(20, 2) NOT NULL,
+    `discount`    decimal(20, 2) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_event`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_event`
+(
+    `id`                 int(11)        NOT NULL AUTO_INCREMENT,
+    `name`               varchar(255)   NOT NULL,
+    `description`        text,
+    `picture_url`        varchar(255)   NOT NULL,
+    `start_time`         timestamp      NOT NULL,
+    `end_time`           timestamp      NOT NULL,
+    `expiration`         int(11)        NOT NULL,
+    `credit`             decimal(20, 2) NOT NULL,
+    `all_movie_included` tinyint        NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_hall`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_hall`
+(
+    `id`    int(11)      NOT NULL AUTO_INCREMENT,
+    `name`  varchar(255) NOT NULL,
+    `seats` text         NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_member`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_member`
+(
+    `id`             int(11)        NOT NULL AUTO_INCREMENT,
+    `user_id`        int(11)        NOT NULL,
+    `member_card_id` int(11)        NOT NULL,
+    `picture_url`    varchar(255)   NOT NULL,
+    `credit`         decimal(20, 2) NOT NULL,
+    `discount_rate`  decimal(10, 2) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_member_card`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_member_card`
+(
+    `id`                 int(11)        NOT NULL AUTO_INCREMENT,
+    `name`               varchar(255)   NOT NULL,
+    `picture_url`        varchar(255)   NOT NULL,
+    `purchase_threshold` decimal(20, 2) NOT NULL,
+    `discount_rate`      decimal(10, 2) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_refund_strategy`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_refund_strategy`
+(
+    `id`                      int(11)        NOT NULL AUTO_INCREMENT,
+    `min_distance_to_playing` int(11)        NOT NULL,
+    `refund_rate`             decimal(10, 2) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_ticket_order`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_ticket_order`
+(
+    `id`          int(11)        NOT NULL AUTO_INCREMENT,
+    `user_id`     int(11)        NOT NULL,
+    `scene_id`    int(11)        NOT NULL,
+    `init_time`   timestamp DEFAULT CURRENT_TIMESTAMP,
+    `ticket_num`  tinyint        NOT NULL,
+    `seats`       varchar(255)   NOT NULL,
+    `cost`        decimal(10, 2) NOT NULL,
+    `status`      tinyint        NOT NULL,
+    `ticket_code` varchar(255)   NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_member_order`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_member_order`
+(
+    `id`        int(11)        NOT NULL AUTO_INCREMENT,
+    `user_id`   int(11)        NOT NULL,
+    `member_id` int(11)        NOT NULL,
+    `init_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `cost`      decimal(10, 2) NOT NULL,
+    `status`    tinyint        NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_message`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_message`
+(
+    `id`                  int(11)      NOT NULL AUTO_INCREMENT,
+    `user_id`             int(11)      NOT NULL,
+    `type`                tinyint      NOT NULL,
+    `title`               varchar(255) NOT NULL,
+    `content`             text         NOT NULL,
+    `init_time`           timestamp DEFAULT CURRENT_TIMESTAMP,
+    `status`              tinyint      NOT NULL,
+    `additional_movie_id` int(11)      NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tbl_comment`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_comment`
+(
+    `id`        int(11)        NOT NULL AUTO_INCREMENT,
+    `user_id`   int(11)        NOT NULL,
+    `movie_id`  int(11)        NOT NULL,
+    `score`     decimal(10, 2) NOT NULL,
+    `init_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;

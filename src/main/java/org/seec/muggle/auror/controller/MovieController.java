@@ -2,9 +2,9 @@ package org.seec.muggle.auror.controller;
 
 
 import org.seec.muggle.auror.bl.MovieService;
-import org.seec.muggle.auror.param.DirectorVO;
-import org.seec.muggle.auror.param.MovieDetailsVO;
-import org.seec.muggle.auror.param.StarringVO;
+import org.seec.muggle.auror.vo.DirectorVO;
+import org.seec.muggle.auror.vo.MovieDetailsVO;
+import org.seec.muggle.auror.vo.StarringVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

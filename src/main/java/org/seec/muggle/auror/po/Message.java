@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  */
 @Data
 public class Message {
-    private Long message;
+    private Long id;
     private Long userId;
     //消息类型 <0: 被赠送优惠券>, <1: 想看电影上映>, <3: 邀请点评>, <4: 其他>
     private Integer type;

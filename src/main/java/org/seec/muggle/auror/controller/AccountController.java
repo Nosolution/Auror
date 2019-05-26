@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.AccountServiceImpl;
-import org.seec.muggle.auror.param.UserForm;
+import org.seec.muggle.auror.vo.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
