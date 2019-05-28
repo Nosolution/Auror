@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-05-22
  */
 @RestController
-@RequestMapping(value = "/movie")
+@RequestMapping(value = "/api/movie")
 public class MovieController {
 
     @Autowired

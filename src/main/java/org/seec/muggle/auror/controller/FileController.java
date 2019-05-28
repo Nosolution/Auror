@@ -20,6 +20,7 @@ import java.util.Date;
 
 
 @RestController
+@RequestMapping(value = "/api")
 public class FileController {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public ResponseEntity<?> upLoadFile(@RequestParam MultipartFile myFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
