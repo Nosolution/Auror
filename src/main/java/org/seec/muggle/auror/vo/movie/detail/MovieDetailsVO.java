@@ -1,10 +1,10 @@
-package org.seec.muggle.auror.vo;
+package org.seec.muggle.auror.vo.movie.detail;
 
 public class MovieDetailsVO {
     /**
      * 电影id
      */
-    private Integer movieId;
+    private Long movieId;
     /**
      * 电影名称
      */
@@ -42,7 +42,7 @@ public class MovieDetailsVO {
     public MovieDetailsVO(){
 
     }
-    public MovieDetailsVO(Integer movieId, String movieName, String posterUrl, String movieType, Integer year, Integer length, Double score) {
+    public MovieDetailsVO(Long movieId, String movieName, String posterUrl, String movieType, Integer year, Integer length, Double score) {
         this.movieId = movieId;
         this.movieName = movieName;
         this.posterUrl = posterUrl;
@@ -52,11 +52,11 @@ public class MovieDetailsVO {
         this.score = score;
     }
 
-    public Integer getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
 

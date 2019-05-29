@@ -3,6 +3,11 @@ package org.seec.muggle.auror.bl;
 
 import org.seec.muggle.auror.dao.FavoriteRecordMapper;
 import org.seec.muggle.auror.dao.MovieMapper;
+<<<<<<< Updated upstream
+=======
+import org.seec.muggle.auror.param.DateLikeForm;
+import org.seec.muggle.auror.vo.movie.MovieForm;
+>>>>>>> Stashed changes
 import org.seec.muggle.auror.po.FavoriteRecord;
 import org.seec.muggle.auror.po.Movie;
 import org.seec.muggle.auror.vo.DateLikeForm;

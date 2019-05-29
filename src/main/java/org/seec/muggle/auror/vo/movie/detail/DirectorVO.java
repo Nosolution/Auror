@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo;
+package org.seec.muggle.auror.vo.movie.detail;
 
 public class DirectorVO
 {

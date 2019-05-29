@@ -1,6 +1,10 @@
 package org.seec.muggle.auror.dao;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
+<<<<<<< Updated upstream
+=======
+import org.seec.muggle.auror.vo.movie.MovieForm;
+>>>>>>> Stashed changes
 import org.seec.muggle.auror.po.Movie;
 import org.seec.muggle.auror.vo.MovieForm;
 
