@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.user;
+package org.seec.muggle.auror.vo.user.register;
 
 /**
  * @Description TODO

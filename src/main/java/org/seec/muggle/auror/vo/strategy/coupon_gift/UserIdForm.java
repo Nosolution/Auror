@@ -7,4 +7,13 @@ package org.seec.muggle.auror.vo.strategy.coupon_gift;
  * @Version 1.0
  **/
 public class UserIdForm {
+    Long userId;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

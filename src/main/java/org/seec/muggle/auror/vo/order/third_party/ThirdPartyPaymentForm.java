@@ -8,7 +8,23 @@ import org.seec.muggle.auror.vo.order.member.CouponsForm;
  * @Date 2019/5/29 20:21
  * @Version 1.0
  **/
-public class ThirdPartyPayment {
+public class ThirdPartyPaymentForm {
     Long orderId;
-    CouponsForm[] 
+    CouponsForm[] coupons;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public CouponsForm[] getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(CouponsForm[] coupons) {
+        this.coupons = coupons;
+    }
 }

@@ -2,12 +2,19 @@ package org.seec.muggle.auror.controller;
 
 
 import org.seec.muggle.auror.bl.MovieService;
+import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
+import org.seec.muggle.auror.vo.movie.comment.CommentForm;
+import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.detail.DirectorVO;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
 import org.seec.muggle.auror.vo.movie.detail.StarringVO;
 import org.seec.muggle.auror.vo.movie.marking.MovieMarkForm;
 import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
 import org.seec.muggle.auror.vo.movie.popularity.MoviePopularVO;
+import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
+import org.seec.muggle.auror.vo.movie.statistics.BoxOfficeVO;
+import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
+import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +23,9 @@ import org.springframework.web.bind.annotation.*;
  * @author jyh
  * @date 2019-05-22
  */
+@CrossOrigin
 @RestController
-@RequestMapping(value = "/api/movie")
+@RequestMapping(value = "/movie")
 public class MovieController {
 
     @Autowired
@@ -60,5 +68,38 @@ public class MovieController {
         }
     }
 
+    @PostMapping(value = "/comment")
+    public ResponseEntity<?> getMovieComment(@RequestBody CommentForm form){
+        return ResponseEntity.ok("");
+    }
 
+    @GetMapping(value = "/comment?movieId={movieId}")
+    public ResponseEntity<?> getMovieComment(){
+        return ResponseEntity.ok(new CommentVO[]{});
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> addMovie(@RequestBody MovieAddForm form){
+        return ResponseEntity.ok("");
+    }
+
+    @PutMapping()
+    public ResponseEntity<?> varyMovie(@RequestBody MovieVaryForm form){
+        return ResponseEntity.ok("");
+    }
+
+    @GetMapping(value = "/statistics/favor_num?movieId={movieId}")
+    public ResponseEntity<?> getFavorNum(@PathVariable Integer movieId){
+        return ResponseEntity.ok(new FavorNumVO[]{});
+    }
+
+    @GetMapping(value = "/statistic/attendance_rate?movieId={movieId}")
+    public ResponseEntity<?> getAttandence(@PathVariable Integer movieId){
+        return ResponseEntity.ok(new AttendenceVO[]{});
+    }
+
+    @GetMapping(value = "/statistic/box_office?movieId={movieId}")
+    public ResponseEntity<?> getBoxOffice(@PathVariable Integer movieId){
+        return ResponseEntity.ok(new BoxOfficeVO());
+    }
 }

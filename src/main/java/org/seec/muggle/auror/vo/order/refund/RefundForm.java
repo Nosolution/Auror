@@ -7,4 +7,13 @@ package org.seec.muggle.auror.vo.order.refund;
  * @Version 1.0
  **/
 public class RefundForm {
+    Long orderId;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
 }

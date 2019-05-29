@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.user;
+package org.seec.muggle.auror.vo.user.login;
 
 /**
  * @Description Login所用输入参数

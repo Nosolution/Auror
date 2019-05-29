@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.order.ticket;
+package org.seec.muggle.auror.vo.order.member;
 
 /**
  * @Description 接口11为什么要定这个？coupons：[1,2,...]不好吗

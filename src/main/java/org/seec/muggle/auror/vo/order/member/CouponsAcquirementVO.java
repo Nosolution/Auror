@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.order.ticket;
+package org.seec.muggle.auror.vo.order.member;
 
 /**
  * @Description TODO

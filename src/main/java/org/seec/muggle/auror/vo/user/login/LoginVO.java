@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.user;
+package org.seec.muggle.auror.vo.user.login;
 
 import org.seec.muggle.auror.enums.UserRoleEnum;
 

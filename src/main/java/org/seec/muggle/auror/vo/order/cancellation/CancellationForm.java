@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.cancellation;
+package org.seec.muggle.auror.vo.order.cancellation;
 
 /**
  * @Description TODO
