@@ -38,7 +38,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/user/counpon")
+    @GetMapping(value = "/user/coupon")
     public ResponseEntity<?> getUserCoupons(){
         return ResponseEntity.ok(new UserCouponsVO[]{});
     }
