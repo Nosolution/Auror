@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController
+@RestController(value = "/api")
 public class UserController {
 
-    @PostMapping(value = "/api/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<?>  login(@RequestBody LoginForm form){
         LoginVO loginRes = new LoginVO();
         return ResponseEntity.ok(loginRes);
