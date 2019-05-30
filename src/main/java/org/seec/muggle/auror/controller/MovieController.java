@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/movie")
+@RequestMapping(value = "/api/movie")
 public class MovieController {
 
     @Autowired

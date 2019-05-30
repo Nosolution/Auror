@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/order")
+@RestController(value = "/api/order")
 public class OrderController {
 
     @GetMapping(value = "/ticket/unfinished/detail?orderId={orderId}")

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController
+@RestController(value = "/api")
 public class ManagerController {
 
     @PostMapping(value = "/personnel/manager")

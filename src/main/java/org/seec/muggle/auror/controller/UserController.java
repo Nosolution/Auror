@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/api/login")
     public ResponseEntity<?>  login(@RequestBody LoginForm form){
         LoginVO loginRes = new LoginVO();
         return ResponseEntity.ok(loginRes);

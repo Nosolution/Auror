@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/scene")
+@RestController(value = "/api/scene")
 public class SceneController {
 
     @GetMapping(value = "/info/of_movie?movieid={movieid}")
