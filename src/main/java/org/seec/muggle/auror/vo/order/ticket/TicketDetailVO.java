@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.vo.order.ticket;
 
+import org.seec.muggle.auror.vo.IntervalVO;
 import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 
 /**
@@ -14,7 +15,7 @@ public class TicketDetailVO {
     String moviePosterUrl;
     String hallName;
     String date;
-    String interval;
+    IntervalVO interval;
     Integer status; //0: 未完成 1: 已完成 2: 已失效
     Integer cost;
     String ticketCode;//取票码
@@ -62,11 +63,11 @@ public class TicketDetailVO {
         this.date = date;
     }
 
-    public String getInterval() {
+    public IntervalVO getInterval() {
         return interval;
     }
 
-    public void setInterval(String interval) {
+    public void setInterval(IntervalVO interval) {
         this.interval = interval;
     }
 

@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.scene.movie;
 
+import org.seec.muggle.auror.vo.IntervalVO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -11,7 +13,7 @@ public class MovieSceneInfoVO {
     Long price;
     String hallName;
     String date;
-    String interval;
+    IntervalVO interval;
     Integer[][] seats;
 
     public Long getSceneId() {
@@ -46,11 +48,11 @@ public class MovieSceneInfoVO {
         this.date = date;
     }
 
-    public String getInterval() {
+    public IntervalVO getInterval() {
         return interval;
     }
 
-    public void setInterval(String interval) {
+    public void setInterval(IntervalVO interval) {
         this.interval = interval;
     }
 

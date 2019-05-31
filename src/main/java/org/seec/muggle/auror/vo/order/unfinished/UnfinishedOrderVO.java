@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
+import org.seec.muggle.auror.vo.IntervalVO;
 import org.seec.muggle.auror.vo.seatselection.UnfinishedOrderSeatsVO;
 
 /**
@@ -15,7 +16,7 @@ public class UnfinishedOrderVO {
     Integer ticketNum;
     Integer cost;
     String date;
-    String interval;
+    IntervalVO interval;
     UnfinishedOrderSeatsVO[] selectedSeats;
     AvailableCouponsVO[] availableCoupons;
     String initTime;//生成订单时间
@@ -68,11 +69,11 @@ public class UnfinishedOrderVO {
         this.date = date;
     }
 
-    public String getInterval() {
+    public IntervalVO getInterval() {
         return interval;
     }
 
-    public void setInterval(String interval) {
+    public void setInterval(IntervalVO interval) {
         this.interval = interval;
     }
 

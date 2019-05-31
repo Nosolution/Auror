@@ -36,7 +36,7 @@ public class SceneController {
     }
 
     @GetMapping(value = "/info/of_hall?hallId={hallId}&date={date}")
-    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathVariable Integer hallId,@PathVariable String date){
+    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathVariable Long hallId,@PathVariable String date){
         return ResponseEntity.ok(new InfoVO());
     }
 
