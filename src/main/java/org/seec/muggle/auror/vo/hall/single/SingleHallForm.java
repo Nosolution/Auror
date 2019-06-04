@@ -8,7 +8,7 @@ package org.seec.muggle.auror.vo.hall.single;
  **/
 public class SingleHallForm {
     String hallName;
-    Integer[][] seats;//0代表不可用，1代表可用
+    int[][] seats;//0代表不可用，1代表可用
 
     public String getHallName() {
         return hallName;
@@ -18,11 +18,11 @@ public class SingleHallForm {
         this.hallName = hallName;
     }
 
-    public Integer[][] getSeats() {
+    public int[][] getSeats() {
         return seats;
     }
 
-    public void setSeats(Integer[][] seats) {
+    public void setSeats(int[][] seats) {
         this.seats = seats;
     }
 }

@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.movie.onshelf;
 
+import org.seec.muggle.auror.po.MoviePO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -69,5 +71,17 @@ public class MovieOnshelfVO {
         this.movieType = movieType;
         this.movieYear = movieYear;
         this.movieLengh = movieLengh;
+    }
+
+    public MovieOnshelfVO(MoviePO po,boolean isOnShow){
+        this.movieId = po.getId();
+        this.movieLengh = po.getLength();
+        this.movieName = po.getMovieName();
+        this.movieType = po.getMovieType();
+        this.movieYear = po.getMovieYear();
+        this.isOnShow = isOnShow;
+    }
+    public MovieOnshelfVO(){
+
     }
 }

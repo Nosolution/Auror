@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seec.muggle.auror.dao.account.UserMapper">
+
+    <select id="userNameExisted">
+        select COUNT(*) FROM  tbl_user where user_hostname = #{userName} limit 1;
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_user(user_hostname, user_password, last_logout_time, last_password_reset_time)
+        values (#{username}, #{password}, #{lastLogoutTime}, #{lastPasswordResetTime})
+    </insert>
+
+    <update id="update" useGeneratedKeys="true">
+        update tbl_user
+        set user_hostname                 = #{username},
+            user_password                 = #{password},
+            last_logout_time         = #{lastLogoutTime},
+            last_password_reset_time = #{lastPasswordResetTime}
+        where id = #{id}
+
+    </update>
+    <select id="getUserByName" resultMap="User">
+        select id,
+               user_hostname,
+               user_password,
+               last_logout_time,
+               last_password_reset_time
+        from tbl_user where user_hostname=#{username}
+    </select>
+
+    <select id="get" resultMap="User">
+        select id,
+               user_hostname,
+               user_password,
+               last_logout_time,
+               last_password_reset_time from tbl_user</select>
+<!--&#45;&#45;                role.role_id,-->
+<!--&#45;&#45;                role.role_name,-->
+<!--&#45;&#45;                permission.perm_id,-->
+<!--&#45;&#45;                permission.perm_name-->
+<!--&#45;&#45;         from (select * from tbl_user where id = #{id}) as u,-->
+<!--&#45;&#45;              (select tbl_role.id as role_id, tbl_role.name as role_name-->
+<!--&#45;&#45;               from tbl_role-->
+<!--&#45;&#45;               where tbl_role.id in (select ur.role_id from user_role ur where ur.user_id = #{id})) as role,-->
+<!--&#45;&#45;              (select p.id as perm_id, p.name as perm_name-->
+<!--&#45;&#45;               from tbl_permission p-->
+<!--&#45;&#45;               where id in (select permission_id-->
+<!--&#45;&#45;                            from role_permission-->
+<!--&#45;&#45;                            where role_id in (select role_id from user_role ur where ur.user_id = #{id}))) as permission-->
+    <!--</select>-->
+    <!--    以上是查出所有数据后再进行条件查询，可能会有性能上的问题
+    -->
+
+    <resultMap id="User" type="org.seec.muggle.auror.po.User">
+        <id column="id" property="id"/>
+        <result column="user_hostname" property="username"/>
+        <result column="user_password" property="password"/>
+        <result column="last_logout_time" property="lastLogoutTime"/>
+        <result column="last_password_reset_time" property="lastPasswordResetTime"/>
+
+        <!--<collection property="roles" javaType="ArrayList"-->
+                                 <!--ofType="Role">-->
+        <!--<id column="role_id" property="id"/>-->
+        <!--<result column="role_name" property="name"/>-->
+    <!--</collection>-->
+
+        <!--<collection property="permissions" javaType="ArrayList"-->
+                    <!--ofType="Permission">-->
+            <!--<id column="perm_id" property="id"/>-->
+            <!--<result column="perm_name" property="name"/>-->
+        <!--</collection>-->
+
+    </resultMap>
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seec.muggle.auror.dao.movie.MovieMapper">
+    
+    <insert id="insertMovie" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.MoviePO">
+        insert into tbl_movie(
+        movie_name, description, visible_date, start_date, end_date, movie_type, movie_country, movie_language, poster_url, length
+        )        
+        values (
+          #{movieName},#{description},#{visibleDate},
+          #{startDate},#{endDate},#{movieType},
+          #{country},#{language},#{posterUrl},#{length}
+        )
+    </insert>
+
+    <insert id="insertCast" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_cast(
+          cast_name, poster_url
+          )
+        values (
+          #{name},#{url}
+        )
+    </insert>
+
+    <insert id="insertMovieCast" useGeneratedKeys="true" keyProperty="id">
+      insert into tbl_cast_movie(
+        movie_id, cast_id,cast_role
+        )
+      select m.id,c.id,#{castRole}
+      from tbl_movie m
+      inner join tbl_cast c on c.cast_name = #{castName}
+      where m.movie_name = #{movieName}
+    </insert>
+
+    <select id="getMovieOnshelf" resultMap="moviePO">
+      select * from tbl_movie where #{now} between visible_date and end_date;
+    </select>
+
+    <select id="findMovieById" resultMap="moviePO">
+        select m.id,
+          m.movie_name,
+          m.description,
+          m.start_date,
+          m.end_date,
+          m.visible_date,
+          m.movie_type,
+          m.movie_country,
+          m.movie_language,
+          m.poster_url,
+          m.length,
+          m.movie_year,
+          director.director_url,
+          director.director_name,
+          actor.starring_name,
+          actor.starring_url
+          from (select * from tbl_movie where id=#{id}) as m,
+          (select tbl_cast.cast_name as director_name,tbl_cast.poster_url as director_url from tbl_cast
+          where tbl_cast.id in (select cm.cast_id from tbl_cast_movie cm where cm.movie_id = #{id} and cm.cast_role = 'Director' ))as director,
+          (select tbl_cast.cast_name as starring_name,tbl_cast.poster_url as starring_url from tbl_cast
+          where tbl_cast.id in (select cm.cast_id from tbl_cast_movie cm where cm.movie_id = #{id} and cm.cast_role = 'Actor' ))as actor
+    </select>
+
+    <resultMap id="moviePO" type="org.seec.muggle.auror.po.MoviePO">
+        <id property="id" column="id" />
+        <result property="movieName" column="movie_name"/>
+        <result property="description" column="description"/>
+        <result property="visibleDate" column="visible_date"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="posterUrl" column="poster_url"/>
+        <result property="movieType" column="movie_type"/>
+        <result property="country" column="movie_country"/>
+        <result property="language" column="movie_language" />
+        <result property="length" column="length"/>
+        <result property="movieYear" column="movie_year"/>
+        <collection property="directors" javaType="ArrayList" ofType="org.seec.muggle.auror.vo.movie.detail.DirectorVO">
+            <result column="director_name" property="name"/>
+            <result column="director_url" property="url"/>
+        </collection>
+
+        <collection property="starrings" javaType="ArrayList" ofType="org.seec.muggle.auror.vo.movie.detail.StarringVO">
+            <result column="starring_name" property="name"/>
+            <result column="starring_url" property="url"/>
+        </collection>
+    </resultMap>
+
+</mapper>

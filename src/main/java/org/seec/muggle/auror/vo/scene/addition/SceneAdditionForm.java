@@ -1,5 +1,8 @@
 package org.seec.muggle.auror.vo.scene.addition;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -9,9 +12,9 @@ package org.seec.muggle.auror.vo.scene.addition;
 public class SceneAdditionForm {
     Long movieId;
     Long hallId;
-    String date;
-    String startTime;
-    String price;
+    Date date;
+    Timestamp startTime;
+    Integer price;
 
     public Long getMovieId() {
         return movieId;
@@ -29,27 +32,27 @@ public class SceneAdditionForm {
         this.hallId = hallId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 }

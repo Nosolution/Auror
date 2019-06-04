@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/api")
+@RestController(value = "/api/personnel")
 public class ManagerController {
 
-    @PostMapping(value = "/personnel/manager")
+    @PostMapping(value = "/manager")
     public ResponseEntity<?> addManager(@RequestBody ManagerForm form){
         return ResponseEntity.ok("");
     }
 
-    @DeleteMapping(value = "/personnel/manager")
+    @DeleteMapping(value = "/manager")
     public ResponseEntity<?> removeManager(@RequestBody ManagerIdForm form){
         return ResponseEntity.ok("");
     }
 
-    @GetMapping(value = "/personnel/manager_list")
+    @GetMapping(value = "/manager_list")
     public ResponseEntity<?> getAllManagers(){
         return ResponseEntity.ok(new ManagerInfoVO[]{});
     }

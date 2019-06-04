@@ -1,11 +1,13 @@
 package org.seec.muggle.auror.controller;
 
+import org.seec.muggle.auror.bl.scene.SceneService;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.Vary.SceneVaryForm;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController(value = "/api/scene")
 public class SceneController {
 
+    @Autowired
+    SceneService sceneService;
+
     @GetMapping(value = "/info/of_movie?movieid={movieid}")
-    public ResponseEntity<?> sceneInfoByMovie(@PathVariable Integer movieId){
+    public ResponseEntity<?> sceneInfoByMovie(@PathVariable Long movieId){
         return ResponseEntity.ok(new MovieSceneInfoVO());
     }
 
@@ -40,12 +45,13 @@ public class SceneController {
         return ResponseEntity.ok(new InfoVO());
     }
 
-    @PostMapping()
+    @PostMapping(value = "")
     public ResponseEntity addMovieScene(@RequestBody SceneAdditionForm form){
+        sceneService.addScene(form.getMovieId(),form.getHallId(),form.getDate(),form.getStartTime(),form.getPrice());
         return ResponseEntity.ok("");
     }
 
-    @PutMapping()
+    @PutMapping(value = "")
     public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form){
         return ResponseEntity.ok("");
     }

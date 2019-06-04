@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.movie.detail;
 
+import org.seec.muggle.auror.po.MoviePO;
+
 public class MovieDetailsVO {
     /**
      * 电影id
@@ -20,6 +22,10 @@ public class MovieDetailsVO {
     /**
      * 电影年份
      */
+
+    private String country;
+    private String language;
+    private String description;
     private Integer year;
     /**
      * 导演
@@ -39,6 +45,8 @@ public class MovieDetailsVO {
      */
     private Double score;
 
+    private int status;
+
     public MovieDetailsVO(){
 
     }
@@ -50,6 +58,54 @@ public class MovieDetailsVO {
         this.year = year;
         this.length = length;
         this.score = score;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public DirectorVO[] getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(DirectorVO[] directors) {
+        this.directors = directors;
+    }
+
+    public StarringVO[] getStarrings() {
+        return starrings;
+    }
+
+    public void setStarrings(StarringVO[] starrings) {
+        this.starrings = starrings;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Long getMovieId() {
@@ -122,5 +178,24 @@ public class MovieDetailsVO {
 
     public void setScore(Double score) {
         this.score = score;
+    }
+
+    public MovieDetailsVO(MoviePO po,int status){
+        this.status = status;
+        this.score = score;
+        this.country = po.getCountry();
+        this.movieName = po.getMovieName();
+        this.description = po.getDescription();
+        this.directors = new DirectorVO[po.getDirectors().size()];
+        this.directors  = po.getDirectors().toArray(directors);
+        this.starrings = new StarringVO[po.getStarrings().size()];
+        this.starrings = po.getStarrings().toArray(starrings);
+        this.length = po.getLength();
+        this.movieId = po.getId();
+        this.language = po.getLanguage();
+        this.movieType = po.getMovieType();
+        this.posterUrl = po.getPosterUrl();
+        this.year = po.getMovieYear();
+
     }
 }

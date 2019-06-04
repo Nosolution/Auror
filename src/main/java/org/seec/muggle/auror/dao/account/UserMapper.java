@@ -1,7 +1,8 @@
-package org.seec.muggle.auror.dao;
+package org.seec.muggle.auror.dao.account;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.dao.BaseOperation;
 import org.seec.muggle.auror.po.User;
 
 /**
@@ -18,5 +19,8 @@ public interface UserMapper extends BaseOperation<User> {
      * @return 根据用户名查找到的User实例
      */
     public User getUserByName(@Param("username") String username);
+
+    public Integer userNameExisted(@Param("userName")String username);
+
 
 }

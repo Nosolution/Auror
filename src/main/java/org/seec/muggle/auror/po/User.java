@@ -3,6 +3,7 @@ package org.seec.muggle.auror.po;
 
 import lombok.Data;
 import org.mindrot.jbcrypt.BCrypt;
+import org.seec.muggle.auror.enums.RoleEnum;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -13,8 +14,8 @@ public class User {
     private Integer id;
     private String username;
     private String password;
-    private List<Role> roles;
     private List<Permission> permissions;
+    private List<Role> roles;
     private Timestamp lastLogoutTime;
     private Timestamp lastPasswordResetTime;
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seec.muggle.auror.dao.hall.HallMapper">
+
+    <insert id="insertNewHall">
+        insert into tbl_hall (hall_seats, hall_name)  values (#{seats},#{name})
+    </insert>
+
+</mapper>

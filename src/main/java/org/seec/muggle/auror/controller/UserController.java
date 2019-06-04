@@ -1,6 +1,9 @@
 package org.seec.muggle.auror.controller;
 
 import javafx.scene.layout.VBox;
+import org.seec.muggle.auror.bl.account.AccountService;
+import org.seec.muggle.auror.po.Account;
+import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.seec.muggle.auror.vo.user.login.LoginForm;
@@ -9,6 +12,7 @@ import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
 import org.seec.muggle.auror.vo.user.member.MemberVO;
 import org.seec.muggle.auror.vo.user.message.UnreadNumVO;
 import org.seec.muggle.auror.vo.user.register.RegisterForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,20 +25,23 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController(value = "/api")
 public class UserController {
+    @Autowired
+    AccountService accountService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<?>  login(@RequestBody LoginForm form){
-        LoginVO loginRes = new LoginVO();
+
+        LoginVO loginRes = accountService.login(form.getUsername(),form.getPassword());
         return ResponseEntity.ok(loginRes);
     }
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody RegisterForm form){
-        boolean isSucc = false;
-        if(isSucc) {
+        BasicVO basicVO = accountService.register(form.getUsername(),form.getPassword());
+        if(basicVO.isSucc()) {
             return ResponseEntity.ok("");
         }else {
-            return ResponseEntity.status(405).body("");
+            return ResponseEntity.status(405).body(basicVO.getMsg());
         }
     }
 

@@ -3,6 +3,8 @@ package org.seec.muggle.auror.vo.movie.addition;
 import org.seec.muggle.auror.vo.movie.detail.DirectorVO;
 import org.seec.muggle.auror.vo.movie.detail.StarringVO;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -12,14 +14,15 @@ import org.seec.muggle.auror.vo.movie.detail.StarringVO;
 public class MovieAddForm {
     String movieName;
     String description;
-    String visibleDate; // 排片信息观众可见时间
-    String startDate;
-    String endDate;
+    Date visibleDate; // 排片信息观众可见时间
+    Date startDate;
+    Date endDate;
     String posterUrl;
     String movieType;
     String country;
     String language;
     Integer length; //时长
+    Integer movieYear;
     /**
      * 导演
      */
@@ -28,6 +31,14 @@ public class MovieAddForm {
      * 主演
      */
     StarringVO[] starrings;
+
+    public Integer getMovieYear() {
+        return movieYear;
+    }
+
+    public void setMovieYear(Integer movieYear) {
+        this.movieYear = movieYear;
+    }
 
     public DirectorVO[] getDirectors() {
         return directors;
@@ -61,27 +72,27 @@ public class MovieAddForm {
         this.description = description;
     }
 
-    public String getVisibleDate() {
+    public Date getVisibleDate() {
         return visibleDate;
     }
 
-    public void setVisibleDate(String visibleDate) {
+    public void setVisibleDate(Date visibleDate) {
         this.visibleDate = visibleDate;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
