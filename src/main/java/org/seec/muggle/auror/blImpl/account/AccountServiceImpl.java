@@ -3,11 +3,13 @@ package org.seec.muggle.auror.blImpl.account;
 import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 
+import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.dao.account.UserMapper;
 
 import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.User;
+import org.seec.muggle.auror.po.UserBasic;
 import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
@@ -23,7 +25,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService , AccountService4Movie {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String LOGIN_ERROR = "用户名或密码错误";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -95,6 +97,11 @@ public class AccountServiceImpl implements AccountService {
     public User getUser(Integer id) {
         User user = userMapper.get(id);
         return user;
+    }
+
+    @Override
+    public UserBasic getUserBasicById(Long userId) {
+        return null;
     }
 
     /**

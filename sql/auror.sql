@@ -296,7 +296,7 @@ alter table tbl_member comment '会员卡表';
 create table `tbl_member_strategy`
 (
 	`id`				bigint not null auto_increment comment'会员策略Id',
-    `name`				varchar(50) comment '会员名???',
+    `castName`				varchar(50) comment '会员名???',
 	`url`				varchar(255) comment '会员图片',
     `threshold`			Integer comment '余额',
     `rate`				float(3) comment '折扣',
@@ -339,7 +339,7 @@ create table `tbl_recharge`
 (
 	`id`				bigint not null auto_increment comment'充值记录',
     `user_id`			bigint comment '用户id',
-    `time`				timestamp comment '充值时间',
+    `commenttime`				timestamp comment '充值时间',
 	`cost`				Integer comment '充值金额',
     primary key(id)
 );

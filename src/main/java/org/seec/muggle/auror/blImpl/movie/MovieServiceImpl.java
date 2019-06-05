@@ -1,17 +1,24 @@
 package org.seec.muggle.auror.blImpl.movie;
 
+import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
 import org.seec.muggle.auror.dao.movie.MovieMapper;
+import org.seec.muggle.auror.po.CastPO;
+import org.seec.muggle.auror.po.CommentPO;
 import org.seec.muggle.auror.po.MoviePO;
+import org.seec.muggle.auror.po.UserBasic;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
+import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
 import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
 import org.seec.muggle.auror.vo.movie.popularity.MoviePopularVO;
+import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +32,9 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService , MovieService4Scene {
     @Autowired
     MovieMapper movieMapper;
+
+    @Autowired
+    AccountService4Movie accountService4Movie;
 
     /**
      * @Author jyh
@@ -61,12 +71,26 @@ public class MovieServiceImpl implements MovieService , MovieService4Scene {
         }
         movieMapper.insertMovie(moviePO);
         for(int i = 0;i<form.getDirectors().length;i++){
-            movieMapper.insertCast(form.getDirectors()[i].getUrl(),form.getDirectors()[i].getName());
-            movieMapper.insertMovieCast(moviePO.getMovieName(),form.getDirectors()[i].getName(),"Director");
+            CastPO castPO = movieMapper.findCastByName(form.getDirectors()[i].getName());
+            //变相初始化，如果返回Null则注入一个新的cast
+            if(castPO==null){
+                castPO = new CastPO();
+                castPO.setCastName(form.getDirectors()[i].getName());
+                castPO.setUrl(form.getDirectors()[i].getUrl());
+                movieMapper.insertCast(castPO);
+            }
+            movieMapper.insertMovieCast(moviePO.getId(),castPO.getId(),"Director");
         }
         for(int i = 0;i<form.getStarrings().length;i++){
-            movieMapper.insertCast(form.getStarrings()[i].getUrl(),form.getStarrings()[i].getName());
-            movieMapper.insertMovieCast(moviePO.getMovieName(),form.getStarrings()[i].getName(),"Actor");
+            CastPO castPO = movieMapper.findCastByName(form.getStarrings()[i].getName());
+            //变相初始化，如果返回Null则注入一个新的cast
+            if(castPO==null){
+                castPO = new CastPO();
+                castPO.setCastName(form.getStarrings()[i].getName());
+                castPO.setUrl(form.getStarrings()[i].getUrl());
+                movieMapper.insertCast(castPO);
+            }
+            movieMapper.insertMovieCast(moviePO.getId(),castPO.getId(),"Actor");
         }
         return  vo;
     }
@@ -94,5 +118,54 @@ public class MovieServiceImpl implements MovieService , MovieService4Scene {
     public Integer getLengthById(Long movieId) {
         MoviePO po = movieMapper.findMovieById(movieId);
         return po.getLength();
+    }
+
+    @Override
+    public List<CommentVO> getMovieComment(Long movieId) {
+        List<CommentPO> commentPOS = movieMapper.getCommentsByMovieId(movieId);
+        List<CommentVO> vos = new ArrayList<>();
+        commentPOS.stream().forEach(o->{
+            UserBasic basic = accountService4Movie.getUserBasicById(o.getUserId());
+            vos.add(new CommentVO(o,basic));
+        });
+        return vos;
+    }
+
+    /**
+     * @Author jyh
+     * @Description //优先替换电影，然后重新建立与演员的对应关系
+     * @Date 20:06 2019/6/5
+     * @Param [form]
+     * @return org.seec.muggle.auror.vo.BasicVO
+     **/
+    @Override
+    public BasicVO updateMovie(MovieVaryForm form) {
+        MoviePO po = new MoviePO(form);
+        movieMapper.updateByMovieId(po);
+        movieMapper.deleteMovieCastByMovieId(form.getMovieId());
+
+        for(int i = 0;i<form.getDirectors().length;i++){
+            CastPO castPO = movieMapper.findCastByName(form.getDirectors()[i].getName());
+            //变相初始化，如果返回Null则注入一个新的cast
+            if(castPO==null){
+                castPO = new CastPO();
+                castPO.setCastName(form.getDirectors()[i].getName());
+                castPO.setUrl(form.getDirectors()[i].getUrl());
+                movieMapper.insertCast(castPO);
+            }
+            movieMapper.insertMovieCast(form.getMovieId(),castPO.getId(),"Director");
+        }
+        for(int i = 0;i<form.getStarrings().length;i++){
+            CastPO castPO = movieMapper.findCastByName(form.getStarrings()[i].getName());
+            //变相初始化，如果返回Null则注入一个新的cast
+            if(castPO==null){
+                castPO = new CastPO();
+                castPO.setCastName(form.getStarrings()[i].getName());
+                castPO.setUrl(form.getStarrings()[i].getUrl());
+                movieMapper.insertCast(castPO);
+            }
+            movieMapper.insertMovieCast(form.getMovieId(),castPO.getId(),"Actor");
+        }
+        return new BasicVO();
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seec.muggle.auror.dao.strategy.StrategyMapper">
+    <select id="selectRefundStrategy" resultType="org.seec.muggle.auror.po.RefundPO">
+        select
+          description description,
+          rate  rate,
+          before_time beforeTime
+        from tbl_refund
+    </select>
+
+    <update id="updateRefundStrategy" parameterType="org.seec.muggle.auror.po.RefundPO">
+        update tbl_refund set description=#{description},rate=#{rate},before_time=#{beforeTime}
+    </update>
+
+    <insert id="insertMemberStrategy" parameterType="org.seec.muggle.auror.po.MemberStrategyPO">
+        insert into tbl_member_strategy (castName, url, threshold, rate) values (#{castName},#{url},#{threshold},#{rate})
+    </insert>
+</mapper>

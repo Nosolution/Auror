@@ -15,6 +15,15 @@ public class MovieOnshelfVO {
     String movieType;
     Integer movieYear;
     Integer movieLengh;
+    String posterUrl;
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
 
     public boolean isOnShow() {
         return isOnShow;
@@ -80,6 +89,7 @@ public class MovieOnshelfVO {
         this.movieType = po.getMovieType();
         this.movieYear = po.getMovieYear();
         this.isOnShow = isOnShow;
+        this.posterUrl = po.getPosterUrl();
     }
     public MovieOnshelfVO(){
 

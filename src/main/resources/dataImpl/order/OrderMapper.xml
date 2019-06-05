@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seec.muggle.auror.dao.order.OrderMapper">
+    <insert id="insertOrder"  parameterType="org.seec.muggle.auror.po.OrderPO" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_order (scene_id, status, code, create_time, user_id,cost) values (#{sceneId},#{status},#{code},#{createTime},#{userId},#{cost});
+    </insert>
+
+    <insert id="insertSeat" parameterType="org.seec.muggle.auror.po.TicketPO">
+        insert into tbl_ticket (sceneId,`row`, `column`) values (#{sceneId},#{row},#{column});
+    </insert>
+
+    <update id="cancelOrder">
+        update tbl_order set status = 2 where id = #{orderId};
+    </update>
+
+    <select id="findOrderById" resultMap="Order">
+        select cost from tbl_order where id =#{orderId};
+    </select>
+
+    <resultMap id="Order" type="org.seec.muggle.auror.po.OrderPO">
+        <id column="id" property="id"/>
+        <result column="scene_id" property="sceneId"/>
+        <result column="status" property="status"/>
+        <result column="code" property="code"/>
+        <result column="create_time" property="createTime"/>
+        <result column="user_id" property="userId"/>
+        <result column="cost" property="cost"/>
+        <result column="pay_method" property="payMethod"/>
+    </resultMap>
+
+</mapper>

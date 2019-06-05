@@ -1,6 +1,8 @@
 package org.seec.muggle.auror.controller;
 
+import org.seec.muggle.auror.bl.order.OrderService;
 import org.seec.muggle.auror.bl.scene.SceneService;
+import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.Vary.SceneVaryForm;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/api/scene")
+@RestController
+@RequestMapping(value = "/api/scene")
 public class SceneController {
 
     @Autowired
     SceneService sceneService;
+    @Autowired
+    OrderService orderService;
 
     @GetMapping(value = "/info/of_movie?movieid={movieid}")
     public ResponseEntity<?> sceneInfoByMovie(@PathVariable Long movieId){
@@ -31,13 +36,9 @@ public class SceneController {
 
     @PostMapping(value = "/order/seat/selection")
     public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form){
+        SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(),form.getUserId(),form.getSelectedSeats());
         boolean isSucc = false;
-        if(isSucc){
-            return ResponseEntity.ok(new SeatsSelectionVO());
-        }
-        else {
-            return ResponseEntity.status(405).body("to do");
-        }
+        return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/info/of_hall?hallId={hallId}&date={date}")
@@ -45,13 +46,13 @@ public class SceneController {
         return ResponseEntity.ok(new InfoVO());
     }
 
-    @PostMapping(value = "")
+    @PostMapping()
     public ResponseEntity addMovieScene(@RequestBody SceneAdditionForm form){
         sceneService.addScene(form.getMovieId(),form.getHallId(),form.getDate(),form.getStartTime(),form.getPrice());
         return ResponseEntity.ok("");
     }
 
-    @PutMapping(value = "")
+    @PutMapping()
     public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form){
         return ResponseEntity.ok("");
     }

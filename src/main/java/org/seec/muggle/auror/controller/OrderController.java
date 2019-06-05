@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.controller;
 
+import org.seec.muggle.auror.bl.order.OrderService;
+import org.seec.muggle.auror.dao.order.OrderMapper;
 import org.seec.muggle.auror.vo.order.cancellation.CancellationForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
@@ -13,6 +15,7 @@ import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentForm;
 import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +26,12 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/api/order")
+@RestController
+@RequestMapping(value = "/api/order")
 public class OrderController {
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping(value = "/ticket/unfinished/detail?orderId={orderId}")
     public ResponseEntity<?> checkOrderDetail(@PathVariable Integer orderId){
@@ -73,12 +80,16 @@ public class OrderController {
 
     @PutMapping(value = "/ticket/cancellation")
     public ResponseEntity<?>  ticketCancel(@RequestBody CancellationForm form){
+        orderService.cancelOrder(form.getOrderId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/ticket/refund")
     public ResponseEntity<?> refund(@RequestBody RefundForm form){
-        return ResponseEntity.ok(new RefundVO());
+        RefundVO vo = new RefundVO();
+        vo.setRefundAmount(orderService.refundOrder(form.getOrderId()));
+
+        return ResponseEntity.ok(vo);
     }
 
     @PostMapping(value = "/member/purchase/payment")

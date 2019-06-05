@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/api")
+@RestController
+@RequestMapping(value = "/api")
 public class UserController {
     @Autowired
     AccountService accountService;

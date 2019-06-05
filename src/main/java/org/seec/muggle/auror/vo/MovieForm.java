@@ -71,11 +71,11 @@
 //        this.id = id;
 //    }
 //
-//    public String getName() {
+//    public String getCastName() {
 //        return name;
 //    }
 //
-//    public void setName(String name) {
+//    public void setCastName(String name) {
 //        this.name = name;
 //    }
 //

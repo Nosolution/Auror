@@ -2,6 +2,7 @@ package org.seec.muggle.auror.dao.scene;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.po.ScenePO;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -15,4 +16,6 @@ import java.util.Date;
 @DaoMapper
 public interface SceneMapper {
     int insertScene(@Param("movieId")Long movieId,@Param("startTime") Timestamp startTime,@Param("endTime")Timestamp end,@Param("hallId") Long hallId,@Param("price") Integer price,@Param("date") Date date);
+
+    ScenePO selectById(@Param("sceneId") Long sceneId);
 }

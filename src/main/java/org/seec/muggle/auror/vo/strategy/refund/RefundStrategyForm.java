@@ -7,22 +7,22 @@ package org.seec.muggle.auror.vo.strategy.refund;
  * @Version 1.0
  **/
 public class RefundStrategyForm {
-    String latestRefundTimeBeforePaying; //距离开场的时间
-    String refundRate;
+    Integer latestRefundTimeBeforePaying; //距离开场的时间
+    Double refundRate;
 
-    public String getLatestRefundTimeBeforePaying() {
+    public Integer getLatestRefundTimeBeforePaying() {
         return latestRefundTimeBeforePaying;
     }
 
-    public void setLatestRefundTimeBeforePaying(String latestRefundTimeBeforePaying) {
+    public void setLatestRefundTimeBeforePaying(Integer latestRefundTimeBeforePaying) {
         this.latestRefundTimeBeforePaying = latestRefundTimeBeforePaying;
     }
 
-    public String getRefundRate() {
+    public Double getRefundRate() {
         return refundRate;
     }
 
-    public void setRefundRate(String refundRate) {
+    public void setRefundRate(Double refundRate) {
         this.refundRate = refundRate;
     }
 }

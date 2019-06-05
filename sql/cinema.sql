@@ -33,7 +33,7 @@ CREATE TABLE `tbl_movie`
     `language`      varchar(255)   DEFAULT NULL,
     `length`        int(11)        DEFAULT NULL,
     `start_date`    timestamp NULL DEFAULT NULL,
-    `name`          varchar(255)   DEFAULT NULL,
+    `castName`          varchar(255)   DEFAULT NULL,
     `description`   text,
     `status`        int(11)        DEFAULT '0',
     PRIMARY KEY (`id`)
@@ -110,10 +110,10 @@ DROP TABLE IF EXISTS `tbl_role`;
 CREATE TABLE `tbl_role`
 (
     `id`   int(11)     NOT NULL AUTO_INCREMENT,
-    `name` varchar(50) NOT NULL,
+    `castName` varchar(50) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `tbl_role_id_uindex` (`id`),
-    UNIQUE KEY `tbl_role_name_uindex` (`name`)
+    UNIQUE KEY `tbl_role_name_uindex` (`castName`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 13
   DEFAULT CHARSET = utf8mb4;
@@ -142,10 +142,10 @@ DROP TABLE IF EXISTS `tbl_permission`;
 CREATE TABLE `tbl_permission`
 (
     `id`   int(11)     NOT NULL AUTO_INCREMENT,
-    `name` varchar(50) NOT NULL,
+    `castName` varchar(50) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `tbl_permission_id_uindex` (`id`),
-    UNIQUE KEY `tbl_permission_name_uindex` (`name`)
+    UNIQUE KEY `tbl_permission_name_uindex` (`castName`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 13
   DEFAULT CHARSET = utf8mb4;
@@ -308,7 +308,7 @@ CREATE TABLE `tbl_coupon`
     `id`          int(11)        NOT NULL AUTO_INCREMENT,
     `user_id`     int(11)        NOT NULL,
     `event_id`    int(11)        NOT NULL,
-    `name`        varchar(255)   NOT NULL,
+    `castName`        varchar(255)   NOT NULL,
     `description` text,
     `picture_url` varchar(255)   NOT NULL,
     `start_time`  timestamp      NOT NULL,
@@ -328,7 +328,7 @@ DROP TABLE IF EXISTS `tbl_event`;
 CREATE TABLE `tbl_event`
 (
     `id`                 int(11)        NOT NULL AUTO_INCREMENT,
-    `name`               varchar(255)   NOT NULL,
+    `castName`               varchar(255)   NOT NULL,
     `description`        text,
     `picture_url`        varchar(255)   NOT NULL,
     `start_time`         timestamp      NOT NULL,
@@ -348,7 +348,7 @@ DROP TABLE IF EXISTS `tbl_hall`;
 CREATE TABLE `tbl_hall`
 (
     `id`    int(11)      NOT NULL AUTO_INCREMENT,
-    `name`  varchar(255) NOT NULL,
+    `castName`  varchar(255) NOT NULL,
     `seats` text         NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
@@ -379,7 +379,7 @@ DROP TABLE IF EXISTS `tbl_member_card`;
 CREATE TABLE `tbl_member_card`
 (
     `id`                 int(11)        NOT NULL AUTO_INCREMENT,
-    `name`               varchar(255)   NOT NULL,
+    `castName`               varchar(255)   NOT NULL,
     `picture_url`        varchar(255)   NOT NULL,
     `purchase_threshold` decimal(20, 2) NOT NULL,
     `discount_rate`      decimal(10, 2) NOT NULL,

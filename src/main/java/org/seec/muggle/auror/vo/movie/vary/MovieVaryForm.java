@@ -3,6 +3,8 @@ package org.seec.muggle.auror.vo.movie.vary;
 import org.seec.muggle.auror.vo.movie.detail.DirectorVO;
 import org.seec.muggle.auror.vo.movie.detail.StarringVO;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -10,14 +12,16 @@ import org.seec.muggle.auror.vo.movie.detail.StarringVO;
  * @Version 1.0
  **/
 public class MovieVaryForm {
+    Long movieId;
     String movieName;
     String description;
-    String visibleDate; // 排片信息观众可见时间
-    String startDate;
-    String endDate;
+    Date visibleDate; // 排片信息观众可见时间
+    Date startDate;
+    Date endDate;
     String posterUrl;
     String movieType;
     String country;
+    Integer movieYear;
     String language;
     Integer length; //时长
     /**
@@ -28,6 +32,22 @@ public class MovieVaryForm {
      * 主演
      */
     StarringVO[] starrings;
+
+    public Integer getMovieYear() {
+        return movieYear;
+    }
+
+    public void setMovieYear(Integer movieYear) {
+        this.movieYear = movieYear;
+    }
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
+    }
 
     public DirectorVO[] getDirectors() {
         return directors;
@@ -61,27 +81,27 @@ public class MovieVaryForm {
         this.description = description;
     }
 
-    public String getVisibleDate() {
+    public Date getVisibleDate() {
         return visibleDate;
     }
 
-    public void setVisibleDate(String visibleDate) {
+    public void setVisibleDate(Date visibleDate) {
         this.visibleDate = visibleDate;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

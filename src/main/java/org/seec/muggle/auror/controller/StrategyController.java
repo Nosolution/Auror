@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.controller;
 
+import org.seec.muggle.auror.bl.strategy.StrategyService;
 import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventDeletionForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
@@ -7,9 +8,9 @@ import org.seec.muggle.auror.vo.strategy.event.EventVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVarietyVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVaryForm;
 import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyForm;
-import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberAddForm;
 import org.seec.muggle.auror.vo.strategy.member.MemberDeleteForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +21,20 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  **/
 @CrossOrigin
-@RestController(value = "/api/strategy")
+@RestController
+@RequestMapping(value = "/api/strategy")
 public class StrategyController {
+    @Autowired
+    StrategyService strategyService;
 
     @GetMapping(value = "/refund")
     public ResponseEntity<?> getRefundStrategy(){
-        return ResponseEntity.ok(new RefundStrategyVO());
+        return ResponseEntity.ok(strategyService.getRefundStrategy());
     }
 
     @PutMapping(value = "/refund")
     public ResponseEntity<?> varyRefundStrategy(@RequestBody RefundStrategyForm form){
+        strategyService.updateRefundStrategy(form.getRefundRate(),form.getLatestRefundTimeBeforePaying());
         return ResponseEntity.ok("");
     }
 
@@ -57,8 +62,10 @@ public class StrategyController {
     public ResponseEntity<?> getVipCardList(){
         return ResponseEntity.ok(new MemberVarietyVO[]{});
     }
+
     @PostMapping(value = "/member")
     public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form){
+        strategyService.createMemberStrategy(form.getMemberStrategyName(),form.getMemberPictureurl(),form.getPurchaseThreshold(),form.getMemberDiscountRate());
         return ResponseEntity.ok("");
     }
 

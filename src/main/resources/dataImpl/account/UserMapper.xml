@@ -39,10 +39,10 @@
 <!--&#45;&#45;                permission.perm_id,-->
 <!--&#45;&#45;                permission.perm_name-->
 <!--&#45;&#45;         from (select * from tbl_user where id = #{id}) as u,-->
-<!--&#45;&#45;              (select tbl_role.id as role_id, tbl_role.name as role_name-->
+<!--&#45;&#45;              (select tbl_role.id as role_id, tbl_role.castName as role_name-->
 <!--&#45;&#45;               from tbl_role-->
 <!--&#45;&#45;               where tbl_role.id in (select ur.role_id from user_role ur where ur.user_id = #{id})) as role,-->
-<!--&#45;&#45;              (select p.id as perm_id, p.name as perm_name-->
+<!--&#45;&#45;              (select p.id as perm_id, p.castName as perm_name-->
 <!--&#45;&#45;               from tbl_permission p-->
 <!--&#45;&#45;               where id in (select permission_id-->
 <!--&#45;&#45;                            from role_permission-->
@@ -61,13 +61,13 @@
         <!--<collection property="roles" javaType="ArrayList"-->
                                  <!--ofType="Role">-->
         <!--<id column="role_id" property="id"/>-->
-        <!--<result column="role_name" property="name"/>-->
+        <!--<result column="role_name" property="castName"/>-->
     <!--</collection>-->
 
         <!--<collection property="permissions" javaType="ArrayList"-->
                     <!--ofType="Permission">-->
             <!--<id column="perm_id" property="id"/>-->
-            <!--<result column="perm_name" property="name"/>-->
+            <!--<result column="perm_name" property="castName"/>-->
         <!--</collection>-->
 
     </resultMap>

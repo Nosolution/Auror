@@ -27,7 +27,7 @@
     <!--</delete>-->
 
     <!--<select id="getDateLikeNum" resultMap="DateLikeForm">-->
-        <!--select count(*) as like_num, DATE(choose_time) as `time`-->
+        <!--select count(*) as like_num, DATE(choose_time) as `commenttime`-->
         <!--from tbl_favorite_record tbr-->
         <!--where movie_id = #{movieId}-->
         <!--GROUP BY DATE(tbr.choose_time)-->

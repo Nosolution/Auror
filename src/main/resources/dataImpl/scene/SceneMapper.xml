@@ -5,4 +5,18 @@
         insert into tbl_scene (movie_id, start, end, hall_id, price,date) values(#{movieId},#{startTime},#{endTime},#{hallId},#{price},#{date})
     </insert>
 
+    <select id="selectById" resultMap="Scene">
+        select * from tbl_scene where id = #{sceneId}
+    </select>
+
+
+    <resultMap id="Scene" type="org.seec.muggle.auror.po.ScenePO">
+        <id column="id" property="id"/>
+        <result column="movie_id" property="movieId"/>
+        <result column="start" property="startTime"/>
+        <result column="end" property="endTime"/>
+        <result column="hall_id" property="hallId"/>
+        <result column="date" property="date"/>
+        <result column="price" property="price"/>
+    </resultMap>
 </mapper>

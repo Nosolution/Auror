@@ -7,13 +7,13 @@ package org.seec.muggle.auror.vo.order.refund;
  * @Version 1.0
  **/
 public class RefundVO {
-    String refundAmount;
+    Double refundAmount;
 
-    public String getRefundAmount() {
+    public Double getRefundAmount() {
         return refundAmount;
     }
 
-    public void setRefundAmount(String refundAmount) {
+    public void setRefundAmount(Double refundAmount) {
         this.refundAmount = refundAmount;
     }
 }

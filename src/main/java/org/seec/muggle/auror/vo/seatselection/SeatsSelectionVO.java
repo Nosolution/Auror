@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.seatselection;
 
+import java.sql.Timestamp;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -10,7 +12,7 @@ public class SeatsSelectionVO {
     Long orderId;
     Integer ticketNum;
     Integer cost;
-    String initTime;
+    Timestamp initTime;
 
     public Long getOrderId() {
         return orderId;
@@ -36,11 +38,11 @@ public class SeatsSelectionVO {
         this.cost = cost;
     }
 
-    public String getInitTime() {
+    public Timestamp getInitTime() {
         return initTime;
     }
 
-    public void setInitTime(String initTime) {
+    public void setInitTime(Timestamp initTime) {
         this.initTime = initTime;
     }
 }

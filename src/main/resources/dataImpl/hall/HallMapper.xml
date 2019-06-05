@@ -3,7 +3,7 @@
 <mapper namespace="org.seec.muggle.auror.dao.hall.HallMapper">
 
     <insert id="insertNewHall">
-        insert into tbl_hall (hall_seats, hall_name)  values (#{seats},#{name})
+        insert into tbl_hall (hall_seats, hall_name)  values (#{seats},#{castName})
     </insert>
 
 </mapper>

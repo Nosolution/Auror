@@ -29,7 +29,7 @@ public class HallServiceImpl implements HallService {
                     stringBuffer.append(",");
                 }
             }
-            if(i!=seats.length){
+            if(i!=seats.length-1){
                 stringBuffer.append(";");
             }
         }

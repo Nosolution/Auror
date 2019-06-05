@@ -1,5 +1,10 @@
 package org.seec.muggle.auror.vo.movie.comment;
 
+import org.seec.muggle.auror.po.CommentPO;
+import org.seec.muggle.auror.po.UserBasic;
+
+import java.sql.Timestamp;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -9,7 +14,7 @@ package org.seec.muggle.auror.vo.movie.comment;
 public class CommentVO {
     String userName;
     String userAvatorUrl; //用户头像url
-    String time; //评论时间
+    Timestamp time; //评论时间
     String comment;
 
     public String getUserName() {
@@ -28,11 +33,11 @@ public class CommentVO {
         this.userAvatorUrl = userAvatorUrl;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
@@ -42,5 +47,12 @@ public class CommentVO {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public CommentVO(CommentPO po , UserBasic basic){
+        this.comment = po.getComment();
+        this.time = po.getCommenttime();
+        this.userAvatorUrl = basic.getUrl();
+        this.userName = basic.getUsername();
     }
 }

@@ -3,6 +3,7 @@ package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
+import org.seec.muggle.auror.po.Comment;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentForm;
@@ -18,6 +19,9 @@ import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author jyh
@@ -81,7 +85,9 @@ public class MovieController {
 
     @GetMapping(value = "/comment?movieId={movieId}")
     public ResponseEntity<?> getMovieComment(){
-        return ResponseEntity.ok(new CommentVO[]{});
+        List<CommentVO> comments = new ArrayList<>();
+        CommentVO[] commentVOS = comments.toArray(new CommentVO[comments.size()]);
+        return ResponseEntity.ok(commentVOS);
     }
 
     @PostMapping()
@@ -92,6 +98,7 @@ public class MovieController {
 
     @PutMapping()
     public ResponseEntity<?> varyMovie(@RequestBody MovieVaryForm form){
+        movieService.updateMovie(form);
         return ResponseEntity.ok("");
     }
 

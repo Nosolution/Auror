@@ -9,8 +9,8 @@ package org.seec.muggle.auror.vo.strategy.member;
 public class MemberAddForm {
     String memberStrategyName; // 约等于会员卡等级
     String memberPictureurl;
-    Integer memberCredit;
-    Integer memberDiscount;
+    Integer purchaseThreshold;
+    Double memberDiscountRate;
 
     public String getMemberStrategyName() {
         return memberStrategyName;
@@ -28,19 +28,19 @@ public class MemberAddForm {
         this.memberPictureurl = memberPictureurl;
     }
 
-    public Integer getMemberCredit() {
-        return memberCredit;
+    public Integer getPurchaseThreshold() {
+        return purchaseThreshold;
     }
 
-    public void setMemberCredit(Integer memberCredit) {
-        this.memberCredit = memberCredit;
+    public void setPurchaseThreshold(Integer purchaseThreshold) {
+        this.purchaseThreshold = purchaseThreshold;
     }
 
-    public Integer getMemberDiscount() {
-        return memberDiscount;
+    public Double getMemberDiscountRate() {
+        return memberDiscountRate;
     }
 
-    public void setMemberDiscount(Integer memberDiscount) {
-        this.memberDiscount = memberDiscount;
+    public void setMemberDiscountRate(Double memberDiscountRate) {
+        this.memberDiscountRate = memberDiscountRate;
     }
 }
