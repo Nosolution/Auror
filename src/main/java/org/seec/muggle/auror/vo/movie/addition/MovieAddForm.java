@@ -15,6 +15,7 @@ public class MovieAddForm {
     String movieName;
     String description;
     Date visibleDate; // 排片信息观众可见时间
+    Date movieOnshow;//?
     Date startDate;
     Date endDate;
     String posterUrl;

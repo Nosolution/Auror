@@ -2,6 +2,7 @@ package org.seec.muggle.auror.blImpl.order;
 
 import com.sun.org.apache.xpath.internal.operations.Or;
 import org.seec.muggle.auror.bl.order.OrderService;
+import org.seec.muggle.auror.bl.order.OrderService4Statistics;
 import org.seec.muggle.auror.bl.scene.SceneService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.order.OrderMapper;
@@ -25,7 +26,7 @@ import java.sql.Timestamp;
  * @Version 1.0
  **/
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService, OrderService4Statistics {
 
     @Autowired
     OrderMapper orderMapper;
@@ -76,5 +77,10 @@ public class OrderServiceImpl implements OrderService {
         Double amount =refundStrategy.getRate()*new Double((double)cost);
         orderMapper.cancelOrder(orderId);
         return amount;
+    }
+
+    @Override
+    public int getNumsBySceneId(Long sceneId) {
+        return orderMapper.orderNumsBySceneId(sceneId);
     }
 }

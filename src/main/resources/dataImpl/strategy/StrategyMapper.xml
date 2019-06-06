@@ -7,6 +7,7 @@
           rate  rate,
           before_time beforeTime
         from tbl_refund
+
     </select>
 
     <update id="updateRefundStrategy" parameterType="org.seec.muggle.auror.po.RefundPO">
@@ -14,6 +15,6 @@
     </update>
 
     <insert id="insertMemberStrategy" parameterType="org.seec.muggle.auror.po.MemberStrategyPO">
-        insert into tbl_member_strategy (castName, url, threshold, rate) values (#{castName},#{url},#{threshold},#{rate})
+        insert into tbl_member_strategy (castName, url, threshold, rate) values (#{name},#{url},#{threshold},#{rate})
     </insert>
 </mapper>

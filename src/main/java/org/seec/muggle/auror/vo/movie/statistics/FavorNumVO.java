@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.movie.statistics;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -8,7 +10,7 @@ package org.seec.muggle.auror.vo.movie.statistics;
  **/
 public class FavorNumVO {
     Integer favorNums;
-    String date;
+    Date date;
 
     public Integer getFavorNums() {
         return favorNums;
@@ -18,11 +20,11 @@ public class FavorNumVO {
         this.favorNums = favorNums;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.bl.movie_statistics;
 
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 
 /**
  * @Description TODO
@@ -11,4 +12,6 @@ import org.seec.muggle.auror.vo.BasicVO;
 public interface MovieMarkService {
 
     public BasicVO mark(Long userId,Long movieId);
+
+    public FavorNumVO[] getFavorsByDate(Long movieId);
 }

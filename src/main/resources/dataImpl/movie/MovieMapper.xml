@@ -4,19 +4,19 @@
     
     <insert id="insertMovie" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.MoviePO">
         insert into tbl_movie(
-        movie_name, description, visible_date, start_date, end_date, movie_type, movie_country, movie_language, poster_url, length
+        movie_name, description, visible_date, start_date, end_date, movie_type, movie_country, movie_language, poster_url, length , movie_year
         )        
         values (
           #{movieName},#{description},#{visibleDate},
           #{startDate},#{endDate},#{movieType},
-          #{country},#{language},#{posterUrl},#{length}
+          #{country},#{language},#{posterUrl},#{length},#{movieYear}
         )
     </insert>
 
     <update id="updateByMovieId" parameterType="org.seec.muggle.auror.po.MoviePO">
         update tbl_movie set movie_name=#{movieName},description=#{description},visible_date=#{visibleDate},
           start_date=#{startDate},end_date=#{endDate},movie_type=#{movieType},
-          movie_country=#{country},movie_language=#{language},poster_url=#{posterUrl},length=#{length} where id = #{id}
+          movie_country=#{country},movie_year = #{movieYear},movie_language=#{language},poster_url=#{posterUrl},length=#{length} where id = #{id}
     </update>
 
     <insert id="insertCast" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.CastPO">
@@ -103,12 +103,12 @@
         <result property="length" column="length"/>
         <result property="movieYear" column="movie_year"/>
         <collection property="directors" javaType="ArrayList" ofType="org.seec.muggle.auror.vo.movie.detail.DirectorVO">
-            <result column="director_name" property="castName"/>
+            <result column="director_name" property="name"/>
             <result column="director_url" property="url"/>
         </collection>
 
         <collection property="starrings" javaType="ArrayList" ofType="org.seec.muggle.auror.vo.movie.detail.StarringVO">
-            <result column="starring_name" property="castName"/>
+            <result column="starring_name" property="name"/>
             <result column="starring_url" property="url"/>
         </collection>
     </resultMap>

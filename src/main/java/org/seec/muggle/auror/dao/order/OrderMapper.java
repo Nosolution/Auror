@@ -24,4 +24,6 @@ public interface OrderMapper {
     int cancelOrder(@Param("orderId") Long orderId);
 
     OrderPO findOrderById(@Param("orderId")Long orderId);
+
+    Integer orderNumsBySceneId(@Param("sceneId")Long sceneId);
 }

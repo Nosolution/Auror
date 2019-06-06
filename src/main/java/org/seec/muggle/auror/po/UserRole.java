@@ -15,7 +15,7 @@ import lombok.NonNull;
 @Data
 public class UserRole {
     @NonNull
-    private Integer userId;
+    private Long userId;
     @NonNull
-    private Integer roleId;
+    private Long roleId;
 }

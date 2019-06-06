@@ -4,12 +4,16 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
+import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
 
+import org.seec.muggle.auror.dao.account.UserRoleMapper;
 import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.exception.BaseException;
+import org.seec.muggle.auror.po.Role;
 import org.seec.muggle.auror.po.User;
 import org.seec.muggle.auror.po.UserBasic;
+import org.seec.muggle.auror.po.UserRole;
 import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
@@ -33,11 +37,11 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
     @Autowired
     private UserMapper userMapper;
 
-//    @Autowired
-//    private RoleMapper roleMapper;
+    @Autowired
+    private RoleMapper roleMapper;
 
-//    @Autowired
-//    private UserRoleMapper userRoleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -52,9 +56,11 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
     public BasicVO register(String username, String password) {
         try {
             BasicVO basicVO = new BasicVO();
+            User user = userMapper.getUserByName(username);
             if(userMapper.getUserByName(username)!=null){
                 basicVO.setSucc(false);
                 basicVO.setMsg("用户名已存在");
+                return basicVO;
             }
             else {
                 insertNewCUSTOMER(username, password);
@@ -111,10 +117,9 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
     void insertNewCUSTOMER(String username, String password) {
         User user = User.generateNerUser(username, password);
         userMapper.insert(user);
-        //user被保存后会产生id
-        //默认新注册的用户都只拥有顾客权限
-//        Role customer = roleMapper.getRoleByName(RoleEnum.CUSTOMER.name().toLowerCase());
-//        userRoleMapper.insert(new UserRole(id, customer.getId()));
-
+//        user被保存后会产生id
+//        默认新注册的用户都只拥有顾客权限
+        Role customer = roleMapper.getRoleByName(RoleEnum.CUSTOMER.name().toLowerCase());
+        userRoleMapper.insert(new UserRole(user.getId(), customer.getId()));
     }
 }

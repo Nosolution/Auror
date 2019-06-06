@@ -65,7 +65,7 @@ public class StrategyController {
 
     @PostMapping(value = "/member")
     public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form){
-        strategyService.createMemberStrategy(form.getMemberStrategyName(),form.getMemberPictureurl(),form.getPurchaseThreshold(),form.getMemberDiscountRate());
+        strategyService.createMemberStrategy(form.getMemberStrategyName(),form.getMemberPictureUrl(),form.getPurchaseThreshold(),form.getMemberDiscountRate());
         return ResponseEntity.ok("");
     }
 

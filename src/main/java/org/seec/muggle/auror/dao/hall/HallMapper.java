@@ -2,6 +2,7 @@ package org.seec.muggle.auror.dao.hall;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.po.HallPO;
 
 /**
  * @Description TODO
@@ -11,5 +12,7 @@ import org.seec.muggle.auror.annotation.DaoMapper;
  **/
 @DaoMapper
 public interface HallMapper {
-    int insertNewHall(@Param("name")String name,@Param("seats")String seats);
+    int insertNewHall(@Param("hallName")String name,@Param("seats")String seats);
+
+    HallPO findHallById(Long hallId);
 }

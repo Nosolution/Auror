@@ -2,6 +2,8 @@ package org.seec.muggle.auror.vo.movie.detail;
 
 import org.seec.muggle.auror.po.MoviePO;
 
+import java.util.Date;
+
 public class MovieDetailsVO {
     /**
      * 电影id
@@ -26,6 +28,8 @@ public class MovieDetailsVO {
     private String country;
     private String language;
     private String description;
+    private Date movieOnshow;
+    private Date visibleDate;
     private Integer year;
     /**
      * 导演
@@ -58,6 +62,22 @@ public class MovieDetailsVO {
         this.year = year;
         this.length = length;
         this.score = score;
+    }
+
+    public Date getMovieOnshow() {
+        return movieOnshow;
+    }
+
+    public void setMovieOnshow(Date movieOnshow) {
+        this.movieOnshow = movieOnshow;
+    }
+
+    public Date getVisibleDate() {
+        return visibleDate;
+    }
+
+    public void setVisibleDate(Date visibleDate) {
+        this.visibleDate = visibleDate;
     }
 
     public String getCountry() {
@@ -196,6 +216,7 @@ public class MovieDetailsVO {
         this.movieType = po.getMovieType();
         this.posterUrl = po.getPosterUrl();
         this.year = po.getMovieYear();
-
+        this.movieOnshow = po.getStartDate();
+        this.visibleDate = po.getVisibleDate();
     }
 }

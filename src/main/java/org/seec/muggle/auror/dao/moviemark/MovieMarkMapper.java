@@ -3,6 +3,11 @@ package org.seec.muggle.auror.dao.moviemark;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.po.FavorRecordPO;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -13,5 +18,10 @@ import org.seec.muggle.auror.annotation.DaoMapper;
 @DaoMapper
 public interface MovieMarkMapper {
 
-    int insertMark(@Param("userId")Long userId,@Param("movieId")Long movieId);
+    int insertMark(@Param("userId")Long userId, @Param("movieId")Long movieId, @Param("time") Date time);
+
+    FavorRecordPO findFavorByMovieIdAndUserId(@Param("movieId")Long movieId,@Param("userId")Long userId);
+
+
+    List<FavorRecordPO> findFavorByMovieId(@Param("movieId")Long movieId);
 }

@@ -54,6 +54,7 @@ public class SceneController {
 
     @PutMapping()
     public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form){
+        sceneService.varyScene(form.getSceneId(),form.getMovieId(),form.getHallId(),form.getDate(),form.getStartTime(),form.getPrice());
         return ResponseEntity.ok("");
     }
 }

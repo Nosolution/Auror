@@ -6,6 +6,7 @@ import org.seec.muggle.auror.po.ScenePO;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -15,7 +16,12 @@ import java.util.Date;
  **/
 @DaoMapper
 public interface SceneMapper {
-    int insertScene(@Param("movieId")Long movieId,@Param("startTime") Timestamp startTime,@Param("endTime")Timestamp end,@Param("hallId") Long hallId,@Param("price") Integer price,@Param("date") Date date);
+    int insertScene(ScenePO po);
+
+    int updateScene(ScenePO po);
 
     ScenePO selectById(@Param("sceneId") Long sceneId);
+
+    List<ScenePO> selectBymovieId(@Param("movieId")Long movieId);
+
 }

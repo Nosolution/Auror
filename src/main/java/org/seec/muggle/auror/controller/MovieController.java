@@ -3,6 +3,8 @@ package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
+import org.seec.muggle.auror.bl.movie_statistics.StatisticsService;
+import org.seec.muggle.auror.bl.strategy.StrategyService;
 import org.seec.muggle.auror.po.Comment;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
@@ -31,6 +33,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/movie")
 public class MovieController {
+
+    @Autowired
+    StatisticsService statisticsService;
 
     @Autowired
     MovieService movieService;
@@ -83,8 +88,8 @@ public class MovieController {
         return ResponseEntity.ok("");
     }
 
-    @GetMapping(value = "/comment?movieId={movieId}")
-    public ResponseEntity<?> getMovieComment(){
+    @GetMapping(value = "/comment")
+    public ResponseEntity<?> getMovieComment(@RequestParam("movieId")Long movieId){
         List<CommentVO> comments = new ArrayList<>();
         CommentVO[] commentVOS = comments.toArray(new CommentVO[comments.size()]);
         return ResponseEntity.ok(commentVOS);
@@ -102,14 +107,15 @@ public class MovieController {
         return ResponseEntity.ok("");
     }
 
-    @GetMapping(value = "/statistics/favor_num?movieId={movieId}")
-    public ResponseEntity<?> getFavorNum(@PathVariable Integer movieId){
-        return ResponseEntity.ok(new FavorNumVO[]{});
+    @GetMapping(value = "/statistics/favor_num")
+    public ResponseEntity<?> getFavorNum(@RequestParam("movieId")Long movieId){
+        return ResponseEntity.ok(movieMarkService.getFavorsByDate(movieId));
     }
 
-    @GetMapping(value = "/statistic/attendance_rate?movieId={movieId}")
-    public ResponseEntity<?> getAttandence(@PathVariable Integer movieId){
-        return ResponseEntity.ok(new AttendenceVO[]{});
+    @GetMapping(value = "/statistic/attendance_rate")
+    public ResponseEntity<?> getAttandence(@RequestParam("movieId") Long movieId){
+        AttendenceVO[] vo = statisticsService.getBoxOfficeRate(movieId);
+        return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/statistic/box_office?movieId={movieId}")

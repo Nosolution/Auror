@@ -20,6 +20,7 @@ create table `tbl_movie`
     `movie_language`		varchar(50) comment '语言',
     `poster_url`			varchar(255) comment '海报',
     `length`				Integer comment '时长',
+    `movie_year`			varchar(255),
     primary key (id)
 );
 alter table tbl_movie comment '电影表';
@@ -32,7 +33,7 @@ alter table tbl_movie comment '电影表';
 --            Create Date       :            2019-06-01
 --            Description       :            电影演职关系表，负责构建并指定职责
 -- =============================================================================================================
---            2010-06-01        ：           修改....增加.......
+--            2010-06-01        ：           修改cast_role,字符串.......
 -- =============================================================================================================
 
 create table `tbl_cast_movie`
@@ -40,7 +41,7 @@ create table `tbl_cast_movie`
 	`id` 		bigint not null auto_increment comment'影职关系Id',
     `movie_id`	bigint comment '电影Id',
     `cast_id`	bigint comment '演职人员Id',
-    `cast_role`	bigint comment '演职人员职责',
+    `cast_role`	varchar(255) comment '演职人员职责',
     primary key(id)
 );
 alter table tbl_cast_movie comment '电影演职关系表';
@@ -109,25 +110,212 @@ alter table tbl_movie_comment comment '电影评论关系表';
     
 -- =============================================================================================================
 --            Function        	:            ...
---            Auhtor            :            JYH
+--            Auhtor            :            HGZ
+--            Create Date       :            2019-06-01
+--            Description       :            职责表
+-- =============================================================================================================
+--            2010-06-03        ：             
+--            2010-06-01        ：           
+-- =============================================================================================================
+
+DROP TABLE IF EXISTS `tbl_role`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_role`
+(
+    `id`   	bigint   NOT NULL AUTO_INCREMENT,
+    `castName` varchar(50) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `tbl_role_id_uindex` (`id`),
+    UNIQUE KEY `tbl_role_name_uindex` (`castName`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 13
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `tbl_role`
+--
+LOCK TABLES `tbl_role` WRITE;
+/*!40000 ALTER TABLE `tbl_role`
+    DISABLE KEYS */;
+INSERT INTO `tbl_role`
+VALUES (1, 'customer'),
+       (2, 'movie_manager'),
+       (3, 'administrator');
+/*!40000 ALTER TABLE `tbl_role`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- -- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            HGZ
+--            Create Date       :            2019-06-01
+--            Description       :            权限表
+-- =============================================================================================================
+--            2010-06-01        ：           
+-- =============================================================================================================
+
+--
+DROP TABLE IF EXISTS `tbl_permission`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_permission`
+(
+    `id`   bigint    NOT NULL AUTO_INCREMENT,
+    `castName` varchar(50) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `tbl_permission_id_uindex` (`id`),
+    UNIQUE KEY `tbl_permission_name_uindex` (`castName`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 13
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `tbl_permission`
+--
+LOCK TABLES `tbl_permission` WRITE;
+/*!40000 ALTER TABLE `tbl_permission`
+    DISABLE KEYS */;
+INSERT INTO `tbl_permission`
+VALUES (1, 'normal'),
+       (2, 'movie_manage'),
+       (3, 'role_manage');
+/*!40000 ALTER TABLE `tbl_permission`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- 
+
+
+-- -- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            HGZ
 --            Create Date       :            2019-06-01
 --            Description       :            用户表
 -- =============================================================================================================
---            2010-06-03        ：           增加last_logout_time  timestamp
---            2010-06-01        ：           增加last_password_reset_time
+--            2010-06-01        ：           
 -- =============================================================================================================
 
-create table `tbl_user`
+--
+DROP TABLE IF EXISTS `tbl_user`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_user`
 (
-	`id`				bigint not null auto_increment comment'用户Id',
-    `user_hostname`		varchar(255) comment '用户名',
-    `user_password`		varchar(255) comment '用户密码',
-    `user_role`			varchar(50) comment '用户职责',
-    `last_logout_time`	timestamp comment '登出时间',
-    `last_password_reset_time` timestamp comment '密码修改时间',
-    primary key(id)
-);
-alter table tbl_user comment '用户表';    
+    `id`                       bigint      NOT NULL AUTO_INCREMENT,
+    `username`                 varchar(50)  NOT NULL,
+    `password`                 varchar(255) NOT NULL,
+    `last_logout_time`         timestamp    NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_password_reset_time` timestamp    NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `tbl_user_id_uindex` (`id`),
+    UNIQUE KEY `tbl_user_username_uindex` (`username`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 13
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `user`
+--
+LOCK TABLES `tbl_user` WRITE;
+/*!40000 ALTER TABLE `tbl_user`
+    DISABLE KEYS */;
+INSERT INTO `tbl_user`
+VALUES (1, 'testname', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
+       (2, 'test', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
+       (3, 'root', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
+       (4, 'admin', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00');
+/*!40000 ALTER TABLE `tbl_user`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- -- -- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            HGZ
+--            Create Date       :            2019-06-01
+--            Description       :            用户职责表
+-- =============================================================================================================
+--            2010-06-01        ：           
+-- =============================================================================================================
+
+--
+DROP TABLE IF EXISTS `user_role`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_role`
+(
+    `user_id` bigint NOT NULL,
+    `role_id` bigint NOT NULL,
+    PRIMARY KEY (`user_id`, `role_id`),
+    foreign key (user_id) references tbl_user (id),
+    foreign key (role_id) references tbl_role (id)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 13
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `user_role`
+--
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role`
+    DISABLE KEYS */;
+INSERT INTO `user_role`
+VALUES (1, 1),
+       (2, 1),
+       (3, 1),
+       (3, 2),
+       (4, 1),
+       (4, 2),
+       (4, 3);
+/*!40000 ALTER TABLE `user_role`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- -- -- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            HGZ
+--            Create Date       :            2019-06-01
+--            Description       :            职责权限表
+-- =============================================================================================================
+--            2010-06-01        ：           
+-- =============================================================================================================
+
+--
+DROP TABLE IF EXISTS `role_permission`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_permission`
+(
+    `role_id`       bigint NOT NULL,
+    `permission_id` bigint NOT NULL,
+    PRIMARY KEY (`role_id`, `permission_id`),
+    foreign key (role_id) references tbl_role (id),
+    foreign key (permission_id) references tbl_permission (id)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 13
+  DEFAULT CHARSET = utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `user_role`
+--
+LOCK TABLES `role_permission` WRITE;
+/*!40000 ALTER TABLE `role_permission`
+    DISABLE KEYS */;
+INSERT INTO `role_permission`
+VALUES (1, 1),
+       (2, 2),
+       (3, 3);
+/*!40000 ALTER TABLE `role_permission`
+    ENABLE KEYS */;
+UNLOCK TABLES;   
 
 
 
@@ -168,6 +356,7 @@ create table `tbl_scene`
 	`end`				timestamp comment '终止时间',
 	`hall_id`			bigint comment '影厅Id',
     `price`				Integer comment '票价',
+    `date`				date comment '日期',
     primary key(id)
 );
 alter table tbl_scene comment '排片表';
@@ -213,6 +402,7 @@ create table `tbl_ticket`
 	`id`				bigint not null auto_increment comment'票Id',
     `row`				Integer comment '排',
     `column`				Integer comment '列',
+    `scene_id`				bigint,
     primary key(id)
 );
 alter table tbl_ticket comment '电影票表';
@@ -320,7 +510,7 @@ create table `tbl_refund`
 (
 	`description`		varchar(255) comment '描述',
     `rate`				float(3) comment '折扣',
-    `befor_time`		timestamp comment '距开场时间'
+    `before_time`		int comment '距开场时间'
 );
 alter table tbl_refund comment '退票策略';
 

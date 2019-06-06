@@ -1,7 +1,10 @@
 package org.seec.muggle.auror.blImpl.hall;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.seec.muggle.auror.bl.hall.HallService;
+import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.dao.hall.HallMapper;
+import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  **/
 @Service
-public class HallServiceImpl implements HallService {
+public class HallServiceImpl implements HallService , HallService4Statistics {
     @Autowired
     HallMapper hallMapper;
 
@@ -37,5 +40,18 @@ public class HallServiceImpl implements HallService {
         return vo;
     }
 
+    @Override
+    public int getSeatsNum(Long hallId) {
+        HallPO PO = hallMapper.findHallById(hallId);
+        return countString(PO.getSeats(),"1");
+    }
 
+    private int countString(String str,String s) {
+        int count = 0, len = str.length();
+        while (str.indexOf(s) != -1) {
+            str = str.substring(str.indexOf(s) + 1, str.length());
+            count++;
+        }
+        return count;
+    }
 }

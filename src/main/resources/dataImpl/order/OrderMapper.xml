@@ -6,7 +6,7 @@
     </insert>
 
     <insert id="insertSeat" parameterType="org.seec.muggle.auror.po.TicketPO">
-        insert into tbl_ticket (sceneId,`row`, `column`) values (#{sceneId},#{row},#{column});
+        insert into tbl_ticket (scene_id,`row`, `column`) values (#{sceneId},#{row},#{column});
     </insert>
 
     <update id="cancelOrder">
@@ -17,6 +17,9 @@
         select cost from tbl_order where id =#{orderId};
     </select>
 
+    <select id="orderNumsBySceneId" resultType="java.lang.Integer">
+        select count(*) from tbl_order where scene_id = #{sceneId} and status = 1
+    </select>
     <resultMap id="Order" type="org.seec.muggle.auror.po.OrderPO">
         <id column="id" property="id"/>
         <result column="scene_id" property="sceneId"/>

@@ -15,4 +15,5 @@ public interface StrategyService {
     BasicVO updateRefundStrategy(Double rate,Integer beforeTime);
 
     BasicVO createMemberStrategy(String name,String url,Integer threshold,Double rate);
+
 }

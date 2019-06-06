@@ -15,4 +15,6 @@ import java.util.Date;
 public interface SceneService {
     BasicVO addScene(Long movieId, Long hallId, Date date, Timestamp startTime,int price);
 
+    BasicVO varyScene(Long sceneId,Long movieId,Long hallId,Date date,Timestamp startTime,int price);
+
 }

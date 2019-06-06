@@ -3,7 +3,14 @@
 <mapper namespace="org.seec.muggle.auror.dao.hall.HallMapper">
 
     <insert id="insertNewHall">
-        insert into tbl_hall (hall_seats, hall_name)  values (#{seats},#{castName})
+        insert into tbl_hall (hall_seats, hall_name)  values (#{seats},#{hallName})
     </insert>
+
+    <select id="findHallById" resultType="org.seec.muggle.auror.po.HallPO">
+        select id id,
+          hall_name hallName,
+          hall_seats seats
+        from tbl_hall where id = #{hallId} limit 1;
+    </select>
 
 </mapper>

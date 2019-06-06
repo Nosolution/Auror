@@ -8,7 +8,7 @@
 //import org.seec.muggle.auror.param.DateLikeForm;
 //import org.seec.muggle.auror.vo.movie.MovieForm;
 //>>>>>>> Stashed changes
-//import org.seec.muggle.auror.po.FavoriteRecord;
+//import org.seec.muggle.auror.po.FavorRecordPO;
 //import org.seec.muggle.auror.po.Movie;
 //import org.seec.muggle.auror.vo.DateLikeForm;
 //import org.seec.muggle.auror.vo.MovieForm;
@@ -72,7 +72,7 @@
 //
 //    @Override
 //    public String likeMovie(int userId, int movieId) {
-//        FavoriteRecord record = new FavoriteRecord();
+//        FavorRecordPO record = new FavorRecordPO();
 //        record.setUserId(userId);
 //        record.setMovieId(movieId);
 //        //todo: user 判空

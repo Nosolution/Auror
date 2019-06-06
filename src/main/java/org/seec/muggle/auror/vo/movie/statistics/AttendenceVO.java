@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.movie.statistics;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -7,14 +9,14 @@ package org.seec.muggle.auror.vo.movie.statistics;
  * @Version 1.0
  **/
 public class AttendenceVO {
-    String date;
+    Date date;
     Double attendanceRate;
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

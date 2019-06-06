@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class Permission {
-    private Integer id;
+    private Long id;
     private String name;
     private List<Role> roles;
 }

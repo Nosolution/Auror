@@ -13,6 +13,6 @@ import lombok.Data;
  */
 @Data
 public class RolePermission {
-    private Integer roleId;
-    private Integer permissionId;
+    private Long roleId;
+    private Long permissionId;
 }
