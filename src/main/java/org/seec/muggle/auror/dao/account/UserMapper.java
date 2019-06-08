@@ -22,5 +22,7 @@ public interface UserMapper extends BaseOperation<User> {
 
     public Integer userNameExisted(@Param("userName")String username);
 
+    public int deleteUserById(@Param("userId")Long userId);
 
+    public User getUserById(@Param("userId")Long userId);
 }

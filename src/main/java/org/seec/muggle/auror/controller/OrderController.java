@@ -94,6 +94,8 @@ public class OrderController {
 
     @PostMapping(value = "/member/purchase/payment")
     public ResponseEntity<?> purchaseVIPCard(@RequestBody VipPurchaseForm form){
+        Long userId = 1l;
+        orderService.purchaseMember(userId,form.getCost(),form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 

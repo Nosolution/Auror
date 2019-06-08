@@ -35,4 +35,9 @@ public interface MovieService {
     public MovieDetailsVO getMovieDetail(Long id);
 
     public BasicVO updateMovie(MovieVaryForm form);
+
+    public BasicVO commentMovie(Long movieId,Integer rate,String comment,Long userId);
+
+    public BasicVO deleteMovie(Long movieId);
+
 }

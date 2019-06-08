@@ -29,6 +29,7 @@ public class HallController {
 
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllHall(){
-        return ResponseEntity.ok(new SingleHallVO[]{});
+        SingleHallVO[]  halls = hallService.gethalls();
+        return ResponseEntity.ok(halls);
     }
 }

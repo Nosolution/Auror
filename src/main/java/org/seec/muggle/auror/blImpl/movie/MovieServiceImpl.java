@@ -2,7 +2,9 @@ package org.seec.muggle.auror.blImpl.movie;
 
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.bl.movie.MovieService;
+import org.seec.muggle.auror.bl.movie.MovieService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
+import org.seec.muggle.auror.bl.scene.SceneService4Movie;
 import org.seec.muggle.auror.dao.movie.MovieMapper;
 import org.seec.muggle.auror.po.CastPO;
 import org.seec.muggle.auror.po.CommentPO;
@@ -18,9 +20,9 @@ import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * @Description TODO
@@ -29,12 +31,15 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class MovieServiceImpl implements MovieService , MovieService4Scene {
+public class MovieServiceImpl implements MovieService , MovieService4Scene , MovieService4Mark {
     @Autowired
     MovieMapper movieMapper;
 
     @Autowired
     AccountService4Movie accountService4Movie;
+
+    @Autowired
+    SceneService4Movie sceneService4Movie;
 
     /**
      * @Author jyh
@@ -167,5 +172,35 @@ public class MovieServiceImpl implements MovieService , MovieService4Scene {
             movieMapper.insertMovieCast(form.getMovieId(),castPO.getId(),"Actor");
         }
         return new BasicVO();
+    }
+
+    @Override
+    public BasicVO commentMovie(Long movieId, Integer rate, String comment, Long userId) {
+        movieMapper.insertComment(movieId,userId,rate,comment, Timestamp.valueOf(LocalDateTime.now()));
+        return new BasicVO();
+    }
+
+    @Override
+    public BasicVO deleteMovie(Long movieId) {
+        List<Timestamp> times = sceneService4Movie.getSceneEndsByMovieId(movieId);
+        Collections.sort(times);
+
+        if(times.size()==0||times.get(times.size()-1).before(Timestamp.valueOf(LocalDateTime.now()))){
+            movieMapper.deleteMovieByMovieId(movieId);
+            BasicVO vo = new BasicVO();
+            vo.setSucc(true);
+            return vo;
+        }
+        else{
+            BasicVO vo = new BasicVO();
+            vo.setSucc(false);
+            vo.setMsg("该影片已排片，暂不能删除,最早可删除时间为："+String.valueOf(times.get(times.size()-1)));
+            return vo;
+        }
+    }
+
+    @Override
+    public MoviePO getMovieById(Long movieId) {
+        return movieMapper.findMovieById(movieId);
     }
 }

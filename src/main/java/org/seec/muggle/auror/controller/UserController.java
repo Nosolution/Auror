@@ -2,6 +2,8 @@ package org.seec.muggle.auror.controller;
 
 import javafx.scene.layout.VBox;
 import org.seec.muggle.auror.bl.account.AccountService;
+import org.seec.muggle.auror.bl.member.MemberService;
+import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
 import org.seec.muggle.auror.po.Account;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
@@ -28,6 +30,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    MemberService memberService;
+
+    @Autowired
+    MovieMarkService movieMarkService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<?>  login(@RequestBody LoginForm form){
@@ -58,14 +66,17 @@ public class UserController {
 
     @GetMapping(value = "/user/mark")
     public ResponseEntity<?> getMarkList(){
-        return ResponseEntity.ok(new MovieMarkVO[]{});
+        Long userid = 1l;
+        MovieMarkVO[] vos = movieMarkService.getFavorsByUserId(userid);
+        return ResponseEntity.ok(vos);
     }
 
     @GetMapping(value = "/member/info")
     public ResponseEntity<?> getMemberInfo(){
-        boolean isSucc = false;
-        if(isSucc){
-            return ResponseEntity.ok(new MemberVO());
+        Long userId = 1l;
+        MemberVO  vo = memberService.getPersonalMemberInfo(userId);
+        if(vo!=null){
+            return ResponseEntity.ok(vo);
         }
         else{
             return ResponseEntity.status(405).body("NOT A MEMBER");

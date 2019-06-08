@@ -21,6 +21,7 @@ create table `tbl_movie`
     `poster_url`			varchar(255) comment '海报',
     `length`				Integer comment '时长',
     `movie_year`			varchar(255),
+    `movie_status`			int,
     primary key (id)
 );
 alter table tbl_movie comment '电影表';
@@ -100,8 +101,9 @@ create table `tbl_movie_comment`
 	`id`			bigint not null auto_increment comment'评论Id',
     `movie_id`		bigint comment '电影id',
     `user_id`		bigint comment '用户id',
-    `score`			float(3) comment '评分',
+    `score`			int comment '评分',
     `comment`		varchar(255) comment'电影评论',
+    `time`			timestamp,
     primary key(id)
 );
 alter table tbl_movie_comment comment '电影评论关系表';
@@ -425,6 +427,7 @@ create table `tbl_coupon`
     `description`		varchar(255) comment '优惠券描述',
 	`discount`			float(3) comment '折扣',
     `threshold`			Integer comment '门栏',
+    `url`				varchar(255) comment'图片',
     primary key(id)
 );
 alter table tbl_coupon comment '优惠券表';
@@ -468,6 +471,7 @@ create table `tbl_member`
 	`id`				bigint not null auto_increment comment'会员卡表Id',
     `strategy_id`		bigint comment '会员策略等级',
     `threshold`			Integer comment '余额',
+    `user_id`			bigint comment'用户Id',
     primary key(id)
 );
 alter table tbl_member comment '会员卡表';
@@ -534,3 +538,41 @@ create table `tbl_recharge`
     primary key(id)
 );
 alter table tbl_recharge comment '充值记录表';
+
+-- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            JYH
+--            Create Date       :            2019-06-06
+--            Description       :            优惠活动
+-- =============================================================================================================
+--            2010-06-01        ：           修改....增加.......
+-- =============================================================================================================
+create table `tbl_event`
+(
+	`id`				bigint not null auto_increment comment'充值记录',
+    `startTime`			timestamp comment '起始时间',
+    `endTime`			timestamp comment '结束时间',
+    `description`		varchar(255) comment'描述',
+    `coupon_id`			bigint comment'优惠券id',
+    `event_name`		varchar(255),
+    primary key(id)
+);
+alter table tbl_event comment '优惠活动';
+
+
+
+-- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            JYH
+--            Create Date       :            2019-06-06
+--            Description       :            电影优惠
+-- =============================================================================================================
+--            2010-06-01        ：           修改....增加.......
+-- =============================================================================================================
+
+create table `tbl_event_movie`
+(
+	`event_id`		bigint not null,
+    `movie_id`		bigint not null
+);
+    

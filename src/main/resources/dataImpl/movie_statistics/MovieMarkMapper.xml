@@ -18,4 +18,8 @@
           insert_time time
          from tbl_movie_favor where movie_id = #{movieId}
     </select>
+
+    <select id="selectMovieIdByUserId" resultType="java.lang.Long">
+        select movie_id from  tbl_movie_favor where user_id = #{userId}
+    </select>
 </mapper>

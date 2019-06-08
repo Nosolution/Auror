@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.controller;
 
 
+import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
 import org.seec.muggle.auror.bl.movie_statistics.StatisticsService;
@@ -10,6 +11,7 @@ import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
+import org.seec.muggle.auror.vo.movie.delete.MovieDelete;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
 import org.seec.muggle.auror.vo.movie.marking.MovieMarkForm;
 import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,12 +88,14 @@ public class MovieController {
 
     @PostMapping(value = "/comment")
     public ResponseEntity<?> getMovieComment(@RequestBody CommentForm form){
+        Long userId = 1l;
+        movieService.commentMovie(form.getMovieId(),form.getRate(),form.getComment(),userId);
         return ResponseEntity.ok("");
     }
 
     @GetMapping(value = "/comment")
     public ResponseEntity<?> getMovieComment(@RequestParam("movieId")Long movieId){
-        List<CommentVO> comments = new ArrayList<>();
+        List<CommentVO> comments = movieService.getMovieComment(movieId);
         CommentVO[] commentVOS = comments.toArray(new CommentVO[comments.size()]);
         return ResponseEntity.ok(commentVOS);
     }
@@ -107,6 +112,17 @@ public class MovieController {
         return ResponseEntity.ok("");
     }
 
+    @DeleteMapping()
+    public ResponseEntity<?> deleteMovie(@RequestBody MovieDelete delete){
+        BasicVO vo = movieService.deleteMovie(delete.getMovieId());
+        if(vo.isSucc()){
+            return ResponseEntity.ok("");
+        }
+        else{
+            return ResponseEntity.status(405).body(vo.getMsg());
+        }
+    }
+
     @GetMapping(value = "/statistics/favor_num")
     public ResponseEntity<?> getFavorNum(@RequestParam("movieId")Long movieId){
         return ResponseEntity.ok(movieMarkService.getFavorsByDate(movieId));
@@ -121,5 +137,14 @@ public class MovieController {
     @GetMapping(value = "/statistic/box_office?movieId={movieId}")
     public ResponseEntity<?> getBoxOffice(@PathVariable Integer movieId){
         return ResponseEntity.ok(new BoxOfficeVO());
+    }
+
+    @GetMapping(value = "/detail/batch")
+    public ResponseEntity<?> getMoviesByList(@PathParam("movieIds")Long[] movieId){
+        MovieDetailsVO[] movies = new MovieDetailsVO[movieId.length];
+        for(int i =0;i<movies.length;i++){
+            movies[i] = movieService.getMovieDetail(movieId[i]);
+        }
+        return ResponseEntity.ok(movies);
     }
 }

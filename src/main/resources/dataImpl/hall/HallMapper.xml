@@ -13,4 +13,10 @@
         from tbl_hall where id = #{hallId} limit 1;
     </select>
 
+    <select id="selectAll" resultType="org.seec.muggle.auror.po.HallPO">
+    select id id,
+      hall_name hallName,
+      hall_seats seats
+    from tbl_hall
+    </select>
 </mapper>

@@ -18,4 +18,6 @@ public interface OrderService {
 
     Double refundOrder(Long orderId);
 
+    BasicVO purchaseMember(Long userId,Integer cost,Long memberId);
+
 }

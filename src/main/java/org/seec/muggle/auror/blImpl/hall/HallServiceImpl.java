@@ -6,8 +6,12 @@ import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.dao.hall.HallMapper;
 import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -53,5 +57,33 @@ public class HallServiceImpl implements HallService , HallService4Statistics {
             count++;
         }
         return count;
+    }
+
+    @Override
+    public SingleHallVO[] gethalls() {
+        List<HallPO> halls = hallMapper.selectAll();
+
+        List<SingleHallVO> vos = new ArrayList<>();
+        halls.stream().forEach(o->{
+            SingleHallVO vo =new SingleHallVO();
+            vo.setHallName(o.getHallName());
+            vo.setSeats(getSeats(o.getSeats()));
+            vos.add(vo);
+        });
+        return vos.toArray(new SingleHallVO[vos.size()]);
+    }
+
+    private Integer[][] getSeats(String seats){
+        String[] rows = seats.split(";");
+        String[] columns = rows[0].split(",");
+        Integer[][] hallSeats = new Integer[rows.length][columns.length];
+        for(int i = 0 ;i<rows.length;i++){
+            String row =rows[i];
+            for(int j = 0; j<columns.length;j++){
+                String[] rowUnits = row.split(",");
+                hallSeats[i][j] = Integer.parseInt(rowUnits[j]);
+            }
+        }
+        return hallSeats;
     }
 }

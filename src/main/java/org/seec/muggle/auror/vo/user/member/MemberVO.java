@@ -1,5 +1,8 @@
 package org.seec.muggle.auror.vo.user.member;
 
+import org.seec.muggle.auror.po.MemberPO;
+import org.seec.muggle.auror.po.MemberStrategyPO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -11,7 +14,7 @@ public class MemberVO {
     String memberStrategyName; // 约等于会员卡等级
     String memberPictureurl;
     Integer memberCredit;
-    Integer memberDiscount;
+    Double memberDiscount;
 
     public Long getMemberId() {
         return memberId;
@@ -45,11 +48,19 @@ public class MemberVO {
         this.memberCredit = memberCredit;
     }
 
-    public Integer getMemberDiscount() {
+    public Double getMemberDiscount() {
         return memberDiscount;
     }
 
-    public void setMemberDiscount(Integer memberDiscount) {
+    public void setMemberDiscount(Double memberDiscount) {
         this.memberDiscount = memberDiscount;
+    }
+
+    public MemberVO(MemberPO memberPO, MemberStrategyPO strategyPO){
+        this.memberCredit = memberPO.getThreshold();
+        this.memberDiscount = strategyPO.getRate();
+        this.memberId = memberPO.getId();
+        this.memberPictureurl = strategyPO.getUrl();
+        this.memberStrategyName = strategyPO.getName();
     }
 }

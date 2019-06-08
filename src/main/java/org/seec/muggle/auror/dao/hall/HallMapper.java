@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.po.HallPO;
 
+import java.util.List;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -15,4 +17,6 @@ public interface HallMapper {
     int insertNewHall(@Param("hallName")String name,@Param("seats")String seats);
 
     HallPO findHallById(Long hallId);
+
+    List<HallPO> selectAll();
 }

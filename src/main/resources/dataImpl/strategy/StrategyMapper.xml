@@ -17,4 +17,91 @@
     <insert id="insertMemberStrategy" parameterType="org.seec.muggle.auror.po.MemberStrategyPO">
         insert into tbl_member_strategy (castName, url, threshold, rate) values (#{name},#{url},#{threshold},#{rate})
     </insert>
+    <select id="selectMemberStrategyById" resultType="org.seec.muggle.auror.po.MemberStrategyPO">
+        select castName name,
+          url url,
+          threshold threshold,
+          rate rate
+         from tbl_member_strategy where id=#{id}
+    </select>
+
+    <select id="selectAllMemberStrategys" resultType="org.seec.muggle.auror.po.MemberStrategyPO">
+        select id id,
+        castName name,
+        url url,
+        threshold threshold,
+        rate rate
+        from tbl_member_strategy
+    </select>
+
+    <insert id="insertEvent" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.EventPO">
+        insert  into tbl_event (startTime, endTime, description,event_name,coupon_id) values (#{startTime},#{endTime},#{description},#{eventName},#{couponId})
+    </insert>
+
+    <insert id="insertCoupon" parameterType="org.seec.muggle.auror.po.CouponPO" useGeneratedKeys="true" keyProperty="id">
+        insert  into tbl_coupon (coupon_name, description, discount, threshold, url) values (#{couponName},#{description},#{discount},#{threshold},#{url})
+    </insert>
+
+    <insert id="insertEventMovie">
+        insert into tbl_event_movie (event_id, movie_id) values (#{eventId},#{movieId})
+    </insert>
+
+    <delete id="deleteEvent">
+        delete from tbl_event where id=#{eventId}
+    </delete>
+
+    <delete id="deleteEventMovie">
+        delete from tbl_event_movie where event_id=#{eventId};
+    </delete>
+
+    <select id="selectEvents" resultType="org.seec.muggle.auror.po.EventPO">
+        select  id id,
+          startTime startTime,
+          endTime endTime,
+          description description,
+          event_name eventName,
+          coupon_id couponId
+        from tbl_event
+    </select>
+
+    <select id="selectCouponById" resultType="org.seec.muggle.auror.po.CouponPO">
+        select id id,
+          coupon_name couponName,
+          description description,
+          discount discount,
+          threshold threshold,
+          url url
+        from tbl_coupon where id = #{couponId}
+    </select>
+
+    <select id="selectEventsById" resultType="org.seec.muggle.auror.po.EventPO">
+        select  id id,
+          startTime startTime,
+          endTime endTime,
+          description description,
+          event_name eventName,
+          coupon_id couponId
+        from tbl_event where id =#{eventId}
+    </select>
+
+    <select id="selectMoviesByEventId" resultType="java.lang.Long">
+        select movie_id from tbl_event_movie where event_id = #{eventId}
+    </select>
+
+    <select id="selectUsersByMemberStrategyId" resultType="java.lang.Long">
+        select user_id from tbl_member where strategy_id = #{strategyId}
+    </select>
+
+    <delete id="deleteMemberStrategy">
+        delete from tbl_member_strategy where id = #{strategyId}
+    </delete>
+
+    <update id="updateMemberStrategy" parameterType="org.seec.muggle.auror.vo.strategy.member.MemberVaryForm">
+        update tbl_member_strategy set
+          castName=#{memberStrategyName},
+          url=#{memberPictureUrl},
+          threshold=#{purchaseThreshold},
+          rate =#{memberDiscountRate},
+         where id = #{memberStrategyId}
+    </update>
 </mapper>

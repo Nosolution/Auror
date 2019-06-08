@@ -1,5 +1,11 @@
 package org.seec.muggle.auror.vo.strategy.event;
 
+import org.seec.muggle.auror.po.CouponPO;
+import org.seec.muggle.auror.po.EventPO;
+
+import java.sql.Timestamp;
+import java.util.List;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -10,9 +16,9 @@ public class EventVO {
     Long eventId;
     String eventName;
     String eventDescription;
-    MovieIdForm[] moviesIncluded ;
-    String startTime;
-    String endTime;
+    Long[] moviesIncluded ;
+    Timestamp startTime;
+    Timestamp endTime;
     String couponName;
     String couponDescription;
     String couponPictureUrl;
@@ -45,27 +51,27 @@ public class EventVO {
         this.eventDescription = eventDescription;
     }
 
-    public MovieIdForm[] getMoviesIncluded() {
+    public Long[] getMoviesIncluded() {
         return moviesIncluded;
     }
 
-    public void setMoviesIncluded(MovieIdForm[] moviesIncluded) {
+    public void setMoviesIncluded(Long[] moviesIncluded) {
         this.moviesIncluded = moviesIncluded;
     }
 
-    public String getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
@@ -116,4 +122,22 @@ public class EventVO {
     public void setCouponExpiration(String couponExpiration) {
         this.couponExpiration = couponExpiration;
     }
+
+    public EventVO(EventPO eventPO, CouponPO couponPO, List<Long> movies){
+        this.eventId = eventPO.getId();
+        this.eventName = eventPO.getEventName();
+        this.eventDescription = eventPO.getDescription();
+        this.moviesIncluded = movies.toArray(new Long[movies.size()]);
+        this.startTime = eventPO.getStartTime();
+        this.endTime = eventPO.getEndTime();
+        this.couponName = couponPO.getCouponName();
+        this.couponDescription = couponPO.getDescription();
+        this.couponPictureUrl = couponPO.getUrl();
+        this.couponDiscount = couponPO.getDiscount();
+        this.couponThreshold = couponPO.getThreshold();
+        this.couponExpiration = "";
+
+    }
+
+
 }

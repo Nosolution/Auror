@@ -2,12 +2,14 @@ package org.seec.muggle.auror.blImpl.order;
 
 import com.sun.org.apache.xpath.internal.operations.Or;
 import org.seec.muggle.auror.bl.order.OrderService;
+import org.seec.muggle.auror.bl.order.OrderService4Mark;
 import org.seec.muggle.auror.bl.order.OrderService4Statistics;
 import org.seec.muggle.auror.bl.scene.SceneService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.order.OrderMapper;
 import org.seec.muggle.auror.po.OrderPO;
 import org.seec.muggle.auror.po.RefundPO;
+import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.po.TicketPO;
 import org.seec.muggle.auror.util.CaptchaUtil;
 import org.seec.muggle.auror.vo.BasicVO;
@@ -18,6 +20,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -26,7 +29,7 @@ import java.sql.Timestamp;
  * @Version 1.0
  **/
 @Service
-public class OrderServiceImpl implements OrderService, OrderService4Statistics {
+public class OrderServiceImpl implements OrderService, OrderService4Statistics, OrderService4Mark {
 
     @Autowired
     OrderMapper orderMapper;
@@ -82,5 +85,21 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics {
     @Override
     public int getNumsBySceneId(Long sceneId) {
         return orderMapper.orderNumsBySceneId(sceneId);
+    }
+
+    @Override
+    public BasicVO purchaseMember(Long userId, Integer cost, Long memberId) {
+        orderMapper.insertMember(memberId,userId,cost);
+        return new BasicVO();
+    }
+
+    @Override
+    public int hasSeen(Long userId, List<ScenePO> sceneId) {
+        for(int i =0;i<sceneId.size();i++){
+            if (orderMapper.findOrderByUserIdAndSceneId(userId,sceneId.get(i).getId())!=null){
+                return 1;
+            }
+        }
+        return 0;
     }
 }

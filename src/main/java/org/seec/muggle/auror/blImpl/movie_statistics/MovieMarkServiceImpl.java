@@ -1,11 +1,17 @@
 package org.seec.muggle.auror.blImpl.movie_statistics;
 
 import org.hibernate.validator.cfg.defs.MaxDef;
+import org.seec.muggle.auror.bl.movie.MovieService4Mark;
 import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
+import org.seec.muggle.auror.bl.order.OrderService4Mark;
+import org.seec.muggle.auror.bl.scene.SceneService4Mark;
 import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.po.FavorRecordPO;
+import org.seec.muggle.auror.po.MoviePO;
+import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
+import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +33,15 @@ public class MovieMarkServiceImpl implements MovieMarkService {
 
     @Autowired
     MovieMarkMapper movieMarkMapper;
+
+    @Autowired
+    MovieService4Mark movieService4Mark;
+
+    @Autowired
+    SceneService4Mark sceneService4Mark;
+
+    @Autowired
+    OrderService4Mark orderService4Mark;
 
     /**
      * @Author jyh
@@ -83,5 +98,44 @@ public class MovieMarkServiceImpl implements MovieMarkService {
         rightNow.setTime(current);
         rightNow.add(Calendar.DATE,1);
         return rightNow.getTime();
+    }
+
+    @Override
+    public MovieMarkVO[] getFavorsByUserId(Long userId) {
+        List<Long> movies = movieMarkMapper.selectMovieIdByUserId(userId);
+        if(movies.size()==0) {
+            return new MovieMarkVO[0];
+        }
+        else {
+            List<MovieMarkVO> vos = new ArrayList<>();
+            movies.stream().forEach(o->{
+                MovieMarkVO vo = new MovieMarkVO();
+                MoviePO po = movieService4Mark.getMovieById(o);
+                vo.setMovieYear(po.getMovieYear());
+                vo.setMovieDescription(po.getDescription());
+                vo.setMovieId(po.getId());
+                vo.setMovieLength(po.getLength());
+                vo.setMovieType(po.getMovieType());
+                vo.setMovieName(po.getMovieName());
+                if(po.getStatus()!=3){
+                    if(po.getStartDate().before(new Date())){
+                        po.setStatus(2);
+                    }
+                    else{
+                        po.setStatus(1);
+                    }
+                    vo.setMovieStatus(po.getStatus());
+                }
+                List<ScenePO> scenes = sceneService4Mark.getScenesById(po.getId());
+                if(orderService4Mark.hasSeen(userId,scenes)==1){
+                    vo.setUserStatus(1);
+                }
+                else{
+                    vo.setUserStatus(2);
+                }
+                vos.add(vo);
+            });
+            return vos.toArray(new MovieMarkVO[vos.size()]);
+        }
     }
 }

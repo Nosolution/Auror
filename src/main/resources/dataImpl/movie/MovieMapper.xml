@@ -88,6 +88,13 @@
         delete  from tbl_cast_movie where movie_id =#{movieId}
     </delete>
 
+    <insert id="insertComment">
+        insert  into tbl_movie_comment (movie_id, user_id, score, comment, `time`) values (#{movieId},#{userId},#{score},#{comment},#{time})
+    </insert>
+
+    <delete id="deleteMovieByMovieId">
+        update tbl_movie set movie_status =3 where id=#{movieId}
+    </delete>
 
     <resultMap id="moviePO" type="org.seec.muggle.auror.po.MoviePO">
         <id property="id" column="id" />
@@ -102,6 +109,7 @@
         <result property="language" column="movie_language" />
         <result property="length" column="length"/>
         <result property="movieYear" column="movie_year"/>
+        <result property="status" column="movie_status"/>
         <collection property="directors" javaType="ArrayList" ofType="org.seec.muggle.auror.vo.movie.detail.DirectorVO">
             <result column="director_name" property="name"/>
             <result column="director_url" property="url"/>

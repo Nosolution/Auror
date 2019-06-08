@@ -17,8 +17,16 @@
         select cost from tbl_order where id =#{orderId};
     </select>
 
+    <insert id="insertMember">
+        insert into tbl_member (strategy_id, threshold, user_id) values (#{strategyId},#{cost},#{userId})
+    </insert>
+
     <select id="orderNumsBySceneId" resultType="java.lang.Integer">
         select count(*) from tbl_order where scene_id = #{sceneId} and status = 1
+    </select>
+
+    <select id="findOrderByUserIdAndSceneId" resultMap="Order">
+        select * from tbl_order where user_id=#{userId} and scene_id = #{sceneId} limit 1
     </select>
     <resultMap id="Order" type="org.seec.muggle.auror.po.OrderPO">
         <id column="id" property="id"/>

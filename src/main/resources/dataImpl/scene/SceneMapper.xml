@@ -17,6 +17,10 @@
         select * from tbl_scene where movie_id = #{movieId}
     </select>
 
+    <select id="selectEndsBymovieId" resultType="java.sql.Timestamp">
+        select `end` from tbl_scene where movie_id = #{movieId};
+    </select>
+
 
     <resultMap id="Scene" type="org.seec.muggle.auror.po.ScenePO">
         <id column="id" property="id"/>

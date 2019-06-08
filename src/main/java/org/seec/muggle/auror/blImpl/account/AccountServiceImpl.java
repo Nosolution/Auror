@@ -18,6 +18,7 @@ import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.user.login.LoginVO;
+import org.seec.muggle.auror.vo.user.member.MemberVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +108,11 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
 
     @Override
     public UserBasic getUserBasicById(Long userId) {
-        return null;
+        UserBasic basic = new UserBasic();
+        User  user = userMapper.getUserById(userId);
+        basic.setUrl("");
+        basic.setUsername(user.getUsername());
+        return basic;
     }
 
     /**
@@ -122,4 +127,6 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
         Role customer = roleMapper.getRoleByName(RoleEnum.CUSTOMER.name().toLowerCase());
         userRoleMapper.insert(new UserRole(user.getId(), customer.getId()));
     }
+
+
 }

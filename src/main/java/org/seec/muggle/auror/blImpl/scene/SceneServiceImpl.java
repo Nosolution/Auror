@@ -1,9 +1,7 @@
 package org.seec.muggle.auror.blImpl.scene;
 
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
-import org.seec.muggle.auror.bl.scene.SceneService;
-import org.seec.muggle.auror.bl.scene.SceneService4Order;
-import org.seec.muggle.auror.bl.scene.SceneService4Statistics;
+import org.seec.muggle.auror.bl.scene.*;
 import org.seec.muggle.auror.dao.scene.SceneMapper;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.vo.BasicVO;
@@ -23,7 +21,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class SceneServiceImpl implements SceneService, SceneService4Order, SceneService4Statistics {
+public class SceneServiceImpl implements SceneService, SceneService4Order, SceneService4Statistics , SceneService4Movie , SceneService4Mark {
     @Autowired
     MovieService4Scene movieService4Scene;
 
@@ -69,5 +67,15 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
 
         return sceneMapper.selectBymovieId(movieId);
 
+    }
+
+    @Override
+    public List<Timestamp> getSceneEndsByMovieId(Long movieId) {
+        return sceneMapper.selectEndsBymovieId(movieId);
+    }
+
+    @Override
+    public List<ScenePO> getScenesById(Long movieId) {
+        return sceneMapper.selectBymovieId(movieId);
     }
 }

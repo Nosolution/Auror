@@ -64,7 +64,16 @@
     </select>
     <!--    以上是查出所有数据后再进行条件查询，可能会有性能上的问题
     -->
+    <delete id="deleteUserById">
+        delete from tbl_user where id=#{userId}
+    </delete>
 
+    <select id="getUserById" resultType="org.seec.muggle.auror.po.User">
+        select id id,
+          username  username,
+          password  password
+        from tbl_user where id = #{userId};
+    </select>
     <resultMap id="User" type="org.seec.muggle.auror.po.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>

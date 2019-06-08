@@ -2,7 +2,9 @@ package org.seec.muggle.auror.bl.account;
 
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.UserForm;
+import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
 import org.seec.muggle.auror.vo.user.login.LoginVO;
+import org.seec.muggle.auror.vo.user.member.MemberVO;
 
 public interface AccountService {
 
@@ -28,6 +30,8 @@ public interface AccountService {
      * @param token header中带有的token(未截取子串)
      */
     public void logout(String token);
+
+
 
 }
 

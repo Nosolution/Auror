@@ -24,4 +24,6 @@ public interface SceneMapper {
 
     List<ScenePO> selectBymovieId(@Param("movieId")Long movieId);
 
+    List<Timestamp> selectEndsBymovieId(@Param("movieId")Long movieId);
+
 }

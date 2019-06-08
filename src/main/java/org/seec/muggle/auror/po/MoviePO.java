@@ -28,6 +28,7 @@ public class MoviePO {
     Integer length; //时长
     Integer movieYear;
     List<DirectorVO> directors;
+    Integer status;
     /**
      * 主演
      */
@@ -145,6 +146,13 @@ public class MoviePO {
         this.length = length;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public MoviePO(MovieAddForm form){
         this.country=form.getCountry();

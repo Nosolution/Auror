@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.strategy.StrategyService;
+import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventDeletionForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
@@ -40,15 +41,19 @@ public class StrategyController {
 
     @GetMapping(value = "/event")
     public ResponseEntity getStrategyEvents(){
-        return ResponseEntity.ok(new EventVO[]{});
+        EventVO[] vos = strategyService.getEvents();
+        return ResponseEntity.ok(vos);
     }
+
     @PostMapping(value = "/event")
     public ResponseEntity addStrategyEvents(@RequestBody EventForm form){
+        strategyService.createEvent(form);
         return ResponseEntity.ok("");
     }
 
     @DeleteMapping(value = "/event")
     public ResponseEntity<?> deleteEvent(@RequestBody EventDeletionForm form){
+        strategyService.deleteEvent(form.getEventId());
         return ResponseEntity.ok("");
     }
 
@@ -60,7 +65,8 @@ public class StrategyController {
 
     @GetMapping(value = "/member")
     public ResponseEntity<?> getVipCardList(){
-        return ResponseEntity.ok(new MemberVarietyVO[]{});
+        MemberVarietyVO[] vos = strategyService.getMemberStrategy();
+        return ResponseEntity.ok(vos);
     }
 
     @PostMapping(value = "/member")
@@ -71,11 +77,23 @@ public class StrategyController {
 
     @DeleteMapping(value = "/member")
     public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form){
-        return ResponseEntity.ok("");
+        BasicVO vo = strategyService.deleteMemberStrategy(form.getMemberStrategyId());
+        if(vo.isSucc()){
+            return ResponseEntity.ok("");
+        }
+        else {
+            return ResponseEntity.status(405).body(vo.getMsg());
+        }
     }
 
     @PutMapping(value = "/member")
     public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form){
-        return ResponseEntity.ok("");
+        BasicVO vo = strategyService.updateMemberStrategy(form);
+        if(vo.isSucc()){
+            return ResponseEntity.ok("");
+        }
+        else {
+            return ResponseEntity.status(405).body(vo.getMsg());
+        }
     }
 }
