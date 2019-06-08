@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.bl.scene;
 
+import org.seec.muggle.auror.po.ScenePO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -8,4 +10,8 @@ package org.seec.muggle.auror.bl.scene;
  **/
 public interface SceneService4Order {
     Integer getPriceByScene(Long sceneId);
+
+    Long getMovieIdByScene(Long sceneId);
+
+    ScenePO selectSceneByID(Long sceneId);
 }

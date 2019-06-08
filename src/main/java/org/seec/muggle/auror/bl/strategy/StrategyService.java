@@ -2,6 +2,7 @@ package org.seec.muggle.auror.bl.strategy;
 
 import org.apache.shiro.event.Event;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
 import org.seec.muggle.auror.vo.strategy.event.EventVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVarietyVO;
@@ -32,5 +33,7 @@ public interface StrategyService {
     BasicVO deleteMemberStrategy(Long strategyId);
 
     BasicVO updateMemberStrategy(MemberVaryForm form);
+
+    BasicVO sendCoupon(CouponGiftForm form);
 
 }

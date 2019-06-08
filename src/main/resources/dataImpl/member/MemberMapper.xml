@@ -5,6 +5,14 @@
       select * from tbl_member where user_id = #{userId} limit 1
     </select>
 
+    <update id="updateMemberById">
+        update tbl_member set strategy_id = #{strategyId} where user_id = #{userId}
+    </update>
+
+    <update id="updateCredit">
+        update tbl_member set threshold = #{cost} where user_id = #{userId}
+    </update>
+
     <resultMap id="Member" type="org.seec.muggle.auror.po.MemberPO">
         <id column="id" property="id"/>
         <result column="strategy_id" property="strategyId"/>

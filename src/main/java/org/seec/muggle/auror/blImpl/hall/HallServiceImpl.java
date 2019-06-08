@@ -2,8 +2,11 @@ package org.seec.muggle.auror.blImpl.hall;
 
 import com.sun.org.apache.regexp.internal.RE;
 import org.seec.muggle.auror.bl.hall.HallService;
+import org.seec.muggle.auror.bl.hall.HallService4Order;
+import org.seec.muggle.auror.bl.hall.HallService4Scene;
 import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.dao.hall.HallMapper;
+import org.seec.muggle.auror.po.Hall;
 import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
@@ -20,7 +23,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class HallServiceImpl implements HallService , HallService4Statistics {
+public class HallServiceImpl implements HallService , HallService4Statistics, HallService4Order, HallService4Scene {
     @Autowired
     HallMapper hallMapper;
 
@@ -85,5 +88,21 @@ public class HallServiceImpl implements HallService , HallService4Statistics {
             }
         }
         return hallSeats;
+    }
+
+    @Override
+    public HallPO selectHallById(Long hallId) {
+        HallPO po = hallMapper.findHallById(hallId);
+        return po;
+    }
+
+    @Override
+    public Hall getHallByhallId(Long hallid) {
+        HallPO po = hallMapper.findHallById(hallid);
+        Hall hall =new Hall();
+        hall.setId(po.getHallId());
+        hall.setName(po.getHallName());
+        hall.setSeats(getSeats(po.getSeats()));
+        return hall;
     }
 }

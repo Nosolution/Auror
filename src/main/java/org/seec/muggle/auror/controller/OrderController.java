@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -33,48 +35,39 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping(value = "/ticket/unfinished/detail?orderId={orderId}")
-    public ResponseEntity<?> checkOrderDetail(@PathVariable Integer orderId){
-    boolean isSucc = false;
-    if(isSucc){
-        return ResponseEntity.ok(new UnfinishedOrderVO());
-    }
-    else {
-        return ResponseEntity.status(405).body("to do");
-    }
+    @GetMapping(value = "/ticket/unfinished/detail")
+    public ResponseEntity<?> checkOrderDetail(@PathParam("orderId") Long orderId){
+        UnfinishedOrderVO vo = orderService.checkUnfinishedOrder(orderId);
+        return ResponseEntity.ok(vo);
     }
 
     @PostMapping(value = "/ticket/payment/member")
     public ResponseEntity<?> memberPayment(@RequestBody MemberPaymentForm form){
-        boolean isSucc = false;
-        if(isSucc) {
-            return ResponseEntity.ok(new MemberPaymentVO());
+        MemberPaymentVO vo = orderService.finishByMember(form);
+        if(vo!=null) {
+            return ResponseEntity.ok(vo);
         }
         else {
-            return ResponseEntity.status(405).body("to do");
+            return ResponseEntity.status(405).body("会员卡余额不足");
         }
     }
 
 
     @PostMapping(value = "/ticket/payment/third_party")
     public ResponseEntity<?>  third_partyPayment(@RequestBody ThirdPartyPaymentForm form){
-        boolean isSucc = false;
-        if(isSucc) {
-            return ResponseEntity.ok(new ThirdPartyPaymentVO[]{});
-        }
-        else {
-            return ResponseEntity.status(405).body("to do");
-        }
+        ThirdPartyPaymentVO vos= orderService.finishByThird_party(form);
+        return ResponseEntity.ok(vos);
     }
 
     @GetMapping(value = "/ticket")
     public ResponseEntity<?> getAllTickets(){
-        boolean isSucc = false;
-        if(isSucc) {
-            return ResponseEntity.ok(new TicketDetailVO[]{});
+        Long userId = 1l;
+        TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
+        if(ticketDetailVOS.length!=0) {
+            return ResponseEntity.ok(ticketDetailVOS);
         }
         else {
-            return ResponseEntity.status(405).body("to do");
+            return ResponseEntity.status(405).body("没有订单");
         }
     }
 
@@ -101,11 +94,15 @@ public class OrderController {
 
     @PostMapping(value = "/member/recharge/payment")
     public ResponseEntity<?> recharge(@RequestBody RechargeForm form){
-        return ResponseEntity.ok(new RechargeVO());
+        Long userId = 1l;
+        RechargeVO vo = orderService.rechargeMember(form,userId);
+        return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/member/recharge/history")
     public ResponseEntity<?> getChargeHistory(){
-        return ResponseEntity.ok(new RechargeHistoryVO[]{});
+        Long userId = 1l;
+        RechargeHistoryVO[] vos = orderService.getRechargeHistory(userId);
+        return ResponseEntity.ok(vos);
     }
 }

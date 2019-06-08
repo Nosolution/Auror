@@ -3,7 +3,7 @@ package org.seec.muggle.auror.po;
 import java.sql.Timestamp;
 
 /**
- * @Description TODO
+ * @Description 06-08新增movieId属性，方便判断用户是否看过/统计总票房
  * @Author 233loser
  * @Date 2019/6/5 14:00
  * @Version 1.0
@@ -17,6 +17,7 @@ public class OrderPO {
     Long userId;
     Integer cost;
     Integer payMethod;
+    Long movieId;
 
     public Long getId() {
         return id;
@@ -83,5 +84,13 @@ public class OrderPO {
     }
     public OrderPO(){
 
+    }
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 }

@@ -1,24 +1,26 @@
 package org.seec.muggle.auror.blImpl.strategy;
 
 import org.seec.muggle.auror.bl.strategy.StrategyService;
+import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.strategy.StrategyMapper;
-import org.seec.muggle.auror.po.CouponPO;
-import org.seec.muggle.auror.po.EventPO;
-import org.seec.muggle.auror.po.MemberStrategyPO;
-import org.seec.muggle.auror.po.RefundPO;
+import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.order.member.CouponsForm;
+import org.seec.muggle.auror.vo.order.unfinished.AvailableCouponsVO;
+import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
 import org.seec.muggle.auror.vo.strategy.event.EventVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVarietyVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVaryForm;
 import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyVO;
+import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description TODO
@@ -27,7 +29,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class StrategyServiceImpl implements StrategyService, StrategyService4Order , StrategyService4Member {
+public class StrategyServiceImpl implements StrategyService, StrategyService4Order , StrategyService4Account, StrategyService4Member {
 
     @Autowired
     StrategyMapper strategyMapper;
@@ -162,4 +164,103 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
             return vo;
         }
     }
+
+
+    @Override
+    public List<AvailableCouponsVO> getCouponsByCost(Integer cost, Long userId) {
+        List<CouponPO> couponPOS = strategyMapper.selectCouponByCost(cost);
+        List<AvailableCouponsVO> couponsVOS = new ArrayList<>();
+        for(int i = 0; i<couponPOS.size();i++){
+            List<Date> dates= strategyMapper.selectCouponsTimes(userId,couponPOS.get(i).getId());
+            for(int j = 0;j<dates.size();j++){
+                AvailableCouponsVO vo = new AvailableCouponsVO(couponPOS.get(i).getId(),couponPOS.get(i).getCouponName(),couponPOS.get(i).getDiscount(),dates.get(i));
+                couponsVOS.add(vo);
+            }
+        }
+        return couponsVOS;
+    }
+
+    @Override
+    public UserCouponsVO[] getCouponsByUser(Long userId) {
+        List<UserCouponPO> uc = strategyMapper.getUserCoupons(userId);
+        List<UserCouponsVO> vos = new ArrayList<>();
+        vos.stream().forEach(o->{
+            UserCouponsVO vo = new UserCouponsVO();
+            CouponPO couponPO = strategyMapper.selectCouponById(o.getCouponId());
+            vo.setCouponDescription(couponPO.getDescription());
+            vo.setCouponDiscount(couponPO.getDiscount());
+            vo.setCouponEndTime(o.getCouponEndTime());
+            vo.setCouponId(o.getCouponId());
+            vo.setCouponName(couponPO.getCouponName());
+            vo.setCouponPictureUrl(couponPO.getUrl());
+            vo.setCouponThreshold(couponPO.getThreshold());
+            vo.setCouponStartTime(o.getCouponStartTime());
+            vo.setCouponExpiration("");
+            vos.add(vo);
+        });
+        return vos.toArray(new UserCouponsVO[vos.size()]);
+    }
+
+    @Override
+    public BasicVO sendCoupon(CouponGiftForm form) {
+        CouponPO po = new CouponPO();
+        po.setCouponName(form.getCouponName());
+        po.setDiscount(form.getCouponDiscount());
+        po.setThreshold(form.getCouponThreshold());
+        po.setUrl(form.getCouponPictureUrl());
+        po.setDescription(form.getCouponDescription());
+        strategyMapper.insertCoupon(po);
+
+        for(int i = 0;i<form.getUserList().length;i++){
+            UserCouponPO ucPO = new UserCouponPO();
+            ucPO.setCouponId(po.getId());
+            ucPO.setStart(form.getStartTime());
+            ucPO.setEnd(form.getEndTime());
+            ucPO.setUserId(form.getUserList()[i]);
+            strategyMapper.insertUserCoupon(ucPO);
+        }
+        return new BasicVO();
+    }
+
+    @Override
+    public List<MemberStrategyPO> selectAllMemberStrategy() {
+        return strategyMapper.selectAllMemberStrategys().stream().sorted(Comparator.comparing(MemberStrategyPO::getThreshold)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer cutDownByCoupons(CouponsForm[] form,Long userId) {
+        int cut = 0;
+        for(int i =0;i<form.length;i++){
+            CouponPO couponPO = strategyMapper.selectCouponById(form[i].getCouponId());
+            cut +=couponPO.getDiscount();
+            strategyMapper.deleteCouponUser(userId,couponPO.getId());
+        };
+        return cut;
+    }
+
+    @Override
+    public List<CouponPO> sendCoupons(Long movieId, Long userId) {
+        List<Long> coupons = strategyMapper.selectCouponIdsByMovieId(movieId);
+        List<CouponPO> pos = new ArrayList<>();
+        for(int i =0;i<coupons.size();i++){
+            CouponPO po = strategyMapper.selectCouponById(coupons.get(i));
+            pos.add(po);
+            UserCouponPO userCouponPO = new UserCouponPO();
+            userCouponPO.setUserId(userId);
+            userCouponPO.setStart(new Date());
+            userCouponPO.setEnd(dayPlus20(new Date()));
+            userCouponPO.setCouponId(coupons.get(i));
+            strategyMapper.insertUserCoupon(userCouponPO);
+        }
+        return pos;
+    }
+
+    private Date dayPlus20(Date current){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(current);
+        calendar.add(Calendar.DATE,20);
+        return calendar.getTime();
+    }
+
+
 }

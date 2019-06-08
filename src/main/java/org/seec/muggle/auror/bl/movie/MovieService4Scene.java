@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.bl.movie;
 
+import org.seec.muggle.auror.po.MoviePO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -8,4 +10,6 @@ package org.seec.muggle.auror.bl.movie;
  **/
 public interface MovieService4Scene {
     Integer getLengthById(Long movieId);
+
+    MoviePO getMovie4Scene(Long movieId);
 }

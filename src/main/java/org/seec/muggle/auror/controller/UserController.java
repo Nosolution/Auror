@@ -3,6 +3,7 @@ package org.seec.muggle.auror.controller;
 import javafx.scene.layout.VBox;
 import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.member.MemberService;
+import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
 import org.seec.muggle.auror.po.Account;
 import org.seec.muggle.auror.vo.BasicVO;
@@ -12,6 +13,7 @@ import org.seec.muggle.auror.vo.user.login.LoginForm;
 import org.seec.muggle.auror.vo.user.login.LoginVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
 import org.seec.muggle.auror.vo.user.member.MemberVO;
+import org.seec.muggle.auror.vo.user.message.MessageVO;
 import org.seec.muggle.auror.vo.user.message.UnreadNumVO;
 import org.seec.muggle.auror.vo.user.register.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class UserController {
     @Autowired
     MovieMarkService movieMarkService;
 
+    @Autowired
+    MessageService messageService;
+
     @PostMapping(value = "/login")
     public ResponseEntity<?>  login(@RequestBody LoginForm form){
 
@@ -56,12 +61,15 @@ public class UserController {
 
     @GetMapping(value = "/user/coupon")
     public ResponseEntity<?> getUserCoupons(){
-        return ResponseEntity.ok(new UserCouponsVO[]{});
+        Long userId = 1l;
+        UserCouponsVO[] couponsVOS = accountService.getCoupons(userId);
+        return ResponseEntity.ok(couponsVOS);
     }
 
     @GetMapping(value = "/user/brief_info")
     public ResponseEntity<?> getUserBriefInfo(){
-        return ResponseEntity.ok(new BriefInfoVO[]{});
+        BriefInfoVO[] vos = accountService.getUsers();
+        return ResponseEntity.ok(vos);
     }
 
     @GetMapping(value = "/user/mark")
@@ -85,11 +93,15 @@ public class UserController {
 
     @GetMapping(value = "/message")
     public ResponseEntity<?> getMessage(){
-        return  ResponseEntity.ok(new MemberVO[]{});
+        Long userId = 1l;
+        return  ResponseEntity.ok(messageService.messages(userId));
     }
 
     @GetMapping(value = "/message/unread_num")
     public ResponseEntity getUnreadNum(){
-        return ResponseEntity.ok(new UnreadNumVO());
+        Long userId = 1l;
+        UnreadNumVO vo = new UnreadNumVO();
+        vo.setUnreadNum(messageService.getUnreadNum(userId));
+        return ResponseEntity.ok(vo);
     }
 }

@@ -9,4 +9,6 @@ package org.seec.muggle.auror.bl.order;
 public interface OrderService4Statistics {
     int getNumsBySceneId(Long sceneId);
 
+    Integer getBoxOffice(Long movieId);
+
 }

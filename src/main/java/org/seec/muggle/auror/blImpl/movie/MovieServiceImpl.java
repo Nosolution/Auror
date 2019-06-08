@@ -3,13 +3,12 @@ package org.seec.muggle.auror.blImpl.movie;
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
+import org.seec.muggle.auror.bl.movie.MovieService4Order;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
+import org.seec.muggle.auror.bl.movie_statistics.StatisticsService4Movie;
 import org.seec.muggle.auror.bl.scene.SceneService4Movie;
 import org.seec.muggle.auror.dao.movie.MovieMapper;
-import org.seec.muggle.auror.po.CastPO;
-import org.seec.muggle.auror.po.CommentPO;
-import org.seec.muggle.auror.po.MoviePO;
-import org.seec.muggle.auror.po.UserBasic;
+import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description TODO
@@ -31,7 +31,11 @@ import java.util.*;
  * @Version 1.0
  **/
 @Service
-public class MovieServiceImpl implements MovieService , MovieService4Scene , MovieService4Mark {
+public class MovieServiceImpl implements MovieService , MovieService4Scene , MovieService4Mark , MovieService4Order {
+
+    @Autowired
+    StatisticsService4Movie statisticsService4Movie;
+
     @Autowired
     MovieMapper movieMapper;
 
@@ -62,7 +66,32 @@ public class MovieServiceImpl implements MovieService , MovieService4Scene , Mov
 
     @Override
     public MoviePopularVO[] getMoviePopular() {
-        return new MoviePopularVO[0];
+        List<MoviePO> movies = movieMapper.getMovieOnshelf(new Date());
+        List<MovieBoxOfficeMap> maps = new ArrayList<>();
+        movies.stream().forEach(o->{
+            MovieBoxOfficeMap map = new MovieBoxOfficeMap();
+            map.setBoxOffice(statisticsService4Movie.getboxOffice(o.getId()));
+            map.setMovieId(o.getId());
+            maps.add(map);
+        });
+        maps.stream().sorted(Comparator.comparing(MovieBoxOfficeMap::getBoxOffice)).collect(Collectors.toList());
+        List<MoviePopularVO> vos = new ArrayList<>();
+        for(int i = maps.size()-1;i>=0;i--){
+            MoviePopularVO vo = new MoviePopularVO();
+            vo.setMovieId(maps.get(i).getMovieId());
+            MoviePO moviePO = movieMapper.findMovieById(maps.get(i).getMovieId());
+            vo.setMovieDescription(moviePO.getDescription());
+            vo.setMovieLength(moviePO.getLength());
+            vo.setMovieName(moviePO.getMovieName());
+            vo.setMovieYear(moviePO.getMovieYear());
+            vo.setMovieType(moviePO.getMovieType());
+            vo.setPosterUrl(moviePO.getPosterUrl());
+            vos.add(vo);
+            if(vos.size()==7){
+                break;
+            }
+        }
+        return vos.toArray(new MoviePopularVO[vos.size()]);
     }
 
     @Override
@@ -201,6 +230,16 @@ public class MovieServiceImpl implements MovieService , MovieService4Scene , Mov
 
     @Override
     public MoviePO getMovieById(Long movieId) {
+        return movieMapper.findMovieById(movieId);
+    }
+
+    @Override
+    public String getMovieNameById(Long movieId) {
+        return movieMapper.findMovieById(movieId).getMovieName();
+    }
+
+    @Override
+    public MoviePO getMovie4Scene(Long movieId) {
         return movieMapper.findMovieById(movieId);
     }
 }

@@ -371,7 +371,7 @@ alter table tbl_scene comment '排片表';
 --            Create Date       :            2019-06-01
 --            Description       :            订单表
 -- =============================================================================================================
---            2010-06-01        ：           修改....增加.......
+--            2010-06-08        ：           增加movieId
 -- =============================================================================================================
 
 create table `tbl_order`
@@ -384,6 +384,7 @@ create table `tbl_order`
     `create_time`		timestamp comment '创立时间',
 	`user_id`			bigint comment '用户id',
     `pay_method`		Integer comment '支付方式',
+    `movie_id`			bigint comment '电影Id',
     primary key(id)
 );
 alter table tbl_order comment '订单表';
@@ -396,7 +397,7 @@ alter table tbl_order comment '订单表';
 --            Create Date       :            2019-06-01
 --            Description       :            电影票表
 -- =============================================================================================================
---            2010-06-01        ：           修改....增加.......
+--            2010-06-08        ：           增加orderId
 -- =============================================================================================================
 
 create table `tbl_ticket`
@@ -405,6 +406,7 @@ create table `tbl_ticket`
     `row`				Integer comment '排',
     `column`				Integer comment '列',
     `scene_id`				bigint,
+    `order_id`				bigint,
     primary key(id)
 );
 alter table tbl_ticket comment '电影票表';
@@ -526,15 +528,16 @@ alter table tbl_refund comment '退票策略';
 --            Create Date       :            2019-06-01
 --            Description       :            充值记录
 -- =============================================================================================================
---            2010-06-01        ：           修改....增加.......
+--            2010-06-08        ：           增加type，用于区别是购买还是充值
 -- =============================================================================================================
 
 create table `tbl_recharge`
 (
 	`id`				bigint not null auto_increment comment'充值记录',
     `user_id`			bigint comment '用户id',
-    `commenttime`				timestamp comment '充值时间',
+    `commenttime`		timestamp comment '充值时间',
 	`cost`				Integer comment '充值金额',
+    `type`				Integer,
     primary key(id)
 );
 alter table tbl_recharge comment '充值记录表';
@@ -575,4 +578,27 @@ create table `tbl_event_movie`
 	`event_id`		bigint not null,
     `movie_id`		bigint not null
 );
-    
+
+
+
+-- =============================================================================================================
+--            Function        	:            ...
+--            Auhtor            :            JYH
+--            Create Date       :            2019-06-08
+--            Description       :            消息表
+-- =============================================================================================================
+--            2010-06-01        ：           修改cast_role,字符串.......
+-- =============================================================================================================
+
+create table `tbl_message`
+(
+	`id`		bigint not null auto_increment,
+    `message_type`	Integer,
+    `message_title`	varchar(50),
+    `message_content`	varchar(255),
+    `init_time`		timestamp,
+    `message_status`	Integer,
+	`movie_id`		bigint,
+	`use_id`		bigint,
+	primary key(id) 
+);

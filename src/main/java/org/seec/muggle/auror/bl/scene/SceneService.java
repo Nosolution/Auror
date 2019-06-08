@@ -1,6 +1,8 @@
 package org.seec.muggle.auror.bl.scene;
 
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.scene.Info.InfoVO;
+import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
 import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 
 import java.sql.Timestamp;
@@ -17,4 +19,7 @@ public interface SceneService {
 
     BasicVO varyScene(Long sceneId,Long movieId,Long hallId,Date date,Timestamp startTime,int price);
 
+    MovieSceneInfoVO[] getScenesInfoByMovieId(Long movieId);
+
+    InfoVO[] getScenesInfoByHallIdAndDate(Long hallId,Date date);
 }

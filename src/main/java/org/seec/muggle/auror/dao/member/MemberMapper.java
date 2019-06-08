@@ -15,4 +15,8 @@ public interface MemberMapper {
 
     MemberPO selectMemberById(@Param("userId")Long userId);
 
+    int updateMemberById(@Param("userId")Long userId,@Param("strategyId")Long strategyId);
+
+    int updateCredit(@Param("cost")Integer credit,@Param("userId")Long userId);
+
 }

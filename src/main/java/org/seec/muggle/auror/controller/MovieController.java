@@ -66,7 +66,8 @@ public class MovieController {
 
     @GetMapping(value = "/popular")
     public ResponseEntity<?> getPopularMovie(){
-        return ResponseEntity.ok(new MoviePopularVO[]{});
+        MoviePopularVO[] vo =movieService.getMoviePopular();
+        return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/onshelf")
@@ -134,9 +135,9 @@ public class MovieController {
         return ResponseEntity.ok(vo);
     }
 
-    @GetMapping(value = "/statistic/box_office?movieId={movieId}")
-    public ResponseEntity<?> getBoxOffice(@PathVariable Integer movieId){
-        return ResponseEntity.ok(new BoxOfficeVO());
+    @GetMapping(value = "/statistic/box_office")
+    public ResponseEntity<?> getBoxOffice(@PathParam("movieId") Long movieId){
+        return ResponseEntity.ok(new BoxOfficeVO(statisticsService.getboxOffice(movieId)));
     }
 
     @GetMapping(value = "/detail/batch")

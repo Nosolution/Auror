@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.strategy.coupon_gift;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -7,9 +9,9 @@ package org.seec.muggle.auror.vo.strategy.coupon_gift;
  * @Version 1.0
  **/
 public class CouponGiftForm {
-    UserIdForm[] userList;
-    String startTime;
-    String endTime;
+    Long[] userList;
+    Date startTime;
+    Date endTime;
     String couponName;
     String couponDescription;
     String couponPictureUrl;
@@ -17,27 +19,27 @@ public class CouponGiftForm {
     Integer couponThreshold; //优惠券使用门槛
     String couponExpiration;
 
-    public UserIdForm[] getUserList() {
+    public Long[] getUserList() {
         return userList;
     }
 
-    public void setUserList(UserIdForm[] userList) {
+    public void setUserList(Long[] userList) {
         this.userList = userList;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

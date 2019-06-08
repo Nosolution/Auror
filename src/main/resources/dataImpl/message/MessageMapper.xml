@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seec.muggle.auror.dao.message.MessageMapper">
+    <select id="getMessages" resultMap="Message">
+        select * from tbl_message where user_id=#{userId}
+    </select>
+
+    <select id="getUnreadNums" resultMap="java.lang.Integer">
+        select count(*) from tbl_message where user_id=#{userId}
+    </select>
+
+    <resultMap id="Message" type="org.seec.muggle.auror.po.Message">
+        <id column="id" property="id"/>
+        <result column="message_type" property="type"/>
+        <result column="user_id" property="userId"/>
+        <result column="message_title" property="title"/>
+        <result column="message_content" property="content"/>
+        <result column="init_time" property="initTime"/>
+        <result column="message_status" property="status"/>
+        <result column="movie_id" property="additionalMovieId"/>
+    </resultMap>
+</mapper>

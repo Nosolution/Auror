@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -29,9 +32,10 @@ public class SceneController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping(value = "/info/of_movie?movieid={movieid}")
-    public ResponseEntity<?> sceneInfoByMovie(@PathVariable Long movieId){
-        return ResponseEntity.ok(new MovieSceneInfoVO());
+    @GetMapping(value = "/info/of_movie")
+    public ResponseEntity<?> sceneInfoByMovie(@PathParam("movieid") Long movieId){
+        MovieSceneInfoVO[] infoVOS = sceneService.getScenesInfoByMovieId(movieId);
+        return ResponseEntity.ok(infoVOS);
     }
 
     @PostMapping(value = "/order/seat/selection")
@@ -41,9 +45,10 @@ public class SceneController {
         return ResponseEntity.ok(vo);
     }
 
-    @GetMapping(value = "/info/of_hall?hallId={hallId}&date={date}")
-    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathVariable Long hallId,@PathVariable String date){
-        return ResponseEntity.ok(new InfoVO());
+    @GetMapping(value = "/info/of_hall")
+    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallId") Long hallId,@PathParam("date") Date date){
+        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallId,date);
+        return ResponseEntity.ok(infoVOS);
     }
 
     @PostMapping()

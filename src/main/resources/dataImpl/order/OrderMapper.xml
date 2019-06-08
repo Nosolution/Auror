@@ -6,8 +6,12 @@
     </insert>
 
     <insert id="insertSeat" parameterType="org.seec.muggle.auror.po.TicketPO">
-        insert into tbl_ticket (scene_id,`row`, `column`) values (#{sceneId},#{row},#{column});
+        insert into tbl_ticket (scene_id,`row`, `column`,order_id) values (#{sceneId},#{row},#{column},#{orderId});
     </insert>
+
+    <delete id="deleteSeat">
+        delete from tbl_ticket where order_id = #{orderId}
+    </delete>
 
     <update id="cancelOrder">
         update tbl_order set status = 2 where id = #{orderId};
@@ -21,6 +25,10 @@
         insert into tbl_member (strategy_id, threshold, user_id) values (#{strategyId},#{cost},#{userId})
     </insert>
 
+    <insert id="insertRecharge" parameterType="org.seec.muggle.auror.po.RechargePO">
+        insert into tbl_recharge (user_id, commenttime, cost, type) values (#{userId},#{timestamp},#{cost},#{type})
+    </insert>
+
     <select id="orderNumsBySceneId" resultType="java.lang.Integer">
         select count(*) from tbl_order where scene_id = #{sceneId} and status = 1
     </select>
@@ -28,6 +36,47 @@
     <select id="findOrderByUserIdAndSceneId" resultMap="Order">
         select * from tbl_order where user_id=#{userId} and scene_id = #{sceneId} limit 1
     </select>
+
+    <select id="sumBoxOffice" resultType="java.lang.Integer">
+        select sum(cost) from tbl_order where movie_id=#{movieId} and status = 1
+    </select>
+
+    <select id="findSeatsById" resultType="Ticket">
+        select order_id,
+          scene_id,
+          `row`,
+          `column`
+        from tbl_ticket where order_id =#{orderId}
+    </select>
+
+    <select id="findSeatsBySceneId" resultType="Ticket">
+        select order_id,
+          scene_id,
+          `row`,
+          `column`
+        from tbl_ticket where scene_id = #{sceneId}
+    </select>
+
+    <select id="getAllPayment" resultType="java.lang.Integer">
+        select sum(cost)from tbl_order where user_id = #{userId} and status = 1
+    </select>
+
+    <select id="sumRecharge" resultType="java.lang.Integer">
+        select sum(cost) from tbl_recharge where user_id=#{userId};
+    </select>
+
+    <update id="finishOrder">
+        update tbl_order set cost=#{cost},pay_method = #{method},status=#{1} where id = #{orderId}
+    </update>
+
+    <select id="selectRechargesById" resultMap="Recharge">
+        select * from tbl_recharge where user_id = #{userId}
+    </select>
+
+    <select id="findAllOrdersByUser" resultType="Order">
+      select * from tbl_order where user_id = #{userId}
+    </select>
+
     <resultMap id="Order" type="org.seec.muggle.auror.po.OrderPO">
         <id column="id" property="id"/>
         <result column="scene_id" property="sceneId"/>
@@ -37,6 +86,20 @@
         <result column="user_id" property="userId"/>
         <result column="cost" property="cost"/>
         <result column="pay_method" property="payMethod"/>
+    </resultMap>
+
+    <resultMap id="Recharge" type="org.seec.muggle.auror.po.RechargePO">
+        <result column="user_id" property="userId"/>
+        <result column="commenttime" property="timestamp"/>
+        <result column="cost" property="cost"/>
+        <result column="type" property="type"/>
+    </resultMap>
+
+    <resultMap id="Ticket" type="org.seec.muggle.auror.po.TicketPO">
+        <result column="order_id" property="orderId"/>
+        <result column="scene_id" property="orderId"/>
+        <result column="row" property="row"/>
+        <result column="column" property="column"/>
     </resultMap>
 
 </mapper>

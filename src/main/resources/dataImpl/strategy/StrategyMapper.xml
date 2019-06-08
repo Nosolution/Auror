@@ -38,8 +38,16 @@
         insert  into tbl_event (startTime, endTime, description,event_name,coupon_id) values (#{startTime},#{endTime},#{description},#{eventName},#{couponId})
     </insert>
 
+    <select id="selectCouponIdsByMovieId" resultType="java.lang.Long">
+        select event_id from tbl_event_movie where movie_id=#{movieId};
+    </select>
+
     <insert id="insertCoupon" parameterType="org.seec.muggle.auror.po.CouponPO" useGeneratedKeys="true" keyProperty="id">
         insert  into tbl_coupon (coupon_name, description, discount, threshold, url) values (#{couponName},#{description},#{discount},#{threshold},#{url})
+    </insert>
+
+    <insert id="insertUserCoupon" parameterType="org.seec.muggle.auror.po.UserCouponPO">
+        insert into tbl_user_coupon (coupon_id, user_id, `start`, `end`) values (#{couponId},#{userId},#{start},#{end})
     </insert>
 
     <insert id="insertEventMovie">
@@ -53,6 +61,20 @@
     <delete id="deleteEventMovie">
         delete from tbl_event_movie where event_id=#{eventId};
     </delete>
+
+    <select id="selectCouponByCost" resultMap="org.seec.muggle.auror.po.CouponPO">
+        select id id,
+          coupon_name couponName,
+          description description,
+          discount discount,
+          threshold threshold,
+          url url
+        from tbl_coupon where threshold &lt;= #{cost}
+    </select>
+
+    <select id="selectCouponsTimes" resultType="java.util.Date">
+        select `end` from tbl_user_coupon where user_id = #{userId} and coupon_id = #{couponId}
+    </select>
 
     <select id="selectEvents" resultType="org.seec.muggle.auror.po.EventPO">
         select  id id,
@@ -104,4 +126,20 @@
           rate =#{memberDiscountRate},
          where id = #{memberStrategyId}
     </update>
+
+    <select id="getUserCoupons" resultMap="UserCoupon">
+        select * from tbl_user_coupon where user_id = #{userId}
+    </select>
+
+    <delete id="deleteCouponUser">
+        delete  from tbl_user_coupon where user_id=#{userId} and coupon_id=#{couponId} limit 1
+    </delete>
+
+    <resultMap id="UserCoupon" type="org.seec.muggle.auror.po.UserCouponPO">
+        <id column="id" property="id"/>
+        <result column="coupon_id" property="couponId"/>
+        <result column="user_id" property="userId"/>
+        <result column="start" property="start"/>
+        <result column="end" property="end"/>
+    </resultMap>
 </mapper>

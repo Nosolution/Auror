@@ -10,4 +10,6 @@ import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
  **/
 public interface StatisticsService {
     AttendenceVO[] getBoxOfficeRate(Long movieId);
+
+    Integer getboxOffice(Long movieId);
 }

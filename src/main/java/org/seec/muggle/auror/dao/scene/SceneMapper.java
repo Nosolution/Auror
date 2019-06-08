@@ -26,4 +26,6 @@ public interface SceneMapper {
 
     List<Timestamp> selectEndsBymovieId(@Param("movieId")Long movieId);
 
+    List<ScenePO> selectByhallIdAndDate(@Param("hallId")Long hallId,@Param("date")Date date);
+
 }

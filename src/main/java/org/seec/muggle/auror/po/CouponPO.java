@@ -10,7 +10,7 @@ public class CouponPO {
     Long id;
     String couponName;
     String description;
-    Double discount;
+    Integer discount;
     Integer threshold;
     String url;
 
@@ -18,7 +18,7 @@ public class CouponPO {
 
     }
 
-    public CouponPO(String couponName, String description, Double discount, Integer threshold, String url) {
+    public CouponPO(String couponName, String description, Integer discount, Integer threshold, String url) {
         this.couponName = couponName;
         this.description = description;
         this.discount = discount;
@@ -50,11 +50,11 @@ public class CouponPO {
         this.description = description;
     }
 
-    public Double getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 

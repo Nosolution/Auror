@@ -2,6 +2,7 @@ package org.seec.muggle.auror.blImpl.movie_statistics;
 
 import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.bl.movie_statistics.StatisticsService;
+import org.seec.muggle.auror.bl.movie_statistics.StatisticsService4Movie;
 import org.seec.muggle.auror.bl.order.OrderService4Statistics;
 import org.seec.muggle.auror.bl.scene.SceneService4Statistics;
 import org.seec.muggle.auror.po.AttendInfo;
@@ -21,7 +22,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class StatisticsServiceImpl implements StatisticsService {
+public class StatisticsServiceImpl implements StatisticsService, StatisticsService4Movie {
 
     @Autowired
     SceneService4Statistics sceneService4Statistics;
@@ -72,5 +73,10 @@ public class StatisticsServiceImpl implements StatisticsService {
             });
             return vos.toArray(new AttendenceVO[vos.size()]);
         }
+    }
+
+    @Override
+    public Integer getboxOffice(Long movieId) {
+        return orderService4Statistics.getBoxOffice(movieId);
     }
 }

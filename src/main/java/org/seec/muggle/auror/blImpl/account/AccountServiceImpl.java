@@ -4,21 +4,22 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
+import org.seec.muggle.auror.bl.member.MemberService4Account;
+import org.seec.muggle.auror.bl.order.OrderService4Account;
+import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
 
 import org.seec.muggle.auror.dao.account.UserRoleMapper;
 import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.exception.BaseException;
-import org.seec.muggle.auror.po.Role;
-import org.seec.muggle.auror.po.User;
-import org.seec.muggle.auror.po.UserBasic;
-import org.seec.muggle.auror.po.UserRole;
+import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
+import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.seec.muggle.auror.vo.user.login.LoginVO;
-import org.seec.muggle.auror.vo.user.member.MemberVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService , AccountService4Movie {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String LOGIN_ERROR = "用户名或密码错误";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    MemberService4Account memberService4Account;
+
+    @Autowired
+    StrategyService4Account strategyService4Account;
+
+    @Autowired
+    OrderService4Account orderService4Account;
 
     @Autowired
     private UserMapper userMapper;
@@ -128,5 +140,30 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
         userRoleMapper.insert(new UserRole(user.getId(), customer.getId()));
     }
 
+    @Override
+    public UserCouponsVO[] getCoupons(Long userId) {
+        return strategyService4Account.getCouponsByUser(userId);
+    }
 
+    @Override
+    public BriefInfoVO[] getUsers() {
+        List<Long> users = userRoleMapper.selectAllUser();
+        List<BriefInfoVO> vos =new ArrayList<>();
+        users.stream().forEach(o->{
+            BriefInfoVO vo =new BriefInfoVO();
+            vo.setUserId(o);
+            Integer orderConsumption = orderService4Account.getConsumptionByUser(o);
+            Member4Account member4Account = memberService4Account.getMemberByUser(o);
+            vo.setMember(member4Account.isMember());
+            if(member4Account.isMember()){
+                vo.setMemberCredit(member4Account.getMemberCredit());
+            }
+            else {
+                vo.setMemberCredit(-1);
+            }
+            vo.setUserTotalConsumption(orderConsumption);
+            vos.add(vo);
+        });
+        return vos.toArray(new BriefInfoVO[vos.size()]);
+    }
 }

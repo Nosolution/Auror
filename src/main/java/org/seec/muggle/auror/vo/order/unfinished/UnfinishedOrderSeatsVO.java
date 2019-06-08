@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.vo.seatselection;
+package org.seec.muggle.auror.vo.order.unfinished;
 
 /**
  * @Description TODO
@@ -23,6 +23,11 @@ public class UnfinishedOrderSeatsVO {
     }
 
     public void setColumn(Integer column) {
+        this.column = column;
+    }
+
+    public UnfinishedOrderSeatsVO(Integer row, Integer column) {
+        this.row = row;
         this.column = column;
     }
 }

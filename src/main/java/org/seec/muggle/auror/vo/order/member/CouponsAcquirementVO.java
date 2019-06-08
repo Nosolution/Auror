@@ -11,7 +11,7 @@ public class CouponsAcquirementVO {
     String couponName;
     String couponPictureUrl;
     String couponDescription;
-    Double couponDiscount;
+    Integer couponDiscount;
 
     public Long getCouponId() {
         return couponId;
@@ -45,11 +45,11 @@ public class CouponsAcquirementVO {
         this.couponDescription = couponDescription;
     }
 
-    public Double getCouponDiscount() {
+    public Integer getCouponDiscount() {
         return couponDiscount;
     }
 
-    public void setCouponDiscount(Double couponDiscount) {
+    public void setCouponDiscount(Integer couponDiscount) {
         this.couponDiscount = couponDiscount;
     }
 }

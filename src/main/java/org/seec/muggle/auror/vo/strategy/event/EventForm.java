@@ -18,7 +18,7 @@ public class EventForm {
     String couponName;
     String couponDescription;
     String couponPictureUrl;
-    Double couponDiscount;
+    Integer couponDiscount;
     Integer couponThreshold;
     String couponExpiration;
 
@@ -95,11 +95,11 @@ public class EventForm {
         this.couponPictureUrl = couponPictureUrl;
     }
 
-    public Double getCouponDiscount() {
+    public Integer getCouponDiscount() {
         return couponDiscount;
     }
 
-    public void setCouponDiscount(Double couponDiscount) {
+    public void setCouponDiscount(Integer couponDiscount) {
         this.couponDiscount = couponDiscount;
     }
 

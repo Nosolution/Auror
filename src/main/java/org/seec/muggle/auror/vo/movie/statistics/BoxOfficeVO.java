@@ -16,4 +16,8 @@ public class BoxOfficeVO {
     public void setBoxOffice(Integer boxOffice) {
         this.boxOffice = boxOffice;
     }
+
+    public BoxOfficeVO(Integer boxOffice) {
+        this.boxOffice = boxOffice;
+    }
 }

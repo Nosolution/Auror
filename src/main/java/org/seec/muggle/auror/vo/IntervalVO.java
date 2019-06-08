@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.vo;
 
-import java.time.LocalTime;
+import java.sql.Timestamp;
 
 /**
  * @Description TODO
@@ -9,22 +9,27 @@ import java.time.LocalTime;
  * @Version 1.0
  **/
 public class IntervalVO {
-    LocalTime startTime;
-    LocalTime endTime;
+    Timestamp startTime;
+    Timestamp endTime;
 
-    public LocalTime getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+
+    public IntervalVO(Timestamp startTime, Timestamp endTime) {
+        this.startTime = startTime;
         this.endTime = endTime;
     }
 }

@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.user.coupon;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -11,10 +13,10 @@ public class UserCouponsVO {
     String couponName;
     String couponDescription;
     String couponPictureUrl;
-    String couponDiscound;
+    Integer couponDiscount;
     Integer couponThreshold; //使用门槛
-    String couponStartTime;
-    String couponEndTime;
+    Date couponStartTime;
+    Date couponEndTime;
     String couponExpiration; //有效期长度
 
     public Long getCouponId() {
@@ -49,12 +51,12 @@ public class UserCouponsVO {
         this.couponPictureUrl = couponPictureUrl;
     }
 
-    public String getCouponDiscound() {
-        return couponDiscound;
+    public Integer getCouponDiscount() {
+        return couponDiscount;
     }
 
-    public void setCouponDiscound(String couponDiscound) {
-        this.couponDiscound = couponDiscound;
+    public void setCouponDiscount(Integer couponDiscount) {
+        this.couponDiscount = couponDiscount;
     }
 
     public Integer getCouponThreshold() {
@@ -65,19 +67,19 @@ public class UserCouponsVO {
         this.couponThreshold = couponThreshold;
     }
 
-    public String getCouponStartTime() {
+    public Date getCouponStartTime() {
         return couponStartTime;
     }
 
-    public void setCouponStartTime(String couponStartTime) {
+    public void setCouponStartTime(Date couponStartTime) {
         this.couponStartTime = couponStartTime;
     }
 
-    public String getCouponEndTime() {
+    public Date getCouponEndTime() {
         return couponEndTime;
     }
 
-    public void setCouponEndTime(String couponEndTime) {
+    public void setCouponEndTime(Date couponEndTime) {
         this.couponEndTime = couponEndTime;
     }
 

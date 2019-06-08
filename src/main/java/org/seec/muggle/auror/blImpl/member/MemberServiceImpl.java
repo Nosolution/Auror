@@ -1,8 +1,11 @@
 package org.seec.muggle.auror.blImpl.member;
 
 import org.seec.muggle.auror.bl.member.MemberService;
+import org.seec.muggle.auror.bl.member.MemberService4Account;
+import org.seec.muggle.auror.bl.member.MemberService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
 import org.seec.muggle.auror.dao.member.MemberMapper;
+import org.seec.muggle.auror.po.Member4Account;
 import org.seec.muggle.auror.po.MemberPO;
 import org.seec.muggle.auror.po.MemberStrategyPO;
 import org.seec.muggle.auror.vo.user.member.MemberVO;
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  **/
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService, MemberService4Order , MemberService4Account {
     @Autowired
     MemberMapper memberMapper;
 
@@ -35,5 +38,51 @@ public class MemberServiceImpl implements MemberService {
             return new MemberVO(member,strategyPO);
         }
 
+    }
+
+    @Override
+    public MemberPO getMemberByUserId(Long userId) {
+        MemberPO po = memberMapper.selectMemberById(userId);
+        return po;
+    }
+
+    @Override
+    public void changeStrategy(Long userId, Long strategyId) {
+        memberMapper.updateMemberById(userId,strategyId);
+    }
+
+    @Override
+    public void recharge(Integer cost, Long userId) {
+        MemberPO po = memberMapper.selectMemberById(userId);
+        memberMapper.updateCredit(cost+po.getThreshold(),userId);
+    }
+
+    @Override
+    public Member4Account getMemberByUser(Long userid) {
+        MemberPO po = memberMapper.selectMemberById(userid);
+        if(po==null){
+            Member4Account account = new Member4Account();
+            account.setMember(false);
+            return account;
+        }
+        else {
+            Member4Account account = new Member4Account();
+            account.setMember(true);
+            account.setMemberCredit(po.getThreshold());
+            return account;
+        }
+
+    }
+
+    @Override
+    public boolean payByMember(Integer cost,Long userId) {
+        MemberPO member = memberMapper.selectMemberById(userId);
+        if(member.getThreshold()<cost){
+            return false;
+        }
+        else{
+            memberMapper.updateCredit(member.getThreshold()-cost,userId);
+        }
+        return true;
     }
 }

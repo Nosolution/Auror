@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -9,8 +11,8 @@ package org.seec.muggle.auror.vo.order.unfinished;
 public class AvailableCouponsVO {
     Long couponId;
     String couponName;
-    Double discount;
-    String endTime;
+    Integer discount;
+    Date endTime;
 
     public Long getCouponId() {
         return couponId;
@@ -28,19 +30,26 @@ public class AvailableCouponsVO {
         this.couponName = couponName;
     }
 
-    public Double getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public AvailableCouponsVO(Long couponId, String couponName, Integer discount, Date endTime) {
+        this.couponId = couponId;
+        this.couponName = couponName;
+        this.discount = discount;
         this.endTime = endTime;
     }
 }

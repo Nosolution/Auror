@@ -59,7 +59,7 @@ public class StrategyController {
 
     @PostMapping(value = "/coupon_gift")
     public ResponseEntity<?> givingCoupon(@RequestBody CouponGiftForm form){
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(strategyService.sendCoupon(form));
     }
 
 

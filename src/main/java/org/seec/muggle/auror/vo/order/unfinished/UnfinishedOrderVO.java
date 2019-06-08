@@ -1,7 +1,12 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
+import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.vo.IntervalVO;
-import org.seec.muggle.auror.vo.seatselection.UnfinishedOrderSeatsVO;
+
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -15,11 +20,11 @@ public class UnfinishedOrderVO {
     String hallName;
     Integer ticketNum;
     Integer cost;
-    String date;
+    Date date;
     IntervalVO interval;
     UnfinishedOrderSeatsVO[] selectedSeats;
     AvailableCouponsVO[] availableCoupons;
-    String initTime;//生成订单时间
+    Timestamp initTime;//生成订单时间
 
     public Long getOrderId() {
         return orderId;
@@ -61,11 +66,11 @@ public class UnfinishedOrderVO {
         this.cost = cost;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -93,11 +98,27 @@ public class UnfinishedOrderVO {
         this.availableCoupons = availableCoupons;
     }
 
-    public String getInitTime() {
+    public Timestamp getInitTime() {
         return initTime;
     }
 
-    public void setInitTime(String initTime) {
+    public void setInitTime(Timestamp initTime) {
         this.initTime = initTime;
+    }
+
+    public UnfinishedOrderVO(OrderPO orderPO, ScenePO scenePO, HallPO hallPO, List<TicketPO> ticketPOS, List<AvailableCouponsVO> couponPOS,String movieName) {
+        this.orderId = orderPO.getId();
+        this.movieName =movieName;
+        this.hallName = hallPO.getHallName();
+        this.ticketNum = ticketPOS.size();
+        this.cost = scenePO.getPrice()*ticketPOS.size();
+        this.date = scenePO.getDate();
+        this.interval = new IntervalVO(scenePO.getStartTime(),scenePO.getEndTime());
+        this.selectedSeats = new UnfinishedOrderSeatsVO[ticketPOS.size()];
+        for(int i =0;i<selectedSeats.length;i++){
+            selectedSeats[i] = new UnfinishedOrderSeatsVO(ticketPOS.get(i).getRow(),ticketPOS.get(i).getColumn());
+        }
+        this.availableCoupons = couponPOS.toArray(new AvailableCouponsVO[couponPOS.size()]);
+        this.initTime = orderPO.getCreateTime();
     }
 }
