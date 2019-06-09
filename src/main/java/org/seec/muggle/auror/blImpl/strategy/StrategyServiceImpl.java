@@ -86,6 +86,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         strategyMapper.insertCoupon(couponPO);
 
         po.setCouponId(couponPO.getId());
+        po.setExpiration(form.getCouponExpiration());
         strategyMapper.insertEvent(po);
 
         for (int i = 0; i < form.getMoviesIncluded().length; i++) {

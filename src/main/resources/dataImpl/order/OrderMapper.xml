@@ -42,7 +42,7 @@
         select sum(cost) from tbl_order where movie_id=#{movieId} and status = 1
     </select>
 
-    <select id="findSeatsById" resultType="Ticket">
+    <select id="findSeatsById" resultMap="Ticket">
         select order_id,
           scene_id,
           `row`,
@@ -50,7 +50,7 @@
         from tbl_ticket where order_id =#{orderId}
     </select>
 
-    <select id="findSeatsBySceneId" resultType="Ticket">
+    <select id="findSeatsBySceneId" resultMap="Ticket">
         select order_id,
           scene_id,
           `row`,
@@ -74,7 +74,7 @@
         select * from tbl_recharge where user_id = #{userId}
     </select>
 
-    <select id="findAllOrdersByUser" resultType="Order">
+    <select id="findAllOrdersByUser" resultMap="Order">
       select * from tbl_order where user_id = #{userId}
     </select>
 

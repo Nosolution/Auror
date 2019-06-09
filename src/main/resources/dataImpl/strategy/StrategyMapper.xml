@@ -62,7 +62,7 @@
         delete from tbl_event_movie where event_id=#{eventId};
     </delete>
 
-    <select id="selectCouponByCost" resultMap="org.seec.muggle.auror.po.CouponPO">
+    <select id="selectCouponByCost" resultType="org.seec.muggle.auror.po.CouponPO">
         select id id,
           coupon_name couponName,
           description description,

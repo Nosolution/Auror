@@ -14,8 +14,17 @@ public class EventPO {
     Timestamp endTime;
     String description;
     String eventName;
+    Integer expiration;
 
     Long couponId;
+
+    public Integer getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Integer expiration) {
+        this.expiration = expiration;
+    }
 
     public Long getCouponId() {
         return couponId;

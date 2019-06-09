@@ -64,29 +64,7 @@ public class MovieDetailsVO {
         this.score = score;
     }
 
-    public Date getMovieOnshow() {
-        return movieOnshow;
-    }
 
-    public void setMovieOnshow(Date movieOnshow) {
-        this.movieOnshow = movieOnshow;
-    }
-
-    public Date getVisibleDate() {
-        return visibleDate;
-    }
-
-    public void setVisibleDate(Date visibleDate) {
-        this.visibleDate = visibleDate;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
     public String getLanguage() {
         return language;
@@ -102,22 +80,6 @@ public class MovieDetailsVO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public DirectorVO[] getDirectors() {
-        return directors;
-    }
-
-    public void setDirectors(DirectorVO[] directors) {
-        this.directors = directors;
-    }
-
-    public StarringVO[] getStarrings() {
-        return starrings;
-    }
-
-    public void setStarrings(StarringVO[] starrings) {
-        this.starrings = starrings;
     }
 
     public int getStatus() {
@@ -152,12 +114,45 @@ public class MovieDetailsVO {
         this.posterUrl = posterUrl;
     }
 
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
     public String getMovieType() {
         return movieType;
     }
 
     public void setMovieType(String movieType) {
         this.movieType = movieType;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getMovieOnshow() {
+        return movieOnshow;
+    }
+
+    public void setMovieOnshow(Date movieOnshow) {
+        this.movieOnshow = movieOnshow;
+    }
+
+    public Date getVisibleDate() {
+        return visibleDate;
+    }
+
+    public void setVisibleDate(Date visibleDate) {
+        this.visibleDate = visibleDate;
     }
 
     public Integer getYear() {
@@ -168,28 +163,20 @@ public class MovieDetailsVO {
         this.year = year;
     }
 
-    public DirectorVO[] getDirector() {
+    public DirectorVO[] getDirectors() {
         return directors;
     }
 
-    public void setDirector(DirectorVO[] directors) {
+    public void setDirectors(DirectorVO[] directors) {
         this.directors = directors;
     }
 
-    public StarringVO[] getStarring() {
+    public StarringVO[] getStarrings() {
         return starrings;
     }
 
-    public void setStarring(StarringVO[] starring) {
-        this.starrings = starring;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
+    public void setStarrings(StarringVO[] starrings) {
+        this.starrings = starrings;
     }
 
     public Double getScore() {
@@ -200,7 +187,7 @@ public class MovieDetailsVO {
         this.score = score;
     }
 
-    public MovieDetailsVO(MoviePO po,int status){
+    public MovieDetailsVO(MoviePO po, int status){
         this.status = status;
         this.score = score;
         this.country = po.getCountry();

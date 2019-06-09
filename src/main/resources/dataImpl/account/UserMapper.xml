@@ -26,19 +26,19 @@
                role.role_name,
                permission.perm_id,
                permission.perm_name
-        from (select * from tbl_user where username ="233") as u,
+        from (select * from tbl_user where username =#{username}) as u,
              (select tbl_role.id as role_id, tbl_role.castName as role_name
               from tbl_role
               where tbl_role.id in (select ur.role_id
                                     from user_role ur
-                                    where ur.user_id = (select id from tbl_user where username = "233"))) as role,
+                                    where ur.user_id = (select id from tbl_user where username = #{username}))) as role,
              (select p.id as perm_id, p.castName as perm_name
               from tbl_permission p
               where id in (select permission_id
                            from role_permission
                            where role_id in (select role_id
                                              from user_role ur
-                                             where ur.user_id = (select id from tbl_user where username = "233")))) as permission
+                                             where ur.user_id = (select id from tbl_user where username = #{username})))) as permission
     </select>
 
     <select id="get" resultMap="User">

@@ -20,7 +20,7 @@ public class EventForm {
     String couponPictureUrl;
     Integer couponDiscount;
     Integer couponThreshold;
-    String couponExpiration;
+    Integer couponExpiration;
 
 
     public Long getEventId() {
@@ -111,11 +111,11 @@ public class EventForm {
         this.couponThreshold = couponThreshold;
     }
 
-    public String getCouponExpiration() {
+    public Integer getCouponExpiration() {
         return couponExpiration;
     }
 
-    public void setCouponExpiration(String couponExpiration) {
+    public void setCouponExpiration(Integer couponExpiration) {
         this.couponExpiration = couponExpiration;
     }
 }
