@@ -39,7 +39,8 @@ public class RefundPO {
     public void setRate(Double rate) {
         this.rate = rate;
     }
-    public RefundPO(){
+
+    public RefundPO() {
 
     }
 }

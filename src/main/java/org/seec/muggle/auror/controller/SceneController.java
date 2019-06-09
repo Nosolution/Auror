@@ -1,14 +1,13 @@
 package org.seec.muggle.auror.controller;
 
-import org.seec.muggle.auror.bl.order.OrderService;
+import org.seec.muggle.auror.bl.deal.OrderService;
 import org.seec.muggle.auror.bl.scene.SceneService;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.Vary.SceneVaryForm;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
-import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionForm;
+import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,33 +32,33 @@ public class SceneController {
     OrderService orderService;
 
     @GetMapping(value = "/info/of_movie")
-    public ResponseEntity<?> sceneInfoByMovie(@PathParam("movieid") Long movieId){
+    public ResponseEntity<?> sceneInfoByMovie(@PathParam("movieid") Long movieId) {
         MovieSceneInfoVO[] infoVOS = sceneService.getScenesInfoByMovieId(movieId);
         return ResponseEntity.ok(infoVOS);
     }
 
     @PostMapping(value = "/order/seat/selection")
-    public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form){
-        SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(),form.getUserId(),form.getSelectedSeats());
+    public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form) {
+        SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(), form.getUserId(), form.getSelectedSeats());
         boolean isSucc = false;
         return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/info/of_hall")
-    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallId") Long hallId,@PathParam("date") Date date){
-        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallId,date);
+    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallId") Long hallId, @PathParam("date") Date date) {
+        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallId, date);
         return ResponseEntity.ok(infoVOS);
     }
 
     @PostMapping()
-    public ResponseEntity addMovieScene(@RequestBody SceneAdditionForm form){
-        sceneService.addScene(form.getMovieId(),form.getHallId(),form.getDate(),form.getStartTime(),form.getPrice());
+    public ResponseEntity addMovieScene(@RequestBody SceneAdditionForm form) {
+        sceneService.addScene(form.getMovieId(), form.getHallId(), form.getDate(), form.getStartTime(), form.getPrice());
         return ResponseEntity.ok("");
     }
 
     @PutMapping()
-    public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form){
-        sceneService.varyScene(form.getSceneId(),form.getMovieId(),form.getHallId(),form.getDate(),form.getStartTime(),form.getPrice());
+    public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form) {
+        sceneService.varyScene(form.getSceneId(), form.getMovieId(), form.getHallId(), form.getDate(), form.getStartTime(), form.getPrice());
         return ResponseEntity.ok("");
     }
 }

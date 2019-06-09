@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.seec.muggle.auror.dao.FavoriteRecordMapper">
+<mapper namespace="org.seec.muggle.auror.dao.favorite_record.FavoriteRecordMapper">
     <insert id="insert">
         insert into tbl_favorite_record(user_id, movie_id)
         values (#{userId}, #{movieId})
@@ -27,7 +27,7 @@
     </delete>
 
     <select id="getDateLikeNum" resultMap="DateLikeForm">
-        select count(*) as like_num, DATE(choose_time) as `commenttime`
+        select count(*) as like_num, DATE(choose_time) as `commentTime`
         from tbl_favorite_record tbr
         where movie_id = #{movieId}
         GROUP BY DATE(tbr.choose_time)

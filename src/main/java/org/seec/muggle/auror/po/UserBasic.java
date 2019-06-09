@@ -30,7 +30,8 @@ public class UserBasic {
         this.username = username;
         this.url = url;
     }
-    public UserBasic(){
+
+    public UserBasic() {
 
     }
 }

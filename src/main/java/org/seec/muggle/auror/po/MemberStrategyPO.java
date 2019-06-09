@@ -53,7 +53,7 @@ public class MemberStrategyPO {
         this.rate = rate;
     }
 
-    public MemberStrategyPO(){
+    public MemberStrategyPO() {
 
     }
 

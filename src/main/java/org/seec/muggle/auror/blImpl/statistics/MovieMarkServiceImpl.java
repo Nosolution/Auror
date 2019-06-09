@@ -1,11 +1,9 @@
-package org.seec.muggle.auror.blImpl.movie_statistics;
+package org.seec.muggle.auror.blImpl.statistics;
 
-import org.hibernate.validator.cfg.defs.MaxDef;
+import org.seec.muggle.auror.bl.deal.OrderService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
-import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
-import org.seec.muggle.auror.bl.movie_statistics.StatisticsService4Movie;
-import org.seec.muggle.auror.bl.order.OrderService4Mark;
 import org.seec.muggle.auror.bl.scene.SceneService4Mark;
+import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.po.FavorRecordPO;
 import org.seec.muggle.auror.po.MoviePO;
@@ -16,12 +14,9 @@ import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Description TODO
@@ -86,7 +81,7 @@ public class MovieMarkServiceImpl implements MovieMarkService {
             current.setFavorNums(0);
             vos[i] = current;
         }
-        favors.stream().forEach(o->{
+        favors.forEach(o -> {
             int pos = dates.indexOf(o.getTime());
             FavorNumVO current = vos[pos];
             current.setFavorNums(current.getFavorNums()+1);
@@ -110,7 +105,7 @@ public class MovieMarkServiceImpl implements MovieMarkService {
         }
         else {
             List<MovieMarkVO> vos = new ArrayList<>();
-            movies.stream().forEach(o->{
+            movies.forEach(o -> {
                 MovieMarkVO vo = new MovieMarkVO();
                 MoviePO po = movieService4Mark.getMovieById(o);
                 vo.setMovieYear(po.getMovieYear());

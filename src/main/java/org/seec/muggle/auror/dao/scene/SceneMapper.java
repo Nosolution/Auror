@@ -22,10 +22,10 @@ public interface SceneMapper {
 
     ScenePO selectById(@Param("sceneId") Long sceneId);
 
-    List<ScenePO> selectBymovieId(@Param("movieId")Long movieId);
+    List<ScenePO> selectByMovieId(@Param("movieId") Long movieId);
 
-    List<Timestamp> selectEndsBymovieId(@Param("movieId")Long movieId);
+    List<Timestamp> selectEndsByMovieId(@Param("movieId") Long movieId);
 
-    List<ScenePO> selectByhallIdAndDate(@Param("hallId")Long hallId,@Param("date")Date date);
+    List<ScenePO> selectByHallIdAndDate(@Param("hallId") Long hallId, @Param("date") Date date);
 
 }

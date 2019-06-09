@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.movie_statistics;
+package org.seec.muggle.auror.bl.statistics;
 
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;

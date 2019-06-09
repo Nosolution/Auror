@@ -74,11 +74,11 @@ public class ScenePO {
         this.date = date;
     }
 
-    public ScenePO(){
+    public ScenePO() {
 
     }
 
-    public ScenePO( Long movieId, Timestamp startTime, Timestamp endTime, Long hallId, Integer price, Date date){
+    public ScenePO(Long movieId, Timestamp startTime, Timestamp endTime, Long hallId, Integer price, Date date) {
         this.movieId = movieId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -86,6 +86,7 @@ public class ScenePO {
         this.price = price;
         this.date = date;
     }
+
     public ScenePO(Long id, Long movieId, Timestamp startTime, Timestamp endTime, Long hallId, Integer price, Date date) {
         this.id = id;
         this.movieId = movieId;

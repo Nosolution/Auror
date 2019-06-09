@@ -42,7 +42,8 @@ public class AttendInfo {
         this.seats = seats;
         this.orders = orders;
     }
-    public AttendInfo(){
+
+    public AttendInfo() {
 
     }
 }

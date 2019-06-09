@@ -77,9 +77,9 @@
     </select>
 
     <select id="getCommentsByMovieId" resultType="org.seec.muggle.auror.po.CommentPO">
-        select user_id  userId,
-          `time` commenttime,
-          comment comment
+        select user_id userId,
+               `time`  commentTime,
+               comment comment
         from tbl_movie_comment
         where movie_id = #{movieId}
     </select>

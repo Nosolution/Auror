@@ -2,14 +2,12 @@ package org.seec.muggle.auror.blImpl.account;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
-
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
+import org.seec.muggle.auror.bl.deal.OrderService4Account;
 import org.seec.muggle.auror.bl.member.MemberService4Account;
-import org.seec.muggle.auror.bl.order.OrderService4Account;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
-
 import org.seec.muggle.auror.dao.account.UserRoleMapper;
 import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.exception.BaseException;
@@ -33,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AccountServiceImpl implements AccountService , AccountService4Movie {
+public class AccountServiceImpl implements AccountService, AccountService4Movie {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String LOGIN_ERROR = "用户名或密码错误";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -58,24 +56,24 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
 
     @Autowired
     private JwtUtil jwtUtil;
-/**
- * @Author jyh、hgz
- * @Description //TODO
- * @Date 20:50 2019/6/1
- * @Param [username, password]
- * @return org.seec.muggle.auror.vo.BasicVO
- **/
+
+    /**
+     * @return org.seec.muggle.auror.vo.BasicVO
+     * @Author jyh、hgz
+     * @Description //TODO
+     * @Date 20:50 2019/6/1
+     * @Param [username, password]
+     **/
     @Override
     public BasicVO register(String username, String password) {
         try {
             BasicVO basicVO = new BasicVO();
             User user = userMapper.getUserByName(username);
-            if(userMapper.getUserByName(username)!=null){
+            if (user != null) {
                 basicVO.setSucc(false);
                 basicVO.setMsg("用户名已存在");
                 return basicVO;
-            }
-            else {
+            } else {
                 insertNewCUSTOMER(username, password);
                 logger.info("账号 {} 注册成功，时间: {}", username, new Timestamp(new Date().getTime()));
                 basicVO.setSucc(true);
@@ -88,16 +86,16 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
     }
 
     @Override
-    public LoginVO login(String username,String password) {
+    public LoginVO login(String username, String password) {
         LoginVO vo = new LoginVO();
         User user = userMapper.getUserByName(username);
         if (null == user || !BCrypt.checkpw(password, user.getPassword())) {
             throw new BaseException(HttpStatus.FORBIDDEN, LOGIN_ERROR);
         }
         vo.setToken(jwtUtil.generateToken(new JwtUser(
-                user.getUsername(),
-                user.getLastLogoutTime(),
-                user.getLastPasswordResetTime())
+                        user.getUsername(),
+                        user.getLastLogoutTime(),
+                        user.getLastPasswordResetTime())
                 )
         );
         return vo;
@@ -121,7 +119,7 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
     @Override
     public UserBasic getUserBasicById(Long userId) {
         UserBasic basic = new UserBasic();
-        User  user = userMapper.getUserById(userId);
+        User user = userMapper.getUserById(userId);
         basic.setUrl("");
         basic.setUsername(user.getUsername());
         return basic;
@@ -148,17 +146,16 @@ public class AccountServiceImpl implements AccountService , AccountService4Movie
     @Override
     public BriefInfoVO[] getUsers() {
         List<Long> users = userRoleMapper.selectAllUser();
-        List<BriefInfoVO> vos =new ArrayList<>();
-        users.stream().forEach(o->{
-            BriefInfoVO vo =new BriefInfoVO();
+        List<BriefInfoVO> vos = new ArrayList<>();
+        users.forEach(o -> {
+            BriefInfoVO vo = new BriefInfoVO();
             vo.setUserId(o);
             Integer orderConsumption = orderService4Account.getConsumptionByUser(o);
             Member4Account member4Account = memberService4Account.getMemberByUser(o);
             vo.setMember(member4Account.isMember());
-            if(member4Account.isMember()){
+            if (member4Account.isMember()) {
                 vo.setMemberCredit(member4Account.getMemberCredit());
-            }
-            else {
+            } else {
                 vo.setMemberCredit(-1);
             }
             vo.setUserTotalConsumption(orderConsumption);

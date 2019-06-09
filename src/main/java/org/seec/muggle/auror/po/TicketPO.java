@@ -44,7 +44,7 @@ public class TicketPO {
         this.sceneId = sceneId;
     }
 
-    public TicketPO(){
+    public TicketPO() {
 
     }
 

@@ -34,7 +34,8 @@ public class HallPO {
     public void setSeats(String seats) {
         this.seats = seats;
     }
-    public HallPO(){
+
+    public HallPO() {
 
     }
 }

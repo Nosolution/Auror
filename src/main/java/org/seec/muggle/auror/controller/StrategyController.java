@@ -6,11 +6,11 @@ import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventDeletionForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
 import org.seec.muggle.auror.vo.strategy.event.EventVO;
+import org.seec.muggle.auror.vo.strategy.member.MemberAddForm;
+import org.seec.muggle.auror.vo.strategy.member.MemberDeleteForm;
 import org.seec.muggle.auror.vo.strategy.member.MemberVarietyVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVaryForm;
 import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyForm;
-import org.seec.muggle.auror.vo.strategy.member.MemberAddForm;
-import org.seec.muggle.auror.vo.strategy.member.MemberDeleteForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,70 +29,68 @@ public class StrategyController {
     StrategyService strategyService;
 
     @GetMapping(value = "/refund")
-    public ResponseEntity<?> getRefundStrategy(){
+    public ResponseEntity<?> getRefundStrategy() {
         return ResponseEntity.ok(strategyService.getRefundStrategy());
     }
 
     @PutMapping(value = "/refund")
-    public ResponseEntity<?> varyRefundStrategy(@RequestBody RefundStrategyForm form){
-        strategyService.updateRefundStrategy(form.getRefundRate(),form.getLatestRefundTimeBeforePaying());
+    public ResponseEntity<?> varyRefundStrategy(@RequestBody RefundStrategyForm form) {
+        strategyService.updateRefundStrategy(form.getRefundRate(), form.getLatestRefundTimeBeforePaying());
         return ResponseEntity.ok("");
     }
 
     @GetMapping(value = "/event")
-    public ResponseEntity getStrategyEvents(){
+    public ResponseEntity getStrategyEvents() {
         EventVO[] vos = strategyService.getEvents();
         return ResponseEntity.ok(vos);
     }
 
     @PostMapping(value = "/event")
-    public ResponseEntity addStrategyEvents(@RequestBody EventForm form){
+    public ResponseEntity addStrategyEvents(@RequestBody EventForm form) {
         strategyService.createEvent(form);
         return ResponseEntity.ok("");
     }
 
     @DeleteMapping(value = "/event")
-    public ResponseEntity<?> deleteEvent(@RequestBody EventDeletionForm form){
+    public ResponseEntity<?> deleteEvent(@RequestBody EventDeletionForm form) {
         strategyService.deleteEvent(form.getEventId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/coupon_gift")
-    public ResponseEntity<?> givingCoupon(@RequestBody CouponGiftForm form){
+    public ResponseEntity<?> givingCoupon(@RequestBody CouponGiftForm form) {
         return ResponseEntity.ok(strategyService.sendCoupon(form));
     }
 
 
     @GetMapping(value = "/member")
-    public ResponseEntity<?> getVipCardList(){
+    public ResponseEntity<?> getVipCardList() {
         MemberVarietyVO[] vos = strategyService.getMemberStrategy();
         return ResponseEntity.ok(vos);
     }
 
     @PostMapping(value = "/member")
-    public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form){
-        strategyService.createMemberStrategy(form.getMemberStrategyName(),form.getMemberPictureUrl(),form.getPurchaseThreshold(),form.getMemberDiscountRate());
+    public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form) {
+        strategyService.createMemberStrategy(form.getMemberStrategyName(), form.getMemberPictureUrl(), form.getPurchaseThreshold(), form.getMemberDiscountRate());
         return ResponseEntity.ok("");
     }
 
     @DeleteMapping(value = "/member")
-    public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form){
+    public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form) {
         BasicVO vo = strategyService.deleteMemberStrategy(form.getMemberStrategyId());
-        if(vo.isSucc()){
+        if (vo.isSucc()) {
             return ResponseEntity.ok("");
-        }
-        else {
+        } else {
             return ResponseEntity.status(405).body(vo.getMsg());
         }
     }
 
     @PutMapping(value = "/member")
-    public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form){
+    public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form) {
         BasicVO vo = strategyService.updateMemberStrategy(form);
-        if(vo.isSucc()){
+        if (vo.isSucc()) {
             return ResponseEntity.ok("");
-        }
-        else {
+        } else {
             return ResponseEntity.status(405).body(vo.getMsg());
         }
     }

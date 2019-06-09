@@ -17,7 +17,7 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface MovieService {
-    public MovieOnshelfVO[] getMovieOnshelf();
+    public MovieOnshelfVO[] getMovieOnShelf();
 
     public MoviePopularVO[] getMoviePopular();
 

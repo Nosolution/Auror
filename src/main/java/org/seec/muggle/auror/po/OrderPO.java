@@ -82,7 +82,8 @@ public class OrderPO {
     public void setPayMethod(Integer payMethod) {
         this.payMethod = payMethod;
     }
-    public OrderPO(){
+
+    public OrderPO() {
 
     }
 

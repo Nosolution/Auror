@@ -51,7 +51,7 @@ public class CommentVO {
 
     public CommentVO(CommentPO po , UserBasic basic){
         this.comment = po.getComment();
-        this.time = po.getCommenttime();
+        this.time = po.getCommentTime();
         this.userAvatorUrl = basic.getUrl();
         this.userName = basic.getUsername();
     }

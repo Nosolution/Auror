@@ -26,7 +26,8 @@
     </insert>
 
     <insert id="insertRecharge" parameterType="org.seec.muggle.auror.po.RechargePO">
-        insert into tbl_recharge (user_id, commenttime, cost, type) values (#{userId},#{timestamp},#{cost},#{type})
+        insert into tbl_recharge (user_id, commentTime, cost, type)
+        values (#{userId}, #{timestamp}, #{cost}, #{type})
     </insert>
 
     <select id="orderNumsBySceneId" resultType="java.lang.Integer">
@@ -90,7 +91,7 @@
 
     <resultMap id="Recharge" type="org.seec.muggle.auror.po.RechargePO">
         <result column="user_id" property="userId"/>
-        <result column="commenttime" property="timestamp"/>
+        <result column="commentTime" property="timestamp"/>
         <result column="cost" property="cost"/>
         <result column="type" property="type"/>
     </resultMap>

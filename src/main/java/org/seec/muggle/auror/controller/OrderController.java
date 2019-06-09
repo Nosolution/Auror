@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.controller;
 
-import org.seec.muggle.auror.bl.order.OrderService;
-import org.seec.muggle.auror.dao.order.OrderMapper;
+import org.seec.muggle.auror.bl.deal.OrderService;
 import org.seec.muggle.auror.vo.order.cancellation.CancellationForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
@@ -36,49 +35,47 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping(value = "/ticket/unfinished/detail")
-    public ResponseEntity<?> checkOrderDetail(@PathParam("orderId") Long orderId){
+    public ResponseEntity<?> checkOrderDetail(@PathParam("orderId") Long orderId) {
         UnfinishedOrderVO vo = orderService.checkUnfinishedOrder(orderId);
         return ResponseEntity.ok(vo);
     }
 
     @PostMapping(value = "/ticket/payment/member")
-    public ResponseEntity<?> memberPayment(@RequestBody MemberPaymentForm form){
+    public ResponseEntity<?> memberPayment(@RequestBody MemberPaymentForm form) {
         MemberPaymentVO vo = orderService.finishByMember(form);
-        if(vo!=null) {
+        if (vo != null) {
             return ResponseEntity.ok(vo);
-        }
-        else {
+        } else {
             return ResponseEntity.status(405).body("会员卡余额不足");
         }
     }
 
 
     @PostMapping(value = "/ticket/payment/third_party")
-    public ResponseEntity<?>  third_partyPayment(@RequestBody ThirdPartyPaymentForm form){
-        ThirdPartyPaymentVO vos= orderService.finishByThird_party(form);
+    public ResponseEntity<?> third_partyPayment(@RequestBody ThirdPartyPaymentForm form) {
+        ThirdPartyPaymentVO vos = orderService.finishByThird_party(form);
         return ResponseEntity.ok(vos);
     }
 
     @GetMapping(value = "/ticket")
-    public ResponseEntity<?> getAllTickets(){
-        Long userId = 1l;
+    public ResponseEntity<?> getAllTickets() {
+        Long userId = 1L;
         TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
-        if(ticketDetailVOS.length!=0) {
+        if (ticketDetailVOS.length != 0) {
             return ResponseEntity.ok(ticketDetailVOS);
-        }
-        else {
+        } else {
             return ResponseEntity.status(405).body("没有订单");
         }
     }
 
     @PutMapping(value = "/ticket/cancellation")
-    public ResponseEntity<?>  ticketCancel(@RequestBody CancellationForm form){
+    public ResponseEntity<?> ticketCancel(@RequestBody CancellationForm form) {
         orderService.cancelOrder(form.getOrderId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/ticket/refund")
-    public ResponseEntity<?> refund(@RequestBody RefundForm form){
+    public ResponseEntity<?> refund(@RequestBody RefundForm form) {
         RefundVO vo = new RefundVO();
         vo.setRefundAmount(orderService.refundOrder(form.getOrderId()));
 
@@ -86,21 +83,21 @@ public class OrderController {
     }
 
     @PostMapping(value = "/member/purchase/payment")
-    public ResponseEntity<?> purchaseVIPCard(@RequestBody VipPurchaseForm form){
+    public ResponseEntity<?> purchaseVIPCard(@RequestBody VipPurchaseForm form) {
         Long userId = 1l;
-        orderService.purchaseMember(userId,form.getCost(),form.getMemberStrategyId());
+        orderService.purchaseMember(userId, form.getCost(), form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/member/recharge/payment")
-    public ResponseEntity<?> recharge(@RequestBody RechargeForm form){
+    public ResponseEntity<?> recharge(@RequestBody RechargeForm form) {
         Long userId = 1l;
-        RechargeVO vo = orderService.rechargeMember(form,userId);
+        RechargeVO vo = orderService.rechargeMember(form, userId);
         return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/member/recharge/history")
-    public ResponseEntity<?> getChargeHistory(){
+    public ResponseEntity<?> getChargeHistory() {
         Long userId = 1l;
         RechargeHistoryVO[] vos = orderService.getRechargeHistory(userId);
         return ResponseEntity.ok(vos);

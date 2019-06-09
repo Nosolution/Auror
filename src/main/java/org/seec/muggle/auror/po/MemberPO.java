@@ -43,7 +43,8 @@ public class MemberPO {
     public void setThreshold(Integer threshold) {
         this.threshold = threshold;
     }
-    public MemberPO(){
+
+    public MemberPO() {
 
     }
 }

@@ -1,7 +1,8 @@
-package org.seec.muggle.auror.dao;
+package org.seec.muggle.auror.dao.favorite_record;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.dao.BaseOperation;
 import org.seec.muggle.auror.po.FavorRecordPO;
 import org.seec.muggle.auror.vo.DateLikeForm;
 

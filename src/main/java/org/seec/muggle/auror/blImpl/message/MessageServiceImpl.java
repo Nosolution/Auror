@@ -23,14 +23,14 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public int getUnreadNum(Long userId) {
-        return  mapper.getUnreadNums(userId);
+        return mapper.getUnreadNums(userId);
     }
 
     @Override
     public MessageVO[] messages(Long userId) {
         List<Message> messages = mapper.getMessages(userId);
         List<MessageVO> vos = new ArrayList<>();
-        messages.stream().forEach(o->{
+        messages.forEach(o -> {
             MessageVO message = new MessageVO();
             message.setMessageContent(o.getContent());
             message.setAdditionalMovieId(o.getAdditionalMovieId());

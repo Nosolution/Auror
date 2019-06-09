@@ -154,8 +154,8 @@ public class MoviePO {
         this.status = status;
     }
 
-    public MoviePO(MovieAddForm form){
-        this.country=form.getCountry();
+    public MoviePO(MovieAddForm form) {
+        this.country = form.getCountry();
         this.description = form.getDescription();
         this.endDate = form.getEndDate();
         this.language = form.getLanguage();
@@ -166,23 +166,24 @@ public class MoviePO {
         this.movieType = form.getMovieType();
         this.posterUrl = form.getPosterUrl();
         this.movieYear = form.getMovieYear();
-    }
-    public MoviePO(MovieVaryForm form){
-        this.country=form.getCountry();
-        this.description = form.getDescription();
-        this.endDate = form.getEndDate();
-        this.language = form.getLanguage();
-        this.length = form.getLength();
-        this.startDate = form.getStartDate();
-        this.visibleDate = form.getVisibleDate();
-        this.movieName = form.getMovieName();
-        this.movieType = form.getMovieType();
-        this.posterUrl = form.getPosterUrl();
-        this.movieYear = form.getMovieYear();
-        this.id =form.getMovieId();
     }
 
-    public MoviePO(){
+    public MoviePO(MovieVaryForm form) {
+        this.country = form.getCountry();
+        this.description = form.getDescription();
+        this.endDate = form.getEndDate();
+        this.language = form.getLanguage();
+        this.length = form.getLength();
+        this.startDate = form.getStartDate();
+        this.visibleDate = form.getVisibleDate();
+        this.movieName = form.getMovieName();
+        this.movieType = form.getMovieType();
+        this.posterUrl = form.getPosterUrl();
+        this.movieYear = form.getMovieYear();
+        this.id = form.getMovieId();
+    }
+
+    public MoviePO() {
 
     }
 }

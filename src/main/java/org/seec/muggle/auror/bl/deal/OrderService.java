@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.order;
+package org.seec.muggle.auror.bl.deal;
 
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;

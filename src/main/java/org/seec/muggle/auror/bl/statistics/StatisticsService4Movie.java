@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.movie_statistics;
+package org.seec.muggle.auror.bl.statistics;
 
 /**
  * @Description TODO
@@ -7,5 +7,5 @@ package org.seec.muggle.auror.bl.movie_statistics;
  * @Version 1.0
  **/
 public interface StatisticsService4Movie {
-    Integer getboxOffice(Long movieId);
+    Integer getBoxOffice(Long movieId);
 }

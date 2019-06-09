@@ -5,9 +5,7 @@ import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.po.CastPO;
 import org.seec.muggle.auror.po.CommentPO;
 import org.seec.muggle.auror.po.MoviePO;
-import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 
-import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +25,7 @@ public interface MovieMapper {
      * @Param [day]
      * @return java.util.List<org.seec.muggle.auror.po.MoviePO>
      **/
-    List<MoviePO> getMovieOnshelf(Date day);
+    List<MoviePO> getMovieOnShelf(Date day);
 
     int insertMovie(MoviePO moviePO);
 

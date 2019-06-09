@@ -12,5 +12,5 @@ import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 public interface HallService {
     BasicVO addHall(String name,int[][] seats);
 
-    SingleHallVO[] gethalls();
+    SingleHallVO[] getHalls();
 }

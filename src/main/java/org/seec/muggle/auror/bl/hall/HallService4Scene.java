@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.bl.hall;
 
 import org.seec.muggle.auror.po.Hall;
-import org.seec.muggle.auror.po.HallPO;
 
 /**
  * @Description TODO
@@ -10,5 +9,5 @@ import org.seec.muggle.auror.po.HallPO;
  * @Version 1.0
  **/
 public interface HallService4Scene {
-    Hall getHallByhallId(Long hallid);
+    Hall getHallById(Long hallId);
 }

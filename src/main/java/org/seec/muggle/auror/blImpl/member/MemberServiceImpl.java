@@ -10,7 +10,6 @@ import org.seec.muggle.auror.po.MemberPO;
 import org.seec.muggle.auror.po.MemberStrategyPO;
 import org.seec.muggle.auror.vo.user.member.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.lang.Long;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  **/
 @Service
-public class MemberServiceImpl implements MemberService, MemberService4Order , MemberService4Account {
+public class MemberServiceImpl implements MemberService, MemberService4Order, MemberService4Account {
     @Autowired
     MemberMapper memberMapper;
 
@@ -30,12 +29,11 @@ public class MemberServiceImpl implements MemberService, MemberService4Order , M
     @Override
     public MemberVO getPersonalMemberInfo(Long userId) {
         MemberPO member = memberMapper.selectMemberById(userId);
-        if(member==null){
+        if (member == null) {
             return null;
-        }
-        else{
+        } else {
             MemberStrategyPO strategyPO = strategyService4Member.getMemberStrategyById(member.getStrategyId());
-            return new MemberVO(member,strategyPO);
+            return new MemberVO(member, strategyPO);
         }
 
     }
@@ -48,24 +46,23 @@ public class MemberServiceImpl implements MemberService, MemberService4Order , M
 
     @Override
     public void changeStrategy(Long userId, Long strategyId) {
-        memberMapper.updateMemberById(userId,strategyId);
+        memberMapper.updateMemberById(userId, strategyId);
     }
 
     @Override
     public void recharge(Integer cost, Long userId) {
         MemberPO po = memberMapper.selectMemberById(userId);
-        memberMapper.updateCredit(cost+po.getThreshold(),userId);
+        memberMapper.updateCredit(cost + po.getThreshold(), userId);
     }
 
     @Override
     public Member4Account getMemberByUser(Long userid) {
         MemberPO po = memberMapper.selectMemberById(userid);
-        if(po==null){
+        if (po == null) {
             Member4Account account = new Member4Account();
             account.setMember(false);
             return account;
-        }
-        else {
+        } else {
             Member4Account account = new Member4Account();
             account.setMember(true);
             account.setMemberCredit(po.getThreshold());
@@ -75,13 +72,12 @@ public class MemberServiceImpl implements MemberService, MemberService4Order , M
     }
 
     @Override
-    public boolean payByMember(Integer cost,Long userId) {
+    public boolean payByMember(Integer cost, Long userId) {
         MemberPO member = memberMapper.selectMemberById(userId);
-        if(member.getThreshold()<cost){
+        if (member.getThreshold() < cost) {
             return false;
-        }
-        else{
-            memberMapper.updateCredit(member.getThreshold()-cost,userId);
+        } else {
+            memberMapper.updateCredit(member.getThreshold() - cost, userId);
         }
         return true;
     }

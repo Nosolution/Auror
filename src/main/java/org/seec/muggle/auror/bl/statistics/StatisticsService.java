@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.movie_statistics;
+package org.seec.muggle.auror.bl.statistics;
 
 import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
 
@@ -11,5 +11,5 @@ import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
 public interface StatisticsService {
     AttendenceVO[] getBoxOfficeRate(Long movieId);
 
-    Integer getboxOffice(Long movieId);
+    Integer getBoxOffice(Long movieId);
 }

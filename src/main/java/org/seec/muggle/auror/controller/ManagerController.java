@@ -3,11 +3,9 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.bl.manager.ManagerService;
 import org.seec.muggle.auror.vo.personnel.ManagerForm;
 import org.seec.muggle.auror.vo.personnel.ManagerIdForm;
-import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 
 /**
@@ -25,19 +23,19 @@ public class ManagerController {
     ManagerService managerService;
 
     @PostMapping(value = "/manager")
-    public ResponseEntity<?> addManager(@RequestBody ManagerForm form){
-        managerService.addManager(form.getUsername(),form.getPassword());
+    public ResponseEntity<?> addManager(@RequestBody ManagerForm form) {
+        managerService.addManager(form.getUsername(), form.getPassword());
         return ResponseEntity.ok("");
     }
 
     @DeleteMapping(value = "/manager")
-    public ResponseEntity<?> removeManager(@RequestBody ManagerIdForm form){
+    public ResponseEntity<?> removeManager(@RequestBody ManagerIdForm form) {
         managerService.deleteManager(form.getManagerId());
         return ResponseEntity.ok("");
     }
 
     @GetMapping(value = "/manager_list")
-    public ResponseEntity<?> getAllManagers(){
+    public ResponseEntity<?> getAllManagers() {
         return ResponseEntity.ok(managerService.getManagers());
     }
 }

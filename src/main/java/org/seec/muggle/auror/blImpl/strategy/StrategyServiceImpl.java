@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @Version 1.0
  **/
 @Service
-public class StrategyServiceImpl implements StrategyService, StrategyService4Order , StrategyService4Account, StrategyService4Member {
+public class StrategyServiceImpl implements StrategyService, StrategyService4Order, StrategyService4Account, StrategyService4Member {
 
     @Autowired
     StrategyMapper strategyMapper;
@@ -41,10 +41,11 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO updateRefundStrategy(Double rate, Integer beforeTime) {
-        RefundPO po = new RefundPO(beforeTime,rate);
+        RefundPO po = new RefundPO(beforeTime, rate);
         strategyMapper.updateRefundStrategy(po);
         return new BasicVO();
     }
+
     @Override
     public RefundPO getRefund() {
         return strategyMapper.selectRefundStrategy().get(0);
@@ -52,21 +53,20 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO createMemberStrategy(String name, String url, Integer threshold, Double rate) {
-        MemberStrategyPO  po = new MemberStrategyPO(name,url,threshold,rate);
+        MemberStrategyPO po = new MemberStrategyPO(name, url, threshold, rate);
         strategyMapper.insertMemberStrategy(po);
         return new BasicVO();
     }
 
     @Override
     public MemberVarietyVO[] getMemberStrategy() {
-        List<MemberStrategyPO> strategyPOS = strategyMapper.selectAllMemberStrategys();
-        if(strategyPOS.size()==0){
+        List<MemberStrategyPO> strategyPOS = strategyMapper.selectAllMemberStrategies();
+        if (strategyPOS.size() == 0) {
             return null;
-        }
-        else {
+        } else {
             List<MemberVarietyVO> vos = new ArrayList<>();
-            strategyPOS.stream().forEach(o->{
-                MemberVarietyVO vo  = new MemberVarietyVO();
+            strategyPOS.forEach(o -> {
+                MemberVarietyVO vo = new MemberVarietyVO();
                 vo.setMemberDiscountRate(o.getRate());
                 vo.setMemberPictureUrl(o.getUrl());
                 vo.setPurchaseThreshold(o.getThreshold());
@@ -81,15 +81,15 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO createEvent(EventForm form) {
-        EventPO po = new EventPO(form.getStartTime(),form.getEndTime(),form.getEventDescription(),form.getEventName());
-        CouponPO couponPO = new CouponPO(form.getCouponName(),form.getCouponDescription(),form.getCouponDiscount(),form.getCouponThreshold(),form.getCouponPictureUrl());
+        EventPO po = new EventPO(form.getStartTime(), form.getEndTime(), form.getEventDescription(), form.getEventName());
+        CouponPO couponPO = new CouponPO(form.getCouponName(), form.getCouponDescription(), form.getCouponDiscount(), form.getCouponThreshold(), form.getCouponPictureUrl());
         strategyMapper.insertCoupon(couponPO);
 
         po.setCouponId(couponPO.getId());
         strategyMapper.insertEvent(po);
 
-        for(int i = 0;i<form.getMoviesIncluded().length;i++){
-            strategyMapper.insertEventMovie(po.getId(),form.getMoviesIncluded()[i]);
+        for (int i = 0; i < form.getMoviesIncluded().length; i++) {
+            strategyMapper.insertEventMovie(po.getId(), form.getMoviesIncluded()[i]);
         }
         return new BasicVO();
     }
@@ -105,8 +105,8 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public EventVO[] getEvents() {
         List<EventPO> events = strategyMapper.selectEvents();
         List<EventVO> res = new ArrayList<>();
-        events.stream().forEach(o->{
-            EventVO vo = new EventVO(o,strategyMapper.selectCouponById(o.getCouponId()),strategyMapper.selectMoviesByEventId(o.getId()));
+        events.forEach(o -> {
+            EventVO vo = new EventVO(o, strategyMapper.selectCouponById(o.getCouponId()), strategyMapper.selectMoviesByEventId(o.getId()));
             res.add(vo);
         });
         return res.toArray(new EventVO[res.size()]);
@@ -120,49 +120,40 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     @Override
     public BasicVO deleteMemberStrategy(Long strategyId) {
         List<Long> isInUsed = strategyMapper.selectUsersByMemberStrategyId(strategyId);
-        if(isInUsed.size() ==0){
+        if (isInUsed.size() == 0) {
             strategyMapper.deleteMemberStrategy(strategyId);
             BasicVO vo = new BasicVO();
             vo.setSucc(true);
             return vo;
-        }
-        else {
-            BasicVO vo = new BasicVO();
-            vo.setSucc(false);
-            String using = "";
-            StringBuffer buffer = new StringBuffer(using);
-            isInUsed.stream().forEach(o->{
-                buffer.append("用户: ");
-                buffer.append(String.valueOf(o));
-            });
-            buffer.append("正处于该策略中，操作失败");
-            vo.setMsg(buffer.toString());
-            return vo;
+        } else {
+            return buildFailureBasicVO(isInUsed);
         }
     }
 
     @Override
     public BasicVO updateMemberStrategy(MemberVaryForm form) {
         List<Long> isInUsed = strategyMapper.selectUsersByMemberStrategyId(form.getMemberStrategyId());
-        if(isInUsed.size() ==0){
+        if (isInUsed.size() == 0) {
             strategyMapper.updateMemberStrategy(form);
             BasicVO vo = new BasicVO();
             vo.setSucc(true);
             return vo;
+        } else {
+            return buildFailureBasicVO(isInUsed);
         }
-        else {
-            BasicVO vo = new BasicVO();
-            vo.setSucc(false);
-            String using = "";
-            StringBuffer buffer = new StringBuffer(using);
-            isInUsed.stream().forEach(o->{
-                buffer.append("用户: ");
-                buffer.append(String.valueOf(o));
-            });
-            buffer.append("正处于该策略中，操作失败");
-            vo.setMsg(buffer.toString());
-            return vo;
-        }
+    }
+
+    private BasicVO buildFailureBasicVO(List<Long> isInUsed) {
+        BasicVO vo = new BasicVO();
+        vo.setSucc(false);
+        String using = "";
+        StringBuffer buffer = new StringBuffer(using);
+        isInUsed.forEach(o -> {
+            buffer.append("用户: ").append(o);
+        });
+        buffer.append("正处于该策略中，操作失败");
+        vo.setMsg(buffer.toString());
+        return vo;
     }
 
 
@@ -170,10 +161,10 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public List<AvailableCouponsVO> getCouponsByCost(Integer cost, Long userId) {
         List<CouponPO> couponPOS = strategyMapper.selectCouponByCost(cost);
         List<AvailableCouponsVO> couponsVOS = new ArrayList<>();
-        for(int i = 0; i<couponPOS.size();i++){
-            List<Date> dates= strategyMapper.selectCouponsTimes(userId,couponPOS.get(i).getId());
-            for(int j = 0;j<dates.size();j++){
-                AvailableCouponsVO vo = new AvailableCouponsVO(couponPOS.get(i).getId(),couponPOS.get(i).getCouponName(),couponPOS.get(i).getDiscount(),dates.get(i));
+        for (int i = 0; i < couponPOS.size(); i++) {
+            List<Date> dates = strategyMapper.selectCouponsTimes(userId, couponPOS.get(i).getId());
+            for (int j = 0; j < dates.size(); j++) {
+                AvailableCouponsVO vo = new AvailableCouponsVO(couponPOS.get(i).getId(), couponPOS.get(i).getCouponName(), couponPOS.get(i).getDiscount(), dates.get(i));
                 couponsVOS.add(vo);
             }
         }
@@ -184,17 +175,17 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public UserCouponsVO[] getCouponsByUser(Long userId) {
         List<UserCouponPO> uc = strategyMapper.getUserCoupons(userId);
         List<UserCouponsVO> vos = new ArrayList<>();
-        vos.stream().forEach(o->{
+        uc.forEach(o -> {
             UserCouponsVO vo = new UserCouponsVO();
             CouponPO couponPO = strategyMapper.selectCouponById(o.getCouponId());
             vo.setCouponDescription(couponPO.getDescription());
             vo.setCouponDiscount(couponPO.getDiscount());
-            vo.setCouponEndTime(o.getCouponEndTime());
+            vo.setCouponEndTime(o.getEnd());
             vo.setCouponId(o.getCouponId());
             vo.setCouponName(couponPO.getCouponName());
             vo.setCouponPictureUrl(couponPO.getUrl());
             vo.setCouponThreshold(couponPO.getThreshold());
-            vo.setCouponStartTime(o.getCouponStartTime());
+            vo.setCouponStartTime(o.getStart());
             vo.setCouponExpiration("");
             vos.add(vo);
         });
@@ -211,7 +202,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         po.setDescription(form.getCouponDescription());
         strategyMapper.insertCoupon(po);
 
-        for(int i = 0;i<form.getUserList().length;i++){
+        for (int i = 0; i < form.getUserList().length; i++) {
             UserCouponPO ucPO = new UserCouponPO();
             ucPO.setCouponId(po.getId());
             ucPO.setStart(form.getStartTime());
@@ -224,17 +215,18 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public List<MemberStrategyPO> selectAllMemberStrategy() {
-        return strategyMapper.selectAllMemberStrategys().stream().sorted(Comparator.comparing(MemberStrategyPO::getThreshold)).collect(Collectors.toList());
+        return strategyMapper.selectAllMemberStrategies().stream().sorted(Comparator.comparing(MemberStrategyPO::getThreshold)).collect(Collectors.toList());
     }
 
     @Override
-    public Integer cutDownByCoupons(CouponsForm[] form,Long userId) {
+    public Integer cutDownByCoupons(CouponsForm[] form, Long userId) {
         int cut = 0;
-        for(int i =0;i<form.length;i++){
+        for (int i = 0; i < form.length; i++) {
             CouponPO couponPO = strategyMapper.selectCouponById(form[i].getCouponId());
-            cut +=couponPO.getDiscount();
-            strategyMapper.deleteCouponUser(userId,couponPO.getId());
-        };
+            cut += couponPO.getDiscount();
+            strategyMapper.deleteCouponUser(userId, couponPO.getId());
+        }
+        ;
         return cut;
     }
 
@@ -242,23 +234,23 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public List<CouponPO> sendCoupons(Long movieId, Long userId) {
         List<Long> coupons = strategyMapper.selectCouponIdsByMovieId(movieId);
         List<CouponPO> pos = new ArrayList<>();
-        for(int i =0;i<coupons.size();i++){
-            CouponPO po = strategyMapper.selectCouponById(coupons.get(i));
+        for (Long coupon : coupons) {
+            CouponPO po = strategyMapper.selectCouponById(coupon);
             pos.add(po);
             UserCouponPO userCouponPO = new UserCouponPO();
             userCouponPO.setUserId(userId);
             userCouponPO.setStart(new Date());
             userCouponPO.setEnd(dayPlus20(new Date()));
-            userCouponPO.setCouponId(coupons.get(i));
+            userCouponPO.setCouponId(coupon);
             strategyMapper.insertUserCoupon(userCouponPO);
         }
         return pos;
     }
 
-    private Date dayPlus20(Date current){
+    private Date dayPlus20(Date current) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(current);
-        calendar.add(Calendar.DATE,20);
+        calendar.add(Calendar.DATE, 20);
         return calendar.getTime();
     }
 

@@ -35,7 +35,7 @@ public class CastPO {
         this.id = id;
     }
 
-    public CastPO(){
+    public CastPO() {
 
     }
 }

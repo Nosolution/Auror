@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.hall.HallService;
-import org.seec.muggle.auror.dao.hall.HallMapper;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.seec.muggle.auror.vo.hall.single.SingleHallForm;
@@ -21,15 +20,16 @@ import org.springframework.web.bind.annotation.*;
 public class HallController {
     @Autowired
     HallService hallService;
+
     @PostMapping()
-    public ResponseEntity<?> addHall(@RequestBody SingleHallForm form){
-        BasicVO vo = hallService.addHall(form.getHallName(),form.getSeats());
+    public ResponseEntity<?> addHall(@RequestBody SingleHallForm form) {
+        BasicVO vo = hallService.addHall(form.getHallName(), form.getSeats());
         return ResponseEntity.ok("");
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<?> getAllHall(){
-        SingleHallVO[]  halls = hallService.gethalls();
+    public ResponseEntity<?> getAllHall() {
+        SingleHallVO[] halls = hallService.getHalls();
         return ResponseEntity.ok(halls);
     }
 }

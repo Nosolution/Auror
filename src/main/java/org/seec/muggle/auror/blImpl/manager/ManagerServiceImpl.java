@@ -59,10 +59,10 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ManagerInfoVO[] getManagers() {
-        List<Long> managerIds= userRoleMapper.selectAllManager();
+        List<Long> managerIds = userRoleMapper.selectAllManager();
         List<ManagerInfoVO> vos = new ArrayList<>();
-        managerIds.stream().forEach(o->{
-            User  user = userMapper.getUserById(o);
+        managerIds.forEach(o -> {
+            User user = userMapper.getUserById(o);
             ManagerInfoVO vo = new ManagerInfoVO();
             vo.setManagerId(o);
             vo.setUsername(user.getUsername());

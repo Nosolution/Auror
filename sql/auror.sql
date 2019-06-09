@@ -533,11 +533,11 @@ alter table tbl_refund comment '退票策略';
 
 create table `tbl_recharge`
 (
-	`id`				bigint not null auto_increment comment'充值记录',
-    `user_id`			bigint comment '用户id',
-    `commenttime`		timestamp comment '充值时间',
-	`cost`				Integer comment '充值金额',
-    `type`				Integer,
+    `id`           bigint not null auto_increment comment '充值记录',
+    `user_id`      bigint comment '用户id',
+    `comment_time` timestamp comment '充值时间',
+    `cost`         Integer comment '充值金额',
+    `type`         Integer,
     primary key(id)
 );
 alter table tbl_recharge comment '充值记录表';

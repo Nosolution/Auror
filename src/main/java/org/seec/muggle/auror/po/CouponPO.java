@@ -14,7 +14,7 @@ public class CouponPO {
     Integer threshold;
     String url;
 
-    public  CouponPO(){
+    public CouponPO() {
 
     }
 

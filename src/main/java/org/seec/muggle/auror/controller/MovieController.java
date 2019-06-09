@@ -1,12 +1,9 @@
 package org.seec.muggle.auror.controller;
 
 
-import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.bl.movie.MovieService;
-import org.seec.muggle.auror.bl.movie_statistics.MovieMarkService;
-import org.seec.muggle.auror.bl.movie_statistics.StatisticsService;
-import org.seec.muggle.auror.bl.strategy.StrategyService;
-import org.seec.muggle.auror.po.Comment;
+import org.seec.muggle.auror.bl.statistics.MovieMarkService;
+import org.seec.muggle.auror.bl.statistics.StatisticsService;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentForm;
@@ -18,14 +15,12 @@ import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
 import org.seec.muggle.auror.vo.movie.popularity.MoviePopularVO;
 import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
 import org.seec.muggle.auror.vo.movie.statistics.BoxOfficeVO;
-import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,7 +67,7 @@ public class MovieController {
 
     @GetMapping(value = "/onshelf")
     public ResponseEntity<?> getMovieOnShelf(){
-        MovieOnshelfVO[] vos = movieService.getMovieOnshelf();
+        MovieOnshelfVO[] vos = movieService.getMovieOnShelf();
         return ResponseEntity.ok(vos);
     }
 
@@ -89,7 +84,7 @@ public class MovieController {
 
     @PostMapping(value = "/comment")
     public ResponseEntity<?> getMovieComment(@RequestBody CommentForm form){
-        Long userId = 1l;
+        Long userId = 1L;
         movieService.commentMovie(form.getMovieId(),form.getRate(),form.getComment(),userId);
         return ResponseEntity.ok("");
     }
@@ -137,7 +132,7 @@ public class MovieController {
 
     @GetMapping(value = "/statistic/box_office")
     public ResponseEntity<?> getBoxOffice(@PathParam("movieId") Long movieId){
-        return ResponseEntity.ok(new BoxOfficeVO(statisticsService.getboxOffice(movieId)));
+        return ResponseEntity.ok(new BoxOfficeVO(statisticsService.getBoxOffice(movieId)));
     }
 
     @GetMapping(value = "/detail/batch")
