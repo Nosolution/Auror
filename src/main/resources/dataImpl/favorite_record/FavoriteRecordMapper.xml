@@ -2,35 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.favorite_record.FavoriteRecordMapper">
     <insert id="insert">
-        insert into tbl_favorite_record(user_id, movie_id)
+        insert into tbl_movie_favor(user_id, movie_id)
         values (#{userId}, #{movieId})
     </insert>
 
     <select id="selectLikeMovie" resultType="int">
         select count(*)
-        from tbl_favorite_record
+        from tbl_movie_favor
         where movie_id = #{movieId}
           and user_id = #{userId}
     </select>
 
     <select id="selectFavoriteNums" resultType="int">
         select count(*)
-        from tbl_favorite_record
+        from tbl_movie_favor
         where movie_id = #{movieId}
     </select>
 
     <delete id="delete">
         delete
-        from tbl_favorite_record
+        from tbl_movie_favor
         where movie_id = #{movieId}
           and user_id = #{userId}
     </delete>
 
     <select id="getDateLikeNum" resultMap="DateLikeForm">
-        select count(*) as like_num, DATE(choose_time) as `commentTime`
-        from tbl_favorite_record tbr
+        select count(*) as like_num, DATE(init_time) as `commentTime`
+        from tbl_movie_favor tbr
         where movie_id = #{movieId}
-        GROUP BY DATE(tbr.choose_time)
+        GROUP BY DATE(tbr.init_time)
     </select>
 
     <resultMap id="DateLikeForm" type="org.seec.muggle.auror.vo.DateLikeForm">

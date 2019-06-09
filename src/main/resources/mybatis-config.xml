@@ -11,6 +11,6 @@
         <!--        <typeAlias type="org.seec.muggle.auror.pooriteRecord" alias="FavorRecordPO"/>-->
         <!--        <typeAlias type="org.seec.muggle.auror.porRole" alias="UserRole"/>-->
         <!--        <typeAlias type="org.seec.muggle.auror.poePermission" alias="RolePermission"/>-->
-        <package castName="org.seec.muggle.auror.po"/>
+        <package name="org.seec.muggle.auror.po"/>
     </typeAliases>
 </configuration>

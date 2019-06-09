@@ -26,13 +26,13 @@
                role.role_name,
                permission.perm_id,
                permission.perm_name
-        from (select * from tbl_user where username =#{username}) as u,
-             (select tbl_role.id as role_id, tbl_role.castName as role_name
+        from (select * from tbl_user where username = #{username}) as u,
+             (select tbl_role.id as role_id, tbl_role.role_name as role_name
               from tbl_role
               where tbl_role.id in (select ur.role_id
                                     from user_role ur
                                     where ur.user_id = (select id from tbl_user where username = #{username}))) as role,
-             (select p.id as perm_id, p.castName as perm_name
+             (select p.id as perm_id, p.permission_name as perm_name
               from tbl_permission p
               where id in (select permission_id
                            from role_permission
@@ -53,10 +53,10 @@
                permission.perm_id,
                permission.perm_name
         from (select * from tbl_user where id = #{id}) as u,
-             (select tbl_role.id as role_id, tbl_role.castName as role_name
+             (select tbl_role.id as role_id, tbl_role.role_name as role_name
               from tbl_role
               where tbl_role.id in (select ur.role_id from user_role ur where ur.user_id = #{id})) as role,
-             (select p.id as perm_id, p.castName as perm_name
+             (select p.id as perm_id, p.permission_name as perm_name
               from tbl_permission p
               where id in (select permission_id
                            from role_permission
@@ -65,14 +65,17 @@
     <!--    以上是查出所有数据后再进行条件查询，可能会有性能上的问题
     -->
     <delete id="deleteUserById">
-        delete from tbl_user where id=#{userId}
+        delete
+        from tbl_user
+        where id = #{userId}
     </delete>
 
     <select id="getUserById" resultType="org.seec.muggle.auror.po.User">
-        select id id,
-          username  username,
-          password  password
-        from tbl_user where id = #{userId};
+        select id       id,
+               username username,
+               password password
+        from tbl_user
+        where id = #{userId};
     </select>
     <resultMap id="User" type="org.seec.muggle.auror.po.User">
         <id column="id" property="id"/>
