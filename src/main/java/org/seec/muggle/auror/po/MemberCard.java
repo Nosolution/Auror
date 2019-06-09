@@ -16,6 +16,6 @@ public class MemberCard {
     private Long id;
     private String name;
     private String pictureUrl;
-    private BigDecimal purchaseThreshold;
+    private BigDecimal price;
     private Double discountRate;
 }

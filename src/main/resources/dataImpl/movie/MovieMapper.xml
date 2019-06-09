@@ -1,59 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.movie.MovieMapper">
-    
+
     <insert id="insertMovie" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.MoviePO">
-        insert into tbl_movie(
-        movie_name, description, visible_date, start_date, end_date, movie_type, movie_country, movie_language, poster_url, length , movie_year, movie_status
-        )        
-        values (
-          #{movieName},#{description},#{visibleDate},
-          #{startDate},#{endDate},#{movieType},
-          #{country},#{language},#{posterUrl},#{length},#{movieYear},1
-        )
+        insert into tbl_movie(movie_name, description, visible_date, start_date, end_date, movie_type, movie_country,
+                              movie_language, poster_url, length, movie_year, movie_status)
+        values (#{movieName}, #{description}, #{visibleDate},
+                #{startDate}, #{endDate}, #{movieType},
+                #{country}, #{language}, #{posterUrl}, #{length}, #{movieYear}, 1)
     </insert>
 
     <update id="updateMovieState">
-        update tbl_movie set movie_status = #{status} where id=#{movieId}
+        update tbl_movie
+        set movie_status = #{status}
+        where id = #{movieId}
     </update>
 
     <update id="updateByMovieId" parameterType="org.seec.muggle.auror.po.MoviePO">
-        update tbl_movie set movie_name=#{movieName},description=#{description},visible_date=#{visibleDate},
-          start_date=#{startDate},end_date=#{endDate},movie_type=#{movieType},
-          movie_country=#{country},movie_year = #{movieYear},movie_language=#{language},poster_url=#{posterUrl},length=#{length} where id = #{id}
+        update tbl_movie
+        set movie_name=#{movieName},
+            description=#{description},
+            visible_date=#{visibleDate},
+            start_date=#{startDate},
+            end_date=#{endDate},
+            movie_type=#{movieType},
+            movie_country=#{country},
+            movie_year = #{movieYear},
+            movie_language=#{language},
+            poster_url=#{posterUrl},
+            length=#{length}
+        where id = #{id}
     </update>
 
     <insert id="insertCast" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.CastPO">
-        insert into tbl_cast(
-          cast_name, poster_url
-          )
-        values (
-          #{castName},#{url}
-        )
+        insert into tbl_cast(cast_name, poster_url)
+        values (#{castName}, #{url})
     </insert>
 
     <!--<insert id="insertMovieCast" useGeneratedKeys="true" keyProperty="id">-->
-      <!--insert into tbl_cast_movie(-->
-        <!--movie_id, cast_id,cast_role-->
-        <!--)-->
-      <!--select m.id,c.id,#{castRole}-->
-      <!--from tbl_movie m-->
-      <!--inner join tbl_cast c on c.cast_name = #{castName}-->
-      <!--where m.movie_name = #{movieName}-->
+    <!--insert into tbl_cast_movie(-->
+    <!--movie_id, cast_id,cast_role-->
+    <!--)-->
+    <!--select m.id,c.id,#{castRole}-->
+    <!--from tbl_movie m-->
+    <!--inner join tbl_cast c on c.cast_name = #{castName}-->
+    <!--where m.movie_name = #{movieName}-->
     <!--</insert>-->
     <insert id="insertMovieCast" useGeneratedKeys="true" keyProperty="id">
-        insert into tbl_cast_movie (movie_id, cast_id, cast_role) values (#{movieId},#{castId},#{role})
+        insert into cast_movie (movie_id, cast_id, cast_role)
+        values (#{movieId}, #{castId}, #{role})
     </insert>
 
     <select id="findCastByName" resultType="org.seec.muggle.auror.po.CastPO">
-        select id id,
-          cast_name castName,
-          poster_url url
-        from tbl_cast where cast_name = #{castName} LIMIT 1
+        select id         id,
+               cast_name  castName,
+               poster_url url
+        from tbl_cast
+        where cast_name = #{castName}
+        LIMIT 1
     </select>
 
-    <select id="getMovieOnshelf" resultMap="moviePO">
+    <select id="getMovieOnShelf" resultMap="moviePO">
       select * from tbl_movie where movie_status = 1 or movie_status = 2
+
     </select>
 
     <select id="findMovieById" resultMap="moviePO">
@@ -76,9 +85,10 @@
           actor.starring_url
           from (select * from tbl_movie where id=#{id}) as m,
           (select tbl_cast.cast_name as director_name,tbl_cast.poster_url as director_url from tbl_cast
-          where tbl_cast.id in (select cm.cast_id from tbl_cast_movie cm where cm.movie_id = #{id} and cm.cast_role = 'Director' ))as director,
+          where tbl_cast.id in (select cm.cast_id from cast_movie cm where cm.movie_id = #{id} and cm.cast_role = 'Director' ))as director,
           (select tbl_cast.cast_name as starring_name,tbl_cast.poster_url as starring_url from tbl_cast
-          where tbl_cast.id in (select cm.cast_id from tbl_cast_movie cm where cm.movie_id = #{id} and cm.cast_role = 'Actor' ))as actor
+          where tbl_cast.id in (select cm.cast_id from cast_movie cm where cm.movie_id = #{id} and cm.cast_role = 'Actor' ))as actor
+
     </select>
 
     <select id="getCommentsByMovieId" resultType="org.seec.muggle.auror.po.CommentPO">
@@ -90,19 +100,24 @@
     </select>
 
     <delete id="deleteMovieCastByMovieId">
-        delete  from tbl_cast_movie where movie_id =#{movieId}
+        delete
+        from cast_movie
+        where movie_id = #{movieId}
     </delete>
 
     <insert id="insertComment">
-        insert  into tbl_movie_comment (movie_id, user_id, score, comment, `time`) values (#{movieId},#{userId},#{score},#{comment},#{time})
+        insert into tbl_movie_comment (movie_id, user_id, score, comment, `time`)
+        values (#{movieId}, #{userId}, #{score}, #{comment}, #{time})
     </insert>
 
     <delete id="deleteMovieByMovieId">
-        update tbl_movie set movie_status =3 where id=#{movieId}
+        update tbl_movie
+        set movie_status =3
+        where id = #{movieId}
     </delete>
 
     <resultMap id="moviePO" type="org.seec.muggle.auror.po.MoviePO">
-        <id property="id" column="id" />
+        <id property="id" column="id"/>
         <result property="movieName" column="movie_name"/>
         <result property="description" column="description"/>
         <result property="visibleDate" column="visible_date"/>
@@ -111,7 +126,7 @@
         <result property="posterUrl" column="poster_url"/>
         <result property="movieType" column="movie_type"/>
         <result property="country" column="movie_country"/>
-        <result property="language" column="movie_language" />
+        <result property="language" column="movie_language"/>
         <result property="length" column="length"/>
         <result property="movieYear" column="movie_year"/>
         <result property="status" column="movie_status"/>

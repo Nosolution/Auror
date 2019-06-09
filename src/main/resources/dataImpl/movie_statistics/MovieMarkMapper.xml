@@ -2,24 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.moviemark.MovieMarkMapper">
     <select id="insertMark">
-        insert into tbl_movie_favor (movie_id, user_id,insert_time) values (#{movieId},#{userId},#{time})
+        insert into tbl_movie_favor (movie_id, user_id, init_time)
+        values (#{movieId}, #{userId}, #{time})
     </select>
 
     <select id="findFavorByMovieIdAndUserId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
-        select movie_id movieId,
-          user_id userId,
-          insert_time time
-         from tbl_movie_favor where movie_id = #{movieId} and user_id =#{userId} limit 1
+        select movie_id  movieId,
+               user_id   userId,
+               init_time time
+        from tbl_movie_favor
+        where movie_id = #{movieId}
+          and user_id = #{userId}
+        limit 1
     </select>
 
     <select id="findFavorByMovieId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
-        select movie_id movieId,
-          user_id userId,
-          insert_time time
-         from tbl_movie_favor where movie_id = #{movieId}
+        select movie_id  movieId,
+               user_id   userId,
+               init_time time
+        from tbl_movie_favor
+        where movie_id = #{movieId}
     </select>
 
     <select id="selectMovieIdByUserId" resultType="java.lang.Long">
-        select movie_id from  tbl_movie_favor where user_id = #{userId}
+        select movie_id
+        from tbl_movie_favor
+        where user_id = #{userId}
     </select>
 </mapper>
