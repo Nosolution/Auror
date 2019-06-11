@@ -4,6 +4,7 @@ import org.seec.muggle.auror.po.Hall;
 import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.po.MoviePO;
 import org.seec.muggle.auror.po.ScenePO;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
 
 import java.util.Date;
@@ -18,7 +19,7 @@ public class InfoVO {
     Long sceneId;
     Integer price;
     String hallName;
-    Date date;
+    String date;
     IntervalVO interval;
     Integer[][] seats;
     String movieName;
@@ -64,11 +65,11 @@ public class InfoVO {
         this.hallName = hallName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -92,7 +93,7 @@ public class InfoVO {
         this.sceneId = scenePO.getId();
         this.price = scenePO.getPrice();
         this.hallName = hall.getName();
-        this.date = scenePO.getDate();
+        this.date = DateUtil.dateToString(scenePO.getDate());
         this.interval = new IntervalVO(scenePO.getStartTime(),scenePO.getEndTime());
         this.seats = seats;
         this.movieName = movie.getMovieName();
