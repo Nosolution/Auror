@@ -1,7 +1,9 @@
 package org.seec.muggle.auror.vo.movie.detail;
 
 import org.seec.muggle.auror.po.MoviePO;
+import org.seec.muggle.auror.util.DateUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MovieDetailsVO {
@@ -28,8 +30,8 @@ public class MovieDetailsVO {
     private String country;
     private String language;
     private String description;
-    private Date movieOnshow;
-    private Date visibleDate;
+    private String movieOnshow;
+    private String visibleDate;
     private Integer year;
     /**
      * 导演
@@ -139,20 +141,20 @@ public class MovieDetailsVO {
         this.country = country;
     }
 
-    public Date getMovieOnshow() {
+    public String getMovieOnshow() {
         return movieOnshow;
     }
 
     public void setMovieOnshow(Date movieOnshow) {
-        this.movieOnshow = movieOnshow;
+        this.movieOnshow = DateUtil.dateToString(movieOnshow);
     }
 
-    public Date getVisibleDate() {
+    public String getVisibleDate() {
         return visibleDate;
     }
 
     public void setVisibleDate(Date visibleDate) {
-        this.visibleDate = visibleDate;
+        this.visibleDate = DateUtil.dateToString(visibleDate);
     }
 
     public Integer getYear() {
@@ -203,7 +205,7 @@ public class MovieDetailsVO {
         this.movieType = po.getMovieType();
         this.posterUrl = po.getPosterUrl();
         this.year = po.getMovieYear();
-        this.movieOnshow = po.getStartDate();
-        this.visibleDate = po.getVisibleDate();
+        this.movieOnshow = DateUtil.dateToString(po.getStartDate());
+        this.visibleDate = DateUtil.dateToString(po.getVisibleDate());
     }
 }

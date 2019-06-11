@@ -4,6 +4,8 @@ import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.member.MemberService;
 import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
+import org.seec.muggle.auror.security.JwtToken;
+import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
@@ -14,8 +16,11 @@ import org.seec.muggle.auror.vo.user.member.MemberVO;
 import org.seec.muggle.auror.vo.user.message.UnreadNumVO;
 import org.seec.muggle.auror.vo.user.register.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description TODO
@@ -27,6 +32,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api")
 public class AccountController {
+    @Autowired
+    private JwtUtil jwtTokenUtil;
+
+    @Value("${jwt.header}")
+    private String tokenHeader;
+
     @Autowired
     AccountService accountService;
 
@@ -52,7 +63,7 @@ public class AccountController {
         if (basicVO.isSucc()) {
             return ResponseEntity.ok("");
         } else {
-            return ResponseEntity.status(405).body(basicVO.getMsg());
+            return ResponseEntity.status(200).body(basicVO.getMsg());
         }
     }
 
@@ -99,5 +110,10 @@ public class AccountController {
         UnreadNumVO vo = new UnreadNumVO();
         vo.setUnreadNum(messageService.getUnreadNum(userId));
         return ResponseEntity.ok(vo);
+    }
+
+    private Long getIdFromRequest(HttpServletRequest request){
+        String token = request.getHeader(tokenHeader).substring(7);
+        return Long.parseLong(jwtTokenUtil.getUsernameFromToken(token));
     }
 }

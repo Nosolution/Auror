@@ -13,7 +13,7 @@
         select * from tbl_scene where id = #{sceneId}
     </select>
 
-    <select id="selectBymovieId" resultMap="Scene">
+    <select id="selectByMovieId" resultMap="Scene">
         select * from tbl_scene where movie_id = #{movieId}
     </select>
 

@@ -69,6 +69,7 @@
           m.poster_url,
           m.length,
           m.movie_year,
+          m.movie_status,
           director.director_url,
           director.director_name,
           actor.starring_name,
