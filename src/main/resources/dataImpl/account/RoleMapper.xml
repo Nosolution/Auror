@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.account.RoleMapper">
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into tbl_role(role_name)
+        insert into tbl_role (role_name)
         values (#{castName})
     </insert>
 
@@ -39,8 +39,8 @@
                     ofType="org.seec.muggle.auror.po.User">
             <id column="user_id" property="id"/>
             <result column="username" property="username"/>
-            <result column="last_logout_date" property="lastLogoutDate"/>
-            <result column="last_password_reset_date" property="lastPasswordResetDate"/>
+            <result column="last_logout_date" property="lastLogoutTime"/>
+            <result column="last_password_reset_date" property="lastPasswordResetTime"/>
         </collection>
 
         <collection property="permissions" javaType="ArrayList"

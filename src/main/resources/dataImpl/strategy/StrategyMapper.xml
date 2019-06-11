@@ -39,7 +39,7 @@
     </select>
 
     <insert id="insertEvent" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.EventPO">
-        insert into tbl_event (startTime, endTime, description, event_name, coupon_id, Expiration)
+        insert into tbl_event (startTime, endTime, description, event_name, coupon_id, expiration)
         values (#{startTime}, #{endTime}, #{description}, #{eventName}, #{couponId}, #{expiration})
     </insert>
 
@@ -101,7 +101,8 @@
                endTime     endTime,
                description description,
                event_name  eventName,
-               coupon_id   couponId
+               coupon_id   couponId,
+              expiration  expiration
         from tbl_event
     </select>
 
@@ -150,7 +151,7 @@
         set member_name=#{memberStrategyName},
             url=#{memberPictureUrl},
             price=#{purchaseThreshold},
-            rate       =#{memberDiscountRate}
+            rate=#{memberDiscountRate}
         where id = #{memberStrategyId}
     </update>
 

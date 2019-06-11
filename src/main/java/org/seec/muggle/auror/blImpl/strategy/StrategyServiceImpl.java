@@ -255,7 +255,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     private Date dayPlusTimes(Date current, Integer times) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(current);
-        calendar.add(Calendar.HOUR, times);
+        calendar.add(Calendar.DATE, times);
         return calendar.getTime();
     }
 
