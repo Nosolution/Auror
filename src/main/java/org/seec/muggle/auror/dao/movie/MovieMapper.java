@@ -31,8 +31,6 @@ public interface MovieMapper {
 
     MoviePO findMovieById(@Param("id") Long id);
 
-    MoviePO findByMovieName(@Param("movieName")String movieName);
-
     int insertCast(CastPO po);
 
     int insertMovieCast(@Param("movieId")Long movieId,@Param("castId")Long castId,@Param("role") String role);

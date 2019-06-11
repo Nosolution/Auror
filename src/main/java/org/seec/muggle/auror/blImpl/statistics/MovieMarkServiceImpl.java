@@ -115,6 +115,8 @@ public class MovieMarkServiceImpl implements MovieMarkService {
                 vo.setMovieType(po.getMovieType());
                 vo.setMovieName(po.getMovieName());
                 vo.setMovieStatus(po.getStatus());
+                vo.setPosterUrl(po.getPosterUrl());
+
                 List<ScenePO> scenes = sceneService4Mark.getScenesById(po.getId());
                 if(orderService4Mark.hasSeen(userId,scenes)==1){
                     vo.setUserStatus(1);

@@ -21,7 +21,10 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description TODO
@@ -68,11 +71,11 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         List<MovieBoxOfficeMap> maps = new ArrayList<>();
         movies.forEach(o -> {
             MovieBoxOfficeMap map = new MovieBoxOfficeMap();
-            map.setBoxOffice(statisticsService4Movie.getBoxOffice(o.getId()));
+//            map.setBoxOffice(statisticsService4Movie.getBoxOffice(o.getId()));
             map.setMovieId(o.getId());
             maps.add(map);
         });
-        maps.sort(Comparator.comparing(MovieBoxOfficeMap::getBoxOffice));
+//        maps.sort(Comparator.comparing(MovieBoxOfficeMap::getBoxOffice));
         List<MoviePopularVO> vos = new ArrayList<>();
         for (int i = maps.size() - 1; i >= 0; i--) {
             MoviePopularVO vo = new MoviePopularVO();

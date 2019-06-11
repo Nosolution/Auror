@@ -57,7 +57,7 @@ public class MemberVO {
     }
 
     public MemberVO(MemberPO memberPO, MemberStrategyPO strategyPO){
-        this.memberCredit = memberPO.getThreshold();
+        this.memberCredit = memberPO.getCredit();
         this.memberDiscount = strategyPO.getRate();
         this.memberId = memberPO.getId();
         this.memberPictureurl = strategyPO.getUrl();

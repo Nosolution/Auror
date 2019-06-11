@@ -7,7 +7,6 @@ import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
 import org.seec.muggle.auror.vo.order.purchase.VipPurchaseForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
-import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.order.refund.RefundForm;
 import org.seec.muggle.auror.vo.order.refund.RefundVO;
 import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentForm;
@@ -98,8 +97,8 @@ public class OrderController {
 
     @GetMapping(value = "/member/recharge/history")
     public ResponseEntity<?> getChargeHistory() {
-        Long userId = 1l;
-        RechargeHistoryVO[] vos = orderService.getRechargeHistory(userId);
-        return ResponseEntity.ok(vos);
+//        Long userId = 1l;
+//        RechargeHistoryVO[] vos = orderService.getRechargeHistory(userId);
+        return ResponseEntity.ok(null);
     }
 }

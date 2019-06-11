@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.message.MessageMapper">
     <select id="getMessages" resultMap="Message">
-        select * from tbl_message where user_id=#{userId}
+        select *
+        from tbl_message
+        where user_id = #{userId}
     </select>
 
 
@@ -10,7 +12,10 @@
         insert into tbl_message (message_type, message_title, message_content, init_time, message_status, movie_id, user_id) values ()
     </insert>
     <select id="getUnreadNums" resultType="java.lang.Integer">
-        select count(*) from tbl_message where user_id=#{userId}
+        select count(*)
+        from tbl_message
+        where user_id = #{userId}
+
     </select>
 
     <resultMap id="Message" type="org.seec.muggle.auror.po.Message">

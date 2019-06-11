@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         RechargePO rechargePO = new RechargePO();
         rechargePO.setCost(cost);
         rechargePO.setUserId(userId);
-        rechargePO.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        rechargePO.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
         rechargePO.setType(1);
         orderMapper.insertRecharge(rechargePO);
         return new BasicVO();
@@ -180,7 +180,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         RechargePO rechargePO = new RechargePO();
         rechargePO.setCost(form.getCost());
         rechargePO.setUserId(userId);
-        rechargePO.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        rechargePO.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
         rechargePO.setType(2);
         orderMapper.insertRecharge(rechargePO);
         memberService4Order.recharge(form.getCost(), userId);
@@ -188,7 +188,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         if (po == null) { //说明已经是至高会员了
             RechargeVO vo = new RechargeVO();
             vo.setUpgraded(false);
-            vo.setCredit(form.getCost() + memberPO.getThreshold());
+            vo.setCredit(form.getCost() + memberPO.getCredit());
             vo.setNewMemberDiscountRate(strategyPOS.get(strategyPOS.size() - 1).getRate());
             vo.setNewMemberPictureUrl(strategyPOS.get(strategyPOS.size() - 1).getUrl());
             vo.setNewMemberStrategyName(strategyPOS.get(strategyPOS.size() - 1).getName());
@@ -196,7 +196,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         } else if (po.getId().equals(memberPO.getStrategyId())) {
             RechargeVO vo = new RechargeVO();
             vo.setUpgraded(false);
-            vo.setCredit(form.getCost() + memberPO.getThreshold());
+            vo.setCredit(form.getCost() + memberPO.getCredit());
             vo.setNewMemberDiscountRate(po.getRate());
             vo.setNewMemberPictureUrl(po.getUrl());
             vo.setNewMemberStrategyName(po.getName());
@@ -204,7 +204,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         } else {
             RechargeVO vo = new RechargeVO();
             vo.setUpgraded(true);
-            vo.setCredit(form.getCost() + memberPO.getThreshold());
+            vo.setCredit(form.getCost() + memberPO.getCredit());
             vo.setNewMemberDiscountRate(po.getRate());
             vo.setNewMemberPictureUrl(po.getUrl());
             vo.setNewMemberStrategyName(po.getName());
@@ -220,7 +220,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         recharges.forEach(o -> {
             RechargeHistoryVO vo = new RechargeHistoryVO();
             vo.setCost(o.getCost());
-            vo.setTime(o.getTimestamp());
+            vo.setTime(o.getInitTime());
             vos.add(vo);
         });
         return vos.toArray(new RechargeHistoryVO[vos.size()]);

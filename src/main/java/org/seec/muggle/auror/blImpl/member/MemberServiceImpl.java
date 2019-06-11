@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     @Override
     public void recharge(Integer cost, Long userId) {
         MemberPO po = memberMapper.selectMemberById(userId);
-        memberMapper.updateCredit(cost + po.getThreshold(), userId);
+        memberMapper.updateCredit(cost + po.getCredit(), userId);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
         } else {
             Member4Account account = new Member4Account();
             account.setMember(true);
-            account.setMemberCredit(po.getThreshold());
+            account.setMemberCredit(po.getCredit());
             return account;
         }
 
@@ -74,10 +74,10 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     @Override
     public boolean payByMember(Integer cost, Long userId) {
         MemberPO member = memberMapper.selectMemberById(userId);
-        if (member.getThreshold() < cost) {
+        if (member.getCredit() < cost) {
             return false;
         } else {
-            memberMapper.updateCredit(member.getThreshold() - cost, userId);
+            memberMapper.updateCredit(member.getCredit() - cost, userId);
         }
         return true;
     }
