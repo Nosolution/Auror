@@ -41,6 +41,8 @@ public interface MovieMapper {
 
     int updateByMovieId(MoviePO po);
 
+    int updateMovieState(@Param("status")Integer status,@Param("movieId")Long movieId);
+
     int deleteMovieCastByMovieId(@Param("movieId")Long movieId);
 
     CastPO findCastByName(@Param("castName")String castname);

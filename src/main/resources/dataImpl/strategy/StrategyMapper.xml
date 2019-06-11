@@ -35,10 +35,10 @@
     </select>
 
     <insert id="insertEvent" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.EventPO">
-        insert  into tbl_event (startTime, endTime, description,event_name,coupon_id) values (#{startTime},#{endTime},#{description},#{eventName},#{couponId})
+        insert  into tbl_event (startTime, endTime, description,event_name,coupon_id,Expiration) values (#{startTime},#{endTime},#{description},#{eventName},#{couponId},#{expiration})
     </insert>
 
-    <select id="selectCouponIdsByMovieId" resultType="java.lang.Long">
+    <select id="selectEventIdsByMovieId" resultType="java.lang.Long">
         select event_id from tbl_event_movie where movie_id=#{movieId};
     </select>
 

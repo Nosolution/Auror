@@ -49,6 +49,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         Timestamp endTime = Timestamp.valueOf(end);
         ScenePO po = new ScenePO(movieId, startTime, endTime, hallId, price, date);
         sceneMapper.insertScene(po);
+        movieService4Scene.setOnScene(movieId);
         return new BasicVO();
     }
 

@@ -44,7 +44,7 @@ public interface StrategyMapper {
 
     List<Long> selectMoviesByEventId(@Param("eventId")Long eventId);
 
-    List<Long> selectCouponIdsByMovieId(@Param("movieId")Long movieId);
+    List<Long> selectEventIdsByMovieId(@Param("movieId")Long movieId);
 
     List<Long> selectUsersByMemberStrategyId(Long strategyId);
 

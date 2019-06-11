@@ -4,14 +4,18 @@
     
     <insert id="insertMovie" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.MoviePO">
         insert into tbl_movie(
-        movie_name, description, visible_date, start_date, end_date, movie_type, movie_country, movie_language, poster_url, length , movie_year
+        movie_name, description, visible_date, start_date, end_date, movie_type, movie_country, movie_language, poster_url, length , movie_year, movie_status
         )        
         values (
           #{movieName},#{description},#{visibleDate},
           #{startDate},#{endDate},#{movieType},
-          #{country},#{language},#{posterUrl},#{length},#{movieYear}
+          #{country},#{language},#{posterUrl},#{length},#{movieYear},1
         )
     </insert>
+
+    <update id="updateMovieState">
+        update tbl_movie set movie_status = #{status} where id=#{movieId}
+    </update>
 
     <update id="updateByMovieId" parameterType="org.seec.muggle.auror.po.MoviePO">
         update tbl_movie set movie_name=#{movieName},description=#{description},visible_date=#{visibleDate},

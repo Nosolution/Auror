@@ -238,4 +238,9 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     public MoviePO getMovie4Scene(Long movieId) {
         return movieMapper.findMovieById(movieId);
     }
+
+    @Override
+    public void setOnScene(Long movieId) {
+        movieMapper.updateMovieState(2,movieId);
+    }
 }

@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.order.recharge_history;
 
+import org.seec.muggle.auror.util.DateUtil;
+
 import java.sql.Timestamp;
 
 /**
@@ -9,15 +11,15 @@ import java.sql.Timestamp;
  * @Version 1.0
  **/
 public class RechargeHistoryVO {
-    Timestamp time;
+    String time;
     Integer cost;
 
-    public Timestamp getTime() {
+    public String getTime() {
         return time;
     }
 
     public void setTime(Timestamp time) {
-        this.time = time;
+        this.time = DateUtil.timestampToString(time);
     }
 
     public Integer getCost() {

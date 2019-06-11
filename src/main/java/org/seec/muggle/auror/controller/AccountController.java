@@ -87,13 +87,13 @@ public class AccountController {
         }
     }
 
-    @GetMapping(value = "/message")
+    @GetMapping(value = "/user/message")
     public ResponseEntity<?> getMessage() {
-        Long userId = 1L;
+        Long userId = 2L;
         return ResponseEntity.ok(messageService.messages(userId));
     }
 
-    @GetMapping(value = "/message/unread_num")
+    @GetMapping(value = "/user/message/unread_num")
     public ResponseEntity getUnreadNum() {
         Long userId = 1l;
         UnreadNumVO vo = new UnreadNumVO();

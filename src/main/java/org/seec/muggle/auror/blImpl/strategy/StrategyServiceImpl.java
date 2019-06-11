@@ -233,25 +233,27 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public List<CouponPO> sendCoupons(Long movieId, Long userId) {
-        List<Long> coupons = strategyMapper.selectCouponIdsByMovieId(movieId);
+        List<Long> events = strategyMapper.selectEventIdsByMovieId(movieId);
         List<CouponPO> pos = new ArrayList<>();
-        for (Long coupon : coupons) {
+        for (Long event : events) {
+            EventPO eventPO = strategyMapper.selectEventsById(event);
+            Long coupon = eventPO.getCouponId();
             CouponPO po = strategyMapper.selectCouponById(coupon);
             pos.add(po);
             UserCouponPO userCouponPO = new UserCouponPO();
             userCouponPO.setUserId(userId);
             userCouponPO.setStart(new Date());
-            userCouponPO.setEnd(dayPlus20(new Date()));
+            userCouponPO.setEnd(dayPlusTimes(new Date(),eventPO.getExpiration()));
             userCouponPO.setCouponId(coupon);
             strategyMapper.insertUserCoupon(userCouponPO);
         }
         return pos;
     }
 
-    private Date dayPlus20(Date current) {
+    private Date dayPlusTimes(Date current,Integer times) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(current);
-        calendar.add(Calendar.DATE, 20);
+        calendar.add(Calendar.HOUR, times);
         return calendar.getTime();
     }
 

@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.user.message;
 
+import org.seec.muggle.auror.util.DateUtil;
+
 import java.sql.Timestamp;
 
 /**
@@ -12,7 +14,7 @@ public class MessageVO {
     Integer messageType; //<0: 被赠送优惠券>, <1: 想看电影上映>, <3: 邀请点评>, <4: 其他>,
     String messageTitle; //消息标题
     String messageContent; //消息内容
-    Timestamp initTime;// 发送时间
+    String initTime;// 发送时间
     Integer messageStatus; // <0: 未读>, <1: 已读> 第一次GET得到的状态是未读，之后GET得到的状态都是已读
     Long additionalMovieId;
 
@@ -40,12 +42,12 @@ public class MessageVO {
         this.messageContent = messageContent;
     }
 
-    public Timestamp getInitTime() {
+    public String getInitTime() {
         return initTime;
     }
 
     public void setInitTime(Timestamp initTime) {
-        this.initTime = initTime;
+        this.initTime = DateUtil.timestampToString(initTime);
     }
 
     public Integer getMessageStatus() {

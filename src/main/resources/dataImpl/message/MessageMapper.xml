@@ -5,6 +5,10 @@
         select * from tbl_message where user_id=#{userId}
     </select>
 
+
+    <insert id="ss">
+        insert into tbl_message (message_type, message_title, message_content, init_time, message_status, movie_id, user_id) values ()
+    </insert>
     <select id="getUnreadNums" resultType="java.lang.Integer">
         select count(*) from tbl_message where user_id=#{userId}
     </select>

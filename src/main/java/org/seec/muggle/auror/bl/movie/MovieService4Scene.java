@@ -12,4 +12,6 @@ public interface MovieService4Scene {
     Integer getLengthById(Long movieId);
 
     MoviePO getMovie4Scene(Long movieId);
+
+    void setOnScene(Long movieId);
 }
