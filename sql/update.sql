@@ -98,7 +98,7 @@ VALUES (1,
 -- ==========================================================================================================================
 
 -- ==========================================================================================================================
-insert into tbl_scene(id, movie_id, start, end, hall_id, price, date)
+insert into tbl_scene(id, movie_id, start_time, end_time, hall_id, price, date)
 VALUES (1, 101, '2019-06-08 10:00:00', '2019-06-08 11:54:00', 1, 50, '2019-06-08'),
        (2, 101, '2019-06-08 12:00:00', '2019-06-08 13:54:00', 2, 60, '2019-06-08'),
        (3, 101, '2019-06-08 13:30:00', '2019-06-08 15:24:00', 1, 55, '2019-06-08'),
@@ -128,11 +128,11 @@ VALUES (101, 1, '2019-06-07 10:00:00'),
 
 
 -- ==========================================================================================================================
-insert into tbl_coupon(id, coupon_name, description, discount, threshold, url)
+insert into tbl_coupon(id, coupon_name, description, benefit, threshold, url)
 VALUES (1, '优惠券1', '折扣较小的优惠券', 15, 49, 'xxx'),
        (2, '优惠券2', '折扣较大的优惠券', 20, 49, 'xxx');
 
-insert into tbl_event(id, event_name, startTime, endTime, description, coupon_id)
+insert into tbl_event(id, event_name, start_time, end_time, description, coupon_id)
 VALUES (1, '夏季大优惠', '2019-06-01', '2019-08-30', '这里是描述', 1),
        (2, '电影节', '2019-06-01', '2019-07-01', '这里也是描述', 2);
 

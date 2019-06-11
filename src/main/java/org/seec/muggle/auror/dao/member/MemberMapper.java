@@ -13,7 +13,7 @@ import org.seec.muggle.auror.po.MemberPO;
 @DaoMapper
 public interface MemberMapper {
 
-    MemberPO selectMemberById(@Param("userId")Long userId);
+    MemberPO getMemberById(@Param("userId") Long userId);
 
     int updateMemberById(@Param("userId")Long userId,@Param("strategyId")Long strategyId);
 

@@ -9,6 +9,7 @@ import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.order.OrderMapper;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.CaptchaUtil;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
@@ -109,7 +110,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
      **/
     @Override
     public Double refundOrder(Long orderId) {
-        Integer cost = orderMapper.findOrderById(orderId).getCost();
+        Integer cost = orderMapper.getOrderById(orderId).getCost();
         RefundPO refundStrategy = strategyService4Order.getRefund();
         Double amount = refundStrategy.getRate() * (double) cost;
         orderMapper.cancelOrder(orderId);
@@ -137,7 +138,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public int hasSeen(Long userId, List<ScenePO> sceneId) {
         for (ScenePO scenePO : sceneId) {
-            if (orderMapper.findOrderByUserIdAndSceneId(userId, scenePO.getId()) != null) {
+            if (orderMapper.getOrderByUserIdAndSceneId(userId, scenePO.getId()) != null) {
                 return 1;
             }
         }
@@ -146,10 +147,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public UnfinishedOrderVO checkUnfinishedOrder(Long orderId) {
-        OrderPO orderPO = orderMapper.findOrderById(orderId);
+        OrderPO orderPO = orderMapper.getOrderById(orderId);
         ScenePO scenePO = sceneService4Order.selectSceneByID(orderPO.getSceneId());
         HallPO hallPO = hallService4Order.selectHallById(scenePO.getHallId());
-        List<TicketPO> ticketPOS = orderMapper.findSeatsById(orderId);
+        List<TicketPO> ticketPOS = orderMapper.getSeatsById(orderId);
         List<AvailableCouponsVO> couponPOS = strategyService4Order.getCouponsByCost(ticketPOS.size() * scenePO.getPrice(), orderPO.getUserId());
 
         UnfinishedOrderVO vo = new UnfinishedOrderVO(orderPO, scenePO, hallPO, ticketPOS, couponPOS, movieService4Order.getMovieNameById(scenePO.getMovieId()));
@@ -223,7 +224,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         recharges.forEach(o -> {
             RechargeHistoryVO vo = new RechargeHistoryVO();
             vo.setCost(o.getCost());
-            vo.setTime(o.getInitTime());
+            vo.setTime(DateUtil.timestampToString(o.getInitTime()));
             vos.add(vo);
         });
         return vos.toArray(new RechargeHistoryVO[vos.size()]);
@@ -231,7 +232,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public List<TicketPO> getTicketsBySceneId(Long sceneId) {
-        return orderMapper.findSeatsBySceneId(sceneId);
+        return orderMapper.getSeatsBySceneId(sceneId);
     }
 
     @Override
@@ -242,7 +243,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public ThirdPartyPaymentVO finishByThird_party(ThirdPartyPaymentForm form) {
-        OrderPO orderPO = orderMapper.findOrderById(form.getOrderId());
+        OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
         Integer cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
 
         Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
@@ -256,7 +257,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public MemberPaymentVO finishByMember(MemberPaymentForm form) {
-        OrderPO orderPO = orderMapper.findOrderById(form.getOrderId());
+        OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
         Integer cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
 
         Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
@@ -290,10 +291,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public TicketDetailVO[] getAllOrders(Long userId) {
-        List<OrderPO> orders = orderMapper.findAllOrdersByUser(userId);
+        List<OrderPO> orders = orderMapper.getAllOrdersByUser(userId);
         List<TicketDetailVO> vos = new ArrayList<>();
         orders.forEach(o -> {
-            List<TicketPO> ticketPOS = orderMapper.findSeatsById(o.getId());
+            List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
             ScenePO scene = sceneService4Order.selectSceneByID(o.getSceneId());
             MoviePO movie = movieService4Order.getMovieById(o.getMovieId());
             RefundPO refundPO = strategyService4Order.getRefund();

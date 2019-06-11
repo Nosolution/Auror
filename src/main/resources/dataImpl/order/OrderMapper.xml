@@ -23,7 +23,7 @@
         where id = #{orderId};
     </update>
 
-    <select id="findOrderById" resultMap="Order">
+    <select id="getOrderById" resultMap="Order">
         select *
         from tbl_order
         where id = #{orderId};
@@ -46,7 +46,7 @@
           and status = 1
     </select>
 
-    <select id="findOrderByUserIdAndSceneId" resultMap="Order">
+    <select id="getOrderByUserIdAndSceneId" resultMap="Order">
         select *
         from tbl_order
         where user_id = #{userId}
@@ -61,7 +61,7 @@
           and status = 1
     </select>
 
-    <select id="findSeatsById" resultMap="Ticket">
+    <select id="getSeatsById" resultMap="Ticket">
         select order_id,
                scene_id,
                `row`,
@@ -70,7 +70,7 @@
         where order_id = #{orderId}
     </select>
 
-    <select id="findSeatsBySceneId" resultMap="Ticket">
+    <select id="getSeatsBySceneId" resultMap="Ticket">
         select order_id,
                scene_id,
                `row`,
@@ -106,7 +106,7 @@
         where user_id = #{userId}
     </select>
 
-    <select id="findAllOrdersByUser" resultMap="Order">
+    <select id="getAllOrdersByUser" resultMap="Order">
         select *
         from tbl_order
         where user_id = #{userId}

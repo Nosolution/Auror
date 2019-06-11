@@ -11,7 +11,7 @@ import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.delete.MovieDelete;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
 import org.seec.muggle.auror.vo.movie.marking.MovieMarkForm;
-import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
+import org.seec.muggle.auror.vo.movie.onshelf.MovieOnShelfVO;
 import org.seec.muggle.auror.vo.movie.popularity.MoviePopularVO;
 import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
 import org.seec.muggle.auror.vo.movie.statistics.BoxOfficeVO;
@@ -67,7 +67,7 @@ public class MovieController {
 
     @GetMapping(value = "/onshelf")
     public ResponseEntity<?> getMovieOnShelf(){
-        MovieOnshelfVO[] vos = movieService.getMovieOnShelf();
+        MovieOnShelfVO[] vos = movieService.getMovieOnShelf();
         return ResponseEntity.ok(vos);
     }
 

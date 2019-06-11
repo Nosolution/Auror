@@ -4,7 +4,7 @@ import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
-import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
+import org.seec.muggle.auror.vo.movie.onshelf.MovieOnShelfVO;
 import org.seec.muggle.auror.vo.movie.popularity.MoviePopularVO;
 import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface MovieService {
-    public MovieOnshelfVO[] getMovieOnShelf();
+    public MovieOnShelfVO[] getMovieOnShelf();
 
     public MoviePopularVO[] getMoviePopular();
 

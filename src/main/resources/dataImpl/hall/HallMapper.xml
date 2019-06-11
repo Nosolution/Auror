@@ -7,7 +7,7 @@
         values (#{seats}, #{hallName})
     </insert>
 
-    <select id="findHallById" resultType="org.seec.muggle.auror.po.HallPO">
+    <select id="getHallById" resultType="org.seec.muggle.auror.po.HallPO">
         select id         id,
                hall_name  hallName,
                hall_seats seats
@@ -16,7 +16,7 @@
         limit 1;
     </select>
 
-    <select id="selectAll" resultType="org.seec.muggle.auror.po.HallPO">
+    <select id="getAll" resultType="org.seec.muggle.auror.po.HallPO">
         select id         id,
                hall_name  hallName,
                hall_seats seats

@@ -51,7 +51,7 @@ public class MovieMarkServiceImpl implements MovieMarkService {
     @Override
     public BasicVO mark(Long userId, Long movieId) {
         BasicVO vo = new BasicVO();
-        if(movieMarkMapper.findFavorByMovieIdAndUserId(movieId,userId) !=null){
+        if (movieMarkMapper.getFavorByMovieIdAndUserId(movieId, userId) != null) {
             vo.setMsg("重复标记");
             return vo;
         }
@@ -106,7 +106,7 @@ public class MovieMarkServiceImpl implements MovieMarkService {
 
     @Override
     public MovieMarkVO[] getFavorsByUserId(Long userId) {
-        List<Long> movies = movieMarkMapper.selectMovieIdByUserId(userId);
+        List<Long> movies = movieMarkMapper.getMovieIdByUserId(userId);
         if(movies.size()==0) {
             return new MovieMarkVO[0];
         }

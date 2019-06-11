@@ -16,7 +16,7 @@ import java.util.List;
 public interface HallMapper {
     int insertNewHall(@Param("hallName")String name,@Param("seats")String seats);
 
-    HallPO findHallById(Long hallId);
+    HallPO getHallById(Long hallId);
 
-    List<HallPO> selectAll();
+    List<HallPO> getAll();
 }

@@ -1,6 +1,5 @@
 package org.seec.muggle.auror.blImpl.account;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.bl.deal.OrderService4Account;
@@ -90,10 +89,14 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
     public LoginVO login(String username, String password) {
         LoginVO vo = new LoginVO();
         User user = userMapper.getUserByName(username);
-        if (null == user || !BCrypt.checkpw(password, user.getPassword())) {
+//        if (null == user || !BCrypt.checkpw(password, user.getPassword())) {
+//            throw new BaseException(HttpStatus.FORBIDDEN, LOGIN_ERROR);
+//        }
+        if (null == user || !password.equals(user.getPassword()))
             throw new BaseException(HttpStatus.FORBIDDEN, LOGIN_ERROR);
-        }
+
         vo.setToken(jwtUtil.generateToken(new JwtUser(
+                        user.getId(),
                         user.getUsername(),
                         user.getLastLogoutTime(),
                         user.getLastPasswordResetTime())
@@ -107,13 +110,13 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
     @Override
     public void logout(String raw) {
         String token = raw.substring(7);
-        String username = jwtUtil.getUsernameFromToken(token);
-        User user = userMapper.getUserByName(username);
+        Long id = jwtUtil.getIdFromToken(token);
+        User user = userMapper.get(id);
         user.setLastLogoutTime(new Timestamp(new Date().getTime()));
         userMapper.update(user);
     }
 
-    public User getUser(Integer id) {
+    public User getUser(Long id) {
         User user = userMapper.get(id);
         return user;
     }
@@ -147,7 +150,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
 
     @Override
     public BriefInfoVO[] getUsers() {
-        List<Long> users = userRoleMapper.selectAllUser();
+        List<Long> users = userRoleMapper.getAllUser();
         List<BriefInfoVO> vos = new ArrayList<>();
         users.forEach(o -> {
             BriefInfoVO vo = new BriefInfoVO();

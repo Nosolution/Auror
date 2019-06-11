@@ -51,7 +51,7 @@
         values (#{movieId}, #{castId}, #{role})
     </insert>
 
-    <select id="findCastByName" resultType="org.seec.muggle.auror.po.CastPO">
+    <select id="getCastByName" resultType="org.seec.muggle.auror.po.CastPO">
         select id         id,
                cast_name  castName,
                poster_url url

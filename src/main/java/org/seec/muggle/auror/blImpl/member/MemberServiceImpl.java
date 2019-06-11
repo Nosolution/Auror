@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
 
     @Override
     public MemberVO getPersonalMemberInfo(Long userId) {
-        MemberPO member = memberMapper.selectMemberById(userId);
+        MemberPO member = memberMapper.getMemberById(userId);
         if (member == null) {
             return null;
         } else {
@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
 
     @Override
     public MemberPO getMemberByUserId(Long userId) {
-        MemberPO po = memberMapper.selectMemberById(userId);
+        MemberPO po = memberMapper.getMemberById(userId);
         return po;
     }
 
@@ -51,13 +51,13 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
 
     @Override
     public void recharge(Integer cost, Long userId) {
-        MemberPO po = memberMapper.selectMemberById(userId);
+        MemberPO po = memberMapper.getMemberById(userId);
         memberMapper.updateCredit(cost + po.getCredit(), userId);
     }
 
     @Override
     public Member4Account getMemberByUser(Long userid) {
-        MemberPO po = memberMapper.selectMemberById(userid);
+        MemberPO po = memberMapper.getMemberById(userid);
         if (po == null) {
             Member4Account account = new Member4Account();
             account.setMember(false);
@@ -73,7 +73,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
 
     @Override
     public boolean payByMember(Integer cost, Long userId) {
-        MemberPO member = memberMapper.selectMemberById(userId);
+        MemberPO member = memberMapper.getMemberById(userId);
         if (member.getCredit() < cost) {
             return false;
         } else {

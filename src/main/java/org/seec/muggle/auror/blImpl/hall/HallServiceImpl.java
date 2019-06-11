@@ -48,7 +48,7 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
 
     @Override
     public int getSeatsNum(Long hallId) {
-        HallPO PO = hallMapper.findHallById(hallId);
+        HallPO PO = hallMapper.getHallById(hallId);
         return countString(PO.getSeats(), "1");
     }
 
@@ -63,7 +63,7 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
 
     @Override
     public SingleHallVO[] getHalls() {
-        List<HallPO> halls = hallMapper.selectAll();
+        List<HallPO> halls = hallMapper.getAll();
 
         List<SingleHallVO> vos = new ArrayList<>();
         halls.stream().forEach(o -> {
@@ -91,13 +91,13 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
 
     @Override
     public HallPO selectHallById(Long hallId) {
-        HallPO po = hallMapper.findHallById(hallId);
+        HallPO po = hallMapper.getHallById(hallId);
         return po;
     }
 
     @Override
     public Hall getHallById(Long hallId) {
-        HallPO po = hallMapper.findHallById(hallId);
+        HallPO po = hallMapper.getHallById(hallId);
         Hall hall = new Hall();
         hall.setId(po.getHallId());
         hall.setName(po.getHallName());
