@@ -30,6 +30,10 @@ public class JwtUtil implements Serializable {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    public Long getIdFromToken(String token) {
+        return Long.valueOf(getUsernameFromToken(token));
+    }
+
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
@@ -74,7 +78,7 @@ public class JwtUtil implements Serializable {
 
     public String generateToken(JwtUser user) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, user.getUsername());
+        return doGenerateToken(claims, String.valueOf(user.getId()));
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
@@ -111,10 +115,10 @@ public class JwtUtil implements Serializable {
     }
 
     public Boolean validateToken(String token, User user) {
-        final String username = getUsernameFromToken(token);
+        final Long id = getIdFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
-        return username.equals(user.getUsername())
+        return id.equals(user.getId())
                 && !isTokenExpired(token)
                 && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetTime())
                 && !isCreatedBeforeLastLogout(created, user.getLastLogoutTime());

@@ -15,6 +15,8 @@ import java.sql.Timestamp;
 @Data
 public class JwtUser {
     @NonNull
+    private Long id;
+    @NonNull
     private String username;
     private String password;
     @NonNull

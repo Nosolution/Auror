@@ -43,8 +43,9 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = jwtUtil.getUsernameFromToken(principals.toString());
-        User user = userMapper.getUserByName(username);
+        //这里的username实际为id
+        Long id = jwtUtil.getIdFromToken(principals.toString());
+        User user = userMapper.get(id);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRoles(user.getRoles()
                 .stream()
@@ -79,10 +80,10 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws BaseException {
         String token = (String) authenticationToken.getPrincipal();
-        String username = jwtUtil.getUsernameFromToken(token);
+        Long id = jwtUtil.getIdFromToken(token);
         //这里使用原来的mapper与实体User，以后可能会需要更改
         //如果user找不到，应该抛出一个异常
-        User user = userMapper.getUserByName(username);
+        User user = userMapper.get(id);
         //认证失败应该抛出一个异常，因项目还未完善，暂不处理
         if (!jwtUtil.validateToken(token, user))
             throw new AuthenticationException("Username or password error");

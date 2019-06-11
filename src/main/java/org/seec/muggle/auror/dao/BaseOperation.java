@@ -30,7 +30,7 @@ public interface BaseOperation<T> {
      * @param id 记录id
      * @return 影响行数
      */
-    T get(Integer id);
+    T get(Long id);
 
     /**
      * 删除记录
@@ -38,5 +38,5 @@ public interface BaseOperation<T> {
      * @param id 记录id
      * @return 影响行数
      */
-    T delete(Integer id);
+    T delete(Long id);
 }

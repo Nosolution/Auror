@@ -90,6 +90,11 @@ public class AccountController {
         return ResponseEntity.ok(vos);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<?> test(HttpServletRequest request) {
+        return ResponseEntity.ok(getIdFromRequest(request));
+    }
+
     @GetMapping(value = "/member/info")
     public ResponseEntity<?> getMemberInfo() {
         Long userId = 1L;
@@ -115,9 +120,8 @@ public class AccountController {
         return ResponseEntity.ok(vo);
     }
 
-    private String getIdFromRequest(HttpServletRequest request) {
+    private Long getIdFromRequest(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(7);
-
-        return jwtTokenUtil.getUsernameFromToken(token);
+        return jwtTokenUtil.getIdFromToken(token);
     }
 }
