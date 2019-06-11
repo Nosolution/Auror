@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.bl.deal;
 
+import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -8,4 +10,6 @@ package org.seec.muggle.auror.bl.deal;
  **/
 public interface OrderService4Account {
     Integer getConsumptionByUser(Long userId);
+
+    RechargeHistoryVO[] getRechargeHistory(Long userId);
 }

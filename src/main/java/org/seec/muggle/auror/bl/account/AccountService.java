@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.bl.account;
 
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.seec.muggle.auror.vo.user.login.LoginVO;
@@ -33,6 +34,8 @@ public interface AccountService {
     public UserCouponsVO[] getCoupons(Long userId);
 
     public BriefInfoVO[] getUsers();
+
+    RechargeHistoryVO[] getRechargeHistory(Long userId);
 
 }
 

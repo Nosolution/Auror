@@ -33,7 +33,6 @@ public interface OrderService {
 
     RechargeVO rechargeMember(RechargeForm form, Long userId);
 
-    RechargeHistoryVO[] getRechargeHistory(Long userId);
 
     ThirdPartyPaymentVO finishByThird_party(ThirdPartyPaymentForm form);
 

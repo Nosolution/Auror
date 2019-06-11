@@ -14,6 +14,7 @@ import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.seec.muggle.auror.vo.user.login.LoginVO;
@@ -167,5 +168,10 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
             vos.add(vo);
         });
         return vos.toArray(new BriefInfoVO[vos.size()]);
+    }
+
+    @Override
+    public RechargeHistoryVO[] getRechargeHistory(Long userId) {
+        return  orderService4Account.getRechargeHistory(userId);
     }
 }

@@ -6,6 +6,7 @@ import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.seec.muggle.auror.vo.user.login.LoginForm;
@@ -123,5 +124,12 @@ public class AccountController {
     private Long getIdFromRequest(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(7);
         return jwtTokenUtil.getIdFromToken(token);
+    }
+
+    @GetMapping(value = "/member/recharge/history")
+    public ResponseEntity<?> getChargeHistory() {
+        Long userId = 24l;
+        RechargeHistoryVO[] vos = accountService.getRechargeHistory(userId);
+        return ResponseEntity.ok(vos);
     }
 }
