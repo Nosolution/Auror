@@ -135,14 +135,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         if (po == null) {
             return new MovieDetailsVO();
         }
-        Date date = new Date();
-        if (date.before(po.getVisibleDate())) {
-            return new MovieDetailsVO(po, 0);
-        } else if (date.after(po.getEndDate())) {
-            return new MovieDetailsVO(po, 2);
-        } else {
-            return new MovieDetailsVO(po, 1);
-        }
+        return  new MovieDetailsVO(po,po.getStatus());
     }
 
     @Override

@@ -136,4 +136,12 @@ public class MovieAddForm {
     public void setLength(Integer length) {
         this.length = length;
     }
+
+    public Date getMovieOnshow() {
+        return startDate;
+    }
+
+    public void setMovieOnshow(Date movieOnshow) {
+        this.startDate = movieOnshow;
+    }
 }
