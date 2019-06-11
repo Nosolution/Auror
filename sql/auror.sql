@@ -75,13 +75,14 @@ alter table tbl_cast_movie comment '电影演职关系表';
 --            Create Date       :            2019-06-01
 --            Description       :            电影偏好关系表
 -- =============================================================================================================
---            2010-06-01        ：           修改....增加.......
+--            2010-06-11        ：           增加insert_time
 -- =============================================================================================================
 
 create table `tbl_movie_favor`
 (
     `movie_id`		bigint comment '电影id',
-    `user_id`		bigint comment '用户id'
+    `user_id`		bigint comment '用户id',
+    `insert_time`	date comment '插入时间'
 );
 alter table tbl_movie_favor comment '电影偏好关系表';
 

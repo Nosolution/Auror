@@ -52,7 +52,7 @@
         from tbl_cast where cast_name = #{castName} LIMIT 1
     </select>
 
-    <select id="getMovieOnshelf" resultMap="moviePO">
+    <select id="getMovieOnShelf" resultMap="moviePO">
       select * from tbl_movie where movie_status = 1 or movie_status = 2
     </select>
 

@@ -98,6 +98,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
                         user.getLastPasswordResetTime())
                 )
         );
+        vo.setRole(roleMapper.getRolesByUserId(user.getId()).get(0).getName());
         return vo;
 
     }

@@ -18,7 +18,7 @@ import java.util.List;
 @DaoMapper
 public interface MovieMarkMapper {
 
-    int insertMark(@Param("userId")Long userId, @Param("movieId")Long movieId, @Param("time") Date time);
+    Integer insertMark(@Param("userId")Long userId, @Param("movieId")Long movieId, @Param("time") Date time);
 
     FavorRecordPO findFavorByMovieIdAndUserId(@Param("movieId")Long movieId,@Param("userId")Long userId);
 

@@ -34,7 +34,7 @@ public class ManagerController {
         return ResponseEntity.ok("");
     }
 
-    @GetMapping(value = "/manager_list")
+    @GetMapping(value = "/manager/list")
     public ResponseEntity<?> getAllManagers() {
         return ResponseEntity.ok(managerService.getManagers());
     }

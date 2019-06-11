@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -47,8 +48,17 @@ public class DateUtil {
         return Timestamp.valueOf(now);
     }
 
-    public static String TimestamptoTimeString(Timestamp input){
+    public static String TimestampToTimeString(Timestamp input){
         String in = timestampToString(input);
         return in.split(" ")[1];
+    }
+
+    public static Timestamp datesToTimestamp(Date year, LocalTime time){
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        String yearStr = sdf.format(year);
+
+        String totalTime = yearStr+" "+time.toString();
+        return stringToTimestamp(totalTime);
+
     }
 }

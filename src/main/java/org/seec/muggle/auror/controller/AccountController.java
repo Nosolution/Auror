@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * @Description TODO
@@ -61,9 +62,9 @@ public class AccountController {
     public ResponseEntity<?> register(@RequestBody RegisterForm form) {
         BasicVO basicVO = accountService.register(form.getUsername(), form.getPassword());
         if (basicVO.isSucc()) {
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok(basicVO);
         } else {
-            return ResponseEntity.status(200).body(basicVO.getMsg());
+            return ResponseEntity.status(200).body(basicVO);
         }
     }
 
@@ -82,7 +83,11 @@ public class AccountController {
 
     @GetMapping(value = "/user/mark")
     public ResponseEntity<?> getMarkList() {
-        Long userId = 1L;
+//        String authToken = request.getHeader(tokenHeader);
+//        final String token = authToken.substring(7);
+//        String username = jwtTokenUtil.getUsernameFromToken(token);
+//        Long userId =
+        Long userId = 24L;
         MovieMarkVO[] vos = movieMarkService.getFavorsByUserId(userId);
         return ResponseEntity.ok(vos);
     }
@@ -112,8 +117,9 @@ public class AccountController {
         return ResponseEntity.ok(vo);
     }
 
-    private Long getIdFromRequest(HttpServletRequest request){
+    private String getIdFromRequest(HttpServletRequest request){
         String token = request.getHeader(tokenHeader).substring(7);
-        return Long.parseLong(jwtTokenUtil.getUsernameFromToken(token));
+
+        return jwtTokenUtil.getUsernameFromToken(token);
     }
 }

@@ -9,14 +9,17 @@ import org.seec.muggle.auror.po.Hall;
 import org.seec.muggle.auror.po.MoviePO;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.po.TicketPO;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,12 +45,13 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     OrderService4Scene orderService4Scene;
 
     @Override
-    public BasicVO addScene(Long movieId, Long hallId, Date date, Timestamp startTime, int price) {
+    public BasicVO addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
         Integer length = movieService4Scene.getLengthById(movieId);
-        LocalDateTime end = startTime.toLocalDateTime();
-        end = end.plusMinutes(length);
+        Timestamp beginTime = DateUtil.datesToTimestamp(date,startTime);
+        LocalDateTime start = beginTime.toLocalDateTime();
+        LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
-        ScenePO po = new ScenePO(movieId, startTime, endTime, hallId, price, date);
+        ScenePO po = new ScenePO(movieId, beginTime, endTime, hallId, price, date);
         sceneMapper.insertScene(po);
         movieService4Scene.setOnScene(movieId);
         return new BasicVO();
@@ -64,12 +68,13 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public BasicVO varyScene(Long sceneId, Long movieId, Long hallId, Date date, Timestamp startTime, int price) {
+    public BasicVO varyScene(Long sceneId, Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
         Integer length = movieService4Scene.getLengthById(movieId);
-        LocalDateTime end = startTime.toLocalDateTime();
-        end = end.plusMinutes(length);
+        Timestamp beginTime = DateUtil.datesToTimestamp(date,startTime);
+        LocalDateTime start = beginTime.toLocalDateTime();
+        LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
-        ScenePO po = new ScenePO(sceneId, movieId, startTime, endTime, hallId, price, date);
+        ScenePO po = new ScenePO(sceneId, movieId, beginTime, endTime, hallId, price, date);
         sceneMapper.updateScene(po);
         return new BasicVO();
     }

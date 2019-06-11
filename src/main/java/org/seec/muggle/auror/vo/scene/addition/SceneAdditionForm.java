@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.vo.scene.addition;
 
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ public class SceneAdditionForm {
     Long movieId;
     Long hallId;
     Date date;
-    Timestamp startTime;
+    LocalTime startTime;
     Integer price;
 
     public Long getMovieId() {
@@ -40,11 +41,11 @@ public class SceneAdditionForm {
         this.date = date;
     }
 
-    public Timestamp getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
