@@ -126,6 +126,14 @@
         where id = #{movieId}
     </delete>
 
+    <select id="sumScore" resultType="int">
+        select sum(score) from tbl_movie_comment where movie_id=#{movieId}
+    </select>
+
+    <select id="sumCommentNum" resultType="int">
+        select count(*) from tbl_movie_comment where movie_id=#{movieId}
+    </select>
+
     <resultMap id="moviePO" type="org.seec.muggle.auror.po.MoviePO">
         <id property="id" column="id"/>
         <result property="movieName" column="movie_name"/>

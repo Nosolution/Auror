@@ -38,6 +38,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     @Autowired
     StatisticsService4Movie statisticsService4Movie;
 
+
     @Autowired
     MovieMapper movieMapper;
 
@@ -137,7 +138,10 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         if (po == null) {
             return new MovieDetailsVO();
         }
-        return  new MovieDetailsVO(po,po.getStatus());
+        int totalScore = movieMapper.sumScore(id);
+        int scoreNum = movieMapper.sumCommentNum(id);
+        double averageScore = (double) scoreNum==0?0.0:totalScore/scoreNum;
+        return  new MovieDetailsVO(po,po.getStatus(),averageScore);
     }
 
     @Override

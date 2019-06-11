@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo;
 
+import org.seec.muggle.auror.util.DateUtil;
+
 import java.sql.Timestamp;
 
 /**
@@ -9,27 +11,28 @@ import java.sql.Timestamp;
  * @Version 1.0
  **/
 public class IntervalVO {
-    Timestamp startTime;
-    Timestamp endTime;
+    String startTime;
+    String endTime;
 
-    public Timestamp getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
     public IntervalVO(Timestamp startTime, Timestamp endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+
+        this.startTime = DateUtil.timestampToTimeString(startTime);
+        this.endTime = DateUtil.timestampToTimeString(endTime);
     }
 }

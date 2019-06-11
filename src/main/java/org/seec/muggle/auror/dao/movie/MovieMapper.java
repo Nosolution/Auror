@@ -48,4 +48,8 @@ public interface MovieMapper {
     int insertComment(@Param("movieId")Long movieId,@Param("userId")Long userId,@Param("score")Integer score,@Param("comment")String comment,@Param("time")Timestamp timestamp);
 
     int deleteMovieByMovieId(@Param("movieId")Long movieId);
+
+    int sumScore(Long movieId);
+
+    int sumCommentNum(Long movieId);
 }

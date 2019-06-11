@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
 import org.seec.muggle.auror.po.*;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
 
 
@@ -20,7 +21,7 @@ public class UnfinishedOrderVO {
     String hallName;
     Integer ticketNum;
     Integer cost;
-    Date date;
+    String date;
     IntervalVO interval;
     UnfinishedOrderSeatsVO[] selectedSeats;
     AvailableCouponsVO[] availableCoupons;
@@ -66,11 +67,11 @@ public class UnfinishedOrderVO {
         this.cost = cost;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -112,7 +113,7 @@ public class UnfinishedOrderVO {
         this.hallName = hallPO.getHallName();
         this.ticketNum = ticketPOS.size();
         this.cost = scenePO.getPrice()*ticketPOS.size();
-        this.date = scenePO.getDate();
+        this.date = DateUtil.dateToString(scenePO.getDate());
         this.interval = new IntervalVO(scenePO.getStartTime(),scenePO.getEndTime());
         this.selectedSeats = new UnfinishedOrderSeatsVO[ticketPOS.size()];
         for(int i =0;i<selectedSeats.length;i++){

@@ -62,4 +62,10 @@ public class DateUtil {
         return stringToTimestamp(totalTime);
 
     }
+
+    public static String timestampToTimeString(Timestamp input){
+        LocalDateTime ldt = input.toLocalDateTime();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
+        return df.format(ldt);
+    }
 }

@@ -24,7 +24,7 @@
     </update>
 
     <select id="findOrderById" resultMap="Order">
-        select cost
+        select *
         from tbl_order
         where id = #{orderId};
     </select>

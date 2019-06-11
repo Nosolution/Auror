@@ -8,4 +8,6 @@ package org.seec.muggle.auror.bl.statistics;
  **/
 public interface StatisticsService4Movie {
     Integer getBoxOffice(Long movieId);
+
+
 }
