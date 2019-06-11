@@ -164,6 +164,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public RechargeVO rechargeMember(RechargeForm form, Long userId) {
         List<MemberStrategyPO> strategyPOS = strategyService4Order.selectAllMemberStrategy();
+
         MemberPO memberPO = memberService4Order.getMemberByUserId(userId);
         MemberStrategyPO po = null;
         int rechargeTotal = orderMapper.sumRecharge(userId);
@@ -184,8 +185,12 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         memberService4Order.recharge(form.getCost(), userId);
 
         if (po == null) { //说明已经是至高会员了
+            po = strategyPOS.get(strategyPOS.size() - 1);
             RechargeVO vo = new RechargeVO();
-            vo.setUpgraded(false);
+            vo.setUpgraded(po.getId()!=memberPO.getStrategyId());
+            if(po.getId()!=memberPO.getStrategyId()) {
+                memberService4Order.changeStrategy(userId, po.getId());
+            }
             vo.setCredit(form.getCost() + memberPO.getCredit());
             vo.setNewMemberDiscountRate(strategyPOS.get(strategyPOS.size() - 1).getRate());
             vo.setNewMemberPictureUrl(strategyPOS.get(strategyPOS.size() - 1).getUrl());

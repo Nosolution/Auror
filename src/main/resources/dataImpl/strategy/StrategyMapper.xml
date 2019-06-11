@@ -11,8 +11,7 @@
 
     <update id="updateRefundStrategy" parameterType="org.seec.muggle.auror.po.RefundPO">
         update tbl_refund
-        set description=#{description},
-            rate=#{rate},
+        set rate=#{rate},
             before_time=#{beforeTime}
     </update>
 

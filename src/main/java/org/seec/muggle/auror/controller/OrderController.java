@@ -58,7 +58,7 @@ public class OrderController {
 
     @GetMapping(value = "/ticket")
     public ResponseEntity<?> getAllTickets() {
-        Long userId = 1L;
+        Long userId = 24L;
         TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
         if (ticketDetailVOS.length != 0) {
             return ResponseEntity.ok(ticketDetailVOS);
@@ -83,14 +83,14 @@ public class OrderController {
 
     @PostMapping(value = "/member/purchase/payment")
     public ResponseEntity<?> purchaseVIPCard(@RequestBody VipPurchaseForm form) {
-        Long userId = 1l;
+        Long userId = 24L;
         orderService.purchaseMember(userId, form.getCost(), form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/member/recharge/payment")
     public ResponseEntity<?> recharge(@RequestBody RechargeForm form) {
-        Long userId = 1l;
+        Long userId = 24L;
         RechargeVO vo = orderService.rechargeMember(form, userId);
         return ResponseEntity.ok(vo);
     }

@@ -94,7 +94,7 @@ public class AccountController {
 
     @GetMapping(value = "/member/info")
     public ResponseEntity<?> getMemberInfo() {
-        Long userId = 1L;
+        Long userId = 24L;
         MemberVO vo = memberService.getPersonalMemberInfo(userId);
         if (vo != null) {
             return ResponseEntity.ok(vo);
