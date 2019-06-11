@@ -53,19 +53,18 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
      **/
     @Override
     public MovieOnshelfVO[] getMovieOnShelf() {
-        Date date = new Date();
-        List<MoviePO> moviesOnshelf = movieMapper.getMovieOnShelf(date);
+        List<MoviePO> moviesOnshelf = movieMapper.getMovieOnShelf();
         MovieOnshelfVO[] vos = new MovieOnshelfVO[moviesOnshelf.size()];
         for (int i = 0; i < moviesOnshelf.size(); i++) {
             MoviePO po = moviesOnshelf.get(i);
-            vos[i] = new MovieOnshelfVO(po, !date.before(po.getStartDate()));//判断当前时间是否>=电影上映开始时间
+            vos[i] = new MovieOnshelfVO(po, po.getStatus()==2);//判断当前时间是否>=电影上映开始时间
         }
         return vos;
     }
 
     @Override
     public MoviePopularVO[] getMoviePopular() {
-        List<MoviePO> movies = movieMapper.getMovieOnShelf(new Date());
+        List<MoviePO> movies = movieMapper.getMovieOnShelf();
         List<MovieBoxOfficeMap> maps = new ArrayList<>();
         movies.forEach(o -> {
             MovieBoxOfficeMap map = new MovieBoxOfficeMap();

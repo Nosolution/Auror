@@ -53,7 +53,7 @@
     </select>
 
     <select id="getMovieOnshelf" resultMap="moviePO">
-      select * from tbl_movie where #{now} between visible_date and end_date;
+      select * from tbl_movie where movie_status = 1 or movie_status = 2
     </select>
 
     <select id="findMovieById" resultMap="moviePO">

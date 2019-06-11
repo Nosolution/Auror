@@ -25,7 +25,7 @@ public interface MovieMapper {
      * @Param [day]
      * @return java.util.List<org.seec.muggle.auror.po.MoviePO>
      **/
-    List<MoviePO> getMovieOnShelf(Date day);
+    List<MoviePO> getMovieOnShelf();
 
     int insertMovie(MoviePO moviePO);
 

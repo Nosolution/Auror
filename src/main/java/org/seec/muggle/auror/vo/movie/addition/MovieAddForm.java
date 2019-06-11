@@ -15,7 +15,7 @@ public class MovieAddForm {
     String movieName;
     String description;
     Date visibleDate; // 排片信息观众可见时间
-    Date movieOnshow;//?
+    Date dateOnshow;//?
     Date startDate;
     Date endDate;
     String posterUrl;
@@ -137,11 +137,11 @@ public class MovieAddForm {
         this.length = length;
     }
 
-    public Date getMovieOnshow() {
+    public Date getDateOnShow() {
         return startDate;
     }
 
-    public void setMovieOnshow(Date movieOnshow) {
-        this.startDate = movieOnshow;
+    public void setDateOnShow(Date dateOnShow) {
+        this.startDate = dateOnShow;
     }
 }
