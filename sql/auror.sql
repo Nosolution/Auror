@@ -11,7 +11,7 @@ create table `tbl_movie`
 (
     `id`             bigint       not null auto_increment comment '电影Id',
     `movie_name`     varchar(50)  NOT NULL comment '电影名称',
-    `description`    varchar(255) comment '电影简介',
+    `description`    text comment '电影简介',
     `visible_date`   date         NOT NULL comment '用户可见时间',
     `start_date`     date comment '上映起始时间',
     `end_date`       date comment '上映结束时间',
@@ -233,10 +233,11 @@ LOCK TABLES `tbl_user` WRITE;
 /*!40000 ALTER TABLE `tbl_user`
     DISABLE KEYS */;
 INSERT INTO `tbl_user`
-VALUES (1, 'testname', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
-       (2, 'test', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
+VALUES (1, 'whiskey', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
+       (2, 'huawei', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
        (3, 'root', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
-       (4, 'admin', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00');
+       (4, 'admin', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00'),
+       (5, 'passport', '123456', '2019-04-06 20:30:00', '2019-04-06 20:30:00');
 /*!40000 ALTER TABLE `tbl_user`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -280,7 +281,8 @@ VALUES (1, 1),
        (3, 2),
        (4, 1),
        (4, 2),
-       (4, 3);
+       (4, 3),
+       (5, 1);
 /*!40000 ALTER TABLE `user_role`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -534,8 +536,8 @@ alter table tbl_member_strategy
 create table `tbl_refund`
 (
     `description` varchar(255) comment '描述',
-    `rate`        float(3) NOT NULL comment '折扣',
-    `before_time` int      NOT NULL comment '距开场时间 单位:小时'
+    `rate`        decimal(10, 2) NOT NULL comment '折扣',
+    `before_time` int            NOT NULL comment '距开场时间 单位:小时'
 );
 alter table tbl_refund
     comment '退票策略';
@@ -553,11 +555,11 @@ alter table tbl_refund
 
 create table `tbl_recharge`
 (
-    `id`           bigint         not null auto_increment comment '充值记录',
-    `user_id`      bigint         NOT NULL comment '用户id',
-    `comment_time` timestamp      NOT NULL comment '充值时间',
-    `cost`         decimal(10, 2) NOT NULL comment '充值金额',
-    `type`         Integer        NOT NULL,
+    `id`        bigint         not null auto_increment comment '充值记录',
+    `user_id`   bigint         NOT NULL comment '用户id',
+    `init_time` timestamp      NOT NULL comment '充值时间',
+    `cost`      decimal(10, 2) NOT NULL comment '充值金额',
+    `type`      Integer        NOT NULL,
     primary key (id)
 );
 alter table tbl_recharge
@@ -578,7 +580,7 @@ create table `tbl_event`
     `event_name`  varchar(255) NOT NULL comment '活动名称',
     `startTime`   timestamp    NOT NULL comment '起始时间',
     `endTime`     timestamp    NOT NULL comment '结束时间',
-    `description` varchar(255) comment '描述',
+    `description` text comment '描述',
     `coupon_id`   bigint       NOT NULL comment '优惠券id',
     primary key (id)
 );

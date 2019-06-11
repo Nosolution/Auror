@@ -25,10 +25,11 @@ public class EventPO {
 
     }
 
-    public EventPO(Timestamp startTime, Timestamp endTime, String description, String eventName) {
+    public EventPO(Timestamp startTime, Timestamp endTime, String description, String eventName, Integer expiration) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
         this.eventName = eventName;
+        this.expiration = expiration;
     }
 }

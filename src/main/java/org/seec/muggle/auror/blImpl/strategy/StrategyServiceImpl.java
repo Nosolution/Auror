@@ -41,7 +41,9 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO updateRefundStrategy(Double rate, Integer beforeTime) {
-        RefundPO po = new RefundPO(beforeTime, rate);
+        RefundPO po = new RefundPO();
+        po.setBeforeTime(beforeTime);
+        po.setRate(rate);
         strategyMapper.updateRefundStrategy(po);
         return new BasicVO();
     }
@@ -81,7 +83,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO createEvent(EventForm form) {
-        EventPO po = new EventPO(form.getStartTime(), form.getEndTime(), form.getEventDescription(), form.getEventName());
+        EventPO po = new EventPO(form.getStartTime(), form.getEndTime(), form.getEventDescription(), form.getEventName(), form.getCouponExpiration());
         CouponPO couponPO = new CouponPO(form.getCouponName(), form.getCouponDescription(), form.getCouponDiscount(), form.getCouponThreshold(), form.getCouponPictureUrl());
         strategyMapper.insertCoupon(couponPO);
 
@@ -243,14 +245,14 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
             UserCouponPO userCouponPO = new UserCouponPO();
             userCouponPO.setUserId(userId);
             userCouponPO.setStart(new Date());
-            userCouponPO.setEnd(dayPlusTimes(new Date(),eventPO.getExpiration()));
+            userCouponPO.setEnd(dayPlusTimes(new Date(), eventPO.getExpiration()));
             userCouponPO.setCouponId(coupon);
             strategyMapper.insertUserCoupon(userCouponPO);
         }
         return pos;
     }
 
-    private Date dayPlusTimes(Date current,Integer times) {
+    private Date dayPlusTimes(Date current, Integer times) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(current);
         calendar.add(Calendar.HOUR, times);

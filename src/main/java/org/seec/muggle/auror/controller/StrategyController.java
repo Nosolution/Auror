@@ -40,13 +40,13 @@ public class StrategyController {
     }
 
     @GetMapping(value = "/event")
-    public ResponseEntity getStrategyEvents() {
+    public ResponseEntity<?> getStrategyEvents() {
         EventVO[] vos = strategyService.getEvents();
         return ResponseEntity.ok(vos);
     }
 
     @PostMapping(value = "/event")
-    public ResponseEntity addStrategyEvents(@RequestBody EventForm form) {
+    public ResponseEntity<?> addStrategyEvents(@RequestBody EventForm form) {
         strategyService.createEvent(form);
         return ResponseEntity.ok("");
     }

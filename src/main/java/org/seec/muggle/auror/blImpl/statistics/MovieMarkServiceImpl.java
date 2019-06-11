@@ -114,6 +114,7 @@ public class MovieMarkServiceImpl implements MovieMarkService {
                 vo.setMovieLength(po.getLength());
                 vo.setMovieType(po.getMovieType());
                 vo.setMovieName(po.getMovieName());
+                vo.setPosterUrl(po.getPosterUrl());
                 if(po.getStatus()!=3){
                     if(po.getStartDate().before(new Date())){
                         po.setStatus(2);

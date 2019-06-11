@@ -74,9 +74,10 @@ public class ShiroConfig {
         filterRuleMap.put("/401", "anon");
 //        filterRuleMap.put("/logout", "logout");//据说shiro已经帮我们实现了, 然而好像效果并不尽如人意
         filterRuleMap.put("/exception", "anon");
+        filterRuleMap.put("/**", "anon");
 
-        filterRuleMap.put("/anon_user/**", "anon");
-        filterRuleMap.put("/movie/**", "anon");
+//        filterRuleMap.put("/anon_user/**", "anon");
+//        filterRuleMap.put("/movie/**", "anon");
 //        filterRuleMap.put("/**", "jwtFilter");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;

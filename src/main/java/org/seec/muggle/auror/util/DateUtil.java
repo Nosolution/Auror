@@ -28,7 +28,8 @@ public class DateUtil {
         }
         return null;
     }
-    public static LocalDateTime stringTolocalDateTime(String input){
+
+    public static LocalDateTime stringToLocalDateTime(String input) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(input,df);
     }
@@ -43,7 +44,7 @@ public class DateUtil {
     }
 
     public static Timestamp stringToTimestamp(String input){
-        LocalDateTime now = stringTolocalDateTime(input);
+        LocalDateTime now = stringToLocalDateTime(input);
         return Timestamp.valueOf(now);
     }
 

@@ -29,7 +29,7 @@
         where id = #{id}
     </select>
 
-    <select id="selectAllMemberStrategys" resultType="org.seec.muggle.auror.po.MemberStrategyPO">
+    <select id="selectAllMemberStrategies" resultType="org.seec.muggle.auror.po.MemberStrategyPO">
         select id          id,
                member_name name,
                url         url,
@@ -56,8 +56,8 @@
     </insert>
 
     <insert id="insertUserCoupon" parameterType="org.seec.muggle.auror.po.UserCouponPO">
-        insert into user_coupon (coupon_id, user_id, `start`, `end`)
-        values (#{couponId}, #{userId}, #{start}, #{end})
+        insert into user_coupon (coupon_id, user_id, `start`, `end`, status)
+        values (#{couponId}, #{userId}, #{start}, #{end}, 1)
     </insert>
 
     <insert id="insertEventMovie">

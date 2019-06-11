@@ -24,8 +24,9 @@
     </select>
 
     <select id="selectByMovieId" resultMap="Scene">
-        select * from tbl_scene where movie_id = #{movieId}
-
+        select *
+        from tbl_scene
+        where movie_id = #{movieId}
     </select>
 
     <select id="selectEndsByMovieId" resultType="java.sql.Timestamp">

@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @Data
 public class RechargePO {
     Long userId;
-    Timestamp timestamp;
+    Timestamp initTime;
     Integer cost;
     //1代表购买，2代表充值
     Integer type;

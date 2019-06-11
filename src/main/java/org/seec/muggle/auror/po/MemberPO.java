@@ -13,6 +13,6 @@ public class MemberPO {
     Long id;
     Long strategyId;
     Long userId;
-    Integer threshold;
+    Integer credit;
 
 }

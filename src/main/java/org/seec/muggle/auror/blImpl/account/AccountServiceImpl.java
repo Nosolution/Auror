@@ -29,6 +29,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService, AccountService4Movie {
@@ -150,15 +151,15 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
         users.forEach(o -> {
             BriefInfoVO vo = new BriefInfoVO();
             vo.setUserId(o);
-            Integer orderConsumption = orderService4Account.getConsumptionByUser(o);
+            Optional<Integer> orderConsumption = Optional.ofNullable(orderService4Account.getConsumptionByUser(o));
             Member4Account member4Account = memberService4Account.getMemberByUser(o);
-            vo.setMember(member4Account.isMember());
+            vo.setIsMember(member4Account.isMember());
             if (member4Account.isMember()) {
                 vo.setMemberCredit(member4Account.getMemberCredit());
             } else {
                 vo.setMemberCredit(-1);
             }
-            vo.setUserTotalConsumption(orderConsumption);
+            vo.setUserTotalConsumption(orderConsumption.orElse(0));
             vos.add(vo);
         });
         return vos.toArray(new BriefInfoVO[vos.size()]);
