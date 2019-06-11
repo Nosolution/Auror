@@ -40,7 +40,6 @@ public class SceneController {
     @PostMapping(value = "/order/seat/selection")
     public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form) {
         SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(), form.getUserId(), form.getSelectedSeats());
-        boolean isSucc = false;
         return ResponseEntity.ok(vo);
     }
 

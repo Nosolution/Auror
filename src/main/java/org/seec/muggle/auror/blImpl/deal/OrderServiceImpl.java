@@ -72,12 +72,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         Integer cost = selectedSeats.length * sceneService4Order.getPriceByScene(sceneId);
         po.setCost(cost);
         po.setMovieId(sceneService4Order.getMovieIdByScene(sceneId));
-
-
         orderMapper.insertOrder(po);
 
         for (int i = 0; i < selectedSeats.length; i++) {
-            orderMapper.insertSeat(new TicketPO(sceneId, selectedSeats[i].getRow(), selectedSeats[i].getColumn()));
+            orderMapper.insertSeat(new TicketPO(sceneId, selectedSeats[i].getRow(), selectedSeats[i].getColumn(),po.getId()));
         }
 
         vo.setOrderId(po.getId());

@@ -19,9 +19,10 @@ public class TicketPO {
 
     }
 
-    public TicketPO(Long sceneId, Integer row, Integer column) {
+    public TicketPO(Long sceneId, Integer row, Integer column,Long orderId) {
         this.sceneId = sceneId;
         this.row = row;
         this.column = column;
+        this.orderId = orderId;
     }
 }
