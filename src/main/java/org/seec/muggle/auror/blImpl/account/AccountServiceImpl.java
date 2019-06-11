@@ -147,7 +147,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
 
     @Override
     public BriefInfoVO[] getUsers() {
-        List<Long> users = userRoleMapper.selectAllUser();
+        List<Long> users = userRoleMapper.getAllUser();
         List<BriefInfoVO> vos = new ArrayList<>();
         users.forEach(o -> {
             BriefInfoVO vo = new BriefInfoVO();

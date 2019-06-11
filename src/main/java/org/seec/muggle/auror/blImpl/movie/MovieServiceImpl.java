@@ -13,7 +13,7 @@ import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
-import org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO;
+import org.seec.muggle.auror.vo.movie.onshelf.MovieOnShelfVO;
 import org.seec.muggle.auror.vo.movie.popularity.MoviePopularVO;
 import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,19 +48,19 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     SceneService4Movie sceneService4Movie;
 
     /**
-     * @return org.seec.muggle.auror.vo.movie.onshelf.MovieOnshelfVO[]
+     * @return org.seec.muggle.auror.vo.movie.onshelf.MovieOnShelfVO[]
      * @Author jyh
      * @Description TODO //有点小问题，如果没有可见的应该传啥
      * @Date 18:41 2019/6/4
      * @Param []
      **/
     @Override
-    public MovieOnshelfVO[] getMovieOnShelf() {
+    public MovieOnShelfVO[] getMovieOnShelf() {
         List<MoviePO> moviesOnshelf = movieMapper.getMovieOnShelf();
-        MovieOnshelfVO[] vos = new MovieOnshelfVO[moviesOnshelf.size()];
+        MovieOnShelfVO[] vos = new MovieOnShelfVO[moviesOnshelf.size()];
         for (int i = 0; i < moviesOnshelf.size(); i++) {
             MoviePO po = moviesOnshelf.get(i);
-            vos[i] = new MovieOnshelfVO(po, po.getStatus()==2);//判断当前时间是否>=电影上映开始时间
+            vos[i] = new MovieOnShelfVO(po, po.getStatus() == 2);//判断当前时间是否>=电影上映开始时间
         }
         return vos;
     }
@@ -107,7 +106,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         }
         movieMapper.insertMovie(moviePO);
         for (int i = 0; i < form.getDirectors().length; i++) {
-            CastPO castPO = movieMapper.findCastByName(form.getDirectors()[i].getName());
+            CastPO castPO = movieMapper.getCastByName(form.getDirectors()[i].getName());
             //变相初始化，如果返回Null则注入一个新的cast
             if (castPO == null) {
                 castPO = new CastPO();
@@ -118,7 +117,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
             movieMapper.insertMovieCast(moviePO.getId(), castPO.getId(), "Director");
         }
         for (int i = 0; i < form.getStarrings().length; i++) {
-            CastPO castPO = movieMapper.findCastByName(form.getStarrings()[i].getName());
+            CastPO castPO = movieMapper.getCastByName(form.getStarrings()[i].getName());
             //变相初始化，如果返回Null则注入一个新的cast
             if (castPO == null) {
                 castPO = new CastPO();
@@ -175,7 +174,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         movieMapper.deleteMovieCastByMovieId(form.getMovieId());
 
         for (int i = 0; i < form.getDirectors().length; i++) {
-            CastPO castPO = movieMapper.findCastByName(form.getDirectors()[i].getName());
+            CastPO castPO = movieMapper.getCastByName(form.getDirectors()[i].getName());
             //变相初始化，如果返回Null则注入一个新的cast
             if (castPO == null) {
                 castPO = new CastPO();
@@ -186,7 +185,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
             movieMapper.insertMovieCast(form.getMovieId(), castPO.getId(), "Director");
         }
         for (int i = 0; i < form.getStarrings().length; i++) {
-            CastPO castPO = movieMapper.findCastByName(form.getStarrings()[i].getName());
+            CastPO castPO = movieMapper.getCastByName(form.getStarrings()[i].getName());
             //变相初始化，如果返回Null则注入一个新的cast
             if (castPO == null) {
                 castPO = new CastPO();

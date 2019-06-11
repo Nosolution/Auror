@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.scene.SceneMapper">
     <insert id="insertScene" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.ScenePO">
-        insert into tbl_scene (movie_id, start, end, hall_id, price, date)
+        insert into tbl_scene (movie_id, start_time, end_time, hall_id, price, date)
         values (#{movieId}, #{startTime}, #{endTime}, #{hallId}, #{price}, #{date})
     </insert>
 
     <update id="updateScene">
         update tbl_scene
         set movie_id=#{movieId},
-            start=#{startTime},
-            end=#{endTime},
+            start_time=#{startTime},
+            end_time=#{endTime},
             hall_id=#{hallId},
             price=#{price},
             date=#{date}
@@ -30,7 +30,9 @@
     </select>
 
     <select id="selectEndsByMovieId" resultType="java.sql.Timestamp">
-        select `end` from tbl_scene where movie_id = #{movieId};
+        select end_time
+        from tbl_scene
+        where movie_id = #{movieId};
     </select>
 
     <select id="selectByHallIdAndDate" resultMap="Scene">

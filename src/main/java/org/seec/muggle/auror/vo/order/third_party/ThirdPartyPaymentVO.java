@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.vo.order.third_party;
 
+import lombok.Data;
 import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
 
 /**
@@ -8,14 +9,8 @@ import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
  * @Date 2019/5/29 20:25
  * @Version 1.0
  **/
+@Data
 public class ThirdPartyPaymentVO {
     CouponsAcquirementVO[] couponsGot;
 
-    public CouponsAcquirementVO[] getCouponsGot() {
-        return couponsGot;
-    }
-
-    public void setCouponsGot(CouponsAcquirementVO[] couponsGot) {
-        this.couponsGot = couponsGot;
-    }
 }

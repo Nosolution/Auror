@@ -7,7 +7,6 @@ import org.seec.muggle.auror.po.OrderPO;
 import org.seec.muggle.auror.po.RechargePO;
 import org.seec.muggle.auror.po.TicketPO;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -27,7 +26,7 @@ public interface OrderMapper {
 
     int deleteSeat(@Param("orderId")Long orderId);
 
-    OrderPO findOrderById(@Param("orderId")Long orderId);
+    OrderPO getOrderById(@Param("orderId") Long orderId);
 
     Integer orderNumsBySceneId(@Param("sceneId")Long sceneId);
 
@@ -35,11 +34,11 @@ public interface OrderMapper {
 
     int insertRecharge(RechargePO po);
 
-    OrderPO findOrderByUserIdAndSceneId(@Param("userId")Long userId,@Param("sceneId")Long sceneId);
+    OrderPO getOrderByUserIdAndSceneId(@Param("userId") Long userId, @Param("sceneId") Long sceneId);
 
-    List<TicketPO> findSeatsById(Long orderId);
+    List<TicketPO> getSeatsById(Long orderId);
 
-    List<TicketPO> findSeatsBySceneId(Long sceneId);
+    List<TicketPO> getSeatsBySceneId(Long sceneId);
 
     Integer sumBoxOffice(Long movieId);
 
@@ -51,5 +50,5 @@ public interface OrderMapper {
 
     int finishOrder(@Param("orderId")Long orderId,@Param("cost")Integer paymeny,@Param("method")Integer method);
 
-    List<OrderPO> findAllOrdersByUser(Long userId);
+    List<OrderPO> getAllOrdersByUser(Long userId);
 }

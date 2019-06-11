@@ -105,11 +105,11 @@ alter table tbl_movie_favor
 
 create table `tbl_movie_comment`
 (
-    `id`       bigint       not null auto_increment comment '评论Id',
-    `movie_id` bigint       NOT NULL comment '电影id',
-    `user_id`  bigint       NOT NULL comment '用户id',
-    `score`    int          NOT NULL comment '评分',
-    `comment`  varchar(255) NOT NULL comment '电影评论',
+    `id`       bigint not null auto_increment comment '评论Id',
+    `movie_id` bigint NOT NULL comment '电影id',
+    `user_id`  bigint NOT NULL comment '用户id',
+    `score`    int    NOT NULL comment '评分',
+    `comment`  text   NOT NULL comment '电影评论',
     `time`     timestamp DEFAULT CURRENT_TIMESTAMP,
     primary key (id)
 );
@@ -363,13 +363,13 @@ alter table tbl_hall
 
 create table `tbl_scene`
 (
-    `id`       bigint         not null auto_increment comment '场次id',
-    `movie_id` bigint         NOT NULL comment '电影Id',
-    `start`    timestamp      NOT NULL comment '起始时间',
-    `end`      timestamp      NOT NULL comment '终止时间',
-    `hall_id`  bigint         NOT NULL comment '影厅Id',
-    `price`    decimal(10, 2) NOT NULL comment '票价',
-    `date`     date           NOT NULL comment '日期',
+    `id`         bigint         not null auto_increment comment '场次id',
+    `movie_id`   bigint         NOT NULL comment '电影Id',
+    `start_time` timestamp      NOT NULL comment '起始时间',
+    `end_time`   timestamp      NOT NULL comment '终止时间',
+    `hall_id`    bigint         NOT NULL comment '影厅Id',
+    `price`      decimal(10, 2) NOT NULL comment '票价',
+    `date`       date           NOT NULL comment '日期',
     primary key (id)
 );
 alter table tbl_scene
@@ -444,7 +444,7 @@ create table `tbl_coupon`
     `id`          bigint         not null auto_increment comment '优惠券Id',
     `coupon_name` varchar(50)    NOT NULL comment '优惠券名',
     `description` varchar(255) comment '优惠券描述',
-    `discount`    float(3)       NOT NULL comment '折扣',
+    `discount`    decimal(10, 2) NOT NULL comment '减额',
     `threshold`   decimal(10, 2) NOT NULL comment '使用门槛',
     `url`         varchar(255)   NOT NULL comment '图片',
     primary key (id)
@@ -580,8 +580,8 @@ create table `tbl_event`
 (
     `id`          bigint       not null auto_increment comment '优惠活动',
     `event_name`  varchar(255) NOT NULL comment '活动名称',
-    `startTime`   timestamp    NOT NULL comment '起始时间',
-    `endTime`     timestamp    NOT NULL comment '结束时间',
+    `start_time`  timestamp    NOT NULL comment '起始时间',
+    `end_time`    timestamp    NOT NULL comment '结束时间',
     `description` text comment '描述',
     `coupon_id`   bigint       NOT NULL comment '优惠券id',
     primary key (id)

@@ -36,25 +36,25 @@ public interface StrategyMapper {
 
     int deleteEventMovie(@Param("eventId")Long eventId);
 
-    List<EventPO> selectEvents();
+    List<EventPO> getEvents();
 
-    CouponPO selectCouponById(@Param("couponId")Long couponId);
+    CouponPO getCouponById(@Param("couponId") Long couponId);
 
-    EventPO selectEventsById(@Param("eventId")Long eventId);
+    EventPO getEventsById(@Param("eventId") Long eventId);
 
-    List<Long> selectMoviesByEventId(@Param("eventId")Long eventId);
+    List<Long> getMoviesByEventId(@Param("eventId") Long eventId);
 
-    List<Long> selectEventIdsByMovieId(@Param("movieId")Long movieId);
+    List<Long> getEventIdsByMovieId(@Param("movieId") Long movieId);
 
-    List<Long> selectUsersByMemberStrategyId(Long strategyId);
+    List<Long> getUsersByMemberStrategyId(Long strategyId);
 
     int deleteMemberStrategy(Long strategyId);
 
     int updateMemberStrategy(MemberVaryForm form);
 
-    List<CouponPO> selectCouponByCost(Integer cost);
+    List<CouponPO> getCouponByCost(Integer cost);
 
-    List<Date> selectCouponsTimes(@Param("userId")Long userId, @Param("couponId")Long couponId);
+    List<Date> getCouponsTimes(@Param("userId") Long userId, @Param("couponId") Long couponId);
 
     List<UserCouponPO> getUserCoupons(Long userId);
 

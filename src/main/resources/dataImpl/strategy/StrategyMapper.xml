@@ -39,11 +39,12 @@
     </select>
 
     <insert id="insertEvent" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.EventPO">
-        insert into tbl_event (startTime, endTime, description, event_name, coupon_id, expiration)
+
+        insert into tbl_event (start_time, end_time, description, event_name, coupon_id, Expiration)
         values (#{startTime}, #{endTime}, #{description}, #{eventName}, #{couponId}, #{expiration})
     </insert>
 
-    <select id="selectEventIdsByMovieId" resultType="java.lang.Long">
+    <select id="getEventIdsByMovieId" resultType="java.lang.Long">
         select event_id
         from event_movie
         where movie_id = #{movieId};
@@ -51,7 +52,7 @@
 
     <insert id="insertCoupon" parameterType="org.seec.muggle.auror.po.CouponPO" useGeneratedKeys="true"
             keyProperty="id">
-        insert into tbl_coupon (coupon_name, description, discount, threshold, url)
+        insert into tbl_coupon (coupon_name, description, benefit, threshold, url)
         values (#{couponName}, #{description}, #{discount}, #{threshold}, #{url})
     </insert>
 
@@ -77,50 +78,50 @@
         where event_id = #{eventId};
     </delete>
 
-    <select id="selectCouponByCost" resultType="org.seec.muggle.auror.po.CouponPO">
+    <select id="getCouponByCost" resultType="org.seec.muggle.auror.po.CouponPO">
         select id          id,
                coupon_name couponName,
                description description,
-               discount    discount,
+               benefit     discount,
                threshold   threshold,
                url         url
         from tbl_coupon
         where threshold &lt;= #{cost}
     </select>
 
-    <select id="selectCouponsTimes" resultType="java.util.Date">
+    <select id="getCouponsTimes" resultType="java.util.Date">
         select `end`
         from user_coupon
         where user_id = #{userId}
           and coupon_id = #{couponId}
     </select>
 
-    <select id="selectEvents" resultType="org.seec.muggle.auror.po.EventPO">
+    <select id="getEvents" resultType="org.seec.muggle.auror.po.EventPO">
         select id          id,
-               startTime   startTime,
-               endTime     endTime,
+               start_time  startTime,
+               end_time    endTime,
                description description,
                event_name  eventName,
                coupon_id   couponId,
-              expiration  expiration
+               expiration  expiration
         from tbl_event
     </select>
 
-    <select id="selectCouponById" resultType="org.seec.muggle.auror.po.CouponPO">
+    <select id="getCouponById" resultType="org.seec.muggle.auror.po.CouponPO">
         select id          id,
                coupon_name couponName,
                description description,
-               discount    discount,
+               benefit     discount,
                threshold   threshold,
                url         url
         from tbl_coupon
         where id = #{couponId}
     </select>
 
-    <select id="selectEventsById" resultType="org.seec.muggle.auror.po.EventPO">
+    <select id="getEventsById" resultType="org.seec.muggle.auror.po.EventPO">
         select id          id,
-               startTime   startTime,
-               endTime     endTime,
+               start_time  startTime,
+               end_time    endTime,
                description description,
                event_name  eventName,
                coupon_id   couponId
@@ -128,13 +129,13 @@
         where id = #{eventId}
     </select>
 
-    <select id="selectMoviesByEventId" resultType="java.lang.Long">
+    <select id="getMoviesByEventId" resultType="java.lang.Long">
         select movie_id
         from event_movie
         where event_id = #{eventId}
     </select>
 
-    <select id="selectUsersByMemberStrategyId" resultType="java.lang.Long">
+    <select id="getUsersByMemberStrategyId" resultType="java.lang.Long">
         select user_id
         from tbl_member
         where strategy_id = #{strategyId}

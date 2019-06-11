@@ -1,5 +1,6 @@
-package org.seec.muggle.auror.vo.scene.Vary;
+package org.seec.muggle.auror.vo.scene.vary;
 
+import lombok.Data;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 
 /**
@@ -8,14 +9,9 @@ import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
  * @Date 2019/5/29 22:58
  * @Version 1.0
  **/
+@Data
 public class SceneVaryForm extends SceneAdditionForm {
     Long sceneId;
 
-    public Long getSceneId() {
-        return sceneId;
-    }
 
-    public void setSceneId(Long sceneId) {
-        this.sceneId = sceneId;
-    }
 }

@@ -106,10 +106,10 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public EventVO[] getEvents() {
-        List<EventPO> events = strategyMapper.selectEvents();
+        List<EventPO> events = strategyMapper.getEvents();
         List<EventVO> res = new ArrayList<>();
         events.forEach(o -> {
-            EventVO vo = new EventVO(o, strategyMapper.selectCouponById(o.getCouponId()), strategyMapper.selectMoviesByEventId(o.getId()));
+            EventVO vo = new EventVO(o, strategyMapper.getCouponById(o.getCouponId()), strategyMapper.getMoviesByEventId(o.getId()));
             res.add(vo);
         });
         return res.toArray(new EventVO[res.size()]);
@@ -122,7 +122,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO deleteMemberStrategy(Long strategyId) {
-        List<Long> isInUsed = strategyMapper.selectUsersByMemberStrategyId(strategyId);
+        List<Long> isInUsed = strategyMapper.getUsersByMemberStrategyId(strategyId);
         if (isInUsed.size() == 0) {
             strategyMapper.deleteMemberStrategy(strategyId);
             BasicVO vo = new BasicVO();
@@ -135,7 +135,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public BasicVO updateMemberStrategy(MemberVaryForm form) {
-        List<Long> isInUsed = strategyMapper.selectUsersByMemberStrategyId(form.getMemberStrategyId());
+        List<Long> isInUsed = strategyMapper.getUsersByMemberStrategyId(form.getMemberStrategyId());
         if (isInUsed.size() == 0) {
             strategyMapper.updateMemberStrategy(form);
             BasicVO vo = new BasicVO();
@@ -162,10 +162,10 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public List<AvailableCouponsVO> getCouponsByCost(Integer cost, Long userId) {
-        List<CouponPO> couponPOS = strategyMapper.selectCouponByCost(cost);
+        List<CouponPO> couponPOS = strategyMapper.getCouponByCost(cost);
         List<AvailableCouponsVO> couponsVOS = new ArrayList<>();
         for (int i = 0; i < couponPOS.size(); i++) {
-            List<Date> dates = strategyMapper.selectCouponsTimes(userId, couponPOS.get(i).getId());
+            List<Date> dates = strategyMapper.getCouponsTimes(userId, couponPOS.get(i).getId());
             for (int j = 0; j < dates.size(); j++) {
                 AvailableCouponsVO vo = new AvailableCouponsVO(couponPOS.get(i).getId(), couponPOS.get(i).getCouponName(), couponPOS.get(i).getDiscount(), dates.get(i));
                 couponsVOS.add(vo);
@@ -180,7 +180,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         List<UserCouponsVO> vos = new ArrayList<>();
         uc.forEach(o -> {
             UserCouponsVO vo = new UserCouponsVO();
-            CouponPO couponPO = strategyMapper.selectCouponById(o.getCouponId());
+            CouponPO couponPO = strategyMapper.getCouponById(o.getCouponId());
             vo.setCouponDescription(couponPO.getDescription());
             vo.setCouponDiscount(couponPO.getDiscount());
             vo.setCouponEndTime(o.getEnd());
@@ -225,7 +225,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public Integer cutDownByCoupons(CouponsForm[] form, Long userId) {
         int cut = 0;
         for (int i = 0; i < form.length; i++) {
-            CouponPO couponPO = strategyMapper.selectCouponById(form[i].getCouponId());
+            CouponPO couponPO = strategyMapper.getCouponById(form[i].getCouponId());
             cut += couponPO.getDiscount();
             strategyMapper.deleteCouponUser(userId, couponPO.getId());
         }
@@ -235,12 +235,12 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public List<CouponPO> sendCoupons(Long movieId, Long userId) {
-        List<Long> events = strategyMapper.selectEventIdsByMovieId(movieId);
+        List<Long> events = strategyMapper.getEventIdsByMovieId(movieId);
         List<CouponPO> pos = new ArrayList<>();
         for (Long event : events) {
-            EventPO eventPO = strategyMapper.selectEventsById(event);
+            EventPO eventPO = strategyMapper.getEventsById(event);
             Long coupon = eventPO.getCouponId();
-            CouponPO po = strategyMapper.selectCouponById(coupon);
+            CouponPO po = strategyMapper.getCouponById(coupon);
             pos.add(po);
             UserCouponPO userCouponPO = new UserCouponPO();
             userCouponPO.setUserId(userId);

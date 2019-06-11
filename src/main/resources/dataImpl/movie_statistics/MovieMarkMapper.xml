@@ -6,7 +6,7 @@
         values (#{movieId}, #{userId}, #{time})
     </select>
 
-    <select id="findFavorByMovieIdAndUserId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
+    <select id="getFavorByMovieIdAndUserId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
         select movie_id  movieId,
                user_id   userId,
                init_time time
@@ -24,7 +24,7 @@
         where movie_id = #{movieId}
     </select>
 
-    <select id="selectMovieIdByUserId" resultType="java.lang.Long">
+    <select id="getMovieIdByUserId" resultType="java.lang.Long">
         select movie_id
         from tbl_movie_favor
         where user_id = #{userId}

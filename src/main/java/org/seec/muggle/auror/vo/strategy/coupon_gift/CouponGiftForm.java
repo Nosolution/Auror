@@ -1,5 +1,7 @@
 package org.seec.muggle.auror.vo.strategy.coupon_gift;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Date;
  * @Date 2019/5/29 21:26
  * @Version 1.0
  **/
+@Data
 public class CouponGiftForm {
     Long[] userList;
     Date startTime;
@@ -19,75 +22,4 @@ public class CouponGiftForm {
     Integer couponThreshold; //优惠券使用门槛
     String couponExpiration;
 
-    public Long[] getUserList() {
-        return userList;
-    }
-
-    public void setUserList(Long[] userList) {
-        this.userList = userList;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getCouponName() {
-        return couponName;
-    }
-
-    public void setCouponName(String couponName) {
-        this.couponName = couponName;
-    }
-
-    public String getCouponDescription() {
-        return couponDescription;
-    }
-
-    public void setCouponDescription(String couponDescription) {
-        this.couponDescription = couponDescription;
-    }
-
-    public String getCouponPictureUrl() {
-        return couponPictureUrl;
-    }
-
-    public void setCouponPictureUrl(String couponPictureUrl) {
-        this.couponPictureUrl = couponPictureUrl;
-    }
-
-    public Integer getCouponDiscount() {
-        return couponDiscount;
-    }
-
-    public void setCouponDiscount(Integer couponDiscount) {
-        this.couponDiscount = couponDiscount;
-    }
-
-    public Integer getCouponThreshold() {
-        return couponThreshold;
-    }
-
-    public void setCouponThreshold(Integer couponThreshold) {
-        this.couponThreshold = couponThreshold;
-    }
-
-    public String getCouponExpiration() {
-        return couponExpiration;
-    }
-
-    public void setCouponExpiration(String couponExpiration) {
-        this.couponExpiration = couponExpiration;
-    }
 }

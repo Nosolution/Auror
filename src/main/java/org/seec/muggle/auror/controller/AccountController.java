@@ -4,7 +4,6 @@ import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.member.MemberService;
 import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
-import org.seec.muggle.auror.security.JwtToken;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
@@ -21,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 
 /**
  * @Description TODO
@@ -110,14 +108,14 @@ public class AccountController {
     }
 
     @GetMapping(value = "/user/message/unread_num")
-    public ResponseEntity getUnreadNum() {
+    public ResponseEntity<?> getUnreadNum() {
         Long userId = 1l;
         UnreadNumVO vo = new UnreadNumVO();
         vo.setUnreadNum(messageService.getUnreadNum(userId));
         return ResponseEntity.ok(vo);
     }
 
-    private String getIdFromRequest(HttpServletRequest request){
+    private String getIdFromRequest(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(7);
 
         return jwtTokenUtil.getUsernameFromToken(token);
