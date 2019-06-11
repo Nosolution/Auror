@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public int getNumsBySceneId(Long sceneId) {
-        return orderMapper.orderNumsBySceneId(sceneId);
+        return orderMapper.TicketNumsBySceneId(sceneId);
     }
 
     @Override

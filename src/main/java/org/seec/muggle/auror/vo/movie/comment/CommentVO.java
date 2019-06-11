@@ -14,7 +14,6 @@ import org.seec.muggle.auror.util.DateUtil;
 @Data
 public class CommentVO {
     String userName;
-    String userAvatorUrl; //用户头像url
     String time; //评论时间
     String comment;
 
@@ -22,7 +21,6 @@ public class CommentVO {
     public CommentVO(CommentPO po , UserBasic basic){
         this.comment = po.getComment();
         this.time = DateUtil.timestampToString(po.getCommentTime());
-        this.userAvatorUrl = basic.getUrl();
         this.userName = basic.getUsername();
     }
 }

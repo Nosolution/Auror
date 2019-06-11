@@ -28,7 +28,7 @@ public interface OrderMapper {
 
     OrderPO getOrderById(@Param("orderId") Long orderId);
 
-    Integer orderNumsBySceneId(@Param("sceneId")Long sceneId);
+    Integer TicketNumsBySceneId(@Param("sceneId")Long sceneId);
 
     int insertMember (@Param("strategyId")Long strategyId,@Param("userId")Long userId,@Param("cost")Integer threshold);
 

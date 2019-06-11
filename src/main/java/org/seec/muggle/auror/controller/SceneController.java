@@ -2,6 +2,7 @@ package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.deal.OrderService;
 import org.seec.muggle.auror.bl.scene.SceneService;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
@@ -44,8 +45,9 @@ public class SceneController {
     }
 
     @GetMapping(value = "/info/of_hall")
-    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallId") Long hallId, @PathParam("date") Date date) {
-        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallId, date);
+    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallId") Long hallId, @PathParam("date") String date) {
+        Date date1 = DateUtil.stringToDate(date);
+        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallId, date1);
         return ResponseEntity.ok(infoVOS);
     }
 
