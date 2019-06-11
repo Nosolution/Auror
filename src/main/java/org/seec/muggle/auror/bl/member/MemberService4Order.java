@@ -15,5 +15,5 @@ public interface MemberService4Order {
 
     public void recharge(Integer cost,Long userId);
 
-    boolean  payByMember(Integer cost,Long userId);
+    Integer payByMember(Integer cost, Long userId);
 }

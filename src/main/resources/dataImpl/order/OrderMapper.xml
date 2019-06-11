@@ -19,7 +19,7 @@
 
     <update id="cancelOrder">
         update tbl_order
-        set status = 2
+        set status = 3
         where id = #{orderId};
     </update>
 
@@ -95,7 +95,7 @@
         update tbl_order
         set cost=#{cost},
             pay_method = #{method},
-            status=#{1}
+            status=1
         where id = #{orderId}
     </update>
 
@@ -120,6 +120,7 @@
         <result column="user_id" property="userId"/>
         <result column="cost" property="cost"/>
         <result column="pay_method" property="payMethod"/>
+        <result column="movie_id" property="movieId"/>
     </resultMap>
 
     <resultMap id="Recharge" type="org.seec.muggle.auror.po.RechargePO">

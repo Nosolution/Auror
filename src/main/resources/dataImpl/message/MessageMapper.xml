@@ -8,15 +8,20 @@
     </select>
 
 
-    <insert id="ss">
-        insert into tbl_message (message_type, message_title, message_content, init_time, message_status, movie_id, user_id) values ()
+    <insert id="insert" parameterType="org.seec.muggle.auror.po.Message">
+        insert into tbl_message (message_type, message_title, message_content, init_time, message_status, movie_id, user_id) values (#{type},#{title},#{content},#{initTime},0,#{additionalMovieId},#{userId})
     </insert>
+
     <select id="getUnreadNums" resultType="java.lang.Integer">
         select count(*)
         from tbl_message
-        where user_id = #{userId}
+        where user_id = #{userId} and message_status = 0
 
     </select>
+
+    <update id="readAll">
+        update tbl_message set message_status = 1 where user_id = #{userId}
+    </update>
 
     <resultMap id="Message" type="org.seec.muggle.auror.po.Message">
         <id column="id" property="id"/>

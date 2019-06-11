@@ -69,7 +69,7 @@ public class AccountController {
 
     @GetMapping(value = "/user/coupon")
     public ResponseEntity<?> getUserCoupons() {
-        Long userId = 1L;
+        Long userId = 24L;
         UserCouponsVO[] couponsVOS = accountService.getCoupons(userId);
         return ResponseEntity.ok(couponsVOS);
     }
@@ -109,13 +109,13 @@ public class AccountController {
 
     @GetMapping(value = "/user/message")
     public ResponseEntity<?> getMessage() {
-        Long userId = 2L;
+        Long userId = 24L;
         return ResponseEntity.ok(messageService.messages(userId));
     }
 
     @GetMapping(value = "/user/message/unread_num")
     public ResponseEntity<?> getUnreadNum() {
-        Long userId = 1l;
+        Long userId = 24l;
         UnreadNumVO vo = new UnreadNumVO();
         vo.setUnreadNum(messageService.getUnreadNum(userId));
         return ResponseEntity.ok(vo);

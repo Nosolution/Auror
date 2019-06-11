@@ -2,6 +2,7 @@ package org.seec.muggle.auror.vo.order.ticket;
 
 import lombok.Data;
 import org.seec.muggle.auror.po.*;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
 import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 
@@ -21,7 +22,7 @@ public class TicketDetailVO {
     String movieName;
     String moviePosterUrl;
     String hallName;
-    Date date;
+    String date;
     IntervalVO interval;
     Integer status; //0: 未完成 1: 已完成 2: 已失效
     Integer cost;
@@ -36,7 +37,7 @@ public class TicketDetailVO {
         this.movieName = movie.getMovieName();
         this.moviePosterUrl = movie.getPosterUrl();
         this.hallName = hall.getHallName();
-        this.date = scene.getDate();
+        this.date = DateUtil.dateToString(scene.getDate());
         this.interval = new IntervalVO(scene.getStartTime(),scene.getEndTime());
         this.status = status;
         this.cost = order.getCost();

@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
 import lombok.Data;
+import org.seec.muggle.auror.util.DateUtil;
 
 import java.util.Date;
 
@@ -15,13 +16,13 @@ public class AvailableCouponsVO {
     Long couponId;
     String couponName;
     Integer discount;
-    Date endTime;
+    String endTime;
 
 
     public AvailableCouponsVO(Long couponId, String couponName, Integer discount, Date endTime) {
         this.couponId = couponId;
         this.couponName = couponName;
         this.discount = discount;
-        this.endTime = endTime;
+        this.endTime = DateUtil.dateToString(endTime);
     }
 }

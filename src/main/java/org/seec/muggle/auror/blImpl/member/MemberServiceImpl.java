@@ -72,13 +72,14 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     }
 
     @Override
-    public boolean payByMember(Integer cost, Long userId) {
+    public Integer payByMember(Integer cost, Long userId) {
         MemberPO member = memberMapper.getMemberById(userId);
+        MemberStrategyPO strategyPO =strategyService4Member.getMemberStrategyById(member.getStrategyId());
         if (member.getCredit() < cost) {
-            return false;
+            return -1;
         } else {
-            memberMapper.updateCredit(member.getCredit() - cost, userId);
+            memberMapper.updateCredit(member.getCredit() - (int)(cost*strategyPO.getRate()), userId);
         }
-        return true;
+        return (int)(cost*strategyPO.getRate());
     }
 }

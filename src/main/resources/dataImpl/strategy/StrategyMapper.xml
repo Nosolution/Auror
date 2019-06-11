@@ -123,7 +123,8 @@
                end_time    endTime,
                description description,
                event_name  eventName,
-               coupon_id   couponId
+               coupon_id   couponId,
+               Expiration expiration
         from tbl_event
         where id = #{eventId}
     </select>

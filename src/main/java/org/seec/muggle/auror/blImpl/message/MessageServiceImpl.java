@@ -30,6 +30,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageVO[] messages(Long userId) {
         List<Message> messages = mapper.getMessages(userId);
+        mapper.readAll(userId);
         List<MessageVO> vos = new ArrayList<>();
         messages.forEach(o -> {
             MessageVO message = new MessageVO();

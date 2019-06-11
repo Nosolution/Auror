@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         po.setUserId(userId);
         po.setCreateTime(new Timestamp(System.currentTimeMillis()));
         po.setSceneId(sceneId);
-        po.setStatus(0);
+        po.setStatus(2);
         Integer cost = selectedSeats.length * sceneService4Order.getPriceByScene(sceneId);
         po.setCost(cost);
         po.setMovieId(sceneService4Order.getMovieIdByScene(sceneId));
@@ -244,7 +244,13 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public ThirdPartyPaymentVO finishByThird_party(ThirdPartyPaymentForm form) {
         OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
-        Integer cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
+        Integer cost ;
+        if(form.getCoupons()==null){
+            cost = 0;
+        }
+        else {
+            cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
+        }
 
         Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
         orderMapper.finishOrder(form.getOrderId(), payment, 2);
@@ -258,15 +264,25 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public MemberPaymentVO finishByMember(MemberPaymentForm form) {
         OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
-        Integer cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
+
+        Integer cost;
+        if(form.getCoupons()==null){
+            cost = 0;
+        }
+        else {
+            cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
+        }
 
         Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
         //判断余额是否足够支付
-        if (!memberService4Order.payByMember(payment, orderPO.getUserId())) {
+        int pay = memberService4Order.payByMember(payment, orderPO.getUserId());
+        if(pay ==-1) {
             return null;
         }
 
-        orderMapper.finishOrder(form.getOrderId(), payment, 1);
+        orderMapper.finishOrder(form.getOrderId(), pay, 1);
+//根据实际支付情况进行优惠券赠送。
+        orderPO = orderMapper.getOrderById(form.getOrderId());
 
         List<CouponsAcquirementVO> acquirementVOS = getAcquirementVOS(orderPO);
         MemberPaymentVO voFinal = new MemberPaymentVO();
@@ -293,6 +309,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     public TicketDetailVO[] getAllOrders(Long userId) {
         List<OrderPO> orders = orderMapper.getAllOrdersByUser(userId);
         List<TicketDetailVO> vos = new ArrayList<>();
+        if(orders.size()==0){
+            return new TicketDetailVO[0];
+        }
         orders.forEach(o -> {
             List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
             ScenePO scene = sceneService4Order.selectSceneByID(o.getSceneId());
@@ -304,7 +323,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                 LocalDateTime today = LocalDateTime.now();
                 LocalDateTime lastAvaliabeTime = scene.getStartTime().toLocalDateTime();
                 lastAvaliabeTime = lastAvaliabeTime.minusHours(refundPO.getBeforeTime());
-                status = 3;
+                if(today.isAfter(lastAvaliabeTime)) {
+                    status = 0;
+                }
             }
             TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hall);
             vos.add(vo);

@@ -18,8 +18,8 @@ public class UserCouponsVO {
     String couponPictureUrl;
     Integer couponDiscount;
     Integer couponThreshold; //使用门槛
-    Date couponStartTime;
-    Date couponEndTime;
+    String couponStartTime;
+    String couponEndTime;
     String couponExpiration; //有效期长度
 
 }

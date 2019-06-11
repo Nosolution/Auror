@@ -17,4 +17,6 @@ public interface MessageMapper extends BaseOperation {
     List<Message> getMessages(Long userId);
 
     int getUnreadNums(Long userId);
+
+    Integer readAll(Long userId);
 }
