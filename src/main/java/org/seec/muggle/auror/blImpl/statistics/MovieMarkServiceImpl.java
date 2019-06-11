@@ -8,6 +8,7 @@ import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.po.FavorRecordPO;
 import org.seec.muggle.auror.po.MoviePO;
 import org.seec.muggle.auror.po.ScenePO;
+import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
@@ -63,6 +64,7 @@ public class MovieMarkServiceImpl implements MovieMarkService {
     /**
      * @Author jyh
      * @Description //第一次尝试用stream的Compare
+     *               //修改 删除无效的0记录
      * @Date 14:37 2019/6/6
      * @Param [movieId]
      * @return org.seec.muggle.auror.vo.movie.statistics.FavorNumVO[]
@@ -74,20 +76,25 @@ public class MovieMarkServiceImpl implements MovieMarkService {
         Date maxDate = favors.stream().max(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();
         List<Date> dates = Stream.iterate(minDate, date ->ForwardDate(date) )
                 .limit((long) ((ForwardDate(maxDate).getTime() - minDate.getTime()) / 1000 / 60 / 60 / 24)).collect(Collectors.toList());
-        FavorNumVO[] vos = new FavorNumVO[dates.size()];
-        for(int i = 0;i<vos.length;i++){
+        List<FavorNumVO> vos = new ArrayList<>();
+        for(int i = 0;i<dates.size();i++){
             FavorNumVO current = new FavorNumVO();
-            current.setDate(dates.get(i));
+            String dayFormat = DateUtil.dateToString(dates.get(i));
+            current.setDate(dayFormat);
             current.setFavorNums(0);
-            vos[i] = current;
+            vos.add(current);
         }
         favors.forEach(o -> {
             int pos = dates.indexOf(o.getTime());
-            FavorNumVO current = vos[pos];
+            FavorNumVO current = vos.get(pos);
             current.setFavorNums(current.getFavorNums()+1);
-            vos[pos] = current;
+            vos.set(pos,current);
         });
-        return vos;
+        //过滤掉数值为0的日期。这是我再次修改的理由
+        List<FavorNumVO> res =  vos.stream().filter(o->
+                !o.getFavorNums().equals(0)
+        ).collect(Collectors.toList());
+        return res.toArray(new FavorNumVO[res.size()]);
     }
 
     private Date ForwardDate(Date current){
