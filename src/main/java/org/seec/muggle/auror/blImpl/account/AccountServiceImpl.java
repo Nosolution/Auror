@@ -15,7 +15,6 @@ import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
@@ -34,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AccountServiceImpl implements AccountService, AccountService4Movie , AccountService4Message {
+public class AccountServiceImpl implements AccountService, AccountService4Movie, AccountService4Message {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String LOGIN_ERROR = "用户名或密码错误";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -68,20 +67,13 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
      * @Param [username, password]
      **/
     @Override
-    public BasicVO register(String username, String password) {
+    public void register(String username, String password) {
+        User user = userMapper.getUserByName(username);
+        if (user != null)
+            throw new BaseException(HttpStatus.OK, "用户名已存在");
         try {
-            BasicVO basicVO = new BasicVO();
-            User user = userMapper.getUserByName(username);
-            if (user != null) {
-                basicVO.setSucc(false);
-                basicVO.setMsg("用户名已存在");
-                return basicVO;
-            } else {
-                insertNewCUSTOMER(username, password);
-                logger.info("账号 {} 注册成功，时间: {}", username, new Timestamp(new Date().getTime()));
-                basicVO.setSucc(true);
-            }
-            return basicVO;
+            insertNewCUSTOMER(username, password);
+            logger.info("账号 {} 注册成功，时间: {}", username, new Timestamp(new Date().getTime()));
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new BaseException(HttpStatus.FORBIDDEN, ACCOUNT_EXIST, e);
@@ -92,9 +84,6 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
     public LoginVO login(String username, String password) {
         LoginVO vo = new LoginVO();
         User user = userMapper.getUserByName(username);
-//        if (null == user || !BCrypt.checkpw(password, user.getPassword())) {
-//            throw new BaseException(HttpStatus.FORBIDDEN, LOGIN_ERROR);
-//        }
         if (null == user || !BCrypt.checkpw(password, user.getPassword()))
             throw new BaseException(HttpStatus.UNAUTHORIZED, LOGIN_ERROR);
 
@@ -105,8 +94,8 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
                         user.getLastPasswordResetTime())
                 )
         );
-        List<Role> roles = roleMapper.getRolesByUserId(user.getId());
-        vo.setRole(roles.get(0).getName());
+
+        vo.setRole(user.getHighestRole().getName());
         return vo;
 
     }
@@ -175,6 +164,6 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
 
     @Override
     public RechargeHistoryVO[] getRechargeHistory(Long userId) {
-        return  orderService4Account.getRechargeHistory(userId);
+        return orderService4Account.getRechargeHistory(userId);
     }
 }

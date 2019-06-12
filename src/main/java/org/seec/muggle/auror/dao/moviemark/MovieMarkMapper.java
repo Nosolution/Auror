@@ -22,7 +22,7 @@ public interface MovieMarkMapper {
 
     FavorRecordPO getFavorByMovieIdAndUserId(@Param("movieId") Long movieId, @Param("userId") Long userId);
 
-    List<FavorRecordPO> findFavorByMovieId(@Param("movieId")Long movieId);
+    List<FavorRecordPO> getFavorByMovieId(@Param("movieId") Long movieId);
 
     List<Long> getMovieIdByUserId(@Param("userId") Long userId);
 }

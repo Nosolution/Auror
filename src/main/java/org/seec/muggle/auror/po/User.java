@@ -5,6 +5,7 @@ import lombok.Data;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,10 @@ public class User {
         u.setLastLogoutTime(new Timestamp(new Date().getTime()));
         u.setLastPasswordResetTime(new Timestamp(new Date().getTime()));
         return u;
+    }
+
+    public Role getHighestRole() {
+        return roles.stream().max(Comparator.comparingLong(Role::getId)).get();
     }
 
 }

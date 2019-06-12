@@ -1,7 +1,5 @@
 package org.seec.muggle.auror.bl.strategy;
 
-import org.apache.shiro.event.Event;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
 import org.seec.muggle.auror.vo.strategy.event.EventVO;
@@ -18,22 +16,22 @@ import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyVO;
 public interface StrategyService {
     RefundStrategyVO getRefundStrategy();
 
-    BasicVO updateRefundStrategy(Double rate,Integer beforeTime);
+    void updateRefundStrategy(Double rate, Integer beforeTime);
 
-    BasicVO createMemberStrategy(String name,String url,Integer threshold,Double rate);
+    void createMemberStrategy(String name, String url, Integer threshold, Double rate);
 
     MemberVarietyVO[] getMemberStrategy();
 
-    BasicVO createEvent(EventForm form);
+    void createEvent(EventForm form);
 
-    BasicVO deleteEvent(Long eventId);
+    void deleteEvent(Long eventId);
 
     EventVO[] getEvents();
 
-    BasicVO deleteMemberStrategy(Long strategyId);
+    void deleteMemberStrategy(Long strategyId);
 
-    BasicVO updateMemberStrategy(MemberVaryForm form);
+    void updateMemberStrategy(MemberVaryForm form);
 
-    BasicVO sendCoupon(CouponGiftForm form);
+    void sendCoupon(CouponGiftForm form);
 
 }

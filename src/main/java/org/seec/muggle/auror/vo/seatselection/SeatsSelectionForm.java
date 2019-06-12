@@ -10,8 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class SeatsSelectionForm {
-    Long userId;
     Long sceneId;
     SelectionForm[] selectedSeats;
-
 }

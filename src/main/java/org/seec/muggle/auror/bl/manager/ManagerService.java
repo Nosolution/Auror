@@ -1,6 +1,5 @@
 package org.seec.muggle.auror.bl.manager;
 
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
 
 /**
@@ -11,9 +10,9 @@ import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
  **/
 public interface ManagerService {
 
-    BasicVO addManager(String username,String password);
+    void addManager(String username, String password);
 
-    BasicVO deleteManager(Long managerId);
+    void deleteManager(Long managerId);
 
     ManagerInfoVO[] getManagers();
 }

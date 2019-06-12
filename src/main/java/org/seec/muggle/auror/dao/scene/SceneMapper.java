@@ -20,12 +20,12 @@ public interface SceneMapper {
 
     int updateScene(ScenePO po);
 
-    ScenePO selectById(@Param("sceneId") Long sceneId);
+    ScenePO getById(@Param("sceneId") Long sceneId);
 
-    List<ScenePO> selectByMovieId(@Param("movieId") Long movieId);
+    List<ScenePO> getByMovieId(@Param("movieId") Long movieId);
 
-    List<Timestamp> selectEndsByMovieId(@Param("movieId") Long movieId);
+    List<Timestamp> getEndsByMovieId(@Param("movieId") Long movieId);
 
-    List<ScenePO> selectByHallIdAndDate(@Param("hallId") Long hallId, @Param("date") Date date);
+    List<ScenePO> getByHallIdAndDate(@Param("hallId") Long hallId, @Param("date") Date date);
 
 }

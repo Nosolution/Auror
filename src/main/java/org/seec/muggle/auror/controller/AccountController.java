@@ -5,7 +5,6 @@ import org.seec.muggle.auror.bl.member.MemberService;
 import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.util.JwtUtil;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
@@ -17,6 +16,7 @@ import org.seec.muggle.auror.vo.user.message.UnreadNumVO;
 import org.seec.muggle.auror.vo.user.register.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,12 +59,8 @@ public class AccountController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody RegisterForm form) {
-        BasicVO basicVO = accountService.register(form.getUsername(), form.getPassword());
-        if (basicVO.isSucc()) {
-            return ResponseEntity.ok(basicVO);
-        } else {
-            return ResponseEntity.status(200).body(basicVO);
-        }
+        accountService.register(form.getUsername(), form.getPassword());
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/user/coupon")
@@ -82,10 +78,6 @@ public class AccountController {
 
     @GetMapping(value = "/user/mark")
     public ResponseEntity<?> getMarkList(HttpServletRequest request) {
-//        String authToken = request.getHeader(tokenHeader);
-//        final String token = authToken.substring(7);
-//        String username = jwtTokenUtil.getUsernameFromToken(token);
-//        Long userId =
         Long userId = getIdFromRequest(request);
         MovieMarkVO[] vos = movieMarkService.getFavorsByUserId(userId);
         return ResponseEntity.ok(vos);
@@ -103,14 +95,15 @@ public class AccountController {
         if (vo != null) {
             return ResponseEntity.ok(vo);
         } else {
-            return ResponseEntity.status(405).body("NOT A MEMBER");
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("NOT A MEMBER");
+
         }
     }
 
     @GetMapping(value = "/user/message")
     public ResponseEntity<?> getMessage(HttpServletRequest request) {
         Long userId = getIdFromRequest(request);
-        return ResponseEntity.ok(messageService.messages(userId));
+        return ResponseEntity.ok(messageService.getMessages(userId));
     }
 
     @GetMapping(value = "/user/message/unread_num")
@@ -121,16 +114,16 @@ public class AccountController {
         return ResponseEntity.ok(vo);
     }
 
-    private Long getIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader).substring(7);
-        return jwtTokenUtil.getIdFromToken(token);
-    }
-
     @GetMapping(value = "/order/member/recharge/history")
     public ResponseEntity<?> getChargeHistory(HttpServletRequest request) {
         Long userId = getIdFromRequest(request);
         RechargeHistoryVO[] vos = accountService.getRechargeHistory(userId);
         return ResponseEntity.ok(vos);
+    }
+
+    private Long getIdFromRequest(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader).substring(7);
+        return jwtTokenUtil.getIdFromToken(token);
     }
 
 

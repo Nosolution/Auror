@@ -10,7 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class MovieMarkForm {
-    Long userId;
     Long movieId;
 
 }

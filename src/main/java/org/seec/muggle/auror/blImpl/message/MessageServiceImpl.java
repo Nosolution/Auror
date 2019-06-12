@@ -23,7 +23,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class MessageServiceImpl implements MessageService , MessageService4Strategy, MessageService4Scene {
+public class MessageServiceImpl implements MessageService, MessageService4Strategy, MessageService4Scene {
     @Autowired
     MessageMapper mapper;
 
@@ -31,7 +31,7 @@ public class MessageServiceImpl implements MessageService , MessageService4Strat
     AccountService4Message accountService4Message;
 
     @Autowired
-    MovieMarkService4Message  movieMarkService4Message;
+    MovieMarkService4Message movieMarkService4Message;
 
     @Override
     public int getUnreadNum(Long userId) {
@@ -39,7 +39,7 @@ public class MessageServiceImpl implements MessageService , MessageService4Strat
     }
 
     @Override
-    public MessageVO[] messages(Long userId) {
+    public MessageVO[] getMessages(Long userId) {
         List<Message> messages = mapper.getMessages(userId);
         mapper.readAll(userId);
         List<MessageVO> vos = new ArrayList<>();
@@ -57,27 +57,27 @@ public class MessageServiceImpl implements MessageService , MessageService4Strat
     }
 
     @Override
-    public void SendMovieOnSceneRemind(Message message) {
+    public void sendMovieOnSceneRemind(Message message) {
         List<Long> users = movieMarkService4Message.getUsersByMovieId(message.getAdditionalMovieId());
-        if(users.size()!=0){
-            for(int i =0;i<users.size();i++){
-                message.setUserId(users.get(i));
+        if (users.size() != 0) {
+            for (Long user : users) {
+                message.setUserId(user);
                 mapper.insert(message);
             }
         }
     }
 
     /**
+     * @return void
      * @Author jyh
      * @Description //赠送优惠券顺便送信息
      * @Date 16:06 2019/6/12
      * @Param [form]
-     * @return void
      **/
     @Override
     public void sendCouponReceiversMessages(Message form, Long[] users) {
-        for(int i = 0; i< users.length; i++){
-            form.setUserId(users[i]);
+        for (Long user : users) {
+            form.setUserId(user);
             mapper.insert(form);
         }
     }
@@ -86,8 +86,8 @@ public class MessageServiceImpl implements MessageService , MessageService4Strat
     @Override
     public void newEventRemind(Message message) {
         BriefInfoVO[] briefInfos = accountService4Message.getUsers();
-        for(int i = 0;i< briefInfos.length;i++){
-            message.setUserId(briefInfos[i].getUserId());
+        for (BriefInfoVO briefInfo : briefInfos) {
+            message.setUserId(briefInfo.getUserId());
             mapper.insert(message);
         }
     }

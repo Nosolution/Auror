@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.strategy.StrategyService;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventDeletionForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
@@ -78,21 +77,13 @@ public class StrategyController {
 
     @DeleteMapping(value = "/member")
     public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form) {
-        BasicVO vo = strategyService.deleteMemberStrategy(form.getMemberStrategyId());
-        if (vo.isSucc()) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.status(405).body(vo.getMsg());
-        }
+        strategyService.deleteMemberStrategy(form.getMemberStrategyId());
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping(value = "/member")
     public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form) {
-        BasicVO vo = strategyService.updateMemberStrategy(form);
-        if (vo.isSucc()) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.status(405).body(vo.getMsg());
-        }
+        strategyService.updateMemberStrategy(form);
+        return ResponseEntity.ok(null);
     }
 }

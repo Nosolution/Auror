@@ -20,4 +20,5 @@ public interface RoleMapper extends BaseOperation<Role> {
     List<Role> getRolesByUserId(Long id);
 
     Role getRoleByName(@Param("name") String name);
+
 }

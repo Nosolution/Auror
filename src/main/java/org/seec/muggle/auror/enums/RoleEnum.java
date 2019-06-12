@@ -8,5 +8,5 @@ package org.seec.muggle.auror.enums;
  * @since 2019/4/11
  */
 public enum RoleEnum {
-    CUSTOMER, MOVIE_MANAGER, ADMIN
+    CUSTOMER, MOVIE_MANAGER, ADMINISTRATOR
 }

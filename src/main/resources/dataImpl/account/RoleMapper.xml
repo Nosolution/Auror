@@ -31,6 +31,7 @@
         where role_name = #{name}
     </select>
 
+
     <resultMap id="Role" type="org.seec.muggle.auror.po.Role">
         <id column="id" property="id"/>
         <result column="role_name" property="name"/>

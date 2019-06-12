@@ -8,13 +8,11 @@ import org.seec.muggle.auror.bl.scene.*;
 import org.seec.muggle.auror.dao.scene.SceneMapper;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.DateUtil;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -46,34 +44,33 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     MessageService4Scene messageService4Scene;
 
     @Override
-    public BasicVO addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
+    public void addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
         //第一步判断movie状态是否为0，如果是0 说明第一次上映，给想看的人发消息
         MoviePO moviePO = movieService4Scene.getMovie4Scene(movieId);
-        if(moviePO.getStatus()==0){
+        if (moviePO.getStatus() == 0) {
             Message message = new Message();
-            message.setContent(moviePO.getMovieName()+"已上映");
+            message.setContent(moviePO.getMovieName() + "已上映");
             message.setTitle("某部想看电影已上映");
             message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
             message.setType(1);
             message.setAdditionalMovieId(movieId);
-            messageService4Scene.SendMovieOnSceneRemind(message);
+            messageService4Scene.sendMovieOnSceneRemind(message);
         }
 
 
         Integer length = movieService4Scene.getLengthById(movieId);
-        Timestamp beginTime = DateUtil.datesToTimestamp(date,startTime);
+        Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
         LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
         ScenePO po = new ScenePO(movieId, beginTime, endTime, hallId, price, date);
         sceneMapper.insertScene(po);
         movieService4Scene.setOnScene(movieId);
-        return new BasicVO();
     }
 
     @Override
     public Integer getPriceByScene(Long sceneId) {
-        ScenePO po = sceneMapper.selectById(sceneId);
+        ScenePO po = sceneMapper.getById(sceneId);
         if (po != null) {
             return po.getPrice();
         } else {
@@ -82,54 +79,60 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public BasicVO varyScene(Long sceneId, Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
+    public void varyScene(Long sceneId, Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
         Integer length = movieService4Scene.getLengthById(movieId);
-        Timestamp beginTime = DateUtil.datesToTimestamp(date,startTime);
+        Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
         LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
         ScenePO po = new ScenePO(sceneId, movieId, beginTime, endTime, hallId, price, date);
         sceneMapper.updateScene(po);
-        return new BasicVO();
     }
 
     @Override
     public List<ScenePO> getScenesByMovieId(Long movieId) {
 
-        return sceneMapper.selectByMovieId(movieId);
+        return sceneMapper.getByMovieId(movieId);
 
     }
 
     @Override
     public List<Timestamp> getSceneEndsByMovieId(Long movieId) {
-        return sceneMapper.selectEndsByMovieId(movieId);
+        return sceneMapper.getEndsByMovieId(movieId);
     }
 
     @Override
     public List<ScenePO> getScenesById(Long movieId) {
-        return sceneMapper.selectByMovieId(movieId);
+        return sceneMapper.getByMovieId(movieId);
     }
 
     @Override
     public Long getMovieIdByScene(Long sceneId) {
-        ScenePO po = sceneMapper.selectById(sceneId);
+        ScenePO po = sceneMapper.getById(sceneId);
         return po.getMovieId();
     }
 
     @Override
     public ScenePO selectSceneByID(Long sceneId) {
-        return sceneMapper.selectById(sceneId);
+        return sceneMapper.getById(sceneId);
     }
 
     @Override
     public MovieSceneInfoVO[] getScenesInfoByMovieId(Long movieId) {
         List<MovieSceneInfoVO> vos = new ArrayList<>();
-        List<ScenePO> pos = sceneMapper.selectByMovieId(movieId);
-        if(pos.size()==0){
-            return new MovieSceneInfoVO[0];
-        }
-
-        pos.forEach(o -> {
+        List<ScenePO> pos = sceneMapper.getByMovieId(movieId);
+//        if(pos.size()==0){
+//            return new MovieSceneInfoVO[0];
+//        }
+        pos.stream().sorted((o1, o2) -> {
+                    //降序
+                    if (o1.getDate().compareTo(o2.getDate()) == 0) {
+                        return o2.getStartTime().compareTo(o1.getStartTime());
+                    } else {
+                        return o2.getDate().compareTo(o1.getDate());
+                    }
+                }
+        ).forEach(o -> {
             Hall hall = hallService4Scene.getHallById(o.getHallId());
             Integer[][] seats = loadSeats(o, hall);
             MovieSceneInfoVO vo = new MovieSceneInfoVO(o, hall, seats);
@@ -141,7 +144,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     @Override
     public InfoVO[] getScenesInfoByHallIdAndDate(Long hallId, Date date) {
         List<InfoVO> vos = new ArrayList<>();
-        List<ScenePO> pos = sceneMapper.selectByHallIdAndDate(hallId, date);
+        List<ScenePO> pos = sceneMapper.getByHallIdAndDate(hallId, date);
 
         pos.forEach(o -> {
             Hall hall = hallService4Scene.getHallById(o.getHallId());

@@ -13,7 +13,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @DaoMapper
-public interface MessageMapper extends BaseOperation {
+public interface MessageMapper extends BaseOperation<Message> {
     List<Message> getMessages(Long userId);
 
     int getUnreadNums(Long userId);

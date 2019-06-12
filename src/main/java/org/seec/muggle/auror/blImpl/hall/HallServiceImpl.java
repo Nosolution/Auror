@@ -7,7 +7,6 @@ import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.dao.hall.HallMapper;
 import org.seec.muggle.auror.po.Hall;
 import org.seec.muggle.auror.po.HallPO;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +26,12 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
     HallMapper hallMapper;
 
     @Override
-    public BasicVO addHall(String name, int[][] seats) {
-        BasicVO vo = new BasicVO();
+    public void addHall(String name, int[][] seats) {
         String seat = "";
         StringBuilder stringBuilder = new StringBuilder(seat);
         for (int i = 0; i < seats.length; i++) {
             for (int j = 0; j < seats[i].length; j++) {
-                stringBuilder.append(String.valueOf(seats[i][j]));
+                stringBuilder.append(seats[i][j]);
                 if (j != seats[i].length - 1) {
                     stringBuilder.append(",");
                 }
@@ -43,7 +41,6 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
             }
         }
         hallMapper.insertNewHall(name, stringBuilder.toString());
-        return vo;
     }
 
     @Override

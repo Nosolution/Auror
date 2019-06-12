@@ -6,9 +6,9 @@ import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.strategy.StrategyMapper;
+import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.DateUtil;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.member.CouponsForm;
 import org.seec.muggle.auror.vo.order.unfinished.AvailableCouponsVO;
 import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
@@ -19,6 +19,7 @@ import org.seec.muggle.auror.vo.strategy.member.MemberVaryForm;
 import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -43,28 +44,26 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public RefundStrategyVO getRefundStrategy() {
-        return new RefundStrategyVO(strategyMapper.selectRefundStrategy().get(0));
+        return new RefundStrategyVO(strategyMapper.getRefundStrategy().get(0));
     }
 
     @Override
-    public BasicVO updateRefundStrategy(Double rate, Integer beforeTime) {
+    public void updateRefundStrategy(Double rate, Integer beforeTime) {
         RefundPO po = new RefundPO();
         po.setBeforeTime(beforeTime);
         po.setRate(rate);
         strategyMapper.updateRefundStrategy(po);
-        return new BasicVO();
     }
 
     @Override
     public RefundPO getRefund() {
-        return strategyMapper.selectRefundStrategy().get(0);
+        return strategyMapper.getRefundStrategy().get(0);
     }
 
     @Override
-    public BasicVO createMemberStrategy(String name, String url, Integer threshold, Double rate) {
+    public void createMemberStrategy(String name, String url, Integer threshold, Double rate) {
         MemberStrategyPO po = new MemberStrategyPO(name, url, threshold, rate);
         strategyMapper.insertMemberStrategy(po);
-        return new BasicVO();
     }
 
     @Override
@@ -89,7 +88,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     }
 
     @Override
-    public BasicVO createEvent(EventForm form) {
+    public void createEvent(EventForm form) {
         EventPO po = new EventPO(form.getStartTime(), form.getEndTime(), form.getEventDescription(), form.getEventName(), form.getCouponExpiration());
         CouponPO couponPO = new CouponPO(form.getCouponName(), form.getCouponDescription(), form.getCouponDiscount(), form.getCouponThreshold(), form.getCouponPictureUrl());
         strategyMapper.insertCoupon(couponPO);
@@ -109,14 +108,12 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         message.setTitle("新优惠活动提示");
         message.setContent("新的优惠活动公布了，不如我们把它……");
         messageService4Strategy.newEventRemind(message);
-        return new BasicVO();
     }
 
     @Override
-    public BasicVO deleteEvent(Long eventId) {
+    public void deleteEvent(Long eventId) {
         strategyMapper.deleteEvent(eventId);
         strategyMapper.deleteEventMovie(eventId);
-        return new BasicVO();
     }
 
     @Override
@@ -136,42 +133,33 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     }
 
     @Override
-    public BasicVO deleteMemberStrategy(Long strategyId) {
+    public void deleteMemberStrategy(Long strategyId) {
         List<Long> isInUsed = strategyMapper.getUsersByMemberStrategyId(strategyId);
         if (isInUsed.size() == 0) {
             strategyMapper.deleteMemberStrategy(strategyId);
-            BasicVO vo = new BasicVO();
-            vo.setSucc(true);
-            return vo;
         } else {
-            return buildFailureBasicVO(isInUsed);
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, buildFailureMsg(isInUsed));
         }
     }
 
     @Override
-    public BasicVO updateMemberStrategy(MemberVaryForm form) {
+    public void updateMemberStrategy(MemberVaryForm form) {
         List<Long> isInUsed = strategyMapper.getUsersByMemberStrategyId(form.getMemberStrategyId());
         if (isInUsed.size() == 0) {
             strategyMapper.updateMemberStrategy(form);
-            BasicVO vo = new BasicVO();
-            vo.setSucc(true);
-            return vo;
         } else {
-            return buildFailureBasicVO(isInUsed);
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, buildFailureMsg(isInUsed));
         }
     }
 
-    private BasicVO buildFailureBasicVO(List<Long> isInUsed) {
-        BasicVO vo = new BasicVO();
-        vo.setSucc(false);
-        String using = "";
-        StringBuffer buffer = new StringBuffer(using);
+
+    private String buildFailureMsg(List<Long> isInUsed) {
+        StringBuffer buffer = new StringBuffer();
         isInUsed.forEach(o -> {
             buffer.append("用户: ").append(o);
         });
         buffer.append("正处于该策略中，操作失败");
-        vo.setMsg(buffer.toString());
-        return vo;
+        return buffer.toString();
     }
 
 
@@ -211,7 +199,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     }
 
     @Override
-    public BasicVO sendCoupon(CouponGiftForm form) {
+    public void sendCoupon(CouponGiftForm form) {
         CouponPO po = new CouponPO();
         po.setCouponName(form.getCouponName());
         po.setDiscount(form.getCouponDiscount());
@@ -229,15 +217,13 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
             strategyMapper.insertUserCoupon(ucPO);
         }
         //发送提醒消息;
-        Message message  = new Message();
+        Message message = new Message();
         message.setTitle("优惠券获取提示");
         message.setStatus(0);
         message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
         message.setContent("您获取了新的优惠券，请于卡包查看。");
         message.setType(0);
-        messageService4Strategy.sendCouponReceiversMessages(message,form.getUserList());
-
-        return new BasicVO();
+        messageService4Strategy.sendCouponReceiversMessages(message, form.getUserList());
     }
 
     @Override

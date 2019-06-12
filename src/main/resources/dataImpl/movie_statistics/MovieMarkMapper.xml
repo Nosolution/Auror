@@ -20,7 +20,7 @@
         limit 1
     </select>
 
-    <select id="findFavorByMovieId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
+    <select id="getFavorByMovieId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
         select movie_id  movieId,
                user_id   userId,
                init_time time
