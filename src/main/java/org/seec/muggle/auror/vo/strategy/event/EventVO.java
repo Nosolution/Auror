@@ -3,8 +3,8 @@ package org.seec.muggle.auror.vo.strategy.event;
 import lombok.Data;
 import org.seec.muggle.auror.po.CouponPO;
 import org.seec.muggle.auror.po.EventPO;
+import org.seec.muggle.auror.util.DateUtil;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -19,28 +19,28 @@ public class EventVO {
     String eventName;
     String eventDescription;
     Long[] moviesIncluded ;
-    Timestamp startTime;
-    Timestamp endTime;
+    String startTime;
+    String endTime;
     String couponName;
     String couponDescription;
     String couponPictureUrl;
     Integer couponDiscount;
     Integer couponThreshold;
-    String couponExpiration;
+    Integer couponExpiration;
 
     public EventVO(EventPO eventPO, CouponPO couponPO, List<Long> movies){
         this.eventId = eventPO.getId();
         this.eventName = eventPO.getEventName();
         this.eventDescription = eventPO.getDescription();
         this.moviesIncluded = movies.toArray(new Long[movies.size()]);
-        this.startTime = eventPO.getStartTime();
-        this.endTime = eventPO.getEndTime();
+        this.startTime = DateUtil.timestampToYear(eventPO.getStartTime());
+        this.endTime = DateUtil.timestampToYear(eventPO.getEndTime());
         this.couponName = couponPO.getCouponName();
         this.couponDescription = couponPO.getDescription();
         this.couponPictureUrl = couponPO.getUrl();
         this.couponDiscount = couponPO.getDiscount();
         this.couponThreshold = couponPO.getThreshold();
-        this.couponExpiration = "";
+        this.couponExpiration = eventPO.getExpiration();
 
     }
 

@@ -4,6 +4,7 @@ import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.dao.message.MessageMapper;
 import org.seec.muggle.auror.po.Message;
 import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.vo.MessageForm;
 import org.seec.muggle.auror.vo.user.message.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,10 @@ public class MessageServiceImpl implements MessageService {
             vos.add(message);
         });
         return vos.toArray(new MessageVO[vos.size()]);
+    }
+
+    @Override
+    public void sendMessages(MessageForm form) {
+
     }
 }

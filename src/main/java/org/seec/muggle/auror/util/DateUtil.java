@@ -68,4 +68,10 @@ public class DateUtil {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
         return df.format(ldt);
     }
+
+    public static String timestampToYear(Timestamp input){
+        LocalDateTime ldt = input.toLocalDateTime();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return df.format(ldt);
+    }
 }

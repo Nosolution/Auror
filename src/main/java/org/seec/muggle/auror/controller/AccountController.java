@@ -6,6 +6,7 @@ import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
+import org.seec.muggle.auror.vo.MessageForm;
 import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
@@ -132,4 +133,6 @@ public class AccountController {
         RechargeHistoryVO[] vos = accountService.getRechargeHistory(userId);
         return ResponseEntity.ok(vos);
     }
+
+
 }
