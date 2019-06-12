@@ -31,6 +31,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Description TODO
@@ -168,7 +169,8 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
         MemberPO memberPO = memberService4Order.getMemberByUserId(userId);
         MemberStrategyPO po = null;
-        int rechargeTotal = orderMapper.sumRecharge(userId);
+        Optional<Integer>recharge= Optional.ofNullable(orderMapper.sumRecharge(userId));
+        int rechargeTotal =recharge.orElse(0);
         for (int i = 0; i < strategyPOS.size(); i++) {
             if (strategyPOS.get(i).getThreshold() > rechargeTotal + form.getCost()) {
                 po = strategyPOS.get(i - 1);

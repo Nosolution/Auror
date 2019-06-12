@@ -33,7 +33,7 @@
 
     <resultMap id="Role" type="org.seec.muggle.auror.po.Role">
         <id column="id" property="id"/>
-        <result column="castName" property="name"/>
+        <result column="role_name" property="name"/>
 
         <collection property="users" javaType="ArrayList"
                     ofType="org.seec.muggle.auror.po.User">
