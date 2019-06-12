@@ -444,7 +444,7 @@ create table `tbl_coupon`
     `id`          bigint         not null auto_increment comment '优惠券Id',
     `coupon_name` varchar(50)    NOT NULL comment '优惠券名',
     `description` varchar(255) comment '优惠券描述',
-    `discount`    decimal(10, 2) NOT NULL comment '减额',
+    `benefit`     decimal(10, 2) NOT NULL comment '减额',
     `threshold`   decimal(10, 2) NOT NULL comment '使用门槛',
     `url`         varchar(255)   NOT NULL comment '图片',
     primary key (id)
@@ -583,6 +583,7 @@ create table `tbl_event`
     `start_time`  timestamp    NOT NULL comment '起始时间',
     `end_time`    timestamp    NOT NULL comment '结束时间',
     `description` text comment '描述',
+    `expiration`  int(11)      NOT NULL comment '优惠券有效期长度, 单位:天',
     `coupon_id`   bigint       NOT NULL comment '优惠券id',
     primary key (id)
 );

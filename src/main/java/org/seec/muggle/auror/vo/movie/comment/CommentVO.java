@@ -13,7 +13,7 @@ import org.seec.muggle.auror.util.DateUtil;
  **/
 @Data
 public class CommentVO {
-    String userName;
+    String username;
     String time; //评论时间
     String comment;
 
@@ -21,6 +21,6 @@ public class CommentVO {
     public CommentVO(CommentPO po , UserBasic basic){
         this.comment = po.getComment();
         this.time = DateUtil.timestampToString(po.getCommentTime());
-        this.userName = basic.getUsername();
+        this.username = basic.getUsername();
     }
 }

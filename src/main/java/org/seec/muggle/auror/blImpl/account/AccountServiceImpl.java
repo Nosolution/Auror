@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.blImpl.account;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.bl.deal.OrderService4Account;
@@ -93,8 +94,8 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie 
 //        if (null == user || !BCrypt.checkpw(password, user.getPassword())) {
 //            throw new BaseException(HttpStatus.FORBIDDEN, LOGIN_ERROR);
 //        }
-        if (null == user || !password.equals(user.getPassword()))
-            throw new BaseException(HttpStatus.FORBIDDEN, LOGIN_ERROR);
+        if (null == user || !BCrypt.checkpw(password, user.getPassword()))
+            throw new BaseException(HttpStatus.UNAUTHORIZED, LOGIN_ERROR);
 
         vo.setToken(jwtUtil.generateToken(new JwtUser(
                         user.getId(),

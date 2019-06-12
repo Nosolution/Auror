@@ -25,13 +25,13 @@ public class ManagerController {
     @PostMapping(value = "/manager")
     public ResponseEntity<?> addManager(@RequestBody ManagerForm form) {
         managerService.addManager(form.getUsername(), form.getPassword());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/manager")
     public ResponseEntity<?> removeManager(@RequestBody ManagerIdForm form) {
         managerService.deleteManager(form.getManagerId());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/manager/list")

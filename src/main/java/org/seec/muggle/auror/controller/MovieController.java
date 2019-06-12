@@ -42,7 +42,7 @@ public class MovieController {
     MovieMarkService movieMarkService;
 
     @GetMapping(value = "/detail/{movieId}")
-    public ResponseEntity<?> getMovieDetail(@PathVariable Long movieId){
+    public ResponseEntity<?> getMovieDetail(@PathVariable Long movieId) {
 //        MovieDetailsVO movieDetail = new MovieDetailsVO(1l,"雷  神 Thor: Ragnarok","https://s2.ax1x.com/2019/05/07/EyJKv4.png","Action, Adventure, Drama",2019,123,8.9);
 //        DirectorVO[] directors = new DirectorVO[2];
 //        directors[0] = new DirectorVO("雷神","https://s2.ax1x.com/2019/05/07/EyJKv4.png");
@@ -56,89 +56,87 @@ public class MovieController {
 //        movieDetail.setDirector(directors);
 //        movieDetail.setStarring(starrings);
         MovieDetailsVO movieDetail = movieService.getMovieDetail(movieId);
-    return ResponseEntity.ok(movieDetail);
+        return ResponseEntity.ok(movieDetail);
     }
 
     @GetMapping(value = "/popular")
-    public ResponseEntity<?> getPopularMovie(){
-        MoviePopularVO[] vo =movieService.getMoviePopular();
+    public ResponseEntity<?> getPopularMovie() {
+        MoviePopularVO[] vo = movieService.getMoviePopular();
         return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/onshelf")
-    public ResponseEntity<?> getMovieOnShelf(){
+    public ResponseEntity<?> getMovieOnShelf() {
         MovieOnShelfVO[] vos = movieService.getMovieOnShelf();
         return ResponseEntity.ok(vos);
     }
 
     @PostMapping(value = "/mark")
-    public ResponseEntity<?> markMovie(@RequestBody MovieMarkForm form){
-        BasicVO vo = movieMarkService.mark(form.getUserId(),form.getMovieId());
-        if(vo.isSucc()){
-            return ResponseEntity.ok("");
-        }
-        else{
+    public ResponseEntity<?> markMovie(@RequestBody MovieMarkForm form) {
+        BasicVO vo = movieMarkService.mark(form.getUserId(), form.getMovieId());
+        if (vo.isSucc()) {
+            return ResponseEntity.ok(null);
+        } else {
             return ResponseEntity.status(405).body(vo.getMsg());
         }
     }
 
     @PostMapping(value = "/comment")
-    public ResponseEntity<?> getMovieComment(@RequestBody CommentForm form){
-        Long userId = 24L;
-        movieService.commentMovie(form.getMovieId(),form.getRate(),form.getComment(),userId);
-        return ResponseEntity.ok("");
+    public ResponseEntity<?> commentMovie(@RequestBody CommentForm form) {
+        Long userId = 2L;
+        movieService.commentMovie(form.getMovieId(), form.getRate(), form.getComment(), userId);
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/comment")
-    public ResponseEntity<?> getMovieComment(@RequestParam("movieId")Long movieId){
+    public ResponseEntity<?> getMovieComment(@RequestParam("movieId") Long movieId) {
         List<CommentVO> comments = movieService.getMovieComment(movieId);
         CommentVO[] commentVOS = comments.toArray(new CommentVO[comments.size()]);
         return ResponseEntity.ok(commentVOS);
     }
 
     @PostMapping()
-    public ResponseEntity<?> addMovie(@RequestBody MovieAddForm form){
+    public ResponseEntity<?> addMovie(@RequestBody MovieAddForm form) {
         movieService.addMovie(form);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping()
-    public ResponseEntity<?> varyMovie(@RequestBody MovieVaryForm form){
+    public ResponseEntity<?> varyMovie(@RequestBody MovieVaryForm form) {
         movieService.updateMovie(form);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping()
-    public ResponseEntity<?> deleteMovie(@RequestBody MovieDelete delete){
+    public ResponseEntity<?> deleteMovie(@RequestBody MovieDelete delete) {
         BasicVO vo = movieService.deleteMovie(delete.getMovieId());
-        if(vo.isSucc()){
-            return ResponseEntity.ok("");
-        }
-        else{
+        if (vo.isSucc()) {
+            return ResponseEntity.ok(null);
+        } else {
             return ResponseEntity.status(405).body(vo.getMsg());
         }
     }
 
     @GetMapping(value = "/statistics/favor_num")
-    public ResponseEntity<?> getFavorNum(@RequestParam("movieId")Long movieId){
+    public ResponseEntity<?> getFavorNum(@RequestParam("movieId") Long movieId) {
         return ResponseEntity.ok(movieMarkService.getFavorsByDate(movieId));
     }
 
     @GetMapping(value = "/statistic/attendance_rate")
-    public ResponseEntity<?> getAttandence(@RequestParam("movieId") Long movieId){
+    public ResponseEntity<?> getAttendance(@RequestParam("movieId") Long movieId) {
         AttendenceVO[] vo = statisticsService.getBoxOfficeRate(movieId);
         return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/statistic/box_office")
-    public ResponseEntity<?> getBoxOffice(@PathParam("movieId") Long movieId){
+    public ResponseEntity<?> getBoxOffice(@PathParam("movieId") Long movieId) {
         return ResponseEntity.ok(new BoxOfficeVO(statisticsService.getBoxOffice(movieId)));
     }
 
     @GetMapping(value = "/detail/batch")
-    public ResponseEntity<?> getMoviesByList(@PathParam("movieIds")Long[] movieId){
+    public ResponseEntity<?> getMoviesByList(@PathParam("movieIds") Long[] movieId) {
         MovieDetailsVO[] movies = new MovieDetailsVO[movieId.length];
-        for(int i =0;i<movies.length;i++){
+        for (int i = 0; i < movies.length; i++) {
             movies[i] = movieService.getMovieDetail(movieId[i]);
         }
         return ResponseEntity.ok(movies);

@@ -35,8 +35,8 @@ public class StrategyController {
 
     @PutMapping(value = "/refund")
     public ResponseEntity<?> varyRefundStrategy(@RequestBody RefundStrategyForm form) {
-        strategyService.updateRefundStrategy(form.getRefundRate(), form.getLatestRefundTimeBeforePaying());
-        return ResponseEntity.ok("");
+        strategyService.updateRefundStrategy(form.getRefundRate(), form.getLatestRefundTimeBeforePlaying());
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/event")
@@ -48,19 +48,19 @@ public class StrategyController {
     @PostMapping(value = "/event")
     public ResponseEntity<?> addStrategyEvents(@RequestBody EventForm form) {
         strategyService.createEvent(form);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/event")
     public ResponseEntity<?> deleteEvent(@RequestBody EventDeletionForm form) {
         strategyService.deleteEvent(form.getEventId());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @PostMapping(value = "/coupon_gift")
     public ResponseEntity<?> givingCoupon(@RequestBody CouponGiftForm form) {
         strategyService.sendCoupon(form);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
 
@@ -73,14 +73,14 @@ public class StrategyController {
     @PostMapping(value = "/member")
     public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form) {
         strategyService.createMemberStrategy(form.getMemberStrategyName(), form.getMemberPictureUrl(), form.getPurchaseThreshold(), form.getMemberDiscountRate());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/member")
     public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form) {
         BasicVO vo = strategyService.deleteMemberStrategy(form.getMemberStrategyId());
         if (vo.isSucc()) {
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok(null);
         } else {
             return ResponseEntity.status(405).body(vo.getMsg());
         }
@@ -90,7 +90,7 @@ public class StrategyController {
     public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form) {
         BasicVO vo = strategyService.updateMemberStrategy(form);
         if (vo.isSucc()) {
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok(null);
         } else {
             return ResponseEntity.status(405).body(vo.getMsg());
         }

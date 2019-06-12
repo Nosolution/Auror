@@ -24,7 +24,7 @@ public class HallController {
     @PostMapping()
     public ResponseEntity<?> addHall(@RequestBody SingleHallForm form) {
         BasicVO vo = hallService.addHall(form.getHallName(), form.getSeats());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/all")

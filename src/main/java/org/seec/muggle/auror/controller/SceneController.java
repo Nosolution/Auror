@@ -3,6 +3,7 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.bl.deal.OrderService;
 import org.seec.muggle.auror.bl.scene.SceneService;
 import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
@@ -10,9 +11,11 @@ import org.seec.muggle.auror.vo.scene.vary.SceneVaryForm;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionForm;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.Date;
 
@@ -31,6 +34,11 @@ public class SceneController {
     SceneService sceneService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    JwtUtil jwtUtil;
+    @Value("${jwt.header}")
+    String tokenHeader;
+
 
     @GetMapping(value = "/info/of_movie")
     public ResponseEntity<?> sceneInfoByMovie(@PathParam("movieid") Long movieId) {
@@ -39,8 +47,9 @@ public class SceneController {
     }
 
     @PostMapping(value = "/order/seat/selection")
-    public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form) {
-        SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(), form.getUserId(), form.getSelectedSeats());
+    public ResponseEntity<?> seatSelection(HttpServletRequest request, @RequestBody SeatsSelectionForm form) {
+        Long id = getIdFromRequest(request);
+        SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(), id, form.getSelectedSeats());
         return ResponseEntity.ok(vo);
     }
 
@@ -54,12 +63,17 @@ public class SceneController {
     @PostMapping()
     public ResponseEntity addMovieScene(@RequestBody SceneAdditionForm form) {
         sceneService.addScene(form.getMovieId(), form.getHallId(), form.getDate(), form.getStartTime(), form.getPrice());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping()
     public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form) {
         sceneService.varyScene(form.getSceneId(), form.getMovieId(), form.getHallId(), form.getDate(), form.getStartTime(), form.getPrice());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(null);
+    }
+
+    private Long getIdFromRequest(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader).substring(7);
+        return jwtUtil.getIdFromToken(token);
     }
 }

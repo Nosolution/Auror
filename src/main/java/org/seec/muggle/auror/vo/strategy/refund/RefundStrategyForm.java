@@ -10,7 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class RefundStrategyForm {
-    Integer latestRefundTimeBeforePaying; //距离开场的时间
+    Integer latestRefundTimeBeforePlaying; //距离开场的时间
     Double refundRate;
 
 }

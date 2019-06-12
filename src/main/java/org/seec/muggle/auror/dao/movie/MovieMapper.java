@@ -48,7 +48,7 @@ public interface MovieMapper {
 
     int deleteMovieByMovieId(@Param("movieId")Long movieId);
 
-    int sumScore(Long movieId);
+    Integer sumScore(Long movieId);
 
-    int sumCommentNum(Long movieId);
+    Integer sumCommentNum(Long movieId);
 }

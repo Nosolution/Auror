@@ -7,7 +7,6 @@ import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
 import org.seec.muggle.auror.vo.order.purchase.VipPurchaseForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
-import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.order.refund.RefundForm;
 import org.seec.muggle.auror.vo.order.refund.RefundVO;
 import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentForm;
@@ -59,7 +58,7 @@ public class OrderController {
 
     @GetMapping(value = "/ticket")
     public ResponseEntity<?> getAllTickets() {
-        Long userId = 24L;
+        Long userId = 1L;
         TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
         if (ticketDetailVOS.length != 0) {
             return ResponseEntity.ok(ticketDetailVOS);
@@ -84,14 +83,14 @@ public class OrderController {
 
     @PostMapping(value = "/member/purchase/payment")
     public ResponseEntity<?> purchaseVIPCard(@RequestBody VipPurchaseForm form) {
-        Long userId = 24L;
+        Long userId = 1L;
         orderService.purchaseMember(userId, form.getCost(), form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/member/recharge/payment")
     public ResponseEntity<?> recharge(@RequestBody RechargeForm form) {
-        Long userId = 24L;
+        Long userId = 2L;
         RechargeVO vo = orderService.rechargeMember(form, userId);
         return ResponseEntity.ok(vo);
     }

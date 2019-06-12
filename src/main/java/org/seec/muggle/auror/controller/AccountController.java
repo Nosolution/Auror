@@ -6,7 +6,6 @@ import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
-import org.seec.muggle.auror.vo.MessageForm;
 import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
@@ -70,7 +69,7 @@ public class AccountController {
 
     @GetMapping(value = "/user/coupon")
     public ResponseEntity<?> getUserCoupons() {
-        Long userId = 24L;
+        Long userId = 1L;
         UserCouponsVO[] couponsVOS = accountService.getCoupons(userId);
         return ResponseEntity.ok(couponsVOS);
     }
@@ -87,7 +86,7 @@ public class AccountController {
 //        final String token = authToken.substring(7);
 //        String username = jwtTokenUtil.getUsernameFromToken(token);
 //        Long userId =
-        Long userId = 24L;
+        Long userId = 1L;
         MovieMarkVO[] vos = movieMarkService.getFavorsByUserId(userId);
         return ResponseEntity.ok(vos);
     }
@@ -99,7 +98,7 @@ public class AccountController {
 
     @GetMapping(value = "/member/info")
     public ResponseEntity<?> getMemberInfo() {
-        Long userId = 24L;
+        Long userId = 2L;
         MemberVO vo = memberService.getPersonalMemberInfo(userId);
         if (vo != null) {
             return ResponseEntity.ok(vo);
@@ -110,13 +109,13 @@ public class AccountController {
 
     @GetMapping(value = "/user/message")
     public ResponseEntity<?> getMessage() {
-        Long userId = 24L;
+        Long userId = 1L;
         return ResponseEntity.ok(messageService.messages(userId));
     }
 
     @GetMapping(value = "/user/message/unread_num")
     public ResponseEntity<?> getUnreadNum() {
-        Long userId = 24l;
+        Long userId = 1l;
         UnreadNumVO vo = new UnreadNumVO();
         vo.setUnreadNum(messageService.getUnreadNum(userId));
         return ResponseEntity.ok(vo);
@@ -127,9 +126,9 @@ public class AccountController {
         return jwtTokenUtil.getIdFromToken(token);
     }
 
-    @GetMapping(value = "/member/recharge/history")
+    @GetMapping(value = "/order/member/recharge/history")
     public ResponseEntity<?> getChargeHistory() {
-        Long userId = 24l;
+        Long userId = 2l;
         RechargeHistoryVO[] vos = accountService.getRechargeHistory(userId);
         return ResponseEntity.ok(vos);
     }
