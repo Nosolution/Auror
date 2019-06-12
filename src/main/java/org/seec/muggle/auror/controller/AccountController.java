@@ -100,7 +100,11 @@ public class AccountController {
     public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
         Long userId = getIdFromRequest(request);
         MemberVO vo = memberService.getPersonalMemberInfo(userId);
-        vo.setMember(vo==null);
+        boolean isMember = (vo==null);
+        if(vo==null){
+            vo = new MemberVO();
+        }
+        vo.setMember(isMember);
         return ResponseEntity.ok(vo);
     }
 

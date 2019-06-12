@@ -67,6 +67,10 @@ public class MemberVO {
         this.memberDiscount = memberDiscount;
     }
 
+
+    public MemberVO(){
+
+    }
     public MemberVO(MemberPO memberPO, MemberStrategyPO strategyPO){
         this.memberCredit = memberPO.getCredit();
         this.memberDiscount = strategyPO.getRate();
