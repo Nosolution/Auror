@@ -2,6 +2,7 @@ package org.seec.muggle.auror.blImpl.account;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
+import org.seec.muggle.auror.bl.account.AccountService4Message;
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
 import org.seec.muggle.auror.bl.deal.OrderService4Account;
 import org.seec.muggle.auror.bl.member.MemberService4Account;
@@ -33,7 +34,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AccountServiceImpl implements AccountService, AccountService4Movie {
+public class AccountServiceImpl implements AccountService, AccountService4Movie , AccountService4Message {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String LOGIN_ERROR = "用户名或密码错误";
     private Logger logger = LoggerFactory.getLogger(this.getClass());

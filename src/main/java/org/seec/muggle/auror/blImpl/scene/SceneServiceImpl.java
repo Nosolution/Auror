@@ -140,7 +140,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         Integer[][] seats = hall.getSeats();
         List<TicketPO> ticketPOS = orderService4Scene.getTicketsBySceneId(scene.getId());
         for (TicketPO ticketPO : ticketPOS) {
-            seats[ticketPO.getRow()][ticketPO.getColumn()] = 0;
+            seats[ticketPO.getRow()][ticketPO.getColumn()] = 2;
         }
         return seats;
     }

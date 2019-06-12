@@ -138,10 +138,13 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         if (po == null) {
             return new MovieDetailsVO();
         }
-        int totalScore = Optional.ofNullable(movieMapper.sumScore(id)).orElse(0);
-        int scoreNum = Optional.ofNullable(movieMapper.sumCommentNum(id)).orElse(0);
-        double averageScore = (double) scoreNum == 0 ? 0.0 : totalScore / scoreNum;
-        return new MovieDetailsVO(po, po.getStatus(), averageScore);
+        Optional<Integer> scores = Optional.ofNullable(movieMapper.sumScore(id));
+        Integer totalScore = scores.orElse(0);
+        Optional<Integer> num = Optional.ofNullable(movieMapper.sumCommentNum(id));
+        Integer scoreNum = num.orElse(0);
+        double averageScore = (double) scoreNum==0?0.0:totalScore/scoreNum;
+        return  new MovieDetailsVO(po,po.getStatus(),averageScore);
+
     }
 
     @Override

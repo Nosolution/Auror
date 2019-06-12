@@ -20,7 +20,7 @@ public class MovieSceneInfoVO {
     Integer price;
     String hallName;
     String date;
-    IntervalVO interval;
+    String interval;
     Integer[][] seats;
     
     public MovieSceneInfoVO(ScenePO po, Hall hall, Integer[][] seats) {
@@ -28,7 +28,7 @@ public class MovieSceneInfoVO {
         this.price = po.getPrice();
         this.hallName = hall.getName();
         this.date = DateUtil.dateToString(po.getDate());
-        this.interval = new IntervalVO(po.getStartTime(), po.getEndTime());
+        interval = DateUtil.timestampToTimeString(po.getStartTime())+"-"+DateUtil.timestampToTimeString( po.getEndTime());
         this.seats = seats;
     }
 

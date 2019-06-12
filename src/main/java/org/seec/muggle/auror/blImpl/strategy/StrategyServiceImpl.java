@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.blImpl.strategy;
 
+import org.seec.muggle.auror.bl.message.MessageService4Strategy;
 import org.seec.muggle.auror.bl.strategy.StrategyService;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
@@ -20,6 +21,8 @@ import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,6 +34,9 @@ import java.util.stream.Collectors;
  **/
 @Service
 public class StrategyServiceImpl implements StrategyService, StrategyService4Order, StrategyService4Account, StrategyService4Member {
+
+    @Autowired
+    MessageService4Strategy messageService4Strategy;
 
     @Autowired
     StrategyMapper strategyMapper;
@@ -95,6 +101,14 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         for (int i = 0; i < form.getMoviesIncluded().length; i++) {
             strategyMapper.insertEventMovie(po.getId(), form.getMoviesIncluded()[i]);
         }
+
+        //发送消息提示
+        Message message = new Message();
+        message.setType(4);
+        message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
+        message.setTitle("新优惠活动提示");
+        message.setContent("新的优惠活动公布了，不如我们把它……");
+        messageService4Strategy.newEventRemind(message);
         return new BasicVO();
     }
 
@@ -214,6 +228,15 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
             ucPO.setUserId(form.getUserList()[i]);
             strategyMapper.insertUserCoupon(ucPO);
         }
+        //发送提醒消息;
+        Message message  = new Message();
+        message.setTitle("优惠券获取提示");
+        message.setStatus(0);
+        message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
+        message.setContent("您获取了新的优惠券，请于卡包查看。");
+        message.setType(0);
+        messageService4Strategy.sendCouponReceiversMessages(message,form.getUserList());
+
         return new BasicVO();
     }
 

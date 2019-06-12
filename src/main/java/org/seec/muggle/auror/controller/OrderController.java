@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.deal.OrderService;
+import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.order.cancellation.CancellationForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
@@ -14,9 +15,11 @@ import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 
 /**
@@ -32,6 +35,12 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Value("${jwt.header}")
+    String tokenHeader;
 
     @GetMapping(value = "/ticket/unfinished/detail")
     public ResponseEntity<?> checkOrderDetail(@PathParam("orderId") Long orderId) {
@@ -57,8 +66,8 @@ public class OrderController {
     }
 
     @GetMapping(value = "/ticket")
-    public ResponseEntity<?> getAllTickets() {
-        Long userId = 1L;
+    public ResponseEntity<?> getAllTickets(HttpServletRequest request) {
+        Long userId = getIdFromRequest(request);
         TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
         if (ticketDetailVOS.length != 0) {
             return ResponseEntity.ok(ticketDetailVOS);
@@ -82,18 +91,21 @@ public class OrderController {
     }
 
     @PostMapping(value = "/member/purchase/payment")
-    public ResponseEntity<?> purchaseVIPCard(@RequestBody VipPurchaseForm form) {
-        Long userId = 1L;
+    public ResponseEntity<?> purchaseVIPCard(HttpServletRequest request,@RequestBody VipPurchaseForm form) {
+        Long userId = getIdFromRequest(request);
         orderService.purchaseMember(userId, form.getCost(), form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/member/recharge/payment")
-    public ResponseEntity<?> recharge(@RequestBody RechargeForm form) {
-        Long userId = 2L;
+    public ResponseEntity<?> recharge(HttpServletRequest request,@RequestBody RechargeForm form) {
+        Long userId = getIdFromRequest(request);
         RechargeVO vo = orderService.rechargeMember(form, userId);
         return ResponseEntity.ok(vo);
     }
-
+    private Long getIdFromRequest(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader).substring(7);
+        return jwtUtil.getIdFromToken(token);
+    }
 
 }
