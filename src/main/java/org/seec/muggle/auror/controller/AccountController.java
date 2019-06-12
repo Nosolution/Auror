@@ -100,11 +100,8 @@ public class AccountController {
     public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
         Long userId = getIdFromRequest(request);
         MemberVO vo = memberService.getPersonalMemberInfo(userId);
-        if (vo != null) {
-            return ResponseEntity.ok(vo);
-        } else {
-            return ResponseEntity.status(405).body("NOT A MEMBER");
-        }
+        vo.setMember(vo==null);
+        return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/user/message")

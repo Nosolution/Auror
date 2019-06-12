@@ -2,13 +2,11 @@ package org.seec.muggle.auror.blImpl.scene;
 
 import org.seec.muggle.auror.bl.deal.OrderService4Scene;
 import org.seec.muggle.auror.bl.hall.HallService4Scene;
+import org.seec.muggle.auror.bl.message.MessageService4Scene;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
 import org.seec.muggle.auror.bl.scene.*;
 import org.seec.muggle.auror.dao.scene.SceneMapper;
-import org.seec.muggle.auror.po.Hall;
-import org.seec.muggle.auror.po.MoviePO;
-import org.seec.muggle.auror.po.ScenePO;
-import org.seec.muggle.auror.po.TicketPO;
+import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
@@ -44,8 +42,24 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     @Autowired
     OrderService4Scene orderService4Scene;
 
+    @Autowired
+    MessageService4Scene messageService4Scene;
+
     @Override
     public BasicVO addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
+        //第一步判断movie状态是否为0，如果是0 说明第一次上映，给想看的人发消息
+        MoviePO moviePO = movieService4Scene.getMovie4Scene(movieId);
+        if(moviePO.getStatus()==0){
+            Message message = new Message();
+            message.setContent(moviePO.getMovieName()+"已上映");
+            message.setTitle("某部想看电影已上映");
+            message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
+            message.setType(1);
+            message.setAdditionalMovieId(movieId);
+            messageService4Scene.SendMovieOnSceneRemind(message);
+        }
+
+
         Integer length = movieService4Scene.getLengthById(movieId);
         Timestamp beginTime = DateUtil.datesToTimestamp(date,startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
@@ -111,6 +125,9 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     public MovieSceneInfoVO[] getScenesInfoByMovieId(Long movieId) {
         List<MovieSceneInfoVO> vos = new ArrayList<>();
         List<ScenePO> pos = sceneMapper.selectByMovieId(movieId);
+        if(pos.size()==0){
+            return new MovieSceneInfoVO[0];
+        }
 
         pos.forEach(o -> {
             Hall hall = hallService4Scene.getHallById(o.getHallId());

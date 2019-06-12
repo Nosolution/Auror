@@ -4,6 +4,8 @@ import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
 
+import java.util.List;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -17,4 +19,6 @@ public interface MovieMarkService {
     public FavorNumVO[] getFavorsByDate(Long movieId);
 
     public MovieMarkVO[] getFavorsByUserId(Long userId);
+
+
 }

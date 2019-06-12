@@ -4,6 +4,7 @@ import org.seec.muggle.auror.bl.deal.OrderService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
 import org.seec.muggle.auror.bl.scene.SceneService4Mark;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
+import org.seec.muggle.auror.bl.statistics.MovieMarkService4Message;
 import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.po.FavorRecordPO;
 import org.seec.muggle.auror.po.MoviePO;
@@ -26,7 +27,7 @@ import java.util.stream.Stream;
  * @Version 1.0
  **/
 @Service
-public class MovieMarkServiceImpl implements MovieMarkService {
+public class MovieMarkServiceImpl implements MovieMarkService , MovieMarkService4Message {
 
 
     @Autowired
@@ -102,6 +103,12 @@ public class MovieMarkServiceImpl implements MovieMarkService {
         rightNow.setTime(current);
         rightNow.add(Calendar.DATE,1);
         return rightNow.getTime();
+    }
+
+
+    @Override
+    public List<Long> getUsersByMovieId(Long movieId) {
+        return movieMarkMapper.getUserIdsByMovieId(movieId);
     }
 
     @Override

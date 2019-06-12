@@ -2,7 +2,9 @@ package org.seec.muggle.auror.blImpl.message;
 
 import org.seec.muggle.auror.bl.account.AccountService4Message;
 import org.seec.muggle.auror.bl.message.MessageService;
+import org.seec.muggle.auror.bl.message.MessageService4Scene;
 import org.seec.muggle.auror.bl.message.MessageService4Strategy;
+import org.seec.muggle.auror.bl.statistics.MovieMarkService4Message;
 import org.seec.muggle.auror.dao.message.MessageMapper;
 import org.seec.muggle.auror.po.Message;
 import org.seec.muggle.auror.util.DateUtil;
@@ -21,12 +23,15 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class MessageServiceImpl implements MessageService , MessageService4Strategy {
+public class MessageServiceImpl implements MessageService , MessageService4Strategy, MessageService4Scene {
     @Autowired
     MessageMapper mapper;
 
     @Autowired
     AccountService4Message accountService4Message;
+
+    @Autowired
+    MovieMarkService4Message  movieMarkService4Message;
 
     @Override
     public int getUnreadNum(Long userId) {
@@ -51,6 +56,16 @@ public class MessageServiceImpl implements MessageService , MessageService4Strat
         return vos.toArray(new MessageVO[vos.size()]);
     }
 
+    @Override
+    public void SendMovieOnSceneRemind(Message message) {
+        List<Long> users = movieMarkService4Message.getUsersByMovieId(message.getAdditionalMovieId());
+        if(users.size()!=0){
+            for(int i =0;i<users.size();i++){
+                message.setUserId(users.get(i));
+                mapper.insert(message);
+            }
+        }
+    }
 
     /**
      * @Author jyh
@@ -66,6 +81,7 @@ public class MessageServiceImpl implements MessageService , MessageService4Strat
             mapper.insert(form);
         }
     }
+
 
     @Override
     public void newEventRemind(Message message) {
