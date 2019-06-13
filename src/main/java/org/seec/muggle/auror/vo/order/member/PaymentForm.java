@@ -9,7 +9,8 @@ import lombok.Data;
  * @Version 1.0
  **/
 @Data
-public class MemberPaymentForm {
+public class PaymentForm {
+    //第三方支付时为空
     Long memberId;
     Long orderId;
     CouponsForm[] coupons;

@@ -3,14 +3,13 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.bl.deal.OrderService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.order.cancellation.CancellationForm;
-import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
+import org.seec.muggle.auror.vo.order.member.PaymentForm;
 import org.seec.muggle.auror.vo.order.purchase.VipPurchaseForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
 import org.seec.muggle.auror.vo.order.refund.RefundForm;
 import org.seec.muggle.auror.vo.order.refund.RefundVO;
-import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentForm;
 import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
@@ -49,7 +48,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "/ticket/payment/member")
-    public ResponseEntity<?> memberPayment(@RequestBody MemberPaymentForm form) {
+    public ResponseEntity<?> memberPayment(@RequestBody PaymentForm form) {
         MemberPaymentVO vo = orderService.finishByMember(form);
         if (vo != null) {
             return ResponseEntity.ok(vo);
@@ -60,7 +59,7 @@ public class OrderController {
 
 
     @PostMapping(value = "/ticket/payment/third_party")
-    public ResponseEntity<?> third_partyPayment(@RequestBody ThirdPartyPaymentForm form) {
+    public ResponseEntity<?> third_partyPayment(@RequestBody PaymentForm form) {
         ThirdPartyPaymentVO vos = orderService.finishByThird_party(form);
         return ResponseEntity.ok(vos);
     }

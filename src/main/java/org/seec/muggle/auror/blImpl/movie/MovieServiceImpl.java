@@ -22,10 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Description TODO
@@ -151,10 +148,12 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     public List<CommentVO> getMovieComment(Long movieId) {
         List<CommentPO> commentPOS = movieMapper.getCommentsByMovieId(movieId);
         List<CommentVO> vos = new ArrayList<>();
-        commentPOS.stream().forEach(o -> {
-            UserBasic basic = accountService4Movie.getUserBasicById(o.getUserId());
-            vos.add(new CommentVO(o, basic));
-        });
+        commentPOS.stream()
+                .sorted(Comparator.comparing(CommentPO::getCommentTime).reversed())
+                .forEach(o -> {
+                    UserBasic basic = accountService4Movie.getUserBasicById(o.getUserId());
+                    vos.add(new CommentVO(o, basic));
+                });
         return vos;
     }
 

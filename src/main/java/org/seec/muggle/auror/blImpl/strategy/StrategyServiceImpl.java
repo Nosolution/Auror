@@ -120,7 +120,9 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public EventVO[] getEvents() {
         List<EventPO> events = strategyMapper.getEvents();
         List<EventVO> res = new ArrayList<>();
-        events.forEach(o -> {
+        events.stream()
+                .sorted(Comparator.comparing(EventPO::getStartTime).reversed())
+                .forEach(o -> {
             EventVO vo = new EventVO(o, strategyMapper.getCouponById(o.getCouponId()), strategyMapper.getMoviesByEventId(o.getId()));
             res.add(vo);
         });
@@ -181,20 +183,22 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public UserCouponsVO[] getCouponsByUser(Long userId) {
         List<UserCouponPO> uc = strategyMapper.getUserCoupons(userId);
         List<UserCouponsVO> vos = new ArrayList<>();
-        uc.forEach(o -> {
-            UserCouponsVO vo = new UserCouponsVO();
-            CouponPO couponPO = strategyMapper.getCouponById(o.getCouponId());
-            vo.setCouponDescription(couponPO.getDescription());
-            vo.setCouponDiscount(couponPO.getDiscount());
-            vo.setCouponEndTime(DateUtil.dateToString(o.getEnd()));
-            vo.setCouponId(o.getCouponId());
-            vo.setCouponName(couponPO.getCouponName());
-            vo.setCouponPictureUrl(couponPO.getUrl());
-            vo.setCouponThreshold(couponPO.getThreshold());
-            vo.setCouponStartTime(DateUtil.dateToString(o.getStart()));
-            vo.setCouponExpiration("");
-            vos.add(vo);
-        });
+        uc.stream()
+                .sorted(Comparator.comparing(UserCouponPO::getEnd).reversed())
+                .forEach(o -> {
+                    UserCouponsVO vo = new UserCouponsVO();
+                    CouponPO couponPO = strategyMapper.getCouponById(o.getCouponId());
+                    vo.setCouponDescription(couponPO.getDescription());
+                    vo.setCouponDiscount(couponPO.getDiscount());
+                    vo.setCouponEndTime(DateUtil.dateToString(o.getEnd()));
+                    vo.setCouponId(o.getCouponId());
+                    vo.setCouponName(couponPO.getCouponName());
+                    vo.setCouponPictureUrl(couponPO.getUrl());
+                    vo.setCouponThreshold(couponPO.getThreshold());
+                    vo.setCouponStartTime(DateUtil.dateToString(o.getStart()));
+                    vo.setCouponExpiration("");
+                    vos.add(vo);
+                });
         return vos.toArray(new UserCouponsVO[vos.size()]);
     }
 

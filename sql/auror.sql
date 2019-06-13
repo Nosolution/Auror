@@ -626,7 +626,7 @@ create table `tbl_message`
     `message_content` varchar(255) NOT NULL,
     `init_time`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `message_status`  Integer      NOT NULL comment '信息是否已读',
-    `movie_id`        bigint       NOT NULL,
+    `movie_id`        bigint       NULL     DEFAULT 0,
     `user_id`         bigint       NOT NULL,
     primary key (id)
 );

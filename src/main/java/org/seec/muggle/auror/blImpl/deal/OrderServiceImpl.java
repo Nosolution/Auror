@@ -11,12 +11,11 @@ import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.CaptchaUtil;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
-import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
+import org.seec.muggle.auror.vo.order.member.PaymentForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
 import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
-import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentForm;
 import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.AvailableCouponsVO;
@@ -232,6 +231,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                     vo.setTime(DateUtil.timestampToString(o.getInitTime()));
                     vos.add(vo);
                 });
+
         return vos.toArray(new RechargeHistoryVO[vos.size()]);
     }
 
@@ -247,16 +247,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     }
 
     @Override
-    public ThirdPartyPaymentVO finishByThird_party(ThirdPartyPaymentForm form) {
+    public ThirdPartyPaymentVO finishByThird_party(PaymentForm form) {
         OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
-        Integer cost;
-        if (form.getCoupons() == null) {
-            cost = 0;
-        } else {
-            cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
-        }
-
-        Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
+        Integer payment = getPayment(form, orderPO);
         orderMapper.finishOrder(form.getOrderId(), payment, 2);
 
         List<CouponsAcquirementVO> acquirementVOS = getAcquirementVOS(orderPO);
@@ -266,17 +259,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     }
 
     @Override
-    public MemberPaymentVO finishByMember(MemberPaymentForm form) {
+    public MemberPaymentVO finishByMember(PaymentForm form) {
         OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
+        Integer payment = getPayment(form, orderPO);
 
-        Integer cost;
-        if (form.getCoupons() == null) {
-            cost = 0;
-        } else {
-            cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
-        }
-
-        Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
         //判断余额是否足够支付
         int pay = memberService4Order.payByMember(payment, orderPO.getUserId());
         if (pay == -1) {
@@ -291,6 +277,20 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         MemberPaymentVO voFinal = new MemberPaymentVO();
         voFinal.setCouponsGot(acquirementVOS.toArray(new CouponsAcquirementVO[acquirementVOS.size()]));
         return voFinal;
+    }
+
+
+    private Integer getPayment(PaymentForm form, OrderPO orderPO) {
+        Integer cost;
+        if (form.getCoupons() == null) {
+            cost = 0;
+        } else {
+            cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
+        }
+
+        Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
+        return payment;
+
     }
 
     private List<CouponsAcquirementVO> getAcquirementVOS(OrderPO orderPO) {
@@ -315,7 +315,6 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         if (orders.size() == 0) {
             return new TicketDetailVO[0];
         }
-
         orders.stream()
                 .sorted(Comparator.comparing(OrderPO::getCreateTime).reversed())
                 .forEach(o -> {
@@ -336,6 +335,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                     TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hall);
                     vos.add(vo);
                 });
+
         return vos.toArray(new TicketDetailVO[vos.size()]);
     }
 }

@@ -1,10 +1,9 @@
 package org.seec.muggle.auror.bl.deal;
 
-import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
+import org.seec.muggle.auror.vo.order.member.PaymentForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
-import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentForm;
 import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
@@ -32,9 +31,9 @@ public interface OrderService {
     RechargeVO rechargeMember(RechargeForm form, Long userId);
 
 
-    ThirdPartyPaymentVO finishByThird_party(ThirdPartyPaymentForm form);
+    ThirdPartyPaymentVO finishByThird_party(PaymentForm form);
 
-    MemberPaymentVO finishByMember(MemberPaymentForm form);
+    MemberPaymentVO finishByMember(PaymentForm form);
 
     TicketDetailVO[] getAllOrders(Long userId);
 }

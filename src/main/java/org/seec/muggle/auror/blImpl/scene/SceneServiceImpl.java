@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         //第一步判断movie状态是否为0，如果是0 说明第一次上映，给想看的人发消息
         MoviePO moviePO = movieService4Scene.getMovie4Scene(movieId);
 
-        if(moviePO.getStatus()==1){
+        if (moviePO.getStatus() == 1) {
             Message message = new Message();
             message.setContent(moviePO.getMovieName() + "已上映");
             message.setTitle("某部想看电影已上映");
@@ -147,7 +148,9 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         List<InfoVO> vos = new ArrayList<>();
         List<ScenePO> pos = sceneMapper.getByHallIdAndDate(hallId, date);
 
-        pos.forEach(o -> {
+        pos.stream()
+                .sorted(Comparator.comparing(ScenePO::getStartTime))
+                .forEach(o -> {
             Hall hall = hallService4Scene.getHallById(o.getHallId());
             Integer[][] seats = loadSeats(o, hall);
             MoviePO moviePO = movieService4Scene.getMovie4Scene(o.getMovieId());

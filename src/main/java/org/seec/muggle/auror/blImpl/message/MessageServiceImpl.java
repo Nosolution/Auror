@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
         List<Message> messages = mapper.getMessages(userId);
         mapper.readAll(userId);
         List<MessageVO> vos = new ArrayList<>();
-        messages.forEach(o -> {
+        messages.stream().sorted(Comparator.comparing(Message::getInitTime).reversed()).forEach(o -> {
             MessageVO message = new MessageVO();
             message.setMessageContent(o.getContent());
             message.setAdditionalMovieId(o.getAdditionalMovieId());

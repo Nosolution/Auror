@@ -7,7 +7,9 @@
     </select>
 
     <select id="getUserIdsByMovieId" resultType="java.lang.Long">
-        SELECT user_id from tbl_movie_favor where movie_id=#{movieId}
+        SELECT user_id
+        from tbl_movie_favor
+        where movie_id = #{movieId}
     </select>
 
     <select id="getFavorByMovieIdAndUserId" resultType="org.seec.muggle.auror.po.FavorRecordPO">
@@ -32,5 +34,6 @@
         select movie_id
         from tbl_movie_favor
         where user_id = #{userId}
+        order by init_time desc
     </select>
 </mapper>
