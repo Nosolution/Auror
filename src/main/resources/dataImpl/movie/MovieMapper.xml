@@ -68,7 +68,7 @@
 
     </select>
 
-    <select id="findMovieById" resultMap="moviePO">
+    <select id="getMovieById" resultMap="moviePO">
         select m.id,
                m.movie_name,
                m.description,

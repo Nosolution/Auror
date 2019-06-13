@@ -10,7 +10,6 @@ import org.seec.muggle.auror.dao.order.OrderMapper;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.CaptchaUtil;
 import org.seec.muggle.auror.util.DateUtil;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
@@ -30,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,12 +76,12 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         po.setMovieId(sceneService4Order.getMovieIdByScene(sceneId));
         orderMapper.insertOrder(po);
 
-        for (int i = 0; i < selectedSeats.length; i++) {
-            orderMapper.insertSeat(new TicketPO(sceneId, selectedSeats[i].getRow(), selectedSeats[i].getColumn(),po.getId()));
+        for (SelectionForm selectedSeat : selectedSeats) {
+            orderMapper.insertSeat(new TicketPO(sceneId, selectedSeat.getRow(), selectedSeat.getColumn(), po.getId()));
         }
 
         vo.setOrderId(po.getId());
-        vo.setInitTime(po.getCreateTime());
+        vo.setInitTime(DateUtil.timestampToString(po.getCreateTime()));
         vo.setTicketNum(selectedSeats.length);
         vo.setCost(cost);
         return vo;
@@ -95,10 +95,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
      * @Param [orderId]
      **/
     @Override
-    public BasicVO cancelOrder(Long orderId) {
+    public void cancelOrder(Long orderId) {
         orderMapper.cancelOrder(orderId);
         orderMapper.deleteSeat(orderId);
-        return new BasicVO();
     }
 
 
@@ -125,7 +124,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     }
 
     @Override
-    public BasicVO purchaseMember(Long userId, Integer cost, Long memberId) {
+    public void purchaseMember(Long userId, Integer cost, Long memberId) {
         orderMapper.insertMember(memberId, userId, cost);
         RechargePO rechargePO = new RechargePO();
         rechargePO.setCost(cost);
@@ -133,7 +132,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         rechargePO.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
         rechargePO.setType(1);
         orderMapper.insertRecharge(rechargePO);
-        return new BasicVO();
+
     }
 
     @Override
@@ -153,6 +152,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         HallPO hallPO = hallService4Order.selectHallById(scenePO.getHallId());
         List<TicketPO> ticketPOS = orderMapper.getSeatsById(orderId);
         List<AvailableCouponsVO> couponPOS = strategyService4Order.getCouponsByCost(ticketPOS.size() * scenePO.getPrice(), orderPO.getUserId());
+        couponPOS.sort(Comparator.comparing(AvailableCouponsVO::getEndTime));
 
         UnfinishedOrderVO vo = new UnfinishedOrderVO(orderPO, scenePO, hallPO, ticketPOS, couponPOS, movieService4Order.getMovieNameById(scenePO.getMovieId()));
         return vo;
@@ -190,8 +190,8 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         if (po == null) { //说明已经是至高会员了
             po = strategyPOS.get(strategyPOS.size() - 1);
             RechargeVO vo = new RechargeVO();
-            vo.setUpgraded(po.getId()!=memberPO.getStrategyId());
-            if(po.getId()!=memberPO.getStrategyId()) {
+            vo.setUpgraded(po.getId() != memberPO.getStrategyId());
+            if (po.getId() != memberPO.getStrategyId()) {
                 memberService4Order.changeStrategy(userId, po.getId());
             }
             vo.setCredit(form.getCost() + memberPO.getCredit());
@@ -246,11 +246,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public ThirdPartyPaymentVO finishByThird_party(ThirdPartyPaymentForm form) {
         OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
-        Integer cost ;
-        if(form.getCoupons()==null){
+        Integer cost;
+        if (form.getCoupons() == null) {
             cost = 0;
-        }
-        else {
+        } else {
             cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
         }
 
@@ -268,17 +267,16 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         OrderPO orderPO = orderMapper.getOrderById(form.getOrderId());
 
         Integer cost;
-        if(form.getCoupons()==null){
+        if (form.getCoupons() == null) {
             cost = 0;
-        }
-        else {
+        } else {
             cost = strategyService4Order.cutDownByCoupons(form.getCoupons(), orderPO.getUserId());
         }
 
         Integer payment = (orderPO.getCost() - cost) > 0 ? orderPO.getCost() - cost : 0;
         //判断余额是否足够支付
         int pay = memberService4Order.payByMember(payment, orderPO.getUserId());
-        if(pay ==-1) {
+        if (pay == -1) {
             return null;
         }
 
@@ -311,7 +309,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     public TicketDetailVO[] getAllOrders(Long userId) {
         List<OrderPO> orders = orderMapper.getAllOrdersByUser(userId);
         List<TicketDetailVO> vos = new ArrayList<>();
-        if(orders.size()==0){
+        if (orders.size() == 0) {
             return new TicketDetailVO[0];
         }
         orders.forEach(o -> {
@@ -321,11 +319,11 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
             RefundPO refundPO = strategyService4Order.getRefund();
             HallPO hall = hallService4Order.selectHallById(scene.getHallId());
             int status = o.getStatus();
-            if (status == 1) {
+            if (status == 1) { // 已支付
                 LocalDateTime today = LocalDateTime.now();
-                LocalDateTime lastAvaliabeTime = scene.getStartTime().toLocalDateTime();
-                lastAvaliabeTime = lastAvaliabeTime.minusHours(refundPO.getBeforeTime());
-                if(today.isAfter(lastAvaliabeTime)) {
+                LocalDateTime lastAvaliableTime = scene.getStartTime().toLocalDateTime();
+                lastAvaliableTime = lastAvaliableTime.minusHours(refundPO.getBeforeTime());
+                if (today.isAfter(lastAvaliableTime)) {
                     status = 0;
                 }
             }

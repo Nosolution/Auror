@@ -1,6 +1,5 @@
 package org.seec.muggle.auror.bl.movie;
 
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
@@ -21,7 +20,7 @@ public interface MovieService {
 
     public MoviePopularVO[] getMoviePopular();
 
-    public BasicVO addMovie(MovieAddForm form);
+    public void addMovie(MovieAddForm form);
 
     public List<CommentVO>getMovieComment(Long movieId);
 
@@ -34,10 +33,10 @@ public interface MovieService {
      **/
     public MovieDetailsVO getMovieDetail(Long id);
 
-    public BasicVO updateMovie(MovieVaryForm form);
+    public void updateMovie(MovieVaryForm form);
 
-    public BasicVO commentMovie(Long movieId,Integer rate,String comment,Long userId);
+    public void commentMovie(Long movieId, Integer rate, String comment, Long userId);
 
-    public BasicVO deleteMovie(Long movieId);
+    public void deleteMovie(Long movieId);
 
 }

@@ -1,6 +1,5 @@
 package org.seec.muggle.auror.bl.account;
 
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
@@ -15,7 +14,7 @@ public interface AccountService {
      * @Param [username, password]
      * @return org.seec.muggle.auror.vo.BasicVO
      **/
-    public BasicVO register(String username, String password);
+    public void register(String username, String password);
 
     /**
      * 用户登录，登录成功会返回token

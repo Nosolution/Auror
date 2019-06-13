@@ -8,7 +8,6 @@ import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.po.Role;
 import org.seec.muggle.auror.po.User;
 import org.seec.muggle.auror.po.UserRole;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,19 +41,15 @@ public class ManagerServiceImpl implements ManagerService {
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public BasicVO addManager(String username, String password) {
-        BasicVO vo = new BasicVO();
+    public void addManager(String username, String password) {
         insertNewMANAGER(username, password);
         logger.info("账号 {} 注册成功，时间: {}", username, new Timestamp(new Date().getTime()));
-        vo.setSucc(true);
-        return vo;
     }
 
     @Override
-    public BasicVO deleteManager(Long managerId) {
+    public void deleteManager(Long managerId) {
         userRoleMapper.deleteByUserId(managerId);
         userMapper.deleteUserById(managerId);
-        return new BasicVO();
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
  **/
 @DaoMapper
 public interface StrategyMapper {
-    List<RefundPO> selectRefundStrategy();
+    List<RefundPO> getRefundStrategy();
 
     int updateRefundStrategy(RefundPO po);
 

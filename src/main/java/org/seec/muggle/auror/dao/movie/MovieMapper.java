@@ -28,7 +28,7 @@ public interface MovieMapper {
 
     int insertMovie(MoviePO moviePO);
 
-    MoviePO findMovieById(@Param("id") Long id);
+    MoviePO getMovieById(@Param("id") Long id);
 
     int insertCast(CastPO po);
 

@@ -14,16 +14,16 @@ VALUES (101, 'X战警：黑凤凰 Dark Phoenix',
 
 insert into tbl_cast (id, cast_name, poster_url)
 VALUES (1, '西蒙·金伯格 Simon Kinberg',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1525519509.24.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VRWtgg.jpg'),
        (2, '迈克尔·法斯宾德 Michael Fassbender',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p32214.jpg'),
-       (3, '詹姆斯·麦卡沃伊 James McAvoy', 'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p93.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VRWNvQ.jpg'),
+       (3, '詹姆斯·麦卡沃伊 James McAvoy', 'https://s2.ax1x.com/2019/06/12/VRWwbn.jpg'),
        (4, '苏菲·特纳 Sophie Turner',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1360321984.03.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VRWr5V.jpg'),
        (5, '尼古拉斯·霍尔特 Nicholas Hoult',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1371701601.6.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VRWr5V.jpg'),
        (6, '泰伊·谢里丹 Tye Sheridan',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1464678182.3.jpg');
+        'https://s2.ax1x.com/2019/06/12/VRWc2F.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (101, 1, 'Director'),
@@ -47,12 +47,12 @@ VALUES (102, '大侦探皮卡丘 Pokémon Detective Pikachu',
 
 insert into tbl_cast (id, cast_name, poster_url)
 VALUES (7, '罗伯·莱特曼 Rob Letterman',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1446386865.82.jpg'),
-       (8, '瑞安·雷诺兹 Ryan Reynolds', 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p48608.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VRWWr9.jpg'),
+       (8, '瑞安·雷诺兹 Ryan Reynolds', 'https://s2.ax1x.com/2019/06/12/VRfpPf.jpg'),
        (9, '贾斯蒂斯·史密斯 Justice Smith',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1523860646.23.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWnRln.jpg'),
        (10, '凯瑟琳·纽顿 Kathryn Newton',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1430023168.56.jpg');
+        'https://s2.ax1x.com/2019/06/12/VWn5wT.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (102, 7, 'Director'),
@@ -73,12 +73,12 @@ VALUES (103, '阿拉丁 Aladdin',
         'https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2553992741.jpg', 128, 2019, 2);
 
 insert into tbl_cast (id, cast_name, poster_url)
-VALUES (11, '盖·里奇 Guy Ritchie', 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p47189.jpg'),
+VALUES (11, '盖·里奇 Guy Ritchie', 'https://s2.ax1x.com/2019/06/12/VWnITU.jpg'),
        (12, '梅纳·玛索德 Mena Massoud',
-        'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1500145110.49.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWnHfJ.jpg'),
        (13, '娜奥米·斯科特 Naomi Scott',
-        'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1558931683.7.jpg'),
-       (14, '威尔·史密斯 Will Smith', 'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p41483.jpg');
+        'https://s2.ax1x.com/2019/06/12/VWnqp9.jpg'),
+       (14, '威尔·史密斯 Will Smith', 'https://s2.ax1x.com/2019/06/12/VWnvm6.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (103, 11, 'Director'),
@@ -98,11 +98,11 @@ VALUES (104, '无所不能 Kaabil', '罗汉是个盲人，但他对生活积极�
 
 insert into tbl_cast (id, cast_name, poster_url)
 VALUES (15, '桑吉·古普塔 Sanjay Gupta',
-        'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1431011756.78.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWuAXt.jpg'),
        (16, '赫里尼克·罗斯汉 Hrithik Roshan',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1432029328.95.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWuVnP.jpg'),
        (17, '亚米·高塔姆 Yami Gautam',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1391846193.64.jpg');
+        'https://s2.ax1x.com/2019/06/12/VWunAS.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (104, 15, 'Director'),
@@ -126,11 +126,11 @@ values (105, '哆啦A梦：大雄的月球探险记 映画ドラえもん のび
 
 insert into tbl_cast (id, cast_name, poster_url)
 VALUES (18, '八锹新之介 Shinnosuke Yakuwa',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1469190483.72.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWnx0K.jpg'),
        (19, '水田山葵 Wasabi Mizuta',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1375424738.93.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWuutg.jpg'),
        (20, '大原惠美 Megumi Oohara',
-        'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1358580306.49.jpg');
+        'https://s2.ax1x.com/2019/06/12/VWu1cn.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (105, 18, 'Director'),
@@ -149,13 +149,13 @@ VALUES (106, '最好的我们', '每个人的心里大概都藏着一个念念�
         'https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2557157554.jpg', 110, 2019, 2);
 
 insert into tbl_cast (id, cast_name, poster_url)
-VALUES (21, '章笛沙 Disha Zhang', 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1559625802.98.jpg'),
+VALUES (21, '章笛沙 Disha Zhang', 'https://s2.ax1x.com/2019/06/12/VWu3Xq.jpg'),
        (22, '陈飞宇 Feiyu Chen',
-        'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1500201702.37.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWuJBV.jpg'),
        (23, '何蓝逗 Lan He',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1499156488.33.jpg'),
+        'https://s2.ax1x.com/2019/06/12/VWuah4.jpg'),
        (24, '惠英红 Kara Wai Ying Hung',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1352363438.56.jpg');
+        'https://s2.ax1x.com/2019/06/12/VWu039.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (106, 21, 'Director'),
@@ -175,9 +175,9 @@ values (107, '哥斯拉2：怪兽之王 Godzilla: King of the Monsters',
 
 insert into tbl_cast (id, cast_name, poster_url)
 values (25, '迈克尔·道赫蒂 Michael Dougherty',
-        'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p34473.jpg'),
-       (26, '凯尔·钱德勒 Kyle Chandler', 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p20877.jpg'),
-       (27, '维拉·法米加 Vera Farmiga', 'https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p11871.jpg');
+        'https://s2.ax1x.com/2019/06/12/VWuDj1.jpg'),
+       (26, '凯尔·钱德勒 Kyle Chandler', 'https://s2.ax1x.com/2019/06/12/VWusnx.jpg'),
+       (27, '维拉·法米加 Vera Farmiga', 'https://s2.ax1x.com/2019/06/12/VWu6HK.jpg');
 
 insert into cast_movie (movie_id, cast_id, cast_role)
 VALUES (107, 25, 'Director'),
@@ -193,7 +193,7 @@ VALUES (1,
         '1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;',
         '一号厅'),
        (1,
-        '0,0,0,1,1,1,1,1,1,0,0,0;0,0,1,1,1,1,1,1,1,1,0,1;0,1,1,1,1,1,1,1,1,1,1,0;0,1,1,1,1,1,1,1,1,1,1,0;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;',
+        '0,0,0,1,1,1,1,1,1,0,0,0;0,0,1,1,1,1,1,1,1,1,0,0;0,1,1,1,1,1,1,1,1,1,1,0;0,1,1,1,1,1,1,1,1,1,1,0;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1;',
         '二号厅');
 
 -- ==========================================================================================================================
@@ -208,14 +208,28 @@ VALUES (1, 101, '2019-06-08 10:00:00', '2019-06-08 11:54:00', 1, 50, '2019-06-08
        (6, 101, '2019-06-08 16:00:00', '2019-06-08 17:54:00', 2, 49.98, '2019-06-08'),
        (7, 101, '2019-06-08 23:00:00', '2019-06-09 01:44:00', 1, 50, '2019-06-08'),
        (8, 101, '2019-06-09 00:00:00', '2019-06-09 01:54:00', 2, 50, '2019-06-09'),
-
-
        (9, 102, '2019-05-30 10:00:00', '2019-05-30 11:44:00', 1, 40, '2019-05-30'),
        (10, 102, '2019-05-31 12:00:00', '2019-06-08 13:44:00', 1, 50, '2019-05-31'),
        (11, 102, '2019-06-08 18:00:00', '2019-06-08 18:44:00', 2, 60, '2019-06-08'),
        (12, 102, '2019-06-08 18:30:00', '2019-06-08 19:14:00', 1, 55, '2019-06-08'),
        (13, 102, '2019-06-08 20:00:00', '2019-06-08 21:44:00', 2, 50, '2019-06-08'),
        (14, 102, '2019-06-08 19:30:00', '2019-06-08 21:14:00', 1, 44.99, '2019-06-08');
+
+insert into tbl_scene (movie_id, start_time, end_time, hall_id, price, date)
+values (104, '2019-06-16 08:00:00', '2019-06-16 10:13:00', 1, 50.00, '2019-06-16'),
+       (105, '2019-06-16 08:00:00', '2019-06-16 09:51:00', 2, 60.00, '2019-06-16'),
+       (106, '2019-06-16 10:30:00', '2019-06-16 12:20:00', 1, 45.00, '2019-06-16'),
+       (107, '2019-06-16 11:00:00', '2019-06-16 13:12:00', 2, 49.00, '2019-06-16'),
+       (102, '2019-06-16 13:00:00', '2019-06-16 14:44:00', 1, 50.00, '2019-06-16'),
+       (105, '2019-06-16 13:40:00', '2019-06-16 15:31:00', 2, 50.00, '2019-06-16'),
+       (103, '2019-06-16 15:20:00', '2019-06-16 17:28:00', 1, 40.00, '2019-06-16'),
+       (106, '2019-06-16 16:00:00', '2019-06-16 17:50:00', 2, 40.00, '2019-06-16'),
+       (104, '2019-06-16 18:00:00', '2019-06-16 20:13:00', 1, 55.00, '2019-06-16'),
+       (101, '2019-06-16 18:15:00', '2019-06-16 20:09:00', 2, 55.00, '2019-06-16'),
+       (102, '2019-06-16 20:30:00', '2019-06-16 22:14:00', 1, 52.00, '2019-06-16'),
+       (105, '2019-06-16 20:30:00', '2019-06-16 22:21:00', 2, 59.00, '2019-06-16'),
+       (102, '2019-06-16 22:30:00', '2019-06-17 00:14:00', 1, 49.00, '2019-06-16'),
+       (105, '2019-06-16 22:30:00', '2019-06-17 00:21:00', 2, 48.00, '2019-06-16');
 
 
 -- ==========================================================================================================================
@@ -334,3 +348,9 @@ values (1, 5, '消息1', '这里是一条消息', '2019-06-03 16:28:31', 0, 0, 1
 
 -- ==========================================================================================================================
 
+-- ==========================================================================================================================
+
+insert into user_coupon(id, coupon_id, user_id, start, end, status)
+VALUES (11, 1, 13, '2019-06-04', '2019-06-11', 1)
+
+-- ==========================================================================================================================

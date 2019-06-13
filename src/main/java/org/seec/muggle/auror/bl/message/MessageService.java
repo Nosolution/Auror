@@ -11,5 +11,5 @@ import org.seec.muggle.auror.vo.user.message.MessageVO;
 public interface MessageService {
     public int getUnreadNum(Long userId);
 
-    public MessageVO[] messages(Long userId);
+    public MessageVO[] getMessages(Long userId);
 }

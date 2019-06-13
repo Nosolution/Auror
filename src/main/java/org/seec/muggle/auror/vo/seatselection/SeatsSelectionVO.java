@@ -2,8 +2,6 @@ package org.seec.muggle.auror.vo.seatselection;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 /**
  * @Description TODO
  * @Author 233loser
@@ -15,6 +13,6 @@ public class SeatsSelectionVO {
     Long orderId;
     Integer ticketNum;
     Integer cost;
-    Timestamp initTime;
+    String initTime;
 
 }

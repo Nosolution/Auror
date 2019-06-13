@@ -21,4 +21,5 @@ public class LoginVO {
     public LoginVO(){
 
     }
+
 }

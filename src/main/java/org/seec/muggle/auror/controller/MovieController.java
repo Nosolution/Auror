@@ -5,7 +5,6 @@ import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.bl.statistics.StatisticsService;
 import org.seec.muggle.auror.util.JwtUtil;
-import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
@@ -51,18 +50,6 @@ public class MovieController {
 
     @GetMapping(value = "/detail/{movieId}")
     public ResponseEntity<?> getMovieDetail(@PathVariable Long movieId) {
-//        MovieDetailsVO movieDetail = new MovieDetailsVO(1l,"雷  神 Thor: Ragnarok","https://s2.ax1x.com/2019/05/07/EyJKv4.png","Action, Adventure, Drama",2019,123,8.9);
-//        DirectorVO[] directors = new DirectorVO[2];
-//        directors[0] = new DirectorVO("雷神","https://s2.ax1x.com/2019/05/07/EyJKv4.png");
-//        directors[1] = new DirectorVO("李爹","https://s2.ax1x.com/2019/05/09/EgLvlj.png");
-//        StarringVO[] starrings = new StarringVO[5];
-//        starrings[0] = new StarringVO("国照","https://s2.ax1x.com/2019/05/09/EgOpmq.png");
-//        starrings[1] = new StarringVO("姜神","https://s2.ax1x.com/2019/05/09/EgXzd0.png");
-//        starrings[2] = new StarringVO("耿爷", "https://s2.ax1x.com/2019/05/09/EgjCJU.png");
-//        starrings[3] = new StarringVO("羊男","https://s2.ax1x.com/2019/05/09/EgjAy9.png");
-//        starrings[4] = new StarringVO("鹿女","https://s2.ax1x.com/2019/05/09/Egjedx.png");
-//        movieDetail.setDirector(directors);
-//        movieDetail.setStarring(starrings);
         MovieDetailsVO movieDetail = movieService.getMovieDetail(movieId);
         return ResponseEntity.ok(movieDetail);
     }
@@ -80,13 +67,10 @@ public class MovieController {
     }
 
     @PostMapping(value = "/mark")
-    public ResponseEntity<?> markMovie(@RequestBody MovieMarkForm form) {
-        BasicVO vo = movieMarkService.mark(form.getUserId(), form.getMovieId());
-        if (vo.isSucc()) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.status(405).body(vo.getMsg());
-        }
+    public ResponseEntity<?> markMovie(HttpServletRequest request, @RequestBody MovieMarkForm form) {
+        movieMarkService.mark(getIdFromRequest(request), form.getMovieId());
+        return ResponseEntity.ok(null);
+
     }
 
     @PostMapping(value = "/comment")
@@ -117,12 +101,9 @@ public class MovieController {
 
     @DeleteMapping()
     public ResponseEntity<?> deleteMovie(@RequestBody MovieDelete delete) {
-        BasicVO vo = movieService.deleteMovie(delete.getMovieId());
-        if (vo.isSucc()) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.status(405).body(vo.getMsg());
-        }
+        movieService.deleteMovie(delete.getMovieId());
+        return ResponseEntity.ok(null);
+
     }
 
     @GetMapping(value = "/statistics/favor_num")
@@ -142,10 +123,11 @@ public class MovieController {
     }
 
     @GetMapping(value = "/detail/batch")
-    public ResponseEntity<?> getMoviesByList(@PathParam("movieIds") Long[] movieId) {
-        MovieDetailsVO[] movies = new MovieDetailsVO[movieId.length];
+    public ResponseEntity<?> getMoviesByList(@RequestParam("movieIds") Long[] movieIds) {
+
+        MovieDetailsVO[] movies = new MovieDetailsVO[movieIds.length];
         for (int i = 0; i < movies.length; i++) {
-            movies[i] = movieService.getMovieDetail(movieId[i]);
+            movies[i] = movieService.getMovieDetail(movieIds[i]);
         }
         return ResponseEntity.ok(movies);
     }

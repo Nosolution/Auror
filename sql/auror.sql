@@ -84,7 +84,6 @@ alter table tbl_cast
 
 create table `tbl_movie_favor`
 (
-
     `movie_id`  bigint    NOT NULL comment '电影id',
     `user_id`   bigint    NOT NULL comment '用户id',
     `init_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP comment '设置日期'

@@ -9,5 +9,5 @@ import org.seec.muggle.auror.po.Message;
  * @Version 1.0
  **/
 public interface MessageService4Scene {
-    public void SendMovieOnSceneRemind(Message message);
+    public void sendMovieOnSceneRemind(Message message);
 }
