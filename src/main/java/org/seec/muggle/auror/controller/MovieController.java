@@ -4,6 +4,7 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.bl.movie.MovieService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.bl.statistics.StatisticsService;
+import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.BasicVO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentForm;
@@ -17,9 +18,11 @@ import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
 import org.seec.muggle.auror.vo.movie.statistics.BoxOfficeVO;
 import org.seec.muggle.auror.vo.movie.vary.MovieVaryForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
@@ -40,6 +43,11 @@ public class MovieController {
 
     @Autowired
     MovieMarkService movieMarkService;
+
+    @Autowired
+    JwtUtil jwtUtil;
+    @Value("${jwt.header}")
+    String tokenHeader;
 
     @GetMapping(value = "/detail/{movieId}")
     public ResponseEntity<?> getMovieDetail(@PathVariable Long movieId) {
@@ -82,8 +90,8 @@ public class MovieController {
     }
 
     @PostMapping(value = "/comment")
-    public ResponseEntity<?> commentMovie(@RequestBody CommentForm form) {
-        Long userId = 2L;
+    public ResponseEntity<?> commentMovie(HttpServletRequest request,@RequestBody CommentForm form) {
+        Long userId = getIdFromRequest(request);
         movieService.commentMovie(form.getMovieId(), form.getRate(), form.getComment(), userId);
         return ResponseEntity.ok(null);
     }
@@ -140,5 +148,10 @@ public class MovieController {
             movies[i] = movieService.getMovieDetail(movieId[i]);
         }
         return ResponseEntity.ok(movies);
+    }
+
+    private Long getIdFromRequest(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader).substring(7);
+        return jwtUtil.getIdFromToken(token);
     }
 }

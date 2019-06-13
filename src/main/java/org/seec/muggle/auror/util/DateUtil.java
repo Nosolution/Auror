@@ -3,8 +3,7 @@ package org.seec.muggle.auror.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -55,11 +54,12 @@ public class DateUtil {
     }
 
     public static Timestamp datesToTimestamp(Date year, LocalTime time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String yearStr = sdf.format(year);
+        Instant instant = year.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDate lyear = instant.atZone(zoneId).toLocalDate();
+        LocalDateTime localDateTime = LocalDateTime.of(lyear,time);
 
-        String totalTime = yearStr + " " + time.toString();
-        return stringToTimestamp(totalTime);
+        return Timestamp.valueOf(localDateTime);
 
     }
 

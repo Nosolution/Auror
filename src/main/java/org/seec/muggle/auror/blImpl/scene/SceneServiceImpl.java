@@ -49,7 +49,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     public BasicVO addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
         //第一步判断movie状态是否为0，如果是0 说明第一次上映，给想看的人发消息
         MoviePO moviePO = movieService4Scene.getMovie4Scene(movieId);
-        if(moviePO.getStatus()==0){
+        if(moviePO.getStatus()==1){
             Message message = new Message();
             message.setContent(moviePO.getMovieName()+"已上映");
             message.setTitle("某部想看电影已上映");
