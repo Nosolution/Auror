@@ -190,6 +190,8 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
                 castPO.setUrl(form.getStarrings()[i].getUrl());
                 movieMapper.insertCast(castPO);
             }
+
+
             movieMapper.insertMovieCast(form.getMovieId(), castPO.getId(), "Actor");
         }
     }

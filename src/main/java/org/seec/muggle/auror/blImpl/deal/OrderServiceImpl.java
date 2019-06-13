@@ -169,8 +169,8 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
         MemberPO memberPO = memberService4Order.getMemberByUserId(userId);
         MemberStrategyPO po = null;
-        Optional<Integer>recharge= Optional.ofNullable(orderMapper.sumRecharge(userId));
-        int rechargeTotal =recharge.orElse(0);
+        Optional<Integer> recharge = Optional.ofNullable(orderMapper.sumRecharge(userId));
+        int rechargeTotal = recharge.orElse(0);
         for (int i = 0; i < strategyPOS.size(); i++) {
             if (strategyPOS.get(i).getThreshold() > rechargeTotal + form.getCost()) {
                 po = strategyPOS.get(i - 1);
@@ -223,12 +223,15 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     public RechargeHistoryVO[] getRechargeHistory(Long userId) {
         List<RechargePO> recharges = orderMapper.selectRechargesById(userId);
         List<RechargeHistoryVO> vos = new ArrayList<>();
-        recharges.forEach(o -> {
-            RechargeHistoryVO vo = new RechargeHistoryVO();
-            vo.setCost(o.getCost());
-            vo.setTime(DateUtil.timestampToString(o.getInitTime()));
-            vos.add(vo);
-        });
+
+        recharges.stream()
+                .sorted(Comparator.comparing(RechargePO::getInitTime).reversed())
+                .forEach(o -> {
+                    RechargeHistoryVO vo = new RechargeHistoryVO();
+                    vo.setCost(o.getCost());
+                    vo.setTime(DateUtil.timestampToString(o.getInitTime()));
+                    vos.add(vo);
+                });
         return vos.toArray(new RechargeHistoryVO[vos.size()]);
     }
 
@@ -312,24 +315,27 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         if (orders.size() == 0) {
             return new TicketDetailVO[0];
         }
-        orders.forEach(o -> {
-            List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
-            ScenePO scene = sceneService4Order.selectSceneByID(o.getSceneId());
-            MoviePO movie = movieService4Order.getMovieById(o.getMovieId());
-            RefundPO refundPO = strategyService4Order.getRefund();
-            HallPO hall = hallService4Order.selectHallById(scene.getHallId());
-            int status = o.getStatus();
-            if (status == 1) { // 已支付
-                LocalDateTime today = LocalDateTime.now();
-                LocalDateTime lastAvaliableTime = scene.getStartTime().toLocalDateTime();
-                lastAvaliableTime = lastAvaliableTime.minusHours(refundPO.getBeforeTime());
-                if (today.isAfter(lastAvaliableTime)) {
-                    status = 0;
-                }
-            }
-            TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hall);
-            vos.add(vo);
-        });
+
+        orders.stream()
+                .sorted(Comparator.comparing(OrderPO::getCreateTime).reversed())
+                .forEach(o -> {
+                    List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
+                    ScenePO scene = sceneService4Order.selectSceneByID(o.getSceneId());
+                    MoviePO movie = movieService4Order.getMovieById(o.getMovieId());
+                    RefundPO refundPO = strategyService4Order.getRefund();
+                    HallPO hall = hallService4Order.selectHallById(scene.getHallId());
+                    int status = o.getStatus();
+                    if (status == 1) { // 已支付
+                        LocalDateTime today = LocalDateTime.now();
+                        LocalDateTime lastAvailableTime = scene.getStartTime().toLocalDateTime();
+                        lastAvailableTime = lastAvailableTime.minusHours(refundPO.getBeforeTime());
+                        if (today.isAfter(lastAvailableTime)) {
+                            status = 0;
+                        }
+                    }
+                    TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hall);
+                    vos.add(vo);
+                });
         return vos.toArray(new TicketDetailVO[vos.size()]);
     }
 }
