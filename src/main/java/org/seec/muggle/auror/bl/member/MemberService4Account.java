@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.member;
 
-import org.seec.muggle.auror.po.Member4Account;
+import org.seec.muggle.auror.po.MemberAccount;
 
 /**
  * @Description TODO
@@ -9,5 +9,5 @@ import org.seec.muggle.auror.po.Member4Account;
  * @Version 1.0
  **/
 public interface MemberService4Account {
-    Member4Account getMemberByUser(Long userid);
+    MemberAccount getMemberByUser(Long userid);
 }

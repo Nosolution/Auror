@@ -4,7 +4,7 @@ import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;
 import org.seec.muggle.auror.vo.order.member.PaymentForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
-import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
+import org.seec.muggle.auror.vo.order.thirdparty.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;

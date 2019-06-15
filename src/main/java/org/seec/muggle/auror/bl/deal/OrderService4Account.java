@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.deal;
 
-import org.seec.muggle.auror.vo.order.recharge_history.RechargeHistoryVO;
+import org.seec.muggle.auror.vo.order.rechargehistory.RechargeHistoryVO;
 
 /**
  * @Description TODO

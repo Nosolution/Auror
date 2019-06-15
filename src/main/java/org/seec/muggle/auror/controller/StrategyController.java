@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.controller;
 
 import org.seec.muggle.auror.bl.strategy.StrategyService;
-import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
+import org.seec.muggle.auror.vo.strategy.coupongift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventDeletionForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
 import org.seec.muggle.auror.vo.strategy.event.EventVO;

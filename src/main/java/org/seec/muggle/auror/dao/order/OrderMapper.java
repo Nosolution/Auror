@@ -1,6 +1,5 @@
 package org.seec.muggle.auror.dao.order;
 
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.po.OrderPO;
@@ -17,7 +16,6 @@ import java.util.List;
  **/
 @DaoMapper
 public interface OrderMapper {
-    @Options(keyProperty = "id")
     Long insertOrder(OrderPO po);
 
     int insertSeat(TicketPO po);
