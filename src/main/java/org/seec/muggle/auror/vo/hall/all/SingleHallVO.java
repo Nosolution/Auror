@@ -10,6 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class SingleHallVO {
+    Long hallId;
     String hallName;
     Integer[][] seats;//0代表不可用，1代表可用
 

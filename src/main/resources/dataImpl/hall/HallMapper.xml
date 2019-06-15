@@ -8,7 +8,7 @@
     </insert>
 
     <select id="getHallById" resultType="org.seec.muggle.auror.po.HallPO">
-        select id         id,
+        select id         hallId,
                hall_name  hallName,
                hall_seats seats
         from tbl_hall
@@ -16,8 +16,17 @@
         limit 1;
     </select>
 
+    <select id="getHallByName" resultType="org.seec.muggle.auror.po.HallPO">
+        select id         hallId,
+               hall_name  hallName,
+               hall_seats seats
+        from tbl_hall
+        where hall_name = #{hallName}
+        limit 1;
+    </select>
+
     <select id="getAll" resultType="org.seec.muggle.auror.po.HallPO">
-        select id         id,
+        select id         hallId,
                hall_name  hallName,
                hall_seats seats
         from tbl_hall

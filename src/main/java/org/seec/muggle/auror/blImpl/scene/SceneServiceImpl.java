@@ -6,11 +6,13 @@ import org.seec.muggle.auror.bl.message.MessageService4Scene;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
 import org.seec.muggle.auror.bl.scene.*;
 import org.seec.muggle.auror.dao.scene.SceneMapper;
+import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -45,7 +47,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     MessageService4Scene messageService4Scene;
 
     @Override
-    public void addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
+    public void addScene(Long movieId, String hallName, Date date, LocalTime startTime, int price) {
         //第一步判断movie状态是否为0，如果是0 说明第一次上映，给想看的人发消息
         MoviePO moviePO = movieService4Scene.getMovie4Scene(movieId);
 
@@ -65,6 +67,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         LocalDateTime start = beginTime.toLocalDateTime();
         LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
+        Long hallId = hallService4Scene.getHallIdByName(hallName);
         ScenePO po = new ScenePO(movieId, beginTime, endTime, hallId, price, date);
         sceneMapper.insertScene(po);
         movieService4Scene.setOnScene(movieId);
@@ -81,14 +84,27 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public void varyScene(Long sceneId, Long movieId, Long hallId, Date date, LocalTime startTime, int price) {
+    public void varyScene(Long sceneId, Long movieId, String hallName, Date date, LocalTime startTime, int price) {
         Integer length = movieService4Scene.getLengthById(movieId);
         Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
         LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
+        Long hallId = hallService4Scene.getHallIdByName(hallName);
         ScenePO po = new ScenePO(sceneId, movieId, beginTime, endTime, hallId, price, date);
         sceneMapper.updateScene(po);
+    }
+
+    @Override
+    public void deleteScene(Long sceneId) {
+        ScenePO scenePO = sceneMapper.getById(sceneId);
+        Hall hall = hallService4Scene.getHallById(scenePO.getHallId());
+        Integer[][] seats = loadSeats(scenePO, hall);
+        for (int i = 0; i < seats.length; i++)
+            for (int j = 0; j < seats[0].length; j++) {
+                if (seats[i][j] > 1)
+                    throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, "已有用户在该场次订票，无法删除该场次");
+            }
     }
 
     @Override
@@ -151,12 +167,12 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         pos.stream()
                 .sorted(Comparator.comparing(ScenePO::getStartTime))
                 .forEach(o -> {
-            Hall hall = hallService4Scene.getHallById(o.getHallId());
-            Integer[][] seats = loadSeats(o, hall);
-            MoviePO moviePO = movieService4Scene.getMovie4Scene(o.getMovieId());
-            InfoVO vo = new InfoVO(moviePO, seats, o, hall);
-            vos.add(vo);
-        });
+                    Hall hall = hallService4Scene.getHallById(o.getHallId());
+                    Integer[][] seats = loadSeats(o, hall);
+                    MoviePO moviePO = movieService4Scene.getMovie4Scene(o.getMovieId());
+                    InfoVO vo = new InfoVO(moviePO, seats, o, hall);
+                    vos.add(vo);
+                });
         return vos.toArray(new InfoVO[vos.size()]);
     }
 

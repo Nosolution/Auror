@@ -10,4 +10,9 @@ import org.seec.muggle.auror.po.Hall;
  **/
 public interface HallService4Scene {
     Hall getHallById(Long hallId);
+
+    Long getHallIdByName(String hallName);
+
+    Hall getHallByName(String hallName);
+
 }

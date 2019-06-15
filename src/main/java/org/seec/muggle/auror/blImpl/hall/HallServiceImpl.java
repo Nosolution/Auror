@@ -65,6 +65,7 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
         List<SingleHallVO> vos = new ArrayList<>();
         halls.stream().forEach(o -> {
             SingleHallVO vo = new SingleHallVO();
+            vo.setHallId(o.getHallId());
             vo.setHallName(o.getHallName());
             vo.setSeats(getSeats(o.getSeats()));
             vos.add(vo);
@@ -95,6 +96,22 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
     @Override
     public Hall getHallById(Long hallId) {
         HallPO po = hallMapper.getHallById(hallId);
+        Hall hall = new Hall();
+        hall.setId(po.getHallId());
+        hall.setName(po.getHallName());
+        hall.setSeats(getSeats(po.getSeats()));
+        return hall;
+    }
+
+    @Override
+    public Long getHallIdByName(String hallName) {
+        HallPO po = hallMapper.getHallByName(hallName);
+        return po.getHallId();
+    }
+
+    @Override
+    public Hall getHallByName(String hallName) {
+        HallPO po = hallMapper.getHallByName(hallName);
         Hall hall = new Hall();
         hall.setId(po.getHallId());
         hall.setName(po.getHallName());

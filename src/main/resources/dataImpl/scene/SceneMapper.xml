@@ -17,6 +17,12 @@
         where id = #{id}
     </update>
 
+    <delete id="deleteScene">
+        delete
+        from tbl_scene
+        where id = #{sceneId}
+    </delete>
+
     <select id="getById" resultMap="Scene">
         select *
         from tbl_scene

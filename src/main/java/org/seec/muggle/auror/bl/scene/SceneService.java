@@ -13,11 +13,13 @@ import java.util.Date;
  * @Version 1.0
  **/
 public interface SceneService {
-    void addScene(Long movieId, Long hallId, Date date, LocalTime startTime, int price);
+    void addScene(Long movieId, String hallName, Date date, LocalTime startTime, int price);
 
-    void varyScene(Long sceneId, Long movieId, Long hallId, Date date, LocalTime startTime, int price);
+    void varyScene(Long sceneId, Long movieId, String hallName, Date date, LocalTime startTime, int price);
+
+    void deleteScene(Long sceneId);
 
     MovieSceneInfoVO[] getScenesInfoByMovieId(Long movieId);
 
-    InfoVO[] getScenesInfoByHallIdAndDate(Long hallId,Date date);
+    InfoVO[] getScenesInfoByHallIdAndDate(Long hallId, Date date);
 }

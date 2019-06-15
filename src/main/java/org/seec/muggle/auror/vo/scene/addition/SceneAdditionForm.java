@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class SceneAdditionForm {
     Long movieId;
-    Long hallId;
+    String hallName;
     Date date;
     LocalTime startTime;
     Integer price;

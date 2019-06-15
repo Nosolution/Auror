@@ -91,12 +91,14 @@
               from tbl_cast
               where tbl_cast.id in (select cm.cast_id
                                     from cast_movie cm
-                                    where cm.movie_id = #{id} and cm.cast_role = 'Director')) as director,
+                                    where cm.movie_id = #{id}
+                                      and cm.cast_role = 'Director')) as director,
              (select tbl_cast.cast_name as starring_name, tbl_cast.poster_url as starring_url
               from tbl_cast
               where tbl_cast.id in (select cm.cast_id
                                     from cast_movie cm
-                                    where cm.movie_id = #{id} and cm.cast_role = 'Actor')) as actor
+                                    where cm.movie_id = #{id}
+                                      and cm.cast_role = 'Actor')) as actor
 
 
     </select>
@@ -127,11 +129,15 @@
     </delete>
 
     <select id="sumScore" resultType="int">
-        select sum(score) from tbl_movie_comment where movie_id=#{movieId}
+        select sum(score)
+        from tbl_movie_comment
+        where movie_id = #{movieId}
     </select>
 
     <select id="sumCommentNum" resultType="int">
-        select count(*) from tbl_movie_comment where movie_id=#{movieId}
+        select count(*)
+        from tbl_movie_comment
+        where movie_id = #{movieId}
     </select>
 
     <resultMap id="moviePO" type="org.seec.muggle.auror.po.MoviePO">

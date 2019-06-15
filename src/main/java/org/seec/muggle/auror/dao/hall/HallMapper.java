@@ -18,5 +18,7 @@ public interface HallMapper {
 
     HallPO getHallById(Long hallId);
 
+    HallPO getHallByName(String hallName);
+
     List<HallPO> getAll();
 }
