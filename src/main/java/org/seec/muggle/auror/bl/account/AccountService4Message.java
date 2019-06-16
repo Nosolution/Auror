@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.account;
 
-import org.seec.muggle.auror.vo.user.brief_info.BriefInfoVO;
+import org.seec.muggle.auror.vo.user.briefinfo.BriefInfoVO;
 
 /**
  * @Description TODO

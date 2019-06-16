@@ -42,7 +42,7 @@ public interface MovieMapper {
 
     int deleteMovieCastByMovieId(@Param("movieId")Long movieId);
 
-    CastPO getCastByName(@Param("castName") String castname);
+    CastPO getCastByName(@Param("castName") String castName);
 
     int insertComment(@Param("movieId")Long movieId,@Param("userId")Long userId,@Param("score")Integer score,@Param("comment")String comment,@Param("time")Timestamp timestamp);
 

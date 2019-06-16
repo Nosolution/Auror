@@ -10,7 +10,7 @@ import org.seec.muggle.auror.vo.order.recharge.RechargeForm;
 import org.seec.muggle.auror.vo.order.recharge.RechargeVO;
 import org.seec.muggle.auror.vo.order.refund.RefundForm;
 import org.seec.muggle.auror.vo.order.refund.RefundVO;
-import org.seec.muggle.auror.vo.order.third_party.ThirdPartyPaymentVO;
+import org.seec.muggle.auror.vo.order.thirdparty.ThirdPartyPaymentVO;
 import org.seec.muggle.auror.vo.order.ticket.TicketDetailVO;
 import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;

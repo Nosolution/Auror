@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.strategy;
 
-import org.seec.muggle.auror.vo.strategy.coupon_gift.CouponGiftForm;
+import org.seec.muggle.auror.vo.strategy.coupongift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventForm;
 import org.seec.muggle.auror.vo.strategy.event.EventVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVarietyVO;
