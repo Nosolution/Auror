@@ -44,7 +44,7 @@
     <select id="getByHallIdAndDate" resultMap="Scene">
         select *
         from tbl_scene
-        where hall_id = #{hallId}
+        where hall_id= #{hallId}
           and `date` = #{date}
     </select>
 

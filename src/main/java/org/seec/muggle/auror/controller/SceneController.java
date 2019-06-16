@@ -54,9 +54,9 @@ public class SceneController {
     }
 
     @GetMapping(value = "/info/of_hall")
-    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallName") Long hallId, @PathParam("date") String date) {
+    public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallName") String hallName, @PathParam("date") String date) {
         Date date1 = DateUtil.stringToDate(date);
-        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallId, date1);
+        InfoVO[] infoVOS = sceneService.getScenesInfoByHallIdAndDate(hallName, date1);
         return ResponseEntity.ok(infoVOS);
     }
 
@@ -68,7 +68,7 @@ public class SceneController {
 
     @PutMapping()
     public ResponseEntity varyMovieScene(@RequestBody SceneVaryForm form) {
-        sceneService.varyScene(form.getSceneId(), form.getMovieId(), form.getHallName(), form.getDate(), form.getStartTime(), form.getPrice());
+        sceneService.varyScene(form.getSceneId(), form.getHallName(), form.getDate(), form.getStartTime(), form.getPrice());
         return ResponseEntity.ok(null);
     }
 

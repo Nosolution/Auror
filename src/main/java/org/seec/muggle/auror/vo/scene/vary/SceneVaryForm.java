@@ -3,6 +3,9 @@ package org.seec.muggle.auror.vo.scene.vary;
 import lombok.Data;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 
+import java.time.LocalTime;
+import java.util.Date;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -10,8 +13,12 @@ import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
  * @Version 1.0
  **/
 @Data
-public class SceneVaryForm extends SceneAdditionForm {
+public class SceneVaryForm {
     Long sceneId;
+    String hallName;
+    Date date;
+    LocalTime startTime;
+    Integer price;
 
 
 }

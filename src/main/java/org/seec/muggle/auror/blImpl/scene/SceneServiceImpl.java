@@ -84,7 +84,9 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public void varyScene(Long sceneId, Long movieId, String hallName, Date date, LocalTime startTime, int price) {
+    public void varyScene(Long sceneId, String hallName, Date date, LocalTime startTime, int price) {
+        //删除movieId后只能通过sceneId获取MovieId进行片长计算了
+        Long movieId = sceneMapper.getById(sceneId).getMovieId();
         Integer length = movieService4Scene.getLengthById(movieId);
         Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
@@ -160,9 +162,10 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public InfoVO[] getScenesInfoByHallIdAndDate(Long hallId, Date date) {
+    public InfoVO[] getScenesInfoByHallIdAndDate(String hallName, Date date) {
         List<InfoVO> vos = new ArrayList<>();
-        List<ScenePO> pos = sceneMapper.getByHallIdAndDate(hallId, date);
+        Hall currentHall = hallService4Scene.getHallByName(hallName);
+        List<ScenePO> pos = sceneMapper.getByHallIdAndDate(currentHall.getId(), date);
 
         pos.stream()
                 .sorted(Comparator.comparing(ScenePO::getStartTime))

@@ -25,6 +25,9 @@ public class InfoVO {
     Integer[][] seats;
     String movieName;
     String posterUrl;
+    Integer length;
+
+
 
     public InfoVO(MoviePO movie, Integer[][] seats, ScenePO scenePO, Hall hall) {
         this.sceneId = scenePO.getId();
@@ -35,5 +38,6 @@ public class InfoVO {
         this.seats = seats;
         this.movieName = movie.getMovieName();
         this.posterUrl = movie.getPosterUrl();
+        this.length = movie.getLength();
     }
 }

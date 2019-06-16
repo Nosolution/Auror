@@ -247,6 +247,13 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         return cut;
     }
 
+    /**
+     * @Author jyh
+     * @Description //TODO 优惠活动时间判断
+     * @Date 8:53 2019/6/13
+     * @Param [movieId, userId]
+     * @return java.util.List<org.seec.muggle.auror.po.CouponPO>
+     **/
     @Override
     public List<CouponPO> sendCoupons(Long movieId, Long userId) {
         List<Long> events = strategyMapper.getEventIdsByMovieId(movieId);

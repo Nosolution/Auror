@@ -72,6 +72,7 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
         List<FavorRecordPO> favors = movieMarkMapper.getFavorByMovieId(movieId);
         if (favors.size() == 0)
             return new FavorNumVO[0];
+
         Date minDate = favors.stream().min(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();
         Date maxDate = favors.stream().max(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();
         List<Date> dates = Stream.iterate(minDate, date -> ForwardDate(date))
