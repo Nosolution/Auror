@@ -50,11 +50,8 @@ public class OrderController {
     @PostMapping(value = "/ticket/payment/member")
     public ResponseEntity<?> memberPayment(@RequestBody PaymentForm form) {
         MemberPaymentVO vo = orderService.finishByMember(form);
-        if (vo != null) {
-            return ResponseEntity.ok(vo);
-        } else {
-            return ResponseEntity.status(405).body("会员卡余额不足");
-        }
+        return ResponseEntity.ok(vo);
+
     }
 
 
@@ -68,11 +65,11 @@ public class OrderController {
     public ResponseEntity<?> getAllTickets(HttpServletRequest request) {
         Long userId = getIdFromRequest(request);
         TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
-        if (ticketDetailVOS.length != 0) {
-            return ResponseEntity.ok(ticketDetailVOS);
-        } else {
-            return ResponseEntity.status(405).body("没有订单");
-        }
+//        if (ticketDetailVOS.length != 0) {
+        return ResponseEntity.ok(ticketDetailVOS);
+//        } else {
+//            return ResponseEntity.status(405).body("没有订单");
+//        }
     }
 
     @PutMapping(value = "/ticket/cancellation")
@@ -90,18 +87,19 @@ public class OrderController {
     }
 
     @PostMapping(value = "/member/purchase/payment")
-    public ResponseEntity<?> purchaseVIPCard(HttpServletRequest request,@RequestBody VipPurchaseForm form) {
+    public ResponseEntity<?> purchaseVIPCard(HttpServletRequest request, @RequestBody VipPurchaseForm form) {
         Long userId = getIdFromRequest(request);
         orderService.purchaseMember(userId, form.getCost(), form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/member/recharge/payment")
-    public ResponseEntity<?> recharge(HttpServletRequest request,@RequestBody RechargeForm form) {
+    public ResponseEntity<?> recharge(HttpServletRequest request, @RequestBody RechargeForm form) {
         Long userId = getIdFromRequest(request);
         RechargeVO vo = orderService.rechargeMember(form, userId);
         return ResponseEntity.ok(vo);
     }
+
     private Long getIdFromRequest(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(7);
         return jwtUtil.getIdFromToken(token);

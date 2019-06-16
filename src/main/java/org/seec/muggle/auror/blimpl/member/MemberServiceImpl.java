@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
 
     @Override
     public MemberVO getPersonalMemberInfo(Long userId) {
-        MemberPO member = memberMapper.getMemberById(userId);
+        MemberPO member = memberMapper.getMemberByUserId(userId);
         if (member == null) {
             return null;
         } else {
@@ -40,24 +40,24 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
 
     @Override
     public MemberPO getMemberByUserId(Long userId) {
-        MemberPO po = memberMapper.getMemberById(userId);
+        MemberPO po = memberMapper.getMemberByUserId(userId);
         return po;
     }
 
     @Override
     public void changeStrategy(Long userId, Long strategyId) {
-        memberMapper.updateMemberById(userId, strategyId);
+        memberMapper.updateMemberByUserId(userId, strategyId);
     }
 
     @Override
-    public void recharge(Integer cost, Long userId) {
-        MemberPO po = memberMapper.getMemberById(userId);
+    public void recharge(Long userId, Integer cost) {
+        MemberPO po = memberMapper.getMemberByUserId(userId);
         memberMapper.updateCredit(cost + po.getCredit(), userId);
     }
 
     @Override
     public MemberAccount getMemberByUser(Long userId) {
-        MemberPO po = memberMapper.getMemberById(userId);
+        MemberPO po = memberMapper.getMemberByUserId(userId);
         if (po == null) {
             MemberAccount account = new MemberAccount();
             account.setMember(false);
@@ -72,8 +72,8 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     }
 
     @Override
-    public Integer payByMember(Integer cost, Long userId) {
-        MemberPO member = memberMapper.getMemberById(userId);
+    public Integer payByMember(Long userId, Integer cost) {
+        MemberPO member = memberMapper.getMemberByUserId(userId);
         MemberStrategyPO strategyPO = strategyService4Member.getMemberStrategyById(member.getStrategyId());
         if (member.getCredit() < cost) {
             return -1;

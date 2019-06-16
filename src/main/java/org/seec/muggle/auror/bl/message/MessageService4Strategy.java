@@ -11,5 +11,5 @@ import org.seec.muggle.auror.po.Message;
 public interface MessageService4Strategy {
     public void sendCouponReceiversMessages(Message message, Long[] userIds);
 
-    public void newEventRemind(Message message);
+    public void broadcastNewEvent(Message message);
 }

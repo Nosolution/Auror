@@ -21,7 +21,7 @@ public interface UserRoleMapper extends BaseOperation<UserRole> {
 
     int deleteByUserId(@Param("userId")Long userId);
 
-    List<Long> getAllManager();
+    List<Long> getAllManagerId();
 
-    List<Long> getAllUser();
+    List<Long> getAllUserId();
 }

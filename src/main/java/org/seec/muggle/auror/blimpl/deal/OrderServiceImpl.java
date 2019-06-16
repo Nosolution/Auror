@@ -7,6 +7,7 @@ import org.seec.muggle.auror.bl.movie.MovieService4Order;
 import org.seec.muggle.auror.bl.scene.SceneService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.order.OrderMapper;
+import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.CaptchaUtil;
 import org.seec.muggle.auror.util.DateUtil;
@@ -23,6 +24,7 @@ import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;
 import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -135,25 +137,25 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     }
 
     @Override
-    public int hasSeen(Long userId, List<ScenePO> sceneId) {
-        for (ScenePO scenePO : sceneId) {
-            if (orderMapper.getOrderByUserIdAndSceneId(userId, scenePO.getId()) != null) {
-                return 1;
+    public boolean hasSeen(Long userId, List<Long> sceneIds) {
+        for (Long sceneId : sceneIds) {
+            if (orderMapper.getOrderByUserIdAndSceneId(userId, sceneId) != null) {
+                return true;
             }
         }
-        return 0;
+        return false;
     }
 
     @Override
     public UnfinishedOrderVO checkUnfinishedOrder(Long orderId) {
         OrderPO orderPO = orderMapper.getOrderById(orderId);
-        ScenePO scenePO = sceneService4Order.selectSceneByID(orderPO.getSceneId());
-        HallPO hallPO = hallService4Order.selectHallById(scenePO.getHallId());
+        ScenePO scenePO = sceneService4Order.getSceneById(orderPO.getSceneId());
+        String hallName = hallService4Order.getHallNameById(scenePO.getHallId());
         List<TicketPO> ticketPOS = orderMapper.getSeatsById(orderId);
         List<AvailableCouponsVO> couponPOS = strategyService4Order.getCouponsByCost(ticketPOS.size() * scenePO.getPrice(), orderPO.getUserId());
         couponPOS.sort(Comparator.comparing(AvailableCouponsVO::getEndTime));
 
-        UnfinishedOrderVO vo = new UnfinishedOrderVO(orderPO, scenePO, hallPO, ticketPOS, couponPOS, movieService4Order.getMovieNameById(scenePO.getMovieId()));
+        UnfinishedOrderVO vo = new UnfinishedOrderVO(orderPO, scenePO, hallName, ticketPOS, couponPOS, movieService4Order.getMovieNameById(scenePO.getMovieId()));
         return vo;
     }
 
@@ -184,13 +186,13 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         rechargePO.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
         rechargePO.setType(2);
         orderMapper.insertRecharge(rechargePO);
-        memberService4Order.recharge(form.getCost(), userId);
+        memberService4Order.recharge(userId, form.getCost());
 
         if (po == null) { //说明已经是至高会员了
             po = strategyPOS.get(strategyPOS.size() - 1);
             RechargeVO vo = new RechargeVO();
-            vo.setUpgraded(po.getId() != memberPO.getStrategyId());
-            if (po.getId() != memberPO.getStrategyId()) {
+            vo.setUpgraded(!po.getId().equals(memberPO.getStrategyId()));
+            if (!po.getId().equals(memberPO.getStrategyId())) {
                 memberService4Order.changeStrategy(userId, po.getId());
             }
             vo.setCredit(form.getCost() + memberPO.getCredit());
@@ -264,9 +266,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         Integer payment = getPayment(form, orderPO);
 
         //判断余额是否足够支付
-        int pay = memberService4Order.payByMember(payment, orderPO.getUserId());
+        int pay = memberService4Order.payByMember(orderPO.getUserId(), payment);
         if (pay == -1) {
-            return null;
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, "会员卡余额不足");
         }
 
         orderMapper.finishOrder(form.getOrderId(), pay, 1);
@@ -319,10 +321,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                 .sorted(Comparator.comparing(OrderPO::getCreateTime).reversed())
                 .forEach(o -> {
                     List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
-                    ScenePO scene = sceneService4Order.selectSceneByID(o.getSceneId());
+                    ScenePO scene = sceneService4Order.getSceneById(o.getSceneId());
                     MoviePO movie = movieService4Order.getMovieById(o.getMovieId());
                     RefundPO refundPO = strategyService4Order.getRefund();
-                    HallPO hall = hallService4Order.selectHallById(scene.getHallId());
+                    String hallName = hallService4Order.getHallNameById(scene.getHallId());
                     int status = o.getStatus();
                     if (status == 1) { // 已支付
                         LocalDateTime today = LocalDateTime.now();
@@ -332,7 +334,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                             status = 0;
                         }
                     }
-                    TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hall);
+                    TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hallName);
                     vos.add(vo);
                 });
 

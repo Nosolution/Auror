@@ -16,8 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-//import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
+/**
+ * Json Web Token相关的工具包，主要负责token的编码与解码
+ *
+ * @author Nosolution
+ * @version 1.0
+ * @since 2019/03/11
+ */
 @Component
 public class JwtUtil implements Serializable {
 

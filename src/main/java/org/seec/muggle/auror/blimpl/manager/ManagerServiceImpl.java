@@ -54,7 +54,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ManagerInfoVO[] getManagers() {
-        List<Long> managerIds = userRoleMapper.getAllManager();
+        List<Long> managerIds = userRoleMapper.getAllManagerId();
         List<ManagerInfoVO> vos = new ArrayList<>();
         managerIds.forEach(o -> {
             User user = userMapper.getUserById(o);

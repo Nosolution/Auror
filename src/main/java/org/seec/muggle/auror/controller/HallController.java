@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Description TODO
+ * @Description 影厅相关的控制器类
  * @Author 233loser
  * @Date 2019/5/29 23:06
  * @Version 1.0
@@ -28,7 +28,7 @@ public class HallController {
 
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllHall() {
-        SingleHallVO[] halls = hallService.getHalls();
+        SingleHallVO[] halls = hallService.getAllHalls();
         return ResponseEntity.ok(halls);
     }
 }

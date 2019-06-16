@@ -55,10 +55,10 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
      **/
     @Override
     public MovieOnShelfVO[] getMovieOnShelf() {
-        List<MoviePO> moviesOnshelf = movieMapper.getMovieOnShelf();
-        MovieOnShelfVO[] vos = new MovieOnShelfVO[moviesOnshelf.size()];
-        for (int i = 0; i < moviesOnshelf.size(); i++) {
-            MoviePO po = moviesOnshelf.get(i);
+        List<MoviePO> moviesOnShelf = movieMapper.getMovieOnShelf();
+        MovieOnShelfVO[] vos = new MovieOnShelfVO[moviesOnShelf.size()];
+        for (int i = 0; i < moviesOnShelf.size(); i++) {
+            MoviePO po = moviesOnShelf.get(i);
             vos[i] = new MovieOnShelfVO(po, po.getStatus() == 2);//判断当前时间是否>=电影上映开始时间
         }
         return vos;
@@ -79,7 +79,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         for (int i = maps.size() - 1; i >= 0; i--) {
             MoviePopularVO vo = new MoviePopularVO();
             vo.setMovieId(maps.get(i).getMovieId());
-            MoviePO moviePO = movieMapper.getMovieById(maps.get(i).getMovieId());
+            MoviePO moviePO = movieMapper.get(maps.get(i).getMovieId());
             vo.setMovieDescription(moviePO.getDescription());
             vo.setMovieLength(moviePO.getLength());
             vo.setMovieName(moviePO.getMovieName());
@@ -97,7 +97,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     @Override
     public void addMovie(MovieAddForm form) {
         MoviePO moviePO = new MoviePO(form);
-        movieMapper.insertMovie(moviePO);
+        movieMapper.insert(moviePO);
         for (int i = 0; i < form.getDirectors().length; i++) {
             CastPO castPO = movieMapper.getCastByName(form.getDirectors()[i].getName());
             //变相初始化，如果返回Null则注入一个新的cast
@@ -123,15 +123,19 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     }
 
     @Override
-    public MovieDetailsVO getMovieDetail(Long id) {
-        MoviePO po = movieMapper.getMovieById(id);
-
+    public MovieDetailsVO getMovieDetail(Long movieId) {
+        MoviePO po = movieMapper.get(movieId);
         if (po == null) {
             return new MovieDetailsVO();
         }
-        Optional<Integer> scores = Optional.ofNullable(movieMapper.sumScore(id));
+        //每次获取电影详情时判断是否已经上映了
+        if (po.getStartDate().before(new Date()) && po.getStatus() == 1) {
+            po.setStatus(2);
+            movieMapper.updateMovieState(2, po.getId());
+        }
+        Optional<Integer> scores = Optional.ofNullable(movieMapper.sumScore(movieId));
         Integer totalScore = scores.orElse(0);
-        Optional<Integer> num = Optional.ofNullable(movieMapper.sumCommentNum(id));
+        Optional<Integer> num = Optional.ofNullable(movieMapper.sumCommentNum(movieId));
         Integer scoreNum = num.orElse(0);
         double averageScore = (double) scoreNum == 0 ? 0.0 : totalScore / scoreNum;
         return new MovieDetailsVO(po, po.getStatus(), averageScore);
@@ -140,7 +144,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
 
     @Override
     public Integer getLengthById(Long movieId) {
-        MoviePO po = movieMapper.getMovieById(movieId);
+        MoviePO po = movieMapper.get(movieId);
         return po.getLength();
     }
 
@@ -151,7 +155,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         commentPOS.stream()
                 .sorted(Comparator.comparing(CommentPO::getCommentTime).reversed())
                 .forEach(o -> {
-                    UserBasic basic = accountService4Movie.getUserBasicById(o.getUserId());
+                    UserBasic basic = accountService4Movie.getUserBasicInfoById(o.getUserId());
                     vos.add(new CommentVO(o, basic));
                 });
         return vos;
@@ -166,7 +170,7 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     @Override
     public void updateMovie(MovieVaryForm form) {
         MoviePO po = new MoviePO(form);
-        movieMapper.updateByMovieId(po);
+        movieMapper.update(po);
         movieMapper.deleteMovieCastByMovieId(form.getMovieId());
 
         for (int i = 0; i < form.getDirectors().length; i++) {
@@ -195,10 +199,6 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         }
     }
 
-    @Override
-    public void commentMovie(Long movieId, Integer rate, String comment, Long userId) {
-        movieMapper.insertComment(movieId, userId, rate, comment, Timestamp.valueOf(LocalDateTime.now()));
-    }
 
     @Override
     public void deleteMovie(Long movieId) {
@@ -206,29 +206,30 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         Collections.sort(times);
 
         if (times.size() == 0 || times.get(times.size() - 1).before(Timestamp.valueOf(LocalDateTime.now()))) {
-            movieMapper.deleteMovieByMovieId(movieId);
+            movieMapper.delete(movieId);
         } else {
             throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, "该影片已排片，暂不能删除,最早可删除时间为：" + (times.get(times.size() - 1)));
         }
     }
 
     @Override
+    public void commentMovie(Long movieId, Long userId, Integer score, String comment) {
+        movieMapper.insertComment(movieId, userId, score, comment, Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    @Override
     public MoviePO getMovieById(Long movieId) {
-        return movieMapper.getMovieById(movieId);
+        return movieMapper.get(movieId);
     }
 
     @Override
     public String getMovieNameById(Long movieId) {
-        return movieMapper.getMovieById(movieId).getMovieName();
+        return movieMapper.get(movieId).getMovieName();
     }
 
     @Override
     public MoviePO getMovie4Scene(Long movieId) {
-        return movieMapper.getMovieById(movieId);
+        return movieMapper.get(movieId);
     }
 
-    @Override
-    public void setOnScene(Long movieId) {
-        movieMapper.updateMovieState(2, movieId);
-    }
 }

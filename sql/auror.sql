@@ -348,6 +348,9 @@ create table `tbl_hall`
 );
 alter table tbl_hall
     comment '影厅表';
+# create unique index tbl_hall_hall_name_uindex
+#     on tbl_hall (hall_name);
+
 
 
 

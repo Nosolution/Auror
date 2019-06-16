@@ -2,6 +2,7 @@ package org.seec.muggle.auror.dao.scene;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.dao.BaseOperation;
 import org.seec.muggle.auror.po.ScenePO;
 
 import java.sql.Timestamp;
@@ -15,14 +16,14 @@ import java.util.List;
  * @Version 1.0
  **/
 @DaoMapper
-public interface SceneMapper {
-    int insertScene(ScenePO po);
+public interface SceneMapper extends BaseOperation<ScenePO> {
+//    int insertScene(ScenePO po);
 
-    int updateScene(ScenePO po);
+//    int updateScene(ScenePO po);
 
-    int deleteScene(@Param("sceneId") Long sceneId);
+//    int deleteScene(@Param("sceneId") Long sceneId);
 
-    ScenePO getById(@Param("sceneId") Long sceneId);
+//    ScenePO getById(@Param("sceneId") Long sceneId);
 
     List<ScenePO> getByMovieId(@Param("movieId") Long movieId);
 

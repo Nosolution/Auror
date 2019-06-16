@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.dao.hall;
 
-import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
+import org.seec.muggle.auror.dao.BaseOperation;
 import org.seec.muggle.auror.po.HallPO;
 
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.List;
  * @Version 1.0
  **/
 @DaoMapper
-public interface HallMapper {
-    int insertNewHall(@Param("hallName")String name,@Param("seats")String seats);
+public interface HallMapper extends BaseOperation<HallPO> {
+//    int insertNewHall(@Param("hallName")String name,@Param("seats")String seats);
 
-    HallPO getHallById(Long hallId);
+//    HallPO getHallById(Long hallId);
 
     HallPO getHallByName(String hallName);
 

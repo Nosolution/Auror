@@ -1,7 +1,5 @@
 package org.seec.muggle.auror.bl.deal;
 
-import org.seec.muggle.auror.po.ScenePO;
-
 import java.util.List;
 
 /**
@@ -12,6 +10,6 @@ import java.util.List;
  **/
 public interface OrderService4Mark {
 
-    int hasSeen(Long userId, List<ScenePO> sceneId);
+    boolean hasSeen(Long userId, List<Long> sceneIds);
 
 }

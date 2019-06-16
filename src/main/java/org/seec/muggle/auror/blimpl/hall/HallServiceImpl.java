@@ -40,30 +40,35 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
                 stringBuilder.append(";");
             }
         }
-        hallMapper.insertNewHall(name, stringBuilder.toString());
+        HallPO po = new HallPO();
+        po.setHallName(name);
+        po.setSeats(stringBuilder.toString());
+        hallMapper.insert(po);
+//        hallMapper.insertNewHall(name, stringBuilder.toString());
     }
 
     @Override
     public int getSeatsNum(Long hallId) {
-        HallPO PO = hallMapper.getHallById(hallId);
-        return countString(PO.getSeats(), "1");
+//        HallPO PO = hallMapper.getHallById(hallId);
+        HallPO po = hallMapper.get(hallId);
+        return countString(po.getSeats(), "1");
     }
 
     private int countString(String str, String s) {
-        int count = 0, len = str.length();
+        int count = 0;
         while (str.contains(s)) {
-            str = str.substring(str.indexOf(s) + 1, str.length());
+            str = str.substring(str.indexOf(s) + 1);
             count++;
         }
         return count;
     }
 
     @Override
-    public SingleHallVO[] getHalls() {
+    public SingleHallVO[] getAllHalls() {
         List<HallPO> halls = hallMapper.getAll();
 
         List<SingleHallVO> vos = new ArrayList<>();
-        halls.stream().forEach(o -> {
+        halls.forEach(o -> {
             SingleHallVO vo = new SingleHallVO();
             vo.setHallId(o.getHallId());
             vo.setHallName(o.getHallName());
@@ -88,14 +93,14 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
     }
 
     @Override
-    public HallPO selectHallById(Long hallId) {
-        HallPO po = hallMapper.getHallById(hallId);
-        return po;
+    public String getHallNameById(Long hallId) {
+        HallPO po = hallMapper.get(hallId);
+        return po.getHallName();
     }
 
     @Override
     public Hall getHallById(Long hallId) {
-        HallPO po = hallMapper.getHallById(hallId);
+        HallPO po = hallMapper.get(hallId);
         Hall hall = new Hall();
         hall.setId(po.getHallId());
         hall.setName(po.getHallName());
@@ -109,13 +114,4 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
         return po.getHallId();
     }
 
-    @Override
-    public Hall getHallByName(String hallName) {
-        HallPO po = hallMapper.getHallByName(hallName);
-        Hall hall = new Hall();
-        hall.setId(po.getHallId());
-        hall.setName(po.getHallName());
-        hall.setSeats(getSeats(po.getSeats()));
-        return hall;
-    }
 }

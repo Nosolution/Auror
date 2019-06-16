@@ -11,6 +11,14 @@ import org.seec.muggle.auror.po.MoviePO;
  **/
 @Data
 public class MovieOnShelfVO {
+    public boolean getIsOnShow() {
+        return isOnShow;
+    }
+
+    public void setIsOnShow(boolean isOnShow) {
+        isOnShow = isOnShow;
+    }
+
     boolean isOnShow;
     Long movieId;
     String movieName;

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 
 /**
  * 异常基类，通过HttpStatus与message构造
+ * 可在请求失败时自定义状态码与错误信息最终抛出，削除了controller层判断service层是否成功的冗余代码
  *
  * @author Nosolution
  * @version 1.0

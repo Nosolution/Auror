@@ -2,33 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.hall.HallMapper">
 
-    <insert id="insertNewHall">
+    <insert id="insert">
         insert into tbl_hall (hall_seats, hall_name)
         values (#{seats}, #{hallName})
     </insert>
 
-    <select id="getHallById" resultType="org.seec.muggle.auror.po.HallPO">
-        select id         hallId,
-               hall_name  hallName,
-               hall_seats seats
+    <select id="get" resultMap="Hall">
+        select *
         from tbl_hall
         where id = #{hallId}
         limit 1;
     </select>
 
-    <select id="getHallByName" resultType="org.seec.muggle.auror.po.HallPO">
-        select id         hallId,
-               hall_name  hallName,
-               hall_seats seats
+    <select id="getHallByName" resultMap="Hall">
+        select *
         from tbl_hall
         where hall_name = #{hallName}
         limit 1;
     </select>
 
-    <select id="getAll" resultType="org.seec.muggle.auror.po.HallPO">
-        select id         hallId,
-               hall_name  hallName,
-               hall_seats seats
+    <select id="getAll" resultMap="Hall">
+        select *
         from tbl_hall
     </select>
+
+
+    <resultMap id="Hall" type="org.seec.muggle.auror.po.HallPO">
+        <id column="id" property="hallId"/>
+        <result column="hall_name" property="hallName"/>
+        <result column="hall_seats" property="seats"/>
+    </resultMap>
 </mapper>

@@ -72,7 +72,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
         if (user != null)
             throw new BaseException(HttpStatus.OK, "用户名已存在");
         try {
-            insertNewCUSTOMER(username, password);
+            addNewCustomer(username, password);
             logger.info("账号 {} 注册成功，时间: {}", username, new Timestamp(new Date().getTime()));
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -110,7 +110,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
     }
 
     @Override
-    public UserBasic getUserBasicById(Long userId) {
+    public UserBasic getUserBasicInfoById(Long userId) {
         UserBasic basic = new UserBasic();
         User user = userMapper.getUserById(userId);
         basic.setUrl("");
@@ -122,7 +122,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
      * 尝试向数据库中插入新的用户记录，保存相关的角色与权限信息
      */
     @Transactional
-    void insertNewCUSTOMER(String username, String password) {
+    void addNewCustomer(String username, String password) {
         User user = User.generateNerUser(username, password);
         userMapper.insert(user);
 //        user被保存后会产生id
@@ -137,8 +137,8 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
     }
 
     @Override
-    public BriefInfoVO[] getUsers() {
-        List<Long> users = userRoleMapper.getAllUser();
+    public BriefInfoVO[] getAllUsers() {
+        List<Long> users = userRoleMapper.getAllUserId();
         List<BriefInfoVO> vos = new ArrayList<>();
         users.forEach(o -> {
             BriefInfoVO vo = new BriefInfoVO();
@@ -155,6 +155,11 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
             vos.add(vo);
         });
         return vos.toArray(new BriefInfoVO[vos.size()]);
+    }
+
+    @Override
+    public List<Long> getAllUserId() {
+        return userRoleMapper.getAllUserId();
     }
 
     @Override

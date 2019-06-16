@@ -1,13 +1,17 @@
 package org.seec.muggle.auror.bl.account;
 
-import org.seec.muggle.auror.vo.user.briefinfo.BriefInfoVO;
+import java.util.List;
 
 /**
- * @Description TODO
+ * @Description account模块为message模块提供的接口
  * @Author 233loser
  * @Date 2019/6/12 14:54
  * @Version 1.0
  **/
 public interface AccountService4Message {
-    public BriefInfoVO[] getUsers();
+
+    /**
+     * 获取所有用户的id
+     */
+    List<Long> getAllUserId();
 }

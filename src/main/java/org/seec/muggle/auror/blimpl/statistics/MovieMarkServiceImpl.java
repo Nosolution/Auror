@@ -9,7 +9,6 @@ import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.FavorRecordPO;
 import org.seec.muggle.auror.po.MoviePO;
-import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
@@ -139,8 +138,8 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
                 vo.setMovieStatus(po.getStatus());
                 vo.setPosterUrl(po.getPosterUrl());
 
-                List<ScenePO> scenes = sceneService4Mark.getScenesById(po.getId());
-                if (orderService4Mark.hasSeen(userId, scenes) == 1) {
+                List<Long> sceneIds = sceneService4Mark.getSceneIdsByMovieId(po.getId());
+                if (orderService4Mark.hasSeen(userId, sceneIds)) {
                     vo.setUserStatus(1);
                 } else {
                     vo.setUserStatus(2);

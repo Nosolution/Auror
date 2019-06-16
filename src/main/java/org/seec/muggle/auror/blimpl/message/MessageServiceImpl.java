@@ -8,7 +8,6 @@ import org.seec.muggle.auror.bl.statistics.MovieMarkService4Message;
 import org.seec.muggle.auror.dao.message.MessageMapper;
 import org.seec.muggle.auror.po.Message;
 import org.seec.muggle.auror.util.DateUtil;
-import org.seec.muggle.auror.vo.user.briefinfo.BriefInfoVO;
 import org.seec.muggle.auror.vo.user.message.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,11 +84,11 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
 
 
     @Override
-    public void newEventRemind(Message message) {
-        BriefInfoVO[] briefInfos = accountService4Message.getUsers();
-        for (BriefInfoVO briefInfo : briefInfos) {
-            message.setUserId(briefInfo.getUserId());
-            mapper.insert(message);
-        }
+    public void broadcastNewEvent(Message message) {
+        accountService4Message.getAllUserId()
+                .forEach(o -> {
+                    message.setUserId(o);
+                    mapper.insert(message);
+                });
     }
 }

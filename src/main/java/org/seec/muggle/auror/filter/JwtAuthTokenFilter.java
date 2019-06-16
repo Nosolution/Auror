@@ -51,7 +51,7 @@ public class JwtAuthTokenFilter extends BasicHttpAuthenticationFilter {
      * @param request  客户端发送的request
      * @param response 还不知道干什么用
      * @return token鉴权结果
-     * @throws Exception 鬼知道这什么exception
+     * @throws Exception 未知exception
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {

@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class CommentForm {
     Long movieId;
-    Integer rate; //评分0-10
+    Integer score; //评分0-10
     String comment;
 
 }

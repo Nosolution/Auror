@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Description TODO
+ * @Description 账户相关的控制器类
  * @Author 233loser
  * @Date 2019/5/28 20:29
  * @Version 1.0
@@ -72,7 +72,7 @@ public class AccountController {
 
     @GetMapping(value = "/user/brief_info")
     public ResponseEntity<?> getUserBriefInfo() {
-        BriefInfoVO[] vos = accountService.getUsers();
+        BriefInfoVO[] vos = accountService.getAllUsers();
         return ResponseEntity.ok(vos);
     }
 
@@ -81,11 +81,6 @@ public class AccountController {
         Long userId = getIdFromRequest(request);
         MovieMarkVO[] vos = movieMarkService.getFavorsByUserId(userId);
         return ResponseEntity.ok(vos);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<?> test(HttpServletRequest request) {
-        return ResponseEntity.ok(getIdFromRequest(request));
     }
 
     @GetMapping(value = "/member/info")

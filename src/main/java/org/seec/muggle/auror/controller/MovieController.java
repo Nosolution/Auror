@@ -76,7 +76,7 @@ public class MovieController {
     @PostMapping(value = "/comment")
     public ResponseEntity<?> commentMovie(HttpServletRequest request,@RequestBody CommentForm form) {
         Long userId = getIdFromRequest(request);
-        movieService.commentMovie(form.getMovieId(), form.getRate(), form.getComment(), userId);
+        movieService.commentMovie(form.getMovieId(), userId, form.getScore(), form.getComment());
         return ResponseEntity.ok(null);
     }
 

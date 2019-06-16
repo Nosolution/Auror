@@ -29,7 +29,7 @@ public class MovieDetailsVO {
     private String country;
     private String language;
     private String description;
-    private String movieOnshow;
+    private String dateOnshow;
     private String visibleDate;
     private Integer year;
     /**
@@ -83,7 +83,7 @@ public class MovieDetailsVO {
         this.movieType = po.getMovieType();
         this.posterUrl = po.getPosterUrl();
         this.year = po.getMovieYear();
-        this.movieOnshow = DateUtil.dateToString(po.getStartDate());
+        this.dateOnshow = DateUtil.dateToString(po.getStartDate());
         this.visibleDate = DateUtil.dateToString(po.getVisibleDate());
     }
 }

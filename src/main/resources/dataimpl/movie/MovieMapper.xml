@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seec.muggle.auror.dao.movie.MovieMapper">
 
-    <insert id="insertMovie" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.MoviePO">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.MoviePO">
         insert into tbl_movie(movie_name, description, visible_date, start_date, end_date, movie_type, movie_country,
                               movie_language, poster_url, length, movie_year, movie_status)
         values (#{movieName}, #{description}, #{visibleDate},
@@ -16,7 +16,7 @@
         where id = #{movieId}
     </update>
 
-    <update id="updateByMovieId" parameterType="org.seec.muggle.auror.po.MoviePO">
+    <update id="update" parameterType="org.seec.muggle.auror.po.MoviePO">
         update tbl_movie
         set movie_name=#{movieName},
             description=#{description},
@@ -68,7 +68,7 @@
 
     </select>
 
-    <select id="getMovieById" resultMap="moviePO">
+    <select id="get" resultMap="moviePO">
         select m.id,
                m.movie_name,
                m.description,
@@ -122,10 +122,10 @@
         values (#{movieId}, #{userId}, #{score}, #{comment}, #{time})
     </insert>
 
-    <delete id="deleteMovieByMovieId">
+    <delete id="delete">
         update tbl_movie
         set movie_status =3
-        where id = #{movieId}
+        where id = #{id}
     </delete>
 
     <select id="sumScore" resultType="int">

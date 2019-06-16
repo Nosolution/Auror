@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 /**
- * 自定义realm，负责对token进行鉴权
+ * 自定义realm，负责根据token进行鉴权
  *
  * @author Nosolution
  * @version 1.0
@@ -51,7 +51,7 @@ public class CustomRealm extends AuthorizingRealm {
                 .stream()
                 .map(Role::getName)
                 .collect(Collectors.toList()));
-//        //shiro有permission的接口，晚点再看看能不能用
+        //shiro有permission的接口，晚点再看看能不能用
         simpleAuthorizationInfo.addStringPermissions(user.getPermissions()
                 .stream()
                 .map(Permission::getName)
@@ -74,7 +74,7 @@ public class CustomRealm extends AuthorizingRealm {
      * 在需要检验token正确性即需要登录时调用。
      *
      * @param authenticationToken 需被检验的token
-     * @return 还不懂
+     * @return 认证信息
      * @throws BaseException 认证失败异常，状态码{@code 401}
      */
     @Override

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description TODO
@@ -69,13 +70,13 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         Timestamp endTime = Timestamp.valueOf(end);
         Long hallId = hallService4Scene.getHallIdByName(hallName);
         ScenePO po = new ScenePO(movieId, beginTime, endTime, hallId, price, date);
-        sceneMapper.insertScene(po);
-        movieService4Scene.setOnScene(movieId);
+        sceneMapper.insert(po);
+
     }
 
     @Override
     public Integer getPriceByScene(Long sceneId) {
-        ScenePO po = sceneMapper.getById(sceneId);
+        ScenePO po = sceneMapper.get(sceneId);
         if (po != null) {
             return po.getPrice();
         } else {
@@ -84,9 +85,9 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public void varyScene(Long sceneId, String hallName, Date date, LocalTime startTime, int price) {
+    public void updateScene(Long sceneId, String hallName, Date date, LocalTime startTime, int price) {
         //删除movieId后只能通过sceneId获取MovieId进行片长计算了
-        Long movieId = sceneMapper.getById(sceneId).getMovieId();
+        Long movieId = sceneMapper.get(sceneId).getMovieId();
         Integer length = movieService4Scene.getLengthById(movieId);
         Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
@@ -94,12 +95,12 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         Timestamp endTime = Timestamp.valueOf(end);
         Long hallId = hallService4Scene.getHallIdByName(hallName);
         ScenePO po = new ScenePO(sceneId, movieId, beginTime, endTime, hallId, price, date);
-        sceneMapper.updateScene(po);
+        sceneMapper.update(po);
     }
 
     @Override
     public void deleteScene(Long sceneId) {
-        ScenePO scenePO = sceneMapper.getById(sceneId);
+        ScenePO scenePO = sceneMapper.get(sceneId);
         Hall hall = hallService4Scene.getHallById(scenePO.getHallId());
         Integer[][] seats = loadSeats(scenePO, hall);
         for (int i = 0; i < seats.length; i++)
@@ -122,19 +123,19 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public List<ScenePO> getScenesById(Long movieId) {
-        return sceneMapper.getByMovieId(movieId);
+    public List<Long> getSceneIdsByMovieId(Long movieId) {
+        return sceneMapper.getByMovieId(movieId).stream().map(ScenePO::getId).collect(Collectors.toList());
     }
 
     @Override
     public Long getMovieIdByScene(Long sceneId) {
-        ScenePO po = sceneMapper.getById(sceneId);
+        ScenePO po = sceneMapper.get(sceneId);
         return po.getMovieId();
     }
 
     @Override
-    public ScenePO selectSceneByID(Long sceneId) {
-        return sceneMapper.getById(sceneId);
+    public ScenePO getSceneById(Long sceneId) {
+        return sceneMapper.get(sceneId);
     }
 
     @Override
@@ -162,10 +163,11 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
     @Override
-    public InfoVO[] getScenesInfoByHallIdAndDate(String hallName, Date date) {
+
+    public InfoVO[] getScenesInfoByHallNameAndDate(String hallName, Date date) {
         List<InfoVO> vos = new ArrayList<>();
-        Hall currentHall = hallService4Scene.getHallByName(hallName);
-        List<ScenePO> pos = sceneMapper.getByHallIdAndDate(currentHall.getId(), date);
+        Long hallId = hallService4Scene.getHallIdByName(hallName);
+        List<ScenePO> pos = sceneMapper.getByHallIdAndDate(hallId, date);
 
         pos.stream()
                 .sorted(Comparator.comparing(ScenePO::getStartTime))
@@ -187,4 +189,6 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         }
         return seats;
     }
+
+
 }

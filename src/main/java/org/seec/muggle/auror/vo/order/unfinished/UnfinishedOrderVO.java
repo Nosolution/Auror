@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
 import lombok.Data;
-import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.po.OrderPO;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.po.TicketPO;
@@ -30,10 +29,10 @@ public class UnfinishedOrderVO {
     AvailableCouponsVO[] availableCoupons;
     Timestamp initTime;//生成订单时间
 
-    public UnfinishedOrderVO(OrderPO orderPO, ScenePO scenePO, HallPO hallPO, List<TicketPO> ticketPOS, List<AvailableCouponsVO> couponPOS, String movieName) {
+    public UnfinishedOrderVO(OrderPO orderPO, ScenePO scenePO, String hallName, List<TicketPO> ticketPOS, List<AvailableCouponsVO> couponPOS, String movieName) {
         this.orderId = orderPO.getId();
         this.movieName =movieName;
-        this.hallName = hallPO.getHallName();
+        this.hallName = hallName;
         this.ticketNum = ticketPOS.size();
         this.cost = scenePO.getPrice()*ticketPOS.size();
         this.date = DateUtil.dateToString(scenePO.getDate());

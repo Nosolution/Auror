@@ -107,7 +107,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
         message.setTitle("新优惠活动提示");
         message.setContent("新的优惠活动公布了，不如我们把它……");
-        messageService4Strategy.newEventRemind(message);
+        messageService4Strategy.broadcastNewEvent(message);
     }
 
     @Override
