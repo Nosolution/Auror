@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blimpl.statistics;
+package org.seec.muggle.auror.blImpl.statistics;
 
 import org.seec.muggle.auror.bl.deal.OrderService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
@@ -69,9 +69,18 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
      **/
     @Override
     public FavorNumVO[] getFavorsByDate(Long movieId) {
-        List<FavorRecordPO> favors = movieMarkMapper.getFavorByMovieId(movieId);
-        if (favors.size() == 0)
+        List<FavorRecordPO> exactFavors = movieMarkMapper.getFavorByMovieId(movieId);
+        if (exactFavors.size() == 0)
             return new FavorNumVO[0];
+        //库里的数据精度过高导致下标获取异常，这边统一做一次数据粗化
+        List<FavorRecordPO> favors = new ArrayList<>();
+        for(int i =0;i<exactFavors.size();i++){
+            FavorRecordPO favorRecordPO = exactFavors.get(i);
+            String currentDate = DateUtil.dateToString(favorRecordPO.getTime());
+            favorRecordPO.setTime(DateUtil.stringToDate(currentDate));
+            favors.add(favorRecordPO);
+        }
+
 
         Date minDate = favors.stream().min(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();
         Date maxDate = favors.stream().max(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();

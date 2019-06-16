@@ -16,7 +16,7 @@ import java.util.Date;
 public class SceneVaryForm {
     Long sceneId;
     String hallName;
-    Date date;
+    String date;
     LocalTime startTime;
     Integer price;
 
