@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.vo.user.coupon;
 
 import lombok.Data;
+import org.seec.muggle.auror.entity.strategy.Coupon4Account;
 
 import java.util.Date;
 
@@ -22,4 +23,15 @@ public class UserCouponsVO {
     String couponEndTime;
     String couponExpiration; //有效期长度
 
+    public UserCouponsVO(Coupon4Account accounts) {
+        this.couponId = accounts.getCouponId();
+        this.couponName = accounts.getCouponName();
+        this.couponDescription = accounts.getCouponDescription();
+        this.couponPictureUrl = accounts.getCouponPictureUrl();
+        this.couponDiscount = accounts.getCouponDiscount();
+        this.couponThreshold = accounts.getCouponThreshold();
+        this.couponStartTime = accounts.getCouponStartTime();
+        this.couponEndTime = accounts.getCouponEndTime();
+        this.couponExpiration = accounts.getCouponExpiration();
+    }
 }

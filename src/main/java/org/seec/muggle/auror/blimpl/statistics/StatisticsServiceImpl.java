@@ -1,10 +1,9 @@
 package org.seec.muggle.auror.blimpl.statistics;
 
-import org.seec.muggle.auror.bl.deal.OrderService4Statistics;
+import org.seec.muggle.auror.bl.order.OrderService4Statistics;
 import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.bl.scene.SceneService4Statistics;
 import org.seec.muggle.auror.bl.statistics.StatisticsService;
-import org.seec.muggle.auror.bl.statistics.StatisticsService4Movie;
 import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.po.AttendInfo;
 import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
@@ -22,7 +21,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class StatisticsServiceImpl implements StatisticsService, StatisticsService4Movie {
+public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
     SceneService4Statistics sceneService4Statistics;

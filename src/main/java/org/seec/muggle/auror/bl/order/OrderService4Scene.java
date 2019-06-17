@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.deal;
+package org.seec.muggle.auror.bl.order;
 
 import org.seec.muggle.auror.po.TicketPO;
 

@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.blimpl.scene;
 
-import org.seec.muggle.auror.bl.deal.OrderService4Scene;
+import org.seec.muggle.auror.bl.order.OrderService4Scene;
 import org.seec.muggle.auror.bl.hall.HallService4Scene;
 import org.seec.muggle.auror.bl.message.MessageService4Scene;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;

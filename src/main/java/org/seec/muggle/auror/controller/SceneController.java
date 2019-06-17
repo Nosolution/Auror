@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.controller;
 
-import org.seec.muggle.auror.bl.deal.OrderService;
+import org.seec.muggle.auror.bl.order.OrderService;
 import org.seec.muggle.auror.bl.scene.SceneService;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.util.JwtUtil;

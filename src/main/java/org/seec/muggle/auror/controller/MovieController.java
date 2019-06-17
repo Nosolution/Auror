@@ -2,7 +2,7 @@ package org.seec.muggle.auror.controller;
 
 
 import org.seec.muggle.auror.bl.movie.MovieService;
-import org.seec.muggle.auror.bl.statistics.MovieMarkService;
+import org.seec.muggle.auror.bl.mark.MovieMarkService;
 import org.seec.muggle.auror.bl.statistics.StatisticsService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;

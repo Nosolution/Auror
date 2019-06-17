@@ -1,10 +1,10 @@
 package org.seec.muggle.auror.blimpl.statistics;
 
-import org.seec.muggle.auror.bl.deal.OrderService4Mark;
+import org.seec.muggle.auror.bl.order.OrderService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
 import org.seec.muggle.auror.bl.scene.SceneService4Mark;
-import org.seec.muggle.auror.bl.statistics.MovieMarkService;
-import org.seec.muggle.auror.bl.statistics.MovieMarkService4Message;
+import org.seec.muggle.auror.bl.mark.MovieMarkService;
+import org.seec.muggle.auror.bl.mark.MovieMarkService4Message;
 import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.exception.BaseException;

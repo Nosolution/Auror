@@ -1,6 +1,6 @@
-package org.seec.muggle.auror.blimpl.deal;
+package org.seec.muggle.auror.blImpl.order;
 
-import org.seec.muggle.auror.bl.deal.*;
+import org.seec.muggle.auror.bl.order.*;
 import org.seec.muggle.auror.bl.hall.HallService4Order;
 import org.seec.muggle.auror.bl.member.MemberService4Order;
 import org.seec.muggle.auror.bl.movie.MovieService4Order;
@@ -10,6 +10,8 @@ import org.seec.muggle.auror.dao.order.OrderMapper;
 import org.seec.muggle.auror.entity.member.Member;
 import org.seec.muggle.auror.entity.movie.Movie4Order;
 import org.seec.muggle.auror.entity.scene.Scene;
+import org.seec.muggle.auror.entity.strategy.Coupon4Order;
+import org.seec.muggle.auror.entity.strategy.MemberStrategy4Order;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.CaptchaUtil;
@@ -169,10 +171,10 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public RechargeVO rechargeMember(RechargeForm form, Long userId) {
-        List<MemberStrategyPO> strategyPOS = strategyService4Order.selectAllMemberStrategy();
+        List<MemberStrategy4Order> strategyPOS = strategyService4Order.selectAllMemberStrategy();
 
         Member member = memberService4Order.getMemberByUserId(userId);
-        MemberStrategyPO po = null;
+        MemberStrategy4Order po = null;
         Optional<Integer> recharge = Optional.ofNullable(orderMapper.sumRecharge(userId));
         int rechargeTotal = recharge.orElse(0);
         for (int i = 0; i < strategyPOS.size(); i++) {
@@ -299,9 +301,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     }
 
     private List<CouponsAcquirementVO> getAcquirementVOS(OrderPO orderPO) {
-        List<CouponPO> couponPOS = strategyService4Order.sendCoupons(orderPO.getMovieId(), orderPO.getUserId());
+        List<Coupon4Order> coupons = strategyService4Order.sendCoupons(orderPO.getMovieId(), orderPO.getUserId());
         List<CouponsAcquirementVO> acquirementVOS = new ArrayList<>();
-        couponPOS.forEach(o -> {
+        coupons.forEach(o -> {
             CouponsAcquirementVO vo = new CouponsAcquirementVO();
             vo.setCouponId(o.getId());
             vo.setCouponDescription(o.getDescription());

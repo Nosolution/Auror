@@ -1,16 +1,17 @@
-package org.seec.muggle.auror.blimpl.account;
+package org.seec.muggle.auror.blImpl.account;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.account.AccountService4Message;
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
-import org.seec.muggle.auror.bl.deal.OrderService4Account;
+import org.seec.muggle.auror.bl.order.OrderService4Account;
 import org.seec.muggle.auror.bl.member.MemberService4Account;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
 import org.seec.muggle.auror.dao.account.UserRoleMapper;
 import org.seec.muggle.auror.entity.member.MemberAccount;
+import org.seec.muggle.auror.entity.strategy.Coupon4Account;
 import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.Role;
@@ -133,7 +134,13 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
 
     @Override
     public UserCouponsVO[] getCoupons(Long userId) {
-        return strategyService4Account.getCouponsByUser(userId);
+        Coupon4Account[] coupon4Accounts = strategyService4Account.getCouponsByUser(userId);
+        UserCouponsVO[] vos = new UserCouponsVO[coupon4Accounts.length];
+        for(int i =0;i<coupon4Accounts.length;i++){
+            vos[i] = new UserCouponsVO(coupon4Accounts[i]);
+        }
+
+        return vos;
     }
 
     @Override

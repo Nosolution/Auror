@@ -3,7 +3,7 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.member.MemberService;
 import org.seec.muggle.auror.bl.message.MessageService;
-import org.seec.muggle.auror.bl.statistics.MovieMarkService;
+import org.seec.muggle.auror.bl.mark.MovieMarkService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.order.rechargehistory.RechargeHistoryVO;
 import org.seec.muggle.auror.vo.user.briefinfo.BriefInfoVO;

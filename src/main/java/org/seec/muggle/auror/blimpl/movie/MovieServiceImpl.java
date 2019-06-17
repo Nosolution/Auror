@@ -6,7 +6,6 @@ import org.seec.muggle.auror.bl.movie.MovieService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Order;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
 import org.seec.muggle.auror.bl.scene.SceneService4Movie;
-import org.seec.muggle.auror.bl.statistics.StatisticsService4Movie;
 import org.seec.muggle.auror.dao.movie.MovieMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.entity.movie.Movie4Order;
@@ -39,8 +38,6 @@ import java.util.*;
 @Service
 public class MovieServiceImpl implements MovieService, MovieService4Scene, MovieService4Mark, MovieService4Order {
 
-    @Autowired
-    StatisticsService4Movie statisticsService4Movie;
 
     @Autowired
     MovieMapper movieMapper;

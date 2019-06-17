@@ -4,7 +4,7 @@ import org.seec.muggle.auror.bl.account.AccountService4Message;
 import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.message.MessageService4Scene;
 import org.seec.muggle.auror.bl.message.MessageService4Strategy;
-import org.seec.muggle.auror.bl.statistics.MovieMarkService4Message;
+import org.seec.muggle.auror.bl.mark.MovieMarkService4Message;
 import org.seec.muggle.auror.dao.message.MessageMapper;
 import org.seec.muggle.auror.po.Message;
 import org.seec.muggle.auror.util.DateUtil;
