@@ -8,8 +8,14 @@ import org.seec.muggle.auror.bl.movie.MovieService4Scene;
 import org.seec.muggle.auror.bl.scene.SceneService4Movie;
 import org.seec.muggle.auror.bl.statistics.StatisticsService4Movie;
 import org.seec.muggle.auror.dao.movie.MovieMapper;
+import org.seec.muggle.auror.entity.movie.Movie4Mark;
+import org.seec.muggle.auror.entity.movie.Movie4Order;
+import org.seec.muggle.auror.entity.movie.Movie4Scene;
 import org.seec.muggle.auror.exception.BaseException;
-import org.seec.muggle.auror.po.*;
+import org.seec.muggle.auror.po.CastPO;
+import org.seec.muggle.auror.po.CommentPO;
+import org.seec.muggle.auror.po.MovieBoxOfficeMap;
+import org.seec.muggle.auror.po.MoviePO;
 import org.seec.muggle.auror.vo.movie.addition.MovieAddForm;
 import org.seec.muggle.auror.vo.movie.comment.CommentVO;
 import org.seec.muggle.auror.vo.movie.detail.MovieDetailsVO;
@@ -35,7 +41,6 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
 
     @Autowired
     StatisticsService4Movie statisticsService4Movie;
-
 
     @Autowired
     MovieMapper movieMapper;
@@ -155,8 +160,8 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         commentPOS.stream()
                 .sorted(Comparator.comparing(CommentPO::getCommentTime).reversed())
                 .forEach(o -> {
-                    UserBasic basic = accountService4Movie.getUserBasicInfoById(o.getUserId());
-                    vos.add(new CommentVO(o, basic));
+                    String username = accountService4Movie.getUsernameById(o.getUserId());
+                    vos.add(new CommentVO(o, username));
                 });
         return vos;
     }
@@ -218,8 +223,18 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     }
 
     @Override
-    public MoviePO getMovieById(Long movieId) {
-        return movieMapper.get(movieId);
+    public Movie4Mark getMovieInfoByIdForMark(Long movieId) {
+        Movie4Mark res = new Movie4Mark();
+        MoviePO po = movieMapper.get(movieId);
+        res.setId(po.getId());
+        res.setMovieName(po.getMovieName());
+        res.setDescription(po.getDescription());
+        res.setLength(po.getLength());
+        res.setMovieYear(po.getMovieYear());
+        res.setPosterUrl(po.getPosterUrl());
+        res.setMovieType(po.getMovieType());
+        res.setStatus(po.getStatus());
+        return res;
     }
 
     @Override
@@ -228,8 +243,23 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
     }
 
     @Override
-    public MoviePO getMovie4Scene(Long movieId) {
-        return movieMapper.get(movieId);
+    public Movie4Order getMovieInfoByIdForOrder(Long movieId) {
+        MoviePO po = movieMapper.get(movieId);
+        Movie4Order res = new Movie4Order();
+        res.setMovieName(po.getMovieName());
+        res.setPosterUrl(po.getPosterUrl());
+        return res;
+    }
+
+    @Override
+    public Movie4Scene getMovieInfoByIdForScene(Long movieId) {
+        MoviePO po = movieMapper.get(movieId);
+        Movie4Scene res = new Movie4Scene();
+        res.setMovieName(po.getMovieName());
+        res.setPosterUrl(po.getPosterUrl());
+        res.setLength(po.getLength());
+        res.setStatus(po.getStatus());
+        return res;
     }
 
 }

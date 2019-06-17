@@ -7,6 +7,9 @@ import org.seec.muggle.auror.bl.movie.MovieService4Order;
 import org.seec.muggle.auror.bl.scene.SceneService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.order.OrderMapper;
+import org.seec.muggle.auror.entity.member.Member;
+import org.seec.muggle.auror.entity.movie.Movie4Order;
+import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.CaptchaUtil;
@@ -149,13 +152,13 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public UnfinishedOrderVO checkUnfinishedOrder(Long orderId) {
         OrderPO orderPO = orderMapper.getOrderById(orderId);
-        ScenePO scenePO = sceneService4Order.getSceneById(orderPO.getSceneId());
-        String hallName = hallService4Order.getHallNameById(scenePO.getHallId());
+        Scene scene = sceneService4Order.getSceneById(orderPO.getSceneId());
+        String hallName = hallService4Order.getHallNameById(scene.getHallId());
         List<TicketPO> ticketPOS = orderMapper.getSeatsById(orderId);
-        List<AvailableCouponsVO> couponPOS = strategyService4Order.getCouponsByCost(ticketPOS.size() * scenePO.getPrice(), orderPO.getUserId());
+        List<AvailableCouponsVO> couponPOS = strategyService4Order.getCouponsByCost(ticketPOS.size() * scene.getPrice(), orderPO.getUserId());
         couponPOS.sort(Comparator.comparing(AvailableCouponsVO::getEndTime));
 
-        UnfinishedOrderVO vo = new UnfinishedOrderVO(orderPO, scenePO, hallName, ticketPOS, couponPOS, movieService4Order.getMovieNameById(scenePO.getMovieId()));
+        UnfinishedOrderVO vo = new UnfinishedOrderVO(orderPO, scene, hallName, ticketPOS, couponPOS, movieService4Order.getMovieNameById(scene.getMovieId()));
         return vo;
     }
 
@@ -168,7 +171,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     public RechargeVO rechargeMember(RechargeForm form, Long userId) {
         List<MemberStrategyPO> strategyPOS = strategyService4Order.selectAllMemberStrategy();
 
-        MemberPO memberPO = memberService4Order.getMemberByUserId(userId);
+        Member member = memberService4Order.getMemberByUserId(userId);
         MemberStrategyPO po = null;
         Optional<Integer> recharge = Optional.ofNullable(orderMapper.sumRecharge(userId));
         int rechargeTotal = recharge.orElse(0);
@@ -191,19 +194,19 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         if (po == null) { //说明已经是至高会员了
             po = strategyPOS.get(strategyPOS.size() - 1);
             RechargeVO vo = new RechargeVO();
-            vo.setUpgraded(!po.getId().equals(memberPO.getStrategyId()));
-            if (!po.getId().equals(memberPO.getStrategyId())) {
+            vo.setUpgraded(!po.getId().equals(member.getStrategyId()));
+            if (!po.getId().equals(member.getStrategyId())) {
                 memberService4Order.changeStrategy(userId, po.getId());
             }
-            vo.setCredit(form.getCost() + memberPO.getCredit());
+            vo.setCredit(form.getCost() + member.getCredit());
             vo.setNewMemberDiscountRate(strategyPOS.get(strategyPOS.size() - 1).getRate());
             vo.setNewMemberPictureUrl(strategyPOS.get(strategyPOS.size() - 1).getUrl());
             vo.setNewMemberStrategyName(strategyPOS.get(strategyPOS.size() - 1).getName());
             return vo;
-        } else if (po.getId().equals(memberPO.getStrategyId())) {
+        } else if (po.getId().equals(member.getStrategyId())) {
             RechargeVO vo = new RechargeVO();
             vo.setUpgraded(false);
-            vo.setCredit(form.getCost() + memberPO.getCredit());
+            vo.setCredit(form.getCost() + member.getCredit());
             vo.setNewMemberDiscountRate(po.getRate());
             vo.setNewMemberPictureUrl(po.getUrl());
             vo.setNewMemberStrategyName(po.getName());
@@ -211,7 +214,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
         } else {
             RechargeVO vo = new RechargeVO();
             vo.setUpgraded(true);
-            vo.setCredit(form.getCost() + memberPO.getCredit());
+            vo.setCredit(form.getCost() + member.getCredit());
             vo.setNewMemberDiscountRate(po.getRate());
             vo.setNewMemberPictureUrl(po.getUrl());
             vo.setNewMemberStrategyName(po.getName());
@@ -321,8 +324,8 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                 .sorted(Comparator.comparing(OrderPO::getCreateTime).reversed())
                 .forEach(o -> {
                     List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
-                    ScenePO scene = sceneService4Order.getSceneById(o.getSceneId());
-                    MoviePO movie = movieService4Order.getMovieById(o.getMovieId());
+                    Scene scene = sceneService4Order.getSceneById(o.getSceneId());
+                    Movie4Order movie = movieService4Order.getMovieInfoByIdForOrder(o.getMovieId());
                     RefundPO refundPO = strategyService4Order.getRefund();
                     String hallName = hallService4Order.getHallNameById(scene.getHallId());
                     int status = o.getStatus();

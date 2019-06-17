@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.member;
 
-import org.seec.muggle.auror.po.MemberPO;
+import org.seec.muggle.auror.entity.member.Member;
 
 /**
  * @Description member模块为order模块提供的接口
@@ -15,7 +15,7 @@ public interface MemberService4Order {
      * @param userId 用户id
      * @return 会员信息
      */
-    MemberPO getMemberByUserId(Long userId);
+    Member getMemberByUserId(Long userId);
 
     /**
      * 修改用户会员对应的策略

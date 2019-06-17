@@ -1,9 +1,9 @@
 package org.seec.muggle.auror.vo.order.ticket;
 
 import lombok.Data;
-import org.seec.muggle.auror.po.MoviePO;
+import org.seec.muggle.auror.entity.movie.Movie4Order;
+import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.po.OrderPO;
-import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.po.TicketPO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
@@ -34,7 +34,7 @@ public class TicketDetailVO {
     Timestamp initTime;
 
 
-    public TicketDetailVO(ScenePO scene, MoviePO movie, int status, List<TicketPO> ticketPOS, OrderPO order, String hallName) {
+    public TicketDetailVO(Scene scene, Movie4Order movie, int status, List<TicketPO> ticketPOS, OrderPO order, String hallName) {
         this.orderId = order.getId();
         this.movieName = movie.getMovieName();
         this.moviePosterUrl = movie.getPosterUrl();

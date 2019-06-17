@@ -1,13 +1,11 @@
 package org.seec.muggle.auror.vo.scene.Info;
 
 import lombok.Data;
+import org.seec.muggle.auror.entity.movie.Movie4Scene;
 import org.seec.muggle.auror.po.Hall;
-import org.seec.muggle.auror.po.MoviePO;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
-
-import java.util.Date;
 
 /**
  * @Description TODO
@@ -28,8 +26,7 @@ public class InfoVO {
     Integer length;
 
 
-
-    public InfoVO(MoviePO movie, Integer[][] seats, ScenePO scenePO, Hall hall) {
+    public InfoVO(Movie4Scene movie, Integer[][] seats, ScenePO scenePO, Hall hall) {
         this.sceneId = scenePO.getId();
         this.price = scenePO.getPrice();
         this.hallName = hall.getName();

@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blImpl.statistics;
+package org.seec.muggle.auror.blimpl.statistics;
 
 import org.seec.muggle.auror.bl.deal.OrderService4Mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
@@ -6,9 +6,9 @@ import org.seec.muggle.auror.bl.scene.SceneService4Mark;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService;
 import org.seec.muggle.auror.bl.statistics.MovieMarkService4Message;
 import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
+import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.FavorRecordPO;
-import org.seec.muggle.auror.po.MoviePO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
@@ -73,7 +73,7 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
             return new FavorNumVO[0];
         //库里的数据精度过高导致下标获取异常，这边统一做一次数据粗化
         List<FavorRecordPO> favors = new ArrayList<>();
-        for(int i =0;i<exactFavors.size();i++){
+        for (int i = 0; i < exactFavors.size(); i++) {
             FavorRecordPO favorRecordPO = exactFavors.get(i);
             String currentDate = DateUtil.dateToString(favorRecordPO.getTime());
             favorRecordPO.setTime(DateUtil.stringToDate(currentDate));
@@ -128,17 +128,17 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
             List<MovieMarkVO> vos = new ArrayList<>();
             movies.forEach(o -> {
                 MovieMarkVO vo = new MovieMarkVO();
-                MoviePO po = movieService4Mark.getMovieById(o);
-                vo.setMovieYear(po.getMovieYear());
-                vo.setMovieDescription(po.getDescription());
-                vo.setMovieId(po.getId());
-                vo.setMovieLength(po.getLength());
-                vo.setMovieType(po.getMovieType());
-                vo.setMovieName(po.getMovieName());
-                vo.setMovieStatus(po.getStatus());
-                vo.setPosterUrl(po.getPosterUrl());
+                Movie4Mark movieInfo = movieService4Mark.getMovieInfoByIdForMark(o);
+                vo.setMovieYear(movieInfo.getMovieYear());
+                vo.setMovieDescription(movieInfo.getDescription());
+                vo.setMovieId(movieInfo.getId());
+                vo.setMovieLength(movieInfo.getLength());
+                vo.setMovieType(movieInfo.getMovieType());
+                vo.setMovieName(movieInfo.getMovieName());
+                vo.setMovieStatus(movieInfo.getStatus());
+                vo.setPosterUrl(movieInfo.getPosterUrl());
 
-                List<Long> sceneIds = sceneService4Mark.getSceneIdsByMovieId(po.getId());
+                List<Long> sceneIds = sceneService4Mark.getSceneIdsByMovieId(movieInfo.getId());
                 if (orderService4Mark.hasSeen(userId, sceneIds)) {
                     vo.setUserStatus(1);
                 } else {

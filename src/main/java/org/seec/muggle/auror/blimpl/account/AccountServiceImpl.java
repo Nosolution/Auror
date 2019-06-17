@@ -10,9 +10,12 @@ import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
 import org.seec.muggle.auror.dao.account.UserRoleMapper;
+import org.seec.muggle.auror.entity.member.MemberAccount;
 import org.seec.muggle.auror.enums.RoleEnum;
 import org.seec.muggle.auror.exception.BaseException;
-import org.seec.muggle.auror.po.*;
+import org.seec.muggle.auror.po.Role;
+import org.seec.muggle.auror.po.User;
+import org.seec.muggle.auror.po.UserRole;
 import org.seec.muggle.auror.security.JwtUser;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.order.rechargehistory.RechargeHistoryVO;
@@ -110,12 +113,9 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
     }
 
     @Override
-    public UserBasic getUserBasicInfoById(Long userId) {
-        UserBasic basic = new UserBasic();
+    public String getUsernameById(Long userId) {
         User user = userMapper.getUserById(userId);
-        basic.setUrl("");
-        basic.setUsername(user.getUsername());
-        return basic;
+        return user.getUsername();
     }
 
     /**

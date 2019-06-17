@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.scene;
 
-import org.seec.muggle.auror.po.ScenePO;
+import org.seec.muggle.auror.entity.scene.Scene;
 
 /**
  * @Description scene模块为order模块提供的接口
@@ -31,5 +31,5 @@ public interface SceneService4Order {
      * @param sceneId 排片id
      * @return 对应的排片信息
      */
-    ScenePO getSceneById(Long sceneId);
+    Scene getSceneById(Long sceneId);
 }

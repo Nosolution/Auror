@@ -5,7 +5,8 @@ import org.seec.muggle.auror.bl.member.MemberService4Account;
 import org.seec.muggle.auror.bl.member.MemberService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
 import org.seec.muggle.auror.dao.member.MemberMapper;
-import org.seec.muggle.auror.po.MemberAccount;
+import org.seec.muggle.auror.entity.member.Member;
+import org.seec.muggle.auror.entity.member.MemberAccount;
 import org.seec.muggle.auror.po.MemberPO;
 import org.seec.muggle.auror.po.MemberStrategyPO;
 import org.seec.muggle.auror.vo.user.member.MemberVO;
@@ -39,9 +40,9 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     }
 
     @Override
-    public MemberPO getMemberByUserId(Long userId) {
+    public Member getMemberByUserId(Long userId) {
         MemberPO po = memberMapper.getMemberByUserId(userId);
-        return po;
+        return new Member(po);
     }
 
     @Override
@@ -58,16 +59,12 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     @Override
     public MemberAccount getMemberByUser(Long userId) {
         MemberPO po = memberMapper.getMemberByUserId(userId);
-        if (po == null) {
-            MemberAccount account = new MemberAccount();
-            account.setMember(false);
-            return account;
-        } else {
-            MemberAccount account = new MemberAccount();
-            account.setMember(true);
+        MemberAccount account = new MemberAccount();
+        account.setMember(po != null);
+        if (po != null) {
             account.setMemberCredit(po.getCredit());
-            return account;
         }
+        return account;
 
     }
 

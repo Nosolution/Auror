@@ -1,6 +1,7 @@
 package org.seec.muggle.auror.bl.member;
 
-import org.seec.muggle.auror.po.MemberAccount;
+
+import org.seec.muggle.auror.entity.member.MemberAccount;
 
 /**
  * @Description member模块为account模块提供的接口

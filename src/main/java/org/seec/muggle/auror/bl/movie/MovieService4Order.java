@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.movie;
 
-import org.seec.muggle.auror.po.MoviePO;
+import org.seec.muggle.auror.entity.movie.Movie4Order;
 
 /**
  * @Description movie模块为order模块提供的接口
@@ -23,5 +23,5 @@ public interface MovieService4Order {
      * @param movieId 电影id
      * @return 电影信息
      */
-    MoviePO getMovieById(Long movieId);
+    Movie4Order getMovieInfoByIdForOrder(Long movieId);
 }

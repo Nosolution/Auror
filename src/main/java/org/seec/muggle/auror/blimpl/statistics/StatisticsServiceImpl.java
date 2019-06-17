@@ -5,8 +5,8 @@ import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.bl.scene.SceneService4Statistics;
 import org.seec.muggle.auror.bl.statistics.StatisticsService;
 import org.seec.muggle.auror.bl.statistics.StatisticsService4Movie;
+import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.po.AttendInfo;
-import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,18 +35,18 @@ public class StatisticsServiceImpl implements StatisticsService, StatisticsServi
 
     @Override
     public AttendenceVO[] getBoxOfficeRate(Long movieId) {
-        List<ScenePO> scenes = sceneService4Statistics.getScenesByMovieId(movieId);
+        List<Scene> scenes = sceneService4Statistics.getScenesByMovieId(movieId);
         if (scenes.size() == 0) {
             return new AttendenceVO[]{};
         } else {
-            scenes.sort(Comparator.comparing(ScenePO::getDate));
+            scenes.sort(Comparator.comparing(Scene::getDate));
             List<AttendInfo> attendInfos = new ArrayList<>();
             int pos = 0;
             AttendInfo info = new AttendInfo(scenes.get(0).getDate(), hallService4Statistics.getSeatsNum(scenes.get(0).getHallId()), orderService4Statistics.getNumsBySceneId(scenes.get(0).getId()));
             attendInfos.add(info);
             for (int i = 1; i < scenes.size(); i++) {
                 info = new AttendInfo();
-                ScenePO current = scenes.get(i);
+                Scene current = scenes.get(i);
                 if (current.getDate().equals(scenes.get(i - 1).getDate())) {
                     info = attendInfos.get(pos);
                     info.setOrders(info.getOrders() + orderService4Statistics.getNumsBySceneId(current.getId()));

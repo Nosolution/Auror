@@ -2,7 +2,6 @@ package org.seec.muggle.auror.vo.movie.comment;
 
 import lombok.Data;
 import org.seec.muggle.auror.po.CommentPO;
-import org.seec.muggle.auror.po.UserBasic;
 import org.seec.muggle.auror.util.DateUtil;
 
 /**
@@ -18,9 +17,9 @@ public class CommentVO {
     String comment;
 
 
-    public CommentVO(CommentPO po , UserBasic basic){
+    public CommentVO(CommentPO po, String username) {
         this.comment = po.getComment();
         this.time = DateUtil.timestampToString(po.getCommentTime());
-        this.username = basic.getUsername();
+        this.username = username;
     }
 }

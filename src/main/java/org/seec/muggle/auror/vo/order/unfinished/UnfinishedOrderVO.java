@@ -1,8 +1,8 @@
 package org.seec.muggle.auror.vo.order.unfinished;
 
 import lombok.Data;
+import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.po.OrderPO;
-import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.po.TicketPO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
@@ -29,14 +29,14 @@ public class UnfinishedOrderVO {
     AvailableCouponsVO[] availableCoupons;
     Timestamp initTime;//生成订单时间
 
-    public UnfinishedOrderVO(OrderPO orderPO, ScenePO scenePO, String hallName, List<TicketPO> ticketPOS, List<AvailableCouponsVO> couponPOS, String movieName) {
+    public UnfinishedOrderVO(OrderPO orderPO, Scene scene, String hallName, List<TicketPO> ticketPOS, List<AvailableCouponsVO> couponPOS, String movieName) {
         this.orderId = orderPO.getId();
         this.movieName =movieName;
         this.hallName = hallName;
         this.ticketNum = ticketPOS.size();
-        this.cost = scenePO.getPrice()*ticketPOS.size();
-        this.date = DateUtil.dateToString(scenePO.getDate());
-        this.interval = new IntervalVO(scenePO.getStartTime(),scenePO.getEndTime());
+        this.cost = scene.getPrice() * ticketPOS.size();
+        this.date = DateUtil.dateToString(scene.getDate());
+        this.interval = new IntervalVO(scene.getStartTime(), scene.getEndTime());
         this.selectedSeats = new UnfinishedOrderSeatsVO[ticketPOS.size()];
         for(int i =0;i<selectedSeats.length;i++){
             selectedSeats[i] = new UnfinishedOrderSeatsVO(ticketPOS.get(i).getRow(),ticketPOS.get(i).getColumn());

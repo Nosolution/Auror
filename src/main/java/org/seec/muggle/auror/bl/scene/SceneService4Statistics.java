@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.scene;
 
-import org.seec.muggle.auror.po.ScenePO;
+import org.seec.muggle.auror.entity.scene.Scene;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface SceneService4Statistics {
      * @param movieId 电影id
      * @return 排片信息列表
      */
-    List<ScenePO> getScenesByMovieId(Long movieId);
+    List<Scene> getScenesByMovieId(Long movieId);
 }

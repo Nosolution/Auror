@@ -1,7 +1,5 @@
 package org.seec.muggle.auror.bl.account;
 
-import org.seec.muggle.auror.po.UserBasic;
-
 /**
  * @Description account模块为movie模块提供的接口
  * @Author 233loser
@@ -10,5 +8,5 @@ import org.seec.muggle.auror.po.UserBasic;
  **/
 public interface AccountService4Movie {
 
-    UserBasic getUserBasicInfoById(Long userId);
+    String getUsernameById(Long userId);
 }
