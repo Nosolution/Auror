@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.bl.scene;
 
+import org.seec.muggle.auror.entity.order.Ticket4Scene;
 import org.seec.muggle.auror.po.TicketPO;
 
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface OrderService4Scene {
-    List<TicketPO> getTicketsBySceneId(Long sceneId);
+    List<Ticket4Scene> getTicketsBySceneId(Long sceneId);
 }

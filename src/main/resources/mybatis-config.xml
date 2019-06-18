@@ -8,7 +8,7 @@
         <!--        <typeAlias type="org.seec.muggle.auror.poe" alias="Role"/>-->
         <!--        <typeAlias type="org.seec.muggle.auror.pomission" alias="Permission"/>-->
         <!--        <typeAlias type="org.seec.muggle.auror.poie" alias="Movie"/>-->
-        <!--        <typeAlias type="org.seec.muggle.auror.pooriteRecord" alias="FavorRecordPO"/>-->
+        <!--        <typeAlias type="org.seec.muggle.auror.pooriteRecord" alias="MovieMarkPO"/>-->
         <!--        <typeAlias type="org.seec.muggle.auror.porRole" alias="UserRole"/>-->
         <!--        <typeAlias type="org.seec.muggle.auror.poePermission" alias="RolePermission"/>-->
         <package name="org.seec.muggle.auror.po"/>

@@ -13,6 +13,7 @@ import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
 import org.seec.muggle.auror.dao.order.OrderMapper;
 import org.seec.muggle.auror.entity.member.Member;
 import org.seec.muggle.auror.entity.movie.Movie4Order;
+import org.seec.muggle.auror.entity.order.Ticket4Scene;
 import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.entity.strategy.Coupon4Order;
 import org.seec.muggle.auror.entity.strategy.MemberStrategy4Order;
@@ -250,8 +251,21 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     }
 
     @Override
-    public List<TicketPO> getTicketsBySceneId(Long sceneId) {
-        return orderMapper.getSeatsBySceneId(sceneId);
+    public List<Ticket4Scene> getTicketsBySceneId(Long sceneId) {
+        List<TicketPO> ticketPOS = orderMapper.getSeatsBySceneId(sceneId);
+        List<Ticket4Scene> ticket4Scenes = new ArrayList<>();
+        if(ticketPOS.size() == 0){
+            return ticket4Scenes;
+        }
+        else{
+            ticketPOS.stream().forEach(o->{
+                Ticket4Scene ticket4Scene = new Ticket4Scene();
+                ticket4Scene.setColumn(o.getColumn());
+                ticket4Scene.setRow(o.getRow());
+                ticket4Scenes.add(ticket4Scene);
+            });
+        }
+        return ticket4Scenes;
     }
 
     @Override

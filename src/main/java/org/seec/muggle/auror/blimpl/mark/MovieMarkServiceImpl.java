@@ -8,7 +8,7 @@ import org.seec.muggle.auror.bl.scene.SceneService4Mark;
 import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.exception.BaseException;
-import org.seec.muggle.auror.po.FavorRecordPO;
+import org.seec.muggle.auror.po.MovieMarkPO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
@@ -68,21 +68,21 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
      **/
     @Override
     public FavorNumVO[] getFavorsByDate(Long movieId) {
-        List<FavorRecordPO> exactFavors = movieMarkMapper.getFavorByMovieId(movieId);
+        List<MovieMarkPO> exactFavors = movieMarkMapper.getFavorByMovieId(movieId);
         if (exactFavors.size() == 0)
             return new FavorNumVO[0];
         //库里的数据精度过高导致下标获取异常，这边统一做一次数据粗化
-        List<FavorRecordPO> favors = new ArrayList<>();
+        List<MovieMarkPO> favors = new ArrayList<>();
         for (int i = 0; i < exactFavors.size(); i++) {
-            FavorRecordPO favorRecordPO = exactFavors.get(i);
-            String currentDate = DateUtil.dateToString(favorRecordPO.getTime());
-            favorRecordPO.setTime(DateUtil.stringToDate(currentDate));
-            favors.add(favorRecordPO);
+            MovieMarkPO movieMarkPO = exactFavors.get(i);
+            String currentDate = DateUtil.dateToString(movieMarkPO.getTime());
+            movieMarkPO.setTime(DateUtil.stringToDate(currentDate));
+            favors.add(movieMarkPO);
         }
 
 
-        Date minDate = favors.stream().min(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();
-        Date maxDate = favors.stream().max(Comparator.comparing(FavorRecordPO::getTime)).get().getTime();
+        Date minDate = favors.stream().min(Comparator.comparing(MovieMarkPO::getTime)).get().getTime();
+        Date maxDate = favors.stream().max(Comparator.comparing(MovieMarkPO::getTime)).get().getTime();
         List<Date> dates = Stream.iterate(minDate, date -> ForwardDate(date))
                 .limit((long) ((ForwardDate(maxDate).getTime() - minDate.getTime()) / 1000 / 60 / 60 / 24)).collect(Collectors.toList());
         List<FavorNumVO> vos = new ArrayList<>();

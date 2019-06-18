@@ -46,7 +46,9 @@ public interface OrderMapper {
 
     Integer getAllPayment(@Param("userId") Long userId);
 
-    int finishOrder(@Param("orderId") Long orderId, @Param("cost") Integer paymeny, @Param("method") Integer method);
+
+    int finishOrder(@Param("orderId")Long orderId,@Param("cost")Integer payment,@Param("method")Integer method);
+
 
     List<OrderPO> getAllOrdersByUser(Long userId);
 }

@@ -12,7 +12,7 @@ import java.util.Date;
  * @since 2019/4/6
  */
 @Data
-public class FavorRecordPO {
+public class MovieMarkPO {
     private Long movieId;
     private Long userId;
     private Date time;

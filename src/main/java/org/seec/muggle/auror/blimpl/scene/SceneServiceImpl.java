@@ -6,6 +6,7 @@ import org.seec.muggle.auror.bl.movie.SceneService4Movie;
 import org.seec.muggle.auror.bl.scene.*;
 import org.seec.muggle.auror.dao.scene.SceneMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Scene;
+import org.seec.muggle.auror.entity.order.Ticket4Scene;
 import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.Hall;
@@ -189,8 +190,8 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
 
     private Integer[][] loadSeats(ScenePO scene, Hall hall) {
         Integer[][] seats = hall.getSeats();
-        List<TicketPO> ticketPOS = orderService4Scene.getTicketsBySceneId(scene.getId());
-        for (TicketPO ticketPO : ticketPOS) {
+        List<Ticket4Scene> ticketPOS = orderService4Scene.getTicketsBySceneId(scene.getId());
+        for (Ticket4Scene ticketPO : ticketPOS) {
             seats[ticketPO.getRow()][ticketPO.getColumn()] = 2;
         }
         return seats;
