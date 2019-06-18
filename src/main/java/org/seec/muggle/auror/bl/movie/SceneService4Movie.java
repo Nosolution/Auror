@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.scene;
+package org.seec.muggle.auror.bl.movie;
 
 import java.sql.Timestamp;
 import java.util.List;

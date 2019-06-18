@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.account;
+package org.seec.muggle.auror.bl.movie;
 
 /**
  * @Description account模块为movie模块提供的接口

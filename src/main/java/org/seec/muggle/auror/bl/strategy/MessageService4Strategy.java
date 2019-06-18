@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.bl.message;
+package org.seec.muggle.auror.bl.strategy;
 
 import org.seec.muggle.auror.po.Message;
 

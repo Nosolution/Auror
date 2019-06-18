@@ -1,11 +1,6 @@
 package org.seec.muggle.auror.blimpl.movie;
 
-import org.seec.muggle.auror.bl.account.AccountService4Movie;
-import org.seec.muggle.auror.bl.movie.MovieService;
-import org.seec.muggle.auror.bl.movie.MovieService4Mark;
-import org.seec.muggle.auror.bl.movie.MovieService4Order;
-import org.seec.muggle.auror.bl.movie.MovieService4Scene;
-import org.seec.muggle.auror.bl.scene.SceneService4Movie;
+import org.seec.muggle.auror.bl.movie.*;
 import org.seec.muggle.auror.dao.movie.MovieMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.entity.movie.Movie4Order;
