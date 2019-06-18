@@ -31,15 +31,15 @@ public class UnfinishedOrderVO {
 
     public UnfinishedOrderVO(OrderPO orderPO, Scene scene, String hallName, List<TicketPO> ticketPOS, List<AvailableCouponsVO> couponPOS, String movieName) {
         this.orderId = orderPO.getId();
-        this.movieName =movieName;
+        this.movieName = movieName;
         this.hallName = hallName;
         this.ticketNum = ticketPOS.size();
         this.cost = scene.getPrice() * ticketPOS.size();
         this.date = DateUtil.dateToString(scene.getDate());
         this.interval = new IntervalVO(scene.getStartTime(), scene.getEndTime());
         this.selectedSeats = new UnfinishedOrderSeatsVO[ticketPOS.size()];
-        for(int i =0;i<selectedSeats.length;i++){
-            selectedSeats[i] = new UnfinishedOrderSeatsVO(ticketPOS.get(i).getRow(),ticketPOS.get(i).getColumn());
+        for (int i = 0; i < selectedSeats.length; i++) {
+            selectedSeats[i] = new UnfinishedOrderSeatsVO(ticketPOS.get(i).getRow(), ticketPOS.get(i).getColumn());
         }
         this.availableCoupons = couponPOS.toArray(new AvailableCouponsVO[couponPOS.size()]);
         this.initTime = orderPO.getCreateTime();

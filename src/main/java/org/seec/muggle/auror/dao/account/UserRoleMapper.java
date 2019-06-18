@@ -19,7 +19,7 @@ public interface UserRoleMapper extends BaseOperation<UserRole> {
 
     int insertBatch(List<UserRole> items);
 
-    int deleteByUserId(@Param("userId")Long userId);
+    int deleteByUserId(@Param("userId") Long userId);
 
     List<Long> getAllManagerId();
 

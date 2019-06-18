@@ -10,20 +10,20 @@ import org.seec.muggle.auror.vo.movie.statistics.AttendenceVO;
  **/
 public interface StatisticsService {
     /**
+     * @return org.seec.muggle.auror.vo.movie.statistics.AttendenceVO[]
      * @Author jyh
      * @Description // 获取某部电影的的上座率，以天区分
      * @Date 20:26 2019/6/6
      * @Param [movieId]
-     * @return org.seec.muggle.auror.vo.movie.statistics.AttendenceVO[]
      **/
     AttendenceVO[] getBoxOfficeRate(Long movieId);
 
     /**
+     * @return java.lang.Integer
      * @Author jyh
      * @Description //获取某部电影的累计票房
      * @Date 22:01 2019/6/6
      * @Param [movieId]
-     * @return java.lang.Integer
      **/
     Integer getBoxOffice(Long movieId);
 }

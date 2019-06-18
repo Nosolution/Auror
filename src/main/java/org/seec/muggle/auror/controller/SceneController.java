@@ -47,7 +47,7 @@ public class SceneController {
     }
 
     @PostMapping(value = "/order/seat/selection")
-    public ResponseEntity<?> seatSelection( @RequestBody SeatsSelectionForm form,HttpServletRequest request) {
+    public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form, HttpServletRequest request) {
         Long id = getIdFromRequest(request);
         SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(), id, form.getSelectedSeats());
         return ResponseEntity.ok(vo);

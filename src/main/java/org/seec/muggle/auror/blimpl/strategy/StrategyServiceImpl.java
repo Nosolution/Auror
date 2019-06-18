@@ -21,7 +21,6 @@ import org.seec.muggle.auror.vo.strategy.event.EventVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVarietyVO;
 import org.seec.muggle.auror.vo.strategy.member.MemberVaryForm;
 import org.seec.muggle.auror.vo.strategy.refund.RefundStrategyVO;
-import org.seec.muggle.auror.vo.user.coupon.UserCouponsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -127,16 +126,16 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         events.stream()
                 .sorted(Comparator.comparing(EventPO::getStartTime).reversed())
                 .forEach(o -> {
-            EventVO vo = new EventVO(o, strategyMapper.getCouponById(o.getCouponId()), strategyMapper.getMoviesByEventId(o.getId()));
-            res.add(vo);
-        });
+                    EventVO vo = new EventVO(o, strategyMapper.getCouponById(o.getCouponId()), strategyMapper.getMoviesByEventId(o.getId()));
+                    res.add(vo);
+                });
         return res.toArray(new EventVO[res.size()]);
     }
 
     @Override
     public MemberStrategy4Member getMemberStrategyById(Long id) {
-       MemberStrategyPO po = strategyMapper.selectMemberStrategyById(id);
-       return new MemberStrategy4Member(po);
+        MemberStrategyPO po = strategyMapper.selectMemberStrategyById(id);
+        return new MemberStrategy4Member(po);
     }
 
     @Override
@@ -237,9 +236,9 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
 
     @Override
     public List<MemberStrategy4Order> selectAllMemberStrategy() {
-        List<MemberStrategyPO>  pos = strategyMapper.selectAllMemberStrategies().stream().sorted(Comparator.comparing(MemberStrategyPO::getThreshold)).collect(Collectors.toList());
-        List<MemberStrategy4Order> memberStrategy4Orders =new ArrayList<>();
-        for(int i =0;i<pos.size();i++){
+        List<MemberStrategyPO> pos = strategyMapper.selectAllMemberStrategies().stream().sorted(Comparator.comparing(MemberStrategyPO::getThreshold)).collect(Collectors.toList());
+        List<MemberStrategy4Order> memberStrategy4Orders = new ArrayList<>();
+        for (int i = 0; i < pos.size(); i++) {
             MemberStrategy4Order order = new MemberStrategy4Order(pos.get(i));
             memberStrategy4Orders.add(order);
         }
@@ -259,11 +258,11 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     }
 
     /**
+     * @return java.util.List<org.seec.muggle.auror.po.CouponPO>
      * @Author jyh
      * @Description //TODO 优惠活动时间判断
      * @Date 8:53 2019/6/13
      * @Param [movieId, userId]
-     * @return java.util.List<org.seec.muggle.auror.po.CouponPO>
      **/
     @Override
     public List<Coupon4Order> sendCoupons(Long movieId, Long userId) {

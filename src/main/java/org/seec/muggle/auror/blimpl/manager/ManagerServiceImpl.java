@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blImpl.manager;
+package org.seec.muggle.auror.blimpl.manager;
 
 import org.seec.muggle.auror.bl.manager.ManagerService;
 import org.seec.muggle.auror.dao.account.RoleMapper;

@@ -71,7 +71,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     @Override
     public Integer payByMember(Long userId, Integer cost) {
         MemberPO member = memberMapper.getMemberByUserId(userId);
-        MemberStrategyPO strategyPO =new MemberStrategyPO(strategyService4Member.getMemberStrategyById(member.getStrategyId()));
+        MemberStrategyPO strategyPO = new MemberStrategyPO(strategyService4Member.getMemberStrategyById(member.getStrategyId()));
         if (member.getCredit() < cost) {
             return -1;
         } else {

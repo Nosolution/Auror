@@ -18,7 +18,8 @@ public class LoginVO {
         this.role = role.toString();
         this.token = token;
     }
-    public LoginVO(){
+
+    public LoginVO() {
 
     }
 

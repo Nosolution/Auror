@@ -22,13 +22,13 @@ public interface OrderMapper {
 
     int cancelOrder(@Param("orderId") Long orderId);
 
-    int deleteSeat(@Param("orderId")Long orderId);
+    int deleteSeat(@Param("orderId") Long orderId);
 
     OrderPO getOrderById(@Param("orderId") Long orderId);
 
-    Integer TicketNumsBySceneId(@Param("sceneId")Long sceneId);
+    Integer TicketNumsBySceneId(@Param("sceneId") Long sceneId);
 
-    int insertMember (@Param("strategyId")Long strategyId,@Param("userId")Long userId,@Param("cost")Integer threshold);
+    int insertMember(@Param("strategyId") Long strategyId, @Param("userId") Long userId, @Param("cost") Integer threshold);
 
     int insertRecharge(RechargePO po);
 
@@ -44,9 +44,9 @@ public interface OrderMapper {
 
     List<RechargePO> selectRechargesById(Long userId);
 
-    Integer getAllPayment(@Param("userId")Long userId);
+    Integer getAllPayment(@Param("userId") Long userId);
 
-    int finishOrder(@Param("orderId")Long orderId,@Param("cost")Integer paymeny,@Param("method")Integer method);
+    int finishOrder(@Param("orderId") Long orderId, @Param("cost") Integer paymeny, @Param("method") Integer method);
 
     List<OrderPO> getAllOrdersByUser(Long userId);
 }

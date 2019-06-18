@@ -16,6 +16,6 @@ public class MoviePopularVO {
     String movieType;
     Integer movieYear;
     Integer movieLength;
-    String  movieDescription;
+    String movieDescription;
 
 }

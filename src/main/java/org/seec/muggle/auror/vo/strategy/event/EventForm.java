@@ -15,7 +15,7 @@ public class EventForm {
     Long eventId;
     String eventName;
     String eventDescription;
-    Long[] moviesIncluded ;
+    Long[] moviesIncluded;
     Timestamp startTime;
     Timestamp endTime;
     String couponName;

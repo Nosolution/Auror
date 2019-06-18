@@ -10,11 +10,11 @@ import org.seec.muggle.auror.po.Message;
  **/
 public interface MessageService4Scene {
     /**
+     * @return void
      * @Author jyh
      * @Description //提供给SceneService的接口，用于提示用户想看电影已经上映
      * @Date 19:59 2019/6/12
      * @Param [message]
-     * @return void
      **/
     public void sendMovieOnSceneRemind(Message message);
 }

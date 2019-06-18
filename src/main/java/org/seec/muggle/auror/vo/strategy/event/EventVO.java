@@ -18,7 +18,7 @@ public class EventVO {
     Long eventId;
     String eventName;
     String eventDescription;
-    Long[] moviesIncluded ;
+    Long[] moviesIncluded;
     String startTime;
     String endTime;
     String couponName;
@@ -28,7 +28,7 @@ public class EventVO {
     Integer couponThreshold;
     Integer couponExpiration;
 
-    public EventVO(EventPO eventPO, CouponPO couponPO, List<Long> movies){
+    public EventVO(EventPO eventPO, CouponPO couponPO, List<Long> movies) {
         this.eventId = eventPO.getId();
         this.eventName = eventPO.getEventName();
         this.eventDescription = eventPO.getDescription();

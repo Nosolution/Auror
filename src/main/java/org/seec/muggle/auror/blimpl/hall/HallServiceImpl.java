@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blImpl.hall;
+package org.seec.muggle.auror.blimpl.hall;
 
 import org.seec.muggle.auror.bl.hall.HallService;
 import org.seec.muggle.auror.bl.hall.HallService4Order;

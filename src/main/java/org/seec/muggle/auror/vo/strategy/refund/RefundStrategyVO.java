@@ -15,7 +15,7 @@ public class RefundStrategyVO {
     Double refundRate;
 
 
-    public RefundStrategyVO(RefundPO po){
+    public RefundStrategyVO(RefundPO po) {
         this.latestRefundTimeBeforePaying = po.getBeforeTime();
         this.refundRate = po.getRate();
     }

@@ -3,8 +3,6 @@ package org.seec.muggle.auror.vo.user.coupon;
 import lombok.Data;
 import org.seec.muggle.auror.entity.strategy.Coupon4Account;
 
-import java.util.Date;
-
 /**
  * @Description TODO
  * @Author 233loser

@@ -10,7 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class VipPurchaseForm {
-    Long  memberStrategyId;//会员卡种类
+    Long memberStrategyId;//会员卡种类
     Integer cost;
 
 }

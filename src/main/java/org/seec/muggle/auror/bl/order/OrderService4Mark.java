@@ -11,11 +11,11 @@ import java.util.List;
 public interface OrderService4Mark {
 
     /**
+     * @return boolean
      * @Author jyh
      * @Description //判断用户是否看过某电影
      * @Date 20:19 2019/6/17
      * @Param [userId, sceneIds]
-     * @return boolean
      **/
     boolean hasSeen(Long userId, List<Long> sceneIds);
 

@@ -4,9 +4,6 @@ import lombok.Data;
 import org.seec.muggle.auror.po.Hall;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.util.DateUtil;
-import org.seec.muggle.auror.vo.IntervalVO;
-
-import java.util.Date;
 
 /**
  * @Description TODO
@@ -22,13 +19,13 @@ public class MovieSceneInfoVO {
     String date;
     String interval;
     Integer[][] seats;
-    
+
     public MovieSceneInfoVO(ScenePO po, Hall hall, Integer[][] seats) {
         this.sceneId = po.getId();
         this.price = po.getPrice();
         this.hallName = hall.getName();
         this.date = DateUtil.dateToString(po.getDate());
-        interval = DateUtil.timestampToTimeString(po.getStartTime())+"-"+DateUtil.timestampToTimeString( po.getEndTime());
+        interval = DateUtil.timestampToTimeString(po.getStartTime()) + "-" + DateUtil.timestampToTimeString(po.getEndTime());
         this.seats = seats;
     }
 

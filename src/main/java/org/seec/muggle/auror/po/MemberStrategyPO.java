@@ -27,11 +27,12 @@ public class MemberStrategyPO {
         this.threshold = threshold;
         this.rate = rate;
     }
-    public MemberStrategyPO(MemberStrategy4Member memberStrategy4Member){
+
+    public MemberStrategyPO(MemberStrategy4Member memberStrategy4Member) {
         this.id = memberStrategy4Member.getId();
         this.rate = memberStrategy4Member.getRate();
         this.threshold = memberStrategy4Member.getThreshold();
-        this.url  = memberStrategy4Member.getUrl();
+        this.url = memberStrategy4Member.getUrl();
         this.name = memberStrategy4Member.getName();
 
     }

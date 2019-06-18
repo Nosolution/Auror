@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.security;
 
 import org.apache.shiro.authc.AuthenticationToken;
-import org.springframework.stereotype.Component;
 
 /**
  * 符合jwt规范的token类，实现shiro的token接口以使用shiro的服务

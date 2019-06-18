@@ -68,10 +68,11 @@ public class MemberVO {
     }
 
 
-    public MemberVO(){
+    public MemberVO() {
 
     }
-    public MemberVO(MemberPO memberPO, MemberStrategyPO strategyPO){
+
+    public MemberVO(MemberPO memberPO, MemberStrategyPO strategyPO) {
         this.memberCredit = memberPO.getCredit();
         this.memberDiscount = strategyPO.getRate();
         this.memberId = memberPO.getId();

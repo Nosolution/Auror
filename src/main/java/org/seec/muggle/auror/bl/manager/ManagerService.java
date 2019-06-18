@@ -11,29 +11,29 @@ import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
 public interface ManagerService {
 
     /**
+     * @return void
      * @Author jyh
      * @Description //新增一个管理员
      * @Date 19:42 2019/6/17
      * @Param [username, password]
-     * @return void
      **/
     void addManager(String username, String password);
 
     /**
+     * @return void
      * @Author jyh
      * @Description //删除管理员
      * @Date 19:43 2019/6/17
      * @Param [managerId]
-     * @return void
      **/
     void deleteManager(Long managerId);
 
     /**
+     * @return org.seec.muggle.auror.vo.personnel.ManagerInfoVO[]
      * @Author jyh
      * @Description //获取所有管理员
      * @Date 19:43 2019/6/17
      * @Param []
-     * @return org.seec.muggle.auror.vo.personnel.ManagerInfoVO[]
      **/
     ManagerInfoVO[] getManagers();
 }

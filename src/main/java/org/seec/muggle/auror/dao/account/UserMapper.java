@@ -20,8 +20,8 @@ public interface UserMapper extends BaseOperation<User> {
      */
     public User getUserByName(@Param("username") String username);
 
-    public int deleteUserById(@Param("userId")Long userId);
+    public int deleteUserById(@Param("userId") Long userId);
 
-    public User getUserById(@Param("userId")Long userId);
+    public User getUserById(@Param("userId") Long userId);
 
 }

@@ -57,19 +57,19 @@ public class DateUtil {
         Instant instant = year.toInstant();
         ZoneId zoneId = ZoneId.systemDefault();
         LocalDate lyear = instant.atZone(zoneId).toLocalDate();
-        LocalDateTime localDateTime = LocalDateTime.of(lyear,time);
+        LocalDateTime localDateTime = LocalDateTime.of(lyear, time);
 
         return Timestamp.valueOf(localDateTime);
 
     }
 
-    public static String timestampToTimeString(Timestamp input){
+    public static String timestampToTimeString(Timestamp input) {
         LocalDateTime ldt = input.toLocalDateTime();
         DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
         return df.format(ldt);
     }
 
-    public static String timestampToYear(Timestamp input){
+    public static String timestampToYear(Timestamp input) {
         LocalDateTime ldt = input.toLocalDateTime();
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return df.format(ldt);

@@ -8,9 +8,10 @@ public class DirectorVO {
     String url;
 
 
-    public DirectorVO(){
+    public DirectorVO() {
 
     }
+
     public DirectorVO(String name, String url) {
         this.name = name;
         this.url = url;

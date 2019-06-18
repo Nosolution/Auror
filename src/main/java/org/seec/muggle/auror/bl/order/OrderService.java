@@ -19,84 +19,84 @@ import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 public interface OrderService {
 
     /**
+     * @return org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO
      * @Author jyh
      * @Description //生成订单并锁座
      * @Date 12:03 2019/6/5
      * @Param [sceneId, userId, selectedSeats]
-     * @return org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO
      **/
     SeatsSelectionVO selectSeats(Long sceneId, Long userId, SelectionForm[] selectedSeats);
 
     /**
+     * @return void
      * @Author jyh
      * @Description //取消订单，将订单状态设置为2
      * @Date 13:13 2019/6/5
      * @Param [orderId]
-     * @return void
      **/
     void cancelOrder(Long orderId);
 
     /**
+     * @return java.lang.Double
      * @Author jyh
      * @Description //订单退款，只有符合退款策略的才能退款
      * @Date 13:14 2019/6/6
      * @Param [orderId]
-     * @return java.lang.Double
      **/
     Double refundOrder(Long orderId);
 
     /**
+     * @return void
      * @Author jyh
      * @Description //购买会员卡
      * @Date 15:14 2019/6/6
      * @Param [userId, cost, memberId]
-     * @return void
      **/
     void purchaseMember(Long userId, Integer cost, Long memberId);
 
     /**
+     * @return org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO
      * @Author jyh
      * @Description //获取用户未完成的订单
      * @Date 19:14 2019/6/7
      * @Param [orderId]
-     * @return org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO
      **/
     UnfinishedOrderVO checkUnfinishedOrder(Long orderId);
 
     /**
+     * @return org.seec.muggle.auror.vo.order.recharge.RechargeVO
      * @Author jyh
      * @Description //用户充值，充值满一定金额会员卡会自动升级，如果升级
      * isUpgraded = true
      * @Date 19:45 2019/6/7
      * @Param [form, userId]
-     * @return org.seec.muggle.auror.vo.order.recharge.RechargeVO
      **/
     RechargeVO rechargeMember(RechargeForm form, Long userId);
 
     /**
+     * @return org.seec.muggle.auror.vo.order.thirdparty.ThirdPartyPaymentVO
      * @Author jyh
      * @Description //使用第三方支付，默认完成
      * @Date 20:16 2019/6/7
      * @Param [form]
-     * @return org.seec.muggle.auror.vo.order.thirdparty.ThirdPartyPaymentVO
      **/
     ThirdPartyPaymentVO finishByThird_party(PaymentForm form);
 
     /**
+     * @return org.seec.muggle.auror.vo.order.member.MemberPaymentVO
      * @Author jyh
      * @Description //TODO
      * @Date 20:16 2019/6/17
      * @Param [form]
-     * @return org.seec.muggle.auror.vo.order.member.MemberPaymentVO
      **/
     MemberPaymentVO finishByMember(PaymentForm form);
 
     /**
+     * @return org.seec.muggle.auror.vo.order.ticket.TicketDetailVO[]
      * @Author jyh
      * @Description //获取用户所有订单
      * @Date 21:17 2019/6/7
      * @Param [userId]
-     * @return org.seec.muggle.auror.vo.order.ticket.TicketDetailVO[]
      **/
     TicketDetailVO[] getAllOrders(Long userId);
 }

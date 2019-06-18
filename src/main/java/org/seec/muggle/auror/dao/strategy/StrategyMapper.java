@@ -30,11 +30,11 @@ public interface StrategyMapper {
 
     int insertCoupon(CouponPO po);
 
-    int insertEventMovie(@Param("eventId")Long eventId,@Param("movieId")Long movieId);
+    int insertEventMovie(@Param("eventId") Long eventId, @Param("movieId") Long movieId);
 
     int deleteEvent(@Param("eventId") Long eventId);
 
-    int deleteEventMovie(@Param("eventId")Long eventId);
+    int deleteEventMovie(@Param("eventId") Long eventId);
 
     List<EventPO> getEvents();
 
@@ -60,5 +60,5 @@ public interface StrategyMapper {
 
     int insertUserCoupon(UserCouponPO po);
 
-    int deleteCouponUser(@Param("userId")Long userId,@Param("couponId")Long couponId);
+    int deleteCouponUser(@Param("userId") Long userId, @Param("couponId") Long couponId);
 }

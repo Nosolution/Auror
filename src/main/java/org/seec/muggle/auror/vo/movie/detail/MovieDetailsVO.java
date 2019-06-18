@@ -67,7 +67,7 @@ public class MovieDetailsVO {
     }
 
 
-    public MovieDetailsVO(MoviePO po, int status,double score){
+    public MovieDetailsVO(MoviePO po, int status, double score) {
         this.status = status;
         this.score = score;
         this.country = po.getCountry();

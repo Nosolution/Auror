@@ -1,11 +1,11 @@
-package org.seec.muggle.auror.blImpl.account;
+package org.seec.muggle.auror.blimpl.account;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.seec.muggle.auror.bl.account.AccountService;
 import org.seec.muggle.auror.bl.account.AccountService4Message;
 import org.seec.muggle.auror.bl.account.AccountService4Movie;
-import org.seec.muggle.auror.bl.order.OrderService4Account;
 import org.seec.muggle.auror.bl.member.MemberService4Account;
+import org.seec.muggle.auror.bl.order.OrderService4Account;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Account;
 import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
@@ -136,7 +136,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
     public UserCouponsVO[] getCoupons(Long userId) {
         Coupon4Account[] coupon4Accounts = strategyService4Account.getCouponsByUser(userId);
         UserCouponsVO[] vos = new UserCouponsVO[coupon4Accounts.length];
-        for(int i =0;i<coupon4Accounts.length;i++){
+        for (int i = 0; i < coupon4Accounts.length; i++) {
             vos[i] = new UserCouponsVO(coupon4Accounts[i]);
         }
 

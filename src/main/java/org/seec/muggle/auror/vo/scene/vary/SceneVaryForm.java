@@ -1,10 +1,8 @@
 package org.seec.muggle.auror.vo.scene.vary;
 
 import lombok.Data;
-import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 /**
  * @Description TODO
