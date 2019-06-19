@@ -1,11 +1,8 @@
-package org.seec.muggle.auror.blImpl.order;
+package org.seec.muggle.auror.bl.order;
 
 import org.seec.muggle.auror.bl.hall.HallService4Order;
 import org.seec.muggle.auror.bl.member.MemberService4Order;
 import org.seec.muggle.auror.bl.movie.MovieService4Order;
-import org.seec.muggle.auror.bl.order.OrderService4Account;
-import org.seec.muggle.auror.bl.order.OrderService4Mark;
-import org.seec.muggle.auror.bl.order.OrderService4Statistics;
 import org.seec.muggle.auror.bl.scene.OrderService4Scene;
 import org.seec.muggle.auror.bl.scene.SceneService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
@@ -174,7 +171,8 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Override
     public Integer getBoxOffice(Long movieId) {
-        return orderMapper.sumBoxOffice(movieId);
+        Optional<Integer> res = Optional.ofNullable(orderMapper.sumBoxOffice(movieId));
+        return res.orElse(0);
     }
 
     @Override

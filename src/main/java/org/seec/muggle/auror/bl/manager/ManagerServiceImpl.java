@@ -3,10 +3,8 @@ package org.seec.muggle.auror.bl.manager;
 import org.seec.muggle.auror.dao.account.RoleMapper;
 import org.seec.muggle.auror.dao.account.UserMapper;
 import org.seec.muggle.auror.dao.account.UserRoleMapper;
-import org.seec.muggle.auror.enums.RoleEnum;
-import org.seec.muggle.auror.po.Role;
+import org.seec.muggle.auror.dao.manager.ManagerMapper;
 import org.seec.muggle.auror.po.User;
-import org.seec.muggle.auror.po.UserRole;
 import org.seec.muggle.auror.service.manager.ManagerService;
 import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
 import org.slf4j.Logger;
@@ -16,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Description TODO
@@ -40,6 +36,9 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Autowired
+    private ManagerMapper managerMapper;
+
     @Override
     public void addManager(String username, String password) {
         insertNewMANAGER(username, password);
@@ -48,31 +47,46 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void deleteManager(Long managerId) {
-        userRoleMapper.deleteByUserId(managerId);
-        userMapper.deleteUserById(managerId);
+        managerMapper.deleteRole(managerId);
+        managerMapper.deleteManager(managerId);
+//        userRoleMapper.deleteByUserId(manageId);
+//        userMapper.deleteUserById(manageId);
     }
 
     @Override
     public ManagerInfoVO[] getManagers() {
-        List<Long> managerIds = userRoleMapper.getAllManagerId();
-        List<ManagerInfoVO> vos = new ArrayList<>();
-        managerIds.forEach(o -> {
-            User user = userMapper.getUserById(o);
-            ManagerInfoVO vo = new ManagerInfoVO();
-            vo.setManagerId(o);
-            vo.setUsername(user.getUsername());
-            vo.setPassword(user.getPassword());
-            vos.add(vo);
-        });
-        return vos.toArray(new ManagerInfoVO[vos.size()]);
+//        List<Long> managerIds = userRoleMapper.getAllManagerId();
+//        List<ManagerInfoVO> vos = new ArrayList<>();
+//        managerIds.forEach(o -> {
+//            User user = userMapper.getUserById(o);
+//            ManagerInfoVO vo = new ManagerInfoVO();
+//            vo.setManageId(o);
+//            vo.setUsername(user.getUsername());
+//            vo.setPassword(user.getPassword());
+//            vos.add(vo);
+//        });
+//        return vos.toArray(new ManagerInfoVO[vos.size()]);
+        return managerMapper.getManagers()
+                .stream()
+                .filter(o -> !managerMapper.getAdminIds().contains(o.getId()))
+                .map(o -> {
+                    ManagerInfoVO vo = new ManagerInfoVO();
+                    vo.setManagerId(o.getId());
+                    vo.setUsername(o.getUsername());
+                    vo.setPassword(o.getPassword());
+                    return vo;
+                }).toArray(ManagerInfoVO[]::new);
     }
 
     @Transactional
     void insertNewMANAGER(String username, String password) {
         User user = User.generateNerUser(username, password);
-        userMapper.insert(user);
+        managerMapper.addNewManager(user);
+//        userMapper.insert(user);
 //        user被保存后会产生id
-        Role customer = roleMapper.getRoleByName(RoleEnum.MOVIE_MANAGER.name().toLowerCase());
-        userRoleMapper.insert(new UserRole(user.getId(), customer.getId()));
+//        Role manager = roleMapper.getRoleByName(RoleEnum.MOVIE_MANAGER.name().toLowerCase());
+        managerMapper.addRole(user.getId());
+//        userRoleMapper.insert(new UserRole(user.getId(), manager.getId()));
+
     }
 }

@@ -24,7 +24,7 @@ public interface ManagerService {
      * @Author jyh
      * @Description //删除管理员
      * @Date 19:43 2019/6/17
-     * @Param [managerId]
+     * @Param [manageId]
      **/
     void deleteManager(Long managerId);
 

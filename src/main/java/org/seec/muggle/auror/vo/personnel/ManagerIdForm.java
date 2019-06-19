@@ -10,6 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class ManagerIdForm {
-    Long managerId;
+    Long manageId;
 
 }

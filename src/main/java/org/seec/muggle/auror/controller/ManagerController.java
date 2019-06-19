@@ -30,7 +30,7 @@ public class ManagerController {
 
     @DeleteMapping(value = "/manager")
     public ResponseEntity<?> removeManager(@RequestBody ManagerIdForm form) {
-        managerService.deleteManager(form.getManagerId());
+        managerService.deleteManager(form.getManageId());
         return ResponseEntity.ok(null);
     }
 
