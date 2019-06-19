@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.controller;
 
-import org.seec.muggle.auror.bl.order.OrderService;
+import org.seec.muggle.auror.service.order.OrderService;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.order.cancellation.CancellationForm;
 import org.seec.muggle.auror.vo.order.member.MemberPaymentVO;

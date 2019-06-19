@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.controller;
 
-import org.seec.muggle.auror.bl.manager.ManagerService;
+import org.seec.muggle.auror.service.manager.ManagerService;
 import org.seec.muggle.auror.vo.personnel.ManagerForm;
 import org.seec.muggle.auror.vo.personnel.ManagerIdForm;
 import org.springframework.beans.factory.annotation.Autowired;

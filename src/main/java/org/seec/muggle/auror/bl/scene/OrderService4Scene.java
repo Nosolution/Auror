@@ -1,7 +1,6 @@
 package org.seec.muggle.auror.bl.scene;
 
 import org.seec.muggle.auror.entity.order.Ticket4Scene;
-import org.seec.muggle.auror.po.TicketPO;
 
 import java.util.List;
 

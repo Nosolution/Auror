@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.controller;
 
-import org.seec.muggle.auror.bl.hall.HallService;
+import org.seec.muggle.auror.service.hall.HallService;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.seec.muggle.auror.vo.hall.single.SingleHallForm;
 import org.springframework.beans.factory.annotation.Autowired;
