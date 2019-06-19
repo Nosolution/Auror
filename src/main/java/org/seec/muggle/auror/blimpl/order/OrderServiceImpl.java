@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blimpl.order;
+package org.seec.muggle.auror.blImpl.order;
 
 import org.seec.muggle.auror.bl.hall.HallService4Order;
 import org.seec.muggle.auror.bl.member.MemberService4Order;
@@ -17,6 +17,7 @@ import org.seec.muggle.auror.entity.order.Ticket4Scene;
 import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.entity.strategy.Coupon4Order;
 import org.seec.muggle.auror.entity.strategy.MemberStrategy4Order;
+import org.seec.muggle.auror.entity.strategy.Refund4Order;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.OrderPO;
 import org.seec.muggle.auror.po.RechargePO;
@@ -125,7 +126,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
     @Override
     public Double refundOrder(Long orderId) {
         Integer cost = orderMapper.getOrderById(orderId).getCost();
-        RefundPO refundStrategy = strategyService4Order.getRefund();
+        Refund4Order refundStrategy = strategyService4Order.getRefund();
         Double amount = refundStrategy.getRate() * (double) cost;
         orderMapper.cancelOrder(orderId);
         orderMapper.deleteSeat(orderId);
@@ -349,7 +350,7 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                     List<TicketPO> ticketPOS = orderMapper.getSeatsById(o.getId());
                     Scene scene = sceneService4Order.getSceneById(o.getSceneId());
                     Movie4Order movie = movieService4Order.getMovieInfoByIdForOrder(o.getMovieId());
-                    RefundPO refundPO = strategyService4Order.getRefund();
+                    Refund4Order refundPO = strategyService4Order.getRefund();
                     String hallName = hallService4Order.getHallNameById(scene.getHallId());
                     int status = o.getStatus();
                     if (status == 1) { // 已支付

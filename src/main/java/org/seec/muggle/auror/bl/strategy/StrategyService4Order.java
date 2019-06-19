@@ -2,6 +2,7 @@ package org.seec.muggle.auror.bl.strategy;
 
 import org.seec.muggle.auror.entity.strategy.Coupon4Order;
 import org.seec.muggle.auror.entity.strategy.MemberStrategy4Order;
+import org.seec.muggle.auror.entity.strategy.Refund4Order;
 import org.seec.muggle.auror.po.RefundPO;
 import org.seec.muggle.auror.vo.order.member.CouponsForm;
 import org.seec.muggle.auror.vo.order.unfinished.AvailableCouponsVO;
@@ -22,7 +23,7 @@ public interface StrategyService4Order {
      * @Date 17:50 2019/6/5
      * @Param []
      **/
-    RefundPO getRefund();
+    Refund4Order getRefund();
 
     /**
      * @return java.util.List<org.seec.muggle.auror.vo.order.unfinished.AvailableCouponsVO>
@@ -52,7 +53,7 @@ public interface StrategyService4Order {
     Integer cutDownByCoupons(CouponsForm[] form, Long userId);
 
     /**
-     * @return java.util.List<org.seec.muggle.auror.po.CouponPO>
+     * @return java.util.List<org.seec.muggle.auror.entity.Coupon4Order>
      * @Author jyh
      * @Description //赠送优惠券
      * @Date 19：08 2019/6/7

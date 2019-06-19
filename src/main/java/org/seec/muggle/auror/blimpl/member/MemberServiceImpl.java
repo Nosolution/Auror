@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blimpl.member;
+package org.seec.muggle.auror.blImpl.member;
 
 import org.seec.muggle.auror.bl.member.MemberService;
 import org.seec.muggle.auror.bl.member.MemberService4Account;

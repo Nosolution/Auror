@@ -1,11 +1,8 @@
-package org.seec.muggle.auror.blimpl.strategy;
+package org.seec.muggle.auror.blImpl.strategy;
 
 import org.seec.muggle.auror.bl.strategy.*;
 import org.seec.muggle.auror.dao.strategy.StrategyMapper;
-import org.seec.muggle.auror.entity.strategy.Coupon4Account;
-import org.seec.muggle.auror.entity.strategy.Coupon4Order;
-import org.seec.muggle.auror.entity.strategy.MemberStrategy4Member;
-import org.seec.muggle.auror.entity.strategy.MemberStrategy4Order;
+import org.seec.muggle.auror.entity.strategy.*;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.util.DateUtil;
@@ -55,8 +52,12 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     }
 
     @Override
-    public RefundPO getRefund() {
-        return strategyMapper.getRefundStrategy().get(0);
+    public Refund4Order getRefund() {
+        RefundPO refundPO = strategyMapper.getRefundStrategy().get(0);
+        Refund4Order refund4Order = new Refund4Order();
+        refund4Order.setBeforeTime(refundPO.getBeforeTime());
+        refund4Order.setRate(refundPO.getRate());
+        return refund4Order;
     }
 
     @Override
@@ -256,7 +257,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     /**
      * @return java.util.List<org.seec.muggle.auror.po.CouponPO>
      * @Author jyh
-     * @Description //TODO 优惠活动时间判断
+     * @Description //
      * @Date 8:53 2019/6/13
      * @Param [movieId, userId]
      **/
