@@ -21,7 +21,7 @@ public class MemberStrategy4Member {
         this.id = po.getId();
         this.name = po.getName();
         this.url = po.getUrl();
-        this.threshold = po.getThreshold();
+        this.threshold = po.getPrice();
         this.rate = po.getRate();
     }
 }

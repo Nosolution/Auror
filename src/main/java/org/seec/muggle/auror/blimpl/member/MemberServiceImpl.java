@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blImpl.member;
+package org.seec.muggle.auror.blimpl.member;
 
 import org.seec.muggle.auror.bl.member.MemberService;
 import org.seec.muggle.auror.bl.member.MemberService4Account;
@@ -7,8 +7,8 @@ import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
 import org.seec.muggle.auror.dao.member.MemberMapper;
 import org.seec.muggle.auror.entity.member.Member;
 import org.seec.muggle.auror.entity.member.MemberAccount;
+import org.seec.muggle.auror.entity.strategy.MemberStrategy4Member;
 import org.seec.muggle.auror.po.MemberPO;
-import org.seec.muggle.auror.po.MemberStrategyPO;
 import org.seec.muggle.auror.vo.user.member.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +33,7 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
         if (member == null) {
             return null;
         } else {
-            MemberStrategyPO strategyPO = new MemberStrategyPO(strategyService4Member.getMemberStrategyById(member.getStrategyId()));
-            return new MemberVO(member, strategyPO);
+            return new MemberVO(member, strategyService4Member.getMemberStrategyById(member.getStrategyId()));
         }
 
     }
@@ -71,12 +70,12 @@ public class MemberServiceImpl implements MemberService, MemberService4Order, Me
     @Override
     public Integer payByMember(Long userId, Integer cost) {
         MemberPO member = memberMapper.getMemberByUserId(userId);
-        MemberStrategyPO strategyPO = new MemberStrategyPO(strategyService4Member.getMemberStrategyById(member.getStrategyId()));
+        MemberStrategy4Member strategy = strategyService4Member.getMemberStrategyById(member.getStrategyId());
         if (member.getCredit() < cost) {
             return -1;
         } else {
-            memberMapper.updateCredit(member.getCredit() - (int) (cost * strategyPO.getRate()), userId);
+            memberMapper.updateCredit(member.getCredit() - (int) (cost * strategy.getRate()), userId);
         }
-        return (int) (cost * strategyPO.getRate());
+        return (int) (cost * strategy.getRate());
     }
 }

@@ -14,6 +14,8 @@ import java.util.Date;
 @Data
 public class MovieMarkPO {
     private Long movieId;
+    //用户id
     private Long userId;
+    //标记的日期
     private Date time;
 }

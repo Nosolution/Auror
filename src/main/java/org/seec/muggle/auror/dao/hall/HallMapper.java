@@ -14,7 +14,7 @@ import java.util.List;
  **/
 @DaoMapper
 public interface HallMapper extends BaseOperation<HallPO> {
-//    int insertNewHall(@Param("hallName")String name,@Param("seats")String seats);
+//    int insertNewHall(@Param("hallName")String name,@Param("seatCount")String seatCount);
 
 //    HallPO getHallById(Long hallId);
 

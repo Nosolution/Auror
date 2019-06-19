@@ -1,8 +1,8 @@
 package org.seec.muggle.auror.vo.user.member;
 
 import lombok.Data;
+import org.seec.muggle.auror.entity.strategy.MemberStrategy4Member;
 import org.seec.muggle.auror.po.MemberPO;
-import org.seec.muggle.auror.po.MemberStrategyPO;
 
 /**
  * @Description TODO
@@ -72,7 +72,7 @@ public class MemberVO {
 
     }
 
-    public MemberVO(MemberPO memberPO, MemberStrategyPO strategyPO) {
+    public MemberVO(MemberPO memberPO, MemberStrategy4Member strategyPO) {
         this.memberCredit = memberPO.getCredit();
         this.memberDiscount = strategyPO.getRate();
         this.memberId = memberPO.getId();

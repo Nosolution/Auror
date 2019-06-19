@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.hall;
 
-import org.seec.muggle.auror.po.Hall;
+import org.seec.muggle.auror.entity.hall.Hall;
 
 /**
  * @Description hall模块为scene模块提供的接口

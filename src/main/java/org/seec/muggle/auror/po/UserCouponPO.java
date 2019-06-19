@@ -12,9 +12,14 @@ import java.util.Date;
  **/
 @Data
 public class UserCouponPO {
+    //用户优惠券记录id
     Long id;
+    //优惠券模板id
     Long couponId;
+    //用户id
     Long userId;
+    //有效开始日期
     Date start;
+    //有效结束日期
     Date end;
 }

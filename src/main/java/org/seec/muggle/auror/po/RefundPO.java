@@ -10,8 +10,11 @@ import lombok.Data;
  **/
 @Data
 public class RefundPO {
+    //在电影上映前多少小时可退款
     Integer beforeTime;
+    //描述
     String description;
+    //退还率
     Double rate;
 
 }

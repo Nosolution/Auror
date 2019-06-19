@@ -6,7 +6,8 @@ import org.seec.muggle.auror.bl.message.MessageService;
 import org.seec.muggle.auror.bl.scene.MessageService4Scene;
 import org.seec.muggle.auror.bl.strategy.MessageService4Strategy;
 import org.seec.muggle.auror.dao.message.MessageMapper;
-import org.seec.muggle.auror.po.Message;
+import org.seec.muggle.auror.entity.message.Message;
+import org.seec.muggle.auror.po.MessagePO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.user.message.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,10 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
 
     @Override
     public MessageVO[] getMessages(Long userId) {
-        List<Message> messages = mapper.getMessages(userId);
+        List<MessagePO> messagePOS = mapper.getMessages(userId);
         mapper.readAll(userId);
         List<MessageVO> vos = new ArrayList<>();
-        messages.stream().sorted(Comparator.comparing(Message::getInitTime).reversed()).forEach(o -> {
+        messagePOS.stream().sorted(Comparator.comparing(MessagePO::getInitTime).reversed()).forEach(o -> {
             MessageVO message = new MessageVO();
             message.setMessageContent(o.getContent());
             message.setAdditionalMovieId(o.getAdditionalMovieId());
@@ -62,7 +63,7 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
         if (users.size() != 0) {
             for (Long user : users) {
                 message.setUserId(user);
-                mapper.insert(message);
+                mapper.insert(new MessagePO(message));
             }
         }
     }
@@ -75,7 +76,7 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
      * @Param [form]
      **/
     @Override
-    public void sendCouponReceiversMessages(Message form, Long[] users) {
+    public void sendCouponReceiversMessages(MessagePO form, Long[] users) {
         for (Long user : users) {
             form.setUserId(user);
             mapper.insert(form);
@@ -84,11 +85,11 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
 
 
     @Override
-    public void broadcastNewEvent(Message message) {
+    public void broadcastNewEvent(MessagePO messagePO) {
         accountService4Message.getAllUserId()
                 .forEach(o -> {
-                    message.setUserId(o);
-                    mapper.insert(message);
+                    messagePO.setUserId(o);
+                    mapper.insert(messagePO);
                 });
     }
 }

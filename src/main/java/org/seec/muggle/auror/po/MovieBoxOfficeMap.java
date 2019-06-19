@@ -10,6 +10,8 @@ import lombok.Data;
  **/
 @Data
 public class MovieBoxOfficeMap {
+    //电影id
     Long movieId;
+    //电影票房
     Integer boxOffice;
 }

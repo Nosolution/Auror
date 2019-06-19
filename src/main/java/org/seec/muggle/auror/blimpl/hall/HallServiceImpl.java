@@ -5,7 +5,7 @@ import org.seec.muggle.auror.bl.hall.HallService4Order;
 import org.seec.muggle.auror.bl.hall.HallService4Scene;
 import org.seec.muggle.auror.bl.hall.HallService4Statistics;
 import org.seec.muggle.auror.dao.hall.HallMapper;
-import org.seec.muggle.auror.po.Hall;
+import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.springframework.beans.factory.annotation.Autowired;

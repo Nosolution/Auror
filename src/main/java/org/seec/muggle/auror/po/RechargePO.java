@@ -12,8 +12,11 @@ import java.sql.Timestamp;
  **/
 @Data
 public class RechargePO {
+    //用户id
     Long userId;
+    //充值时间
     Timestamp initTime;
+    //充值金额
     Integer cost;
     //1代表购买，2代表充值
     Integer type;

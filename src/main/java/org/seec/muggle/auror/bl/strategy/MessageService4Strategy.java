@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.strategy;
 
-import org.seec.muggle.auror.po.Message;
+import org.seec.muggle.auror.po.MessagePO;
 
 /**
  * @Description 提供给Strategy模块的信息模块
@@ -14,16 +14,16 @@ public interface MessageService4Strategy {
      * @Author jyh
      * @Description //当管理员赠送优惠券给用户时，用户获取新的消息<0:获取优惠券
      * @Date 20:00 2019/6/12
-     * @Param [message, userIds]
+     * @Param [messagePO, userIds]
      **/
-    public void sendCouponReceiversMessages(Message message, Long[] userIds);
+    public void sendCouponReceiversMessages(MessagePO messagePO, Long[] userIds);
 
     /**
      * @return void
      * @Author jyh
      * @Description //当管理员发布新的优惠活动时，用户获取新的消息<4: 新的优惠活动>
      * @Date 20:32 2019/6/12
-     * @Param [message]
+     * @Param [messagePO]
      **/
-    public void broadcastNewEvent(Message message);
+    public void broadcastNewEvent(MessagePO messagePO);
 }

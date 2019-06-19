@@ -1,8 +1,8 @@
 package org.seec.muggle.auror.vo.scene.Info;
 
 import lombok.Data;
+import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.entity.movie.Movie4Scene;
-import org.seec.muggle.auror.po.Hall;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.util.DateUtil;
 import org.seec.muggle.auror.vo.IntervalVO;

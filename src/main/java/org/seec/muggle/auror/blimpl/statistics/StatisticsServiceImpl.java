@@ -48,12 +48,12 @@ public class StatisticsServiceImpl implements StatisticsService {
                 Scene current = scenes.get(i);
                 if (current.getDate().equals(scenes.get(i - 1).getDate())) {
                     info = attendInfos.get(pos);
-                    info.setOrders(info.getOrders() + orderService4Statistics.getNumsBySceneId(current.getId()));
-                    info.setSeats(info.getSeats() + hallService4Statistics.getSeatsNum(current.getHallId()));
+                    info.setTicketCount(info.getTicketCount() + orderService4Statistics.getNumsBySceneId(current.getId()));
+                    info.setSeatCount(info.getSeatCount() + hallService4Statistics.getSeatsNum(current.getHallId()));
                     attendInfos.set(pos, info);
                 } else {
-                    info.setSeats(hallService4Statistics.getSeatsNum(current.getHallId()));
-                    info.setOrders(orderService4Statistics.getNumsBySceneId(current.getId()));
+                    info.setSeatCount(hallService4Statistics.getSeatsNum(current.getHallId()));
+                    info.setTicketCount(orderService4Statistics.getNumsBySceneId(current.getId()));
                     info.setDate(current.getDate());
                     attendInfos.add(info);
                     pos++;
@@ -65,7 +65,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             attendInfos.forEach(o -> {
                 AttendenceVO vo = new AttendenceVO();
                 vo.setDate(o.getDate());
-                vo.setAttendanceRate((double) o.getOrders() / o.getSeats());
+                vo.setAttendanceRate((double) o.getTicketCount() / o.getSeatCount());
                 vos.add(vo);
             });
             return vos.toArray(new AttendenceVO[vos.size()]);

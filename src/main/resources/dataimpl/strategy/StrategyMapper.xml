@@ -17,12 +17,12 @@
 
     <insert id="insertMemberStrategy" parameterType="org.seec.muggle.auror.po.MemberStrategyPO">
         insert into tbl_member_strategy (member_name, url, price, rate)
-        values (#{name}, #{url}, #{threshold}, #{rate})
+        values (#{name}, #{url}, #{price}, #{rate})
     </insert>
     <select id="selectMemberStrategyById" resultType="org.seec.muggle.auror.po.MemberStrategyPO">
         select member_name name,
                url         url,
-               price       threshold,
+               price       price,
                rate        rate
         from tbl_member_strategy
         where id = #{id}
@@ -32,7 +32,7 @@
         select id          id,
                member_name name,
                url         url,
-               price       threshold,
+               price       price,
                rate        rate
         from tbl_member_strategy
     </select>
@@ -52,7 +52,7 @@
     <insert id="insertCoupon" parameterType="org.seec.muggle.auror.po.CouponPO" useGeneratedKeys="true"
             keyProperty="id">
         insert into tbl_coupon (coupon_name, description, benefit, threshold, url)
-        values (#{couponName}, #{description}, #{discount}, #{threshold}, #{url})
+        values (#{couponName}, #{description}, #{discount}, #{price}, #{url})
     </insert>
 
     <insert id="insertUserCoupon" parameterType="org.seec.muggle.auror.po.UserCouponPO">

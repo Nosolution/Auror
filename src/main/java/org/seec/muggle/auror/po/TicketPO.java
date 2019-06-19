@@ -10,9 +10,13 @@ import lombok.Data;
  **/
 @Data
 public class TicketPO {
+    //场次id
     Long sceneId;
+    //行号
     Integer row;
+    //列号
     Integer column;
+    //订单id
     Long orderId;
 
     public TicketPO() {

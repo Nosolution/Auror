@@ -13,12 +13,19 @@ import java.util.Date;
  **/
 @Data
 public class ScenePO {
+    //排片id
     Long id;
+    //电影id
     Long movieId;
+    //开始放映时间
     Timestamp startTime;
+    //结束放映时间
     Timestamp endTime;
+    //影厅id
     Long hallId;
+    //票价
     Integer price;
+    //日期
     Date date;
 
     public ScenePO() {

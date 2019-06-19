@@ -12,13 +12,19 @@ import java.sql.Timestamp;
  **/
 @Data
 public class EventPO {
+    //优惠活动id
     Long id;
+    //开始时间
     Timestamp startTime;
+    //结束时间
     Timestamp endTime;
+    //活动描述
     String description;
+    //活动名称
     String eventName;
+    //优惠券的有效期长度，单位：天
     Integer expiration;
-
+    //优惠券模板id
     Long couponId;
 
     public EventPO() {

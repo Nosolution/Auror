@@ -10,7 +10,10 @@ import lombok.Data;
  **/
 @Data
 public class CastPO {
+    //记录id
     Long id;
+    //演职人员名字
     String castName;
+    //头像url
     String url;
 }

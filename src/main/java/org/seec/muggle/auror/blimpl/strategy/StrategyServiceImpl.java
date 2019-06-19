@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.blImpl.strategy;
+package org.seec.muggle.auror.blimpl.strategy;
 
 import org.seec.muggle.auror.bl.strategy.*;
 import org.seec.muggle.auror.dao.strategy.StrategyMapper;
@@ -77,7 +77,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
                 MemberVarietyVO vo = new MemberVarietyVO();
                 vo.setMemberDiscountRate(o.getRate());
                 vo.setMemberPictureUrl(o.getUrl());
-                vo.setPurchaseThreshold(o.getThreshold());
+                vo.setPurchaseThreshold(o.getPrice());
                 vo.setMemberStrategyId(o.getId());
                 vo.setMemberStrategyName(o.getName());
                 vos.add(vo);
@@ -102,12 +102,12 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         }
 
         //发送消息提示
-        Message message = new Message();
-        message.setType(4);
-        message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
-        message.setTitle("新优惠活动提示");
-        message.setContent("新的优惠活动公布了，不如我们把它……");
-        messageService4Strategy.broadcastNewEvent(message);
+        MessagePO messagePO = new MessagePO();
+        messagePO.setType(4);
+        messagePO.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
+        messagePO.setTitle("新优惠活动提示");
+        messagePO.setContent("新的优惠活动公布了，不如我们把它……");
+        messageService4Strategy.broadcastNewEvent(messagePO);
     }
 
     @Override
@@ -222,18 +222,18 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
             strategyMapper.insertUserCoupon(ucPO);
         }
         //发送提醒消息;
-        Message message = new Message();
-        message.setTitle("优惠券获取提示");
-        message.setStatus(0);
-        message.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
-        message.setContent("您获取了新的优惠券，请于卡包查看。");
-        message.setType(0);
-        messageService4Strategy.sendCouponReceiversMessages(message, form.getUserList());
+        MessagePO messagePO = new MessagePO();
+        messagePO.setTitle("优惠券获取提示");
+        messagePO.setStatus(0);
+        messagePO.setInitTime(Timestamp.valueOf(LocalDateTime.now()));
+        messagePO.setContent("您获取了新的优惠券，请于卡包查看。");
+        messagePO.setType(0);
+        messageService4Strategy.sendCouponReceiversMessages(messagePO, form.getUserList());
     }
 
     @Override
     public List<MemberStrategy4Order> selectAllMemberStrategy() {
-        List<MemberStrategyPO> pos = strategyMapper.selectAllMemberStrategies().stream().sorted(Comparator.comparing(MemberStrategyPO::getThreshold)).collect(Collectors.toList());
+        List<MemberStrategyPO> pos = strategyMapper.selectAllMemberStrategies().stream().sorted(Comparator.comparing(MemberStrategyPO::getPrice)).collect(Collectors.toList());
         List<MemberStrategy4Order> memberStrategy4Orders = new ArrayList<>();
         for (int i = 0; i < pos.size(); i++) {
             MemberStrategy4Order order = new MemberStrategy4Order(pos.get(i));

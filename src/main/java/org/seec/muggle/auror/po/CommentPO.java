@@ -12,7 +12,10 @@ import java.sql.Timestamp;
  **/
 @Data
 public class CommentPO {
-    Long userId; //用户头像url
-    Timestamp commentTime; //评论时间
+    //用户id
+    Long userId;
+    //评论时间
+    Timestamp commentTime;
+    //评论内容
     String comment;
 }

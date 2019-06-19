@@ -37,7 +37,7 @@ public interface StrategyService {
      * @Author jyh
      * @Description //新增会员卡类型
      * @Date 15:35 2019/6/5
-     * @Param [name, url, threshold, rate]
+     * @Param [name, url, price, rate]
      **/
     void createMemberStrategy(String name, String url, Integer threshold, Double rate);
 

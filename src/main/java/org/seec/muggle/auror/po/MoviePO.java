@@ -17,24 +17,37 @@ import java.util.List;
  **/
 @Data
 public class MoviePO {
+    //电影id
     Long id;
+    //电影名称
     String movieName;
+    //电影简介
     String description;
-    Date visibleDate; // 排片信息观众可见时间
+    // 排片信息观众可见时间
+    Date visibleDate;
+    //上映时间
     Date startDate;
+    //下映时间
     Date endDate;
+    //海报url
     String posterUrl;
+    //电影类型
     String movieType;
+    //制作地区
     String country;
+    //使用语言
     String language;
-    Integer length; //时长
+    //时长
+    Integer length;
+    //电影年份
     Integer movieYear;
+    //导演
     List<DirectorVO> directors;
-    Integer status;
-    /**
-     * 主演
-     */
+    //主演
     List<StarringVO> starrings;
+    //电影状态 <1:未上映>, <2:已上映>, <3:已下架>
+    Integer status;
+
 
     public MoviePO(MovieAddForm form) {
         this.country = form.getCountry();

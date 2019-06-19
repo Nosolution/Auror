@@ -8,7 +8,7 @@
     </select>
 
 
-    <insert id="insert" parameterType="org.seec.muggle.auror.po.Message">
+    <insert id="insert" parameterType="org.seec.muggle.auror.po.MessagePO">
         insert into tbl_message (message_type, message_title, message_content, init_time, message_status, movie_id, user_id) values (#{type},#{title},#{content},#{initTime},0,#{additionalMovieId},#{userId})
     </insert>
 
@@ -23,7 +23,7 @@
         update tbl_message set message_status = 1 where user_id = #{userId}
     </update>
 
-    <resultMap id="Message" type="org.seec.muggle.auror.po.Message">
+    <resultMap id="Message" type="org.seec.muggle.auror.po.MessagePO">
         <id column="id" property="id"/>
         <result column="message_type" property="type"/>
         <result column="user_id" property="userId"/>

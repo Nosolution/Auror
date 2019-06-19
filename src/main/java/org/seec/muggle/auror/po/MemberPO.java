@@ -10,9 +10,13 @@ import lombok.Data;
  **/
 @Data
 public class MemberPO {
+    //会员id
     Long id;
+    //会员策略id
     Long strategyId;
+    //用户id
     Long userId;
+    //会员卡余额
     Integer credit;
 
 }

@@ -11,27 +11,32 @@ import org.seec.muggle.auror.entity.strategy.MemberStrategy4Member;
  **/
 @Data
 public class MemberStrategyPO {
+    //会员策略id
     Long id;
+    //会员卡名称
     String name;
+    //会员卡背景图url
     String url;
-    Integer threshold;
+    //所需购买价格
+    Integer price;
+    //会员卡折扣率
     Double rate;
 
     public MemberStrategyPO() {
 
     }
 
-    public MemberStrategyPO(String name, String url, Integer threshold, Double rate) {
+    public MemberStrategyPO(String name, String url, Integer price, Double rate) {
         this.name = name;
         this.url = url;
-        this.threshold = threshold;
+        this.price = price;
         this.rate = rate;
     }
 
     public MemberStrategyPO(MemberStrategy4Member memberStrategy4Member) {
         this.id = memberStrategy4Member.getId();
         this.rate = memberStrategy4Member.getRate();
-        this.threshold = memberStrategy4Member.getThreshold();
+        this.price = memberStrategy4Member.getThreshold();
         this.url = memberStrategy4Member.getUrl();
         this.name = memberStrategy4Member.getName();
 

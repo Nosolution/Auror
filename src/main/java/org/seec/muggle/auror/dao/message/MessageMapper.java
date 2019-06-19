@@ -2,7 +2,7 @@ package org.seec.muggle.auror.dao.message;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.dao.BaseOperation;
-import org.seec.muggle.auror.po.Message;
+import org.seec.muggle.auror.po.MessagePO;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import java.util.List;
  * @Version 1.0
  **/
 @DaoMapper
-public interface MessageMapper extends BaseOperation<Message> {
-    List<Message> getMessages(Long userId);
+public interface MessageMapper extends BaseOperation<MessagePO> {
+    List<MessagePO> getMessages(Long userId);
 
     int getUnreadNums(Long userId);
 

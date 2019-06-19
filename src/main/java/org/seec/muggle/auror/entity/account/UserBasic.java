@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.po;
+package org.seec.muggle.auror.entity.account;
 
 import lombok.Data;
 

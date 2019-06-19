@@ -12,15 +12,18 @@ import java.util.Date;
  **/
 @Data
 public class AttendInfo {
+    //指定的日期
     Date date;
-    Integer seats;
-    Integer orders;
+    //总座位数量计算
+    Integer seatCount;
+    //总已被购买票数计算
+    Integer ticketCount;
 
 
-    public AttendInfo(Date date, Integer seats, Integer orders) {
+    public AttendInfo(Date date, Integer seatCount, Integer ticketCount) {
         this.date = date;
-        this.seats = seats;
-        this.orders = orders;
+        this.seatCount = seatCount;
+        this.ticketCount = ticketCount;
     }
 
     public AttendInfo() {

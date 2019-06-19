@@ -11,12 +11,19 @@ import java.util.List;
 
 @Data
 public class User {
+    //用户id
     private Long id;
+    //用户名
     private String username;
+    //用户密码
     private String password;
+    //用户权限
     private List<Permission> permissions;
+    //用户角色
     private List<Role> roles;
+    //上次登出时间
     private Timestamp lastLogoutTime;
+    //上次密码重置时间
     private Timestamp lastPasswordResetTime;
 
 
