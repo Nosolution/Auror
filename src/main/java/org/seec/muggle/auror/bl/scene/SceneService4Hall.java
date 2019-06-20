@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.bl.scene;
 
 /**
- * @Description TODO
+ * @Description 判断该影厅是否有未完成排片
  * @Author 233loser
  * @Date 2019/6/20 22:20
  * @Version 1.0

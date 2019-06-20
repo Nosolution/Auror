@@ -3,10 +3,12 @@ package org.seec.muggle.auror.bl.hall;
 import org.seec.muggle.auror.bl.scene.SceneService4Hall;
 import org.seec.muggle.auror.dao.hall.HallMapper;
 import org.seec.muggle.auror.entity.hall.Hall;
+import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.HallPO;
 import org.seec.muggle.auror.service.hall.HallService;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -109,7 +111,7 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
         HallPO po = hallMapper.getHallByName(name);
         boolean isUsed = sceneService4Hall.isOccupied(po.getHallId());
         if(isUsed){
-            return false;
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED,"该影厅有排片未完成");
         }
         else{
             String seat = getSeatsInString(seats);
