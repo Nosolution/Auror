@@ -39,7 +39,7 @@ public class EventVO {
         this.couponDescription = couponPO.getDescription();
         this.couponPictureUrl = couponPO.getUrl();
         this.couponDiscount = couponPO.getDiscount();
-        this.couponThreshold = couponPO.getPrice();
+        this.couponThreshold = couponPO.getThreshold();
         this.couponExpiration = eventPO.getExpiration();
 
     }

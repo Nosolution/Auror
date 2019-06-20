@@ -6,6 +6,7 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.seec.muggle.auror.config.shiro.RestShiroFilterFactoryBean;
 import org.seec.muggle.auror.filter.JwtAuthTokenFilter;
 import org.seec.muggle.auror.security.CustomRealm;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -49,7 +50,7 @@ public class ShiroConfig {
 
     @Bean("jwtAuthTokenFilter")
     public ShiroFilterFactoryBean factory(DefaultWebSecurityManager securityManager) {
-        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
+        ShiroFilterFactoryBean factoryBean = new RestShiroFilterFactoryBean();
 
         // 添加自己的过滤器并且取名为jwtFilter
         Map<String, Filter> filterMap = new HashMap<>();
@@ -74,18 +75,20 @@ public class ShiroConfig {
         // 访问401和404页面不通过我们的Filter
         filterRuleMap.put("/401", "anon");
 //        filterRuleMap.put("/logout", "logout");//据说shiro已经帮我们实现了, 然而好像效果并不尽如人意
+
+        //配置url筛选策略
         filterRuleMap.put("/exception", "anon");
-//        filterRuleMap.put("/api/movie/detail/**", "anon");
-//        filterRuleMap.put("/api/movie/popular", "anon");
-//        filterRuleMap.put("/api/movie/onshelf", "anon");
-//        filterRuleMap.put("/api/movie/comment", "anon");
-//        filterRuleMap.put("/api/movie", "jwtFilter");
-//        filterRuleMap.put("/api/personnel/**", "jwtFilter");
+        filterRuleMap.put("/api/personnel/**", "jwtFilter");
+        filterRuleMap.put("/api/movie==[POST,PUT,DELETE]", "jwtFilter");
+        filterRuleMap.put("/api/movie/statistics/**==[POST,PUT,DELETE]", "jwtFilter");
+        filterRuleMap.put("/api/hall==[POST,PUT]", "jwtFilter");
+        filterRuleMap.put("/api/scene==[POST,PUT,DELETE]", "jwtFilter");
+        filterRuleMap.put("/api/strategy/refund==PUT", "jwtFilter");
+        filterRuleMap.put("/api/strategy/event==[POST,DELETE]", "jwtFilter");
+        filterRuleMap.put("/api/strategy/coupon_gift==POST", "jwtFilter");
+        filterRuleMap.put("/api/strategy/member==[POST,DELETE]", "jwtFilter");
         filterRuleMap.put("/**", "anon");
 
-//        filterRuleMap.put("/anon_user/**", "anon");
-//        filterRuleMap.put("/movie/**", "anon");
-//        filterRuleMap.put("/**", "jwtFilter");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

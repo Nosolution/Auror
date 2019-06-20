@@ -19,7 +19,7 @@ public class CouponPO {
     //优惠金额
     Integer discount;
     //使用的起始金额
-    Integer price;
+    Integer threshold;
     //优惠券背景图url
     String url;
 
@@ -27,11 +27,11 @@ public class CouponPO {
 
     }
 
-    public CouponPO(String couponName, String description, Integer discount, Integer price, String url) {
+    public CouponPO(String couponName, String description, Integer discount, Integer threshold, String url) {
         this.couponName = couponName;
         this.description = description;
         this.discount = discount;
-        this.price = price;
+        this.threshold = threshold;
         this.url = url;
     }
 

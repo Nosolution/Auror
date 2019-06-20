@@ -195,7 +195,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
                     coupon4Account.setCouponId(o.getCouponId());
                     coupon4Account.setCouponName(couponPO.getCouponName());
                     coupon4Account.setCouponPictureUrl(couponPO.getUrl());
-                    coupon4Account.setCouponThreshold(couponPO.getPrice());
+                    coupon4Account.setCouponThreshold(couponPO.getThreshold());
                     coupon4Account.setCouponStartTime(DateConverterUtil.dateToString(o.getStart()));
                     coupon4Account.setCouponExpiration("");
                     vos.add(coupon4Account);
@@ -208,7 +208,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         CouponPO po = new CouponPO();
         po.setCouponName(form.getCouponName());
         po.setDiscount(form.getCouponDiscount());
-        po.setPrice(form.getCouponThreshold());
+        po.setThreshold(form.getCouponThreshold());
         po.setUrl(form.getCouponPictureUrl());
         po.setDescription(form.getCouponDescription());
         strategyMapper.insertCoupon(po);

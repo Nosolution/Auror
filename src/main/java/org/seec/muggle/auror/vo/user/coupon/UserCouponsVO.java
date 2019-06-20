@@ -32,4 +32,7 @@ public class UserCouponsVO {
         this.couponEndTime = accounts.getCouponEndTime();
         this.couponExpiration = accounts.getCouponExpiration();
     }
+
+    public UserCouponsVO() {
+    }
 }

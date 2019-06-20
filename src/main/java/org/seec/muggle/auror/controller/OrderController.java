@@ -48,7 +48,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "/ticket/payment/member")
-    public ResponseEntity<?> memberPayment(@RequestBody PaymentForm form) {
+    public ResponseEntity<?> payWithMember(@RequestBody PaymentForm form) {
         MemberPaymentVO vo = orderService.finishByMember(form);
         return ResponseEntity.ok(vo);
 
@@ -56,7 +56,7 @@ public class OrderController {
 
 
     @PostMapping(value = "/ticket/payment/third_party")
-    public ResponseEntity<?> third_partyPayment(@RequestBody PaymentForm form) {
+    public ResponseEntity<?> payWithThirdParty(@RequestBody PaymentForm form) {
         ThirdPartyPaymentVO vos = orderService.finishByThirdParty(form);
         return ResponseEntity.ok(vos);
     }

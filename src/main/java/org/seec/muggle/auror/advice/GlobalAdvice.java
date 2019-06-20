@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.advice;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.exception.ErrorDetail;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,17 @@ public class GlobalAdvice {
         return ResponseEntity.status(ex.getStatus()).body(new ErrorDetail("exception", ex.getMessage()));
     }
 
+    /**
+     * 访问接口所需权限不足时转至该接口，返回状态码403
+     *
+     * @param ex 鉴权失败时抛出的异常
+     * @return 状态码为403的响应
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException ex) {
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorDetail("exception", ex.getMessage()));
+    }
 
     /**
      * 一般性的异常处理器
@@ -37,6 +49,8 @@ public class GlobalAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex) {
         ex.printStackTrace();
+//        if (ex instanceof UnauthorizedException)
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorDetail("exception", ex.getMessage()));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorDetail("exception", ex.getMessage()));
     }
 }

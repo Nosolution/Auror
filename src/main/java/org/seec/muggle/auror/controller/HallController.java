@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.seec.muggle.auror.service.hall.HallService;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.seec.muggle.auror.vo.hall.single.SingleHallForm;
@@ -22,7 +23,7 @@ public class HallController {
     HallService hallService;
 
     @PostMapping()
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> addHall(@RequestBody SingleHallForm form) {
         hallService.addHall(form.getHallName(), form.getSeats());
         return ResponseEntity.ok(null);
@@ -35,6 +36,7 @@ public class HallController {
     }
 
     @PutMapping()
+    @RequiresRoles("administrator")
     public ResponseEntity<?> updateHall(@RequestBody HallUpdateForm form) {
         hallService.updateHall(form.getHallId(), form.getHallName(), form.getSeats());
         return ResponseEntity.ok(null);

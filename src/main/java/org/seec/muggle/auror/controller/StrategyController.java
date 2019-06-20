@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.seec.muggle.auror.service.strategy.StrategyService;
 import org.seec.muggle.auror.vo.strategy.coupongift.CouponGiftForm;
 import org.seec.muggle.auror.vo.strategy.event.EventDeletionForm;
@@ -33,6 +34,7 @@ public class StrategyController {
     }
 
     @PutMapping(value = "/refund")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> varyRefundStrategy(@RequestBody RefundStrategyForm form) {
         strategyService.updateRefundStrategy(form.getRefundRate(), form.getLatestRefundTimeBeforePlaying());
         return ResponseEntity.ok(null);
@@ -45,21 +47,21 @@ public class StrategyController {
     }
 
     @PostMapping(value = "/event")
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> addStrategyEvent(@RequestBody EventForm form) {
         strategyService.createEvent(form);
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/event")
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> deleteEvent(@RequestBody EventDeletionForm form) {
         strategyService.deleteEvent(form.getEventId());
         return ResponseEntity.ok(null);
     }
 
     @PostMapping(value = "/coupon_gift")
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> givingCoupon(@RequestBody CouponGiftForm form) {
         strategyService.sendCoupon(form);
         return ResponseEntity.ok(null);
@@ -73,21 +75,21 @@ public class StrategyController {
     }
 
     @PostMapping(value = "/member")
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form) {
         strategyService.createMemberStrategy(form.getMemberStrategyName(), form.getMemberPictureUrl(), form.getPurchaseThreshold(), form.getMemberDiscountRate());
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/member")
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form) {
         strategyService.deleteMemberStrategy(form.getMemberStrategyId());
         return ResponseEntity.ok(null);
     }
 
     @PutMapping(value = "/member")
-//    @RequiresRoles("administrator")
+    @RequiresRoles("administrator")
     public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form) {
         strategyService.updateMemberStrategy(form);
         return ResponseEntity.ok(null);

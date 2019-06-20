@@ -2,6 +2,7 @@ package org.seec.muggle.auror.filter;
 
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.security.JwtToken;
 import org.seec.muggle.auror.util.JwtUtil;
@@ -16,6 +17,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 对request进行过滤，根据业务逻辑实现相应的过滤策略
@@ -115,9 +120,23 @@ public class JwtAuthTokenFilter extends BasicHttpAuthenticationFilter {
         return super.preHandle(request, response);
     }
 
+    //实行REST风格的url匹配逻辑，允许指定HttpMethod
     @Override
     protected boolean pathsMatch(String path, ServletRequest request) {
-        return super.pathsMatch(path, request);
+        String requestURI = this.getPathWithinApplication(request);
+
+        String[] strings = path.split("==");
+
+        if (strings.length <= 1) {
+            // 普通的 URL, 正常处理
+            return this.pathsMatch(strings[0], requestURI);
+        } else {
+            // 获取当前请求的 http method.
+            String httpMethod = WebUtils.toHttp(request).getMethod().toUpperCase();
+
+            // 匹配当前请求的 http method 与 过滤器链中的的是否一致
+            return getRequiredMethods(strings[1]).contains(httpMethod) && this.pathsMatch(strings[0], requestURI);
+        }
     }
 
     /**
@@ -130,5 +149,16 @@ public class JwtAuthTokenFilter extends BasicHttpAuthenticationFilter {
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         }
+    }
+
+    private List<String> getRequiredMethods(String raw) {
+        List<String> res = new ArrayList<>();
+        if (raw.startsWith("[")) {
+            String[] methods = raw.substring(1, raw.length() - 2).split(",");
+            res.addAll(Arrays.asList(methods));
+        } else {
+            res.add(raw);
+        }
+        return res.stream().map(String::toUpperCase).collect(Collectors.toList());
     }
 }

@@ -19,11 +19,11 @@ public class MemberVO {
     Integer memberCredit;
     Double memberDiscount;
 
-    public boolean isMember() {
+    public boolean getIsMember() {
         return isMember;
     }
 
-    public void setMember(boolean member) {
+    public void setIsMember(boolean member) {
         isMember = member;
     }
 
