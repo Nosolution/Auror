@@ -1,8 +1,9 @@
 package org.seec.muggle.auror.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.seec.muggle.auror.service.order.OrderService;
 import org.seec.muggle.auror.service.scene.SceneService;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.addition.SceneAdditionForm;
@@ -48,39 +49,39 @@ public class SceneController {
 
     @PostMapping(value = "/order/seat/selection")
     public ResponseEntity<?> seatSelection(@RequestBody SeatsSelectionForm form, HttpServletRequest request) {
-        Long id = getIdFromRequest(request);
+        Long id = jwtUtil.getIdFromRequest(request, tokenHeader);
         SeatsSelectionVO vo = orderService.selectSeats(form.getSceneId(), id, form.getSelectedSeats());
         return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/info/of_hall")
     public ResponseEntity<?> getSceneInfoByHallIdAndDate(@PathParam("hallName") String hallName, @PathParam("date") String date) {
-        Date date1 = DateUtil.stringToDate(date);
+        Date date1 = DateConverterUtil.stringToDate(date);
         InfoVO[] infoVOS = sceneService.getScenesInfoByHallNameAndDate(
                 hallName, date1);
         return ResponseEntity.ok(infoVOS);
     }
 
     @PostMapping()
+    @RequiresRoles("movie_manager")
     public ResponseEntity addMovieScene(@RequestBody SceneAdditionForm form) {
         sceneService.addScene(form.getMovieId(), form.getHallName(), form.getDate(), form.getStartTime(), form.getPrice());
         return ResponseEntity.ok(null);
     }
 
     @PutMapping()
+    @RequiresRoles("movie_manager")
     public ResponseEntity updateMovieScene(@RequestBody SceneVaryForm form) {
-        sceneService.updateScene(form.getSceneId(), form.getHallName(), DateUtil.stringToDate(form.getDate()), form.getStartTime(), form.getPrice());
+        sceneService.updateScene(form.getSceneId(), form.getHallName(), DateConverterUtil.stringToDate(form.getDate()), form.getStartTime(), form.getPrice());
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping()
+    @RequiresRoles("movie_manager")
     public ResponseEntity<?> deleteMovieScene(@RequestBody Long sceneId) {
         sceneService.deleteScene(sceneId);
         return ResponseEntity.ok(null);
     }
 
-    private Long getIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader).substring(7);
-        return jwtUtil.getIdFromToken(token);
-    }
+
 }

@@ -10,7 +10,7 @@ import org.seec.muggle.auror.entity.movie.Movie4Scene;
  **/
 public interface MovieService4Scene {
     /**
-     * 获取电影长度
+     * 获取电影长度。单位：分钟
      *
      * @param movieId 电影id
      * @return 电影长度

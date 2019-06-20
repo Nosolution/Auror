@@ -161,12 +161,6 @@ public class MovieServiceImpl implements MovieService, MovieService4Scene, Movie
         return vos;
     }
 
-    /**
-     * @Author jyh
-     * @Description //优先替换电影，然后重新建立与演员的对应关系
-     * @Date 20:06 2019/6/5
-     * @Param [form]
-     **/
     @Override
     public void updateMovie(MovieVaryForm form) {
         MoviePO po = new MoviePO(form);

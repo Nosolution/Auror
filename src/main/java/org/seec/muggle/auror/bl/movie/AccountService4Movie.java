@@ -8,5 +8,11 @@ package org.seec.muggle.auror.bl.movie;
  **/
 public interface AccountService4Movie {
 
+    /**
+     * 根据用户id获取用户名
+     *
+     * @param userId 用户id
+     * @return 用户民
+     */
     String getUsernameById(Long userId);
 }

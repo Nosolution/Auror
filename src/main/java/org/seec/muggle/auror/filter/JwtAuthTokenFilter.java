@@ -2,6 +2,7 @@ package org.seec.muggle.auror.filter;
 
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.security.JwtToken;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ import java.io.IOException;
  */
 public class JwtAuthTokenFilter extends BasicHttpAuthenticationFilter {
     /**
-     * 这里继承{@link BasicHttpAuthenticationFilter } 而不是 {@link FormAuthenticationFilter}。
+     * 这里继承{@link BasicHttpAuthenticationFilter} 而不是 {@link FormAuthenticationFilter}。
      * 两者都要求用户登录，区别在于，前者使用 {@code HTTP Basic protocol-specific challenge} 来进行登录验证, 后者会重定向至登录url
      */
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -58,8 +59,9 @@ public class JwtAuthTokenFilter extends BasicHttpAuthenticationFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String authorization = httpServletRequest.getHeader("Authorization");
 
+        if (authorization.length() <= 7)
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, "token错误");
         JwtToken token = new JwtToken(authorization.substring(7));
-        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(token);
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
@@ -111,6 +113,11 @@ public class JwtAuthTokenFilter extends BasicHttpAuthenticationFilter {
             return false;
         }
         return super.preHandle(request, response);
+    }
+
+    @Override
+    protected boolean pathsMatch(String path, ServletRequest request) {
+        return super.pathsMatch(path, request);
     }
 
     /**

@@ -3,7 +3,7 @@ package org.seec.muggle.auror.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 
 import java.sql.Timestamp;
 
@@ -21,8 +21,8 @@ public class IntervalVO {
 
     public IntervalVO(Timestamp startTime, Timestamp endTime) {
 
-        this.startTime = DateUtil.timestampToTimeString(startTime);
-        this.endTime = DateUtil.timestampToTimeString(endTime);
+        this.startTime = DateConverterUtil.timestampToTimeString(startTime);
+        this.endTime = DateConverterUtil.timestampToTimeString(endTime);
     }
 
 }

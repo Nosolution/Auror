@@ -62,13 +62,6 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
     @Autowired
     private JwtUtil jwtUtil;
 
-    /**
-     * @return org.seec.muggle.auror.vo.BasicVO
-     * @Author jyh、hgz
-     * @Description //TODO
-     * @Date 20:50 2019/6/1
-     * @Param [username, password]
-     **/
     @Override
     public void register(String username, String password) {
         User user = userMapper.getUserByName(username);
@@ -104,9 +97,7 @@ public class AccountServiceImpl implements AccountService, AccountService4Movie,
     }
 
     @Override
-    public void logout(String raw) {
-        String token = raw.substring(7);
-        Long id = jwtUtil.getIdFromToken(token);
+    public void logout(Long id) {
         User user = userMapper.get(id);
         user.setLastLogoutTime(new Timestamp(new Date().getTime()));
         userMapper.update(user);

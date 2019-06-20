@@ -2,7 +2,7 @@ package org.seec.muggle.auror.vo.movie.detail;
 
 import lombok.Data;
 import org.seec.muggle.auror.po.MoviePO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 
 @Data
 public class MovieDetailsVO {
@@ -83,7 +83,7 @@ public class MovieDetailsVO {
         this.movieType = po.getMovieType();
         this.posterUrl = po.getPosterUrl();
         this.year = po.getMovieYear();
-        this.dateOnshow = DateUtil.dateToString(po.getStartDate());
-        this.visibleDate = DateUtil.dateToString(po.getVisibleDate());
+        this.dateOnshow = DateConverterUtil.dateToString(po.getStartDate());
+        this.visibleDate = DateConverterUtil.dateToString(po.getVisibleDate());
     }
 }

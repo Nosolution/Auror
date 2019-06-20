@@ -41,7 +41,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void addManager(String username, String password) {
-        insertNewMANAGER(username, password);
+        addNewManager(username, password);
         logger.info("账号 {} 注册成功，时间: {}", username, new Timestamp(new Date().getTime()));
     }
 
@@ -49,23 +49,12 @@ public class ManagerServiceImpl implements ManagerService {
     public void deleteManager(Long managerId) {
         managerMapper.deleteRole(managerId);
         managerMapper.deleteManager(managerId);
-//        userRoleMapper.deleteByUserId(manageId);
-//        userMapper.deleteUserById(manageId);
+
     }
 
     @Override
     public ManagerInfoVO[] getManagers() {
-//        List<Long> managerIds = userRoleMapper.getAllManagerId();
-//        List<ManagerInfoVO> vos = new ArrayList<>();
-//        managerIds.forEach(o -> {
-//            User user = userMapper.getUserById(o);
-//            ManagerInfoVO vo = new ManagerInfoVO();
-//            vo.setManageId(o);
-//            vo.setUsername(user.getUsername());
-//            vo.setPassword(user.getPassword());
-//            vos.add(vo);
-//        });
-//        return vos.toArray(new ManagerInfoVO[vos.size()]);
+
         return managerMapper.getManagers()
                 .stream()
                 .filter(o -> !managerMapper.getAdminIds().contains(o.getId()))
@@ -78,15 +67,16 @@ public class ManagerServiceImpl implements ManagerService {
                 }).toArray(ManagerInfoVO[]::new);
     }
 
+    /**
+     * 向数据库中加入一条管理员的账户记录
+     *
+     * @param username 用户另
+     * @param password 密码
+     */
     @Transactional
-    void insertNewMANAGER(String username, String password) {
+    void addNewManager(String username, String password) {
         User user = User.generateNerUser(username, password);
         managerMapper.addNewManager(user);
-//        userMapper.insert(user);
-//        user被保存后会产生id
-//        Role manager = roleMapper.getRoleByName(RoleEnum.MOVIE_MANAGER.name().toLowerCase());
         managerMapper.addRole(user.getId());
-//        userRoleMapper.insert(new UserRole(user.getId(), manager.getId()));
-
     }
 }

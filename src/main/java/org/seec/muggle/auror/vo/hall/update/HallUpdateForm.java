@@ -10,6 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class HallUpdateForm {
+    Long hallId;
     String hallName;
-    int[][]  seats;
+    int[][] seats;
 }

@@ -16,5 +16,5 @@ public interface MovieMarkService4Message {
      * @Date 21:51 2019/6/12
      * @Param [movieId]
      **/
-    public List<Long> getUsersByMovieId(Long movieId);
+    List<Long> getUsersByMovieId(Long movieId);
 }

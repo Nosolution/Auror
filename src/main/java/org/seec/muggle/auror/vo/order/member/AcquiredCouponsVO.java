@@ -9,7 +9,7 @@ import lombok.Data;
  * @Version 1.0
  **/
 @Data
-public class CouponsAcquirementVO {
+public class AcquiredCouponsVO {
     Long couponId;
     String couponName;
     String couponPictureUrl;

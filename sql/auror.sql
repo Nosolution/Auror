@@ -341,17 +341,15 @@ UNLOCK TABLES;
 
 create table `tbl_hall`
 (
-    `id`         bigint       not null auto_increment comment '影厅id',
-    `hall_seats` varchar(255) NOT NULL comment '座位数组',
-    `hall_name`  varchar(50)  NOT NULL comment '影厅名',
+    `id`         bigint      not null auto_increment comment '影厅id',
+    `hall_seats` text        NOT NULL comment '座位数组',
+    `hall_name`  varchar(50) NOT NULL comment '影厅名',
     primary key (id)
 );
 alter table tbl_hall
     comment '影厅表';
 # create unique index tbl_hall_hall_name_uindex
 #     on tbl_hall (hall_name);
-
-
 
 
 -- =============================================================================================================

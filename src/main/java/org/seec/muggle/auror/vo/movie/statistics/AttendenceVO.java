@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.vo.movie.statistics;
 
 import lombok.Data;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 
 import java.util.Date;
 
@@ -21,7 +21,7 @@ public class AttendenceVO {
     }
 
     public void setDate(Date date) {
-        this.date = DateUtil.dateToString(date);
+        this.date = DateConverterUtil.dateToString(date);
     }
 
     public Double getAttendanceRate() {

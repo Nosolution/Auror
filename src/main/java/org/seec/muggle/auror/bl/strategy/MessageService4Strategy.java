@@ -16,7 +16,7 @@ public interface MessageService4Strategy {
      * @Date 20:00 2019/6/12
      * @Param [messagePO, userIds]
      **/
-    public void sendCouponReceiversMessages(MessagePO messagePO, Long[] userIds);
+    void sendCouponReceiversMessages(MessagePO messagePO, Long[] userIds);
 
     /**
      * @return void
@@ -25,5 +25,5 @@ public interface MessageService4Strategy {
      * @Date 20:32 2019/6/12
      * @Param [messagePO]
      **/
-    public void broadcastNewEvent(MessagePO messagePO);
+    void broadcastNewEvent(MessagePO messagePO);
 }

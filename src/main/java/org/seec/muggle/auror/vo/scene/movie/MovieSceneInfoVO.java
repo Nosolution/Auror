@@ -3,7 +3,7 @@ package org.seec.muggle.auror.vo.scene.movie;
 import lombok.Data;
 import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.po.ScenePO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 
 /**
  * @Description TODO
@@ -24,8 +24,8 @@ public class MovieSceneInfoVO {
         this.sceneId = po.getId();
         this.price = po.getPrice();
         this.hallName = hall.getName();
-        this.date = DateUtil.dateToString(po.getDate());
-        interval = DateUtil.timestampToTimeString(po.getStartTime()) + "-" + DateUtil.timestampToTimeString(po.getEndTime());
+        this.date = DateConverterUtil.dateToString(po.getDate());
+        interval = DateConverterUtil.timestampToTimeString(po.getStartTime()) + "-" + DateConverterUtil.timestampToTimeString(po.getEndTime());
         this.seats = seats;
     }
 

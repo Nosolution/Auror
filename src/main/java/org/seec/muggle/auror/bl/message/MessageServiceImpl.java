@@ -8,7 +8,7 @@ import org.seec.muggle.auror.dao.message.MessageMapper;
 import org.seec.muggle.auror.entity.message.Message;
 import org.seec.muggle.auror.po.MessagePO;
 import org.seec.muggle.auror.service.message.MessageService;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.user.message.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService, MessageService4Strate
             MessageVO message = new MessageVO();
             message.setMessageContent(o.getContent());
             message.setAdditionalMovieId(o.getAdditionalMovieId());
-            message.setInitTime(DateUtil.timestampToString(o.getInitTime()));
+            message.setInitTime(DateConverterUtil.timestampToString(o.getInitTime()));
             message.setMessageStatus(o.getStatus());
             message.setMessageTitle(o.getTitle());
             message.setMessageType(o.getType());

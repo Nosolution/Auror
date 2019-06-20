@@ -49,6 +49,7 @@ public interface OrderMapper {
 
     int finishOrder(@Param("orderId")Long orderId,@Param("cost")Integer payment,@Param("method")Integer method);
 
-
     List<OrderPO> getAllOrdersByUser(Long userId);
+
+    int getSoldSeatsNum(Long sceneId);
 }

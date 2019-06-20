@@ -22,6 +22,7 @@ public class HallController {
     HallService hallService;
 
     @PostMapping()
+//    @RequiresRoles("administrator")
     public ResponseEntity<?> addHall(@RequestBody SingleHallForm form) {
         hallService.addHall(form.getHallName(), form.getSeats());
         return ResponseEntity.ok(null);
@@ -35,8 +36,7 @@ public class HallController {
 
     @PutMapping()
     public ResponseEntity<?> updateHall(@RequestBody HallUpdateForm form) {
-       hallService.updateHall(form.getHallName(), form.getSeats()) ;
-       return ResponseEntity.ok(null);
-
+        hallService.updateHall(form.getHallId(), form.getHallName(), form.getSeats());
+        return ResponseEntity.ok(null);
     }
 }

@@ -10,6 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class MemberPaymentVO {
-    CouponsAcquirementVO[] couponsGot;
+    AcquiredCouponsVO[] couponsGot;
 
 }

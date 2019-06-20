@@ -2,7 +2,7 @@ package org.seec.muggle.auror.vo.movie.comment;
 
 import lombok.Data;
 import org.seec.muggle.auror.po.CommentPO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 
 /**
  * @Description TODO
@@ -19,7 +19,7 @@ public class CommentVO {
 
     public CommentVO(CommentPO po, String username) {
         this.comment = po.getComment();
-        this.time = DateUtil.timestampToString(po.getCommentTime());
+        this.time = DateConverterUtil.timestampToString(po.getCommentTime());
         this.username = username;
     }
 }

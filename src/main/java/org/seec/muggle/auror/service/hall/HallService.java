@@ -22,5 +22,5 @@ public interface HallService {
      */
     SingleHallVO[] getAllHalls();
 
-    boolean updateHall(String name,int[][] seats);
+    void updateHall(Long id, String name, int[][] seats);
 }

@@ -68,14 +68,14 @@ public class MovieController {
 
     @PostMapping(value = "/mark")
     public ResponseEntity<?> markMovie(HttpServletRequest request, @RequestBody MovieMarkForm form) {
-        movieMarkService.mark(getIdFromRequest(request), form.getMovieId());
+        movieMarkService.mark(jwtUtil.getIdFromRequest(request, tokenHeader), form.getMovieId());
         return ResponseEntity.ok(null);
 
     }
 
     @PostMapping(value = "/comment")
     public ResponseEntity<?> commentMovie(HttpServletRequest request, @RequestBody CommentForm form) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtUtil.getIdFromRequest(request, tokenHeader);
         movieService.commentMovie(form.getMovieId(), userId, form.getScore(), form.getComment());
         return ResponseEntity.ok(null);
     }
@@ -88,18 +88,21 @@ public class MovieController {
     }
 
     @PostMapping()
+//    @RequiresRoles("movie_manager")
     public ResponseEntity<?> addMovie(@RequestBody MovieAddForm form) {
         movieService.addMovie(form);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping()
+//    @RequiresRoles("movie_manager")
     public ResponseEntity<?> varyMovie(@RequestBody MovieVaryForm form) {
         movieService.updateMovie(form);
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping()
+//    @RequiresRoles("movie_manager")
     public ResponseEntity<?> deleteMovie(@RequestBody MovieDelete delete) {
         movieService.deleteMovie(delete.getMovieId());
         return ResponseEntity.ok(null);
@@ -107,24 +110,26 @@ public class MovieController {
     }
 
     @GetMapping(value = "/statistics/favor_num")
+//    @RequiresRoles("movie_manager")
     public ResponseEntity<?> getFavorNum(@RequestParam("movieId") Long movieId) {
         return ResponseEntity.ok(movieMarkService.getFavorsByDate(movieId));
     }
 
     @GetMapping(value = "/statistic/attendance_rate")
+//    @RequiresRoles("movie_manager")
     public ResponseEntity<?> getAttendance(@RequestParam("movieId") Long movieId) {
         AttendenceVO[] vo = statisticsService.getBoxOfficeRate(movieId);
         return ResponseEntity.ok(vo);
     }
 
     @GetMapping(value = "/statistic/box_office")
+//    @RequiresRoles("movie_manager")
     public ResponseEntity<?> getBoxOffice(@PathParam("movieId") Long movieId) {
         return ResponseEntity.ok(new BoxOfficeVO(statisticsService.getBoxOffice(movieId)));
     }
 
     @GetMapping(value = "/detail/batch")
     public ResponseEntity<?> getMoviesByList(@RequestParam("movieIds") Long[] movieIds) {
-
         MovieDetailsVO[] movies = new MovieDetailsVO[movieIds.length];
         for (int i = 0; i < movies.length; i++) {
             movies[i] = movieService.getMovieDetail(movieIds[i]);
@@ -132,8 +137,5 @@ public class MovieController {
         return ResponseEntity.ok(movies);
     }
 
-    private Long getIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader).substring(7);
-        return jwtUtil.getIdFromToken(token);
-    }
+
 }

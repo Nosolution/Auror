@@ -44,13 +44,16 @@
     <select id="getByHallIdAndDate" resultMap="Scene">
         select *
         from tbl_scene
-        where hall_id= #{hallId}
+        where hall_id = #{hallId}
           and `date` = #{date}
     </select>
 
     <select id="getSceneUnfinishedByHallId" resultType="java.sql.Timestamp">
-        select start_time from tbl_scene where hall_id=#{hallId}
+        select end_time
+        from tbl_scene
+        where hall_id = #{hallId}
     </select>
+
 
     <resultMap id="Scene" type="org.seec.muggle.auror.po.ScenePO">
         <id column="id" property="id"/>

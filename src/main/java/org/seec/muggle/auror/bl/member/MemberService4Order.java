@@ -36,8 +36,8 @@ public interface MemberService4Order {
     /**
      * 使用会员账户支付订单
      *
-     * @param cost   花费
      * @param userId 用户id
+     * @param cost   花费
      * @return 实际扣除的额度
      */
     Integer payByMember(Long userId, Integer cost);

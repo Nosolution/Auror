@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/personnel")
+//@RequiresRoles("administrator")
 public class ManagerController {
 
     @Autowired

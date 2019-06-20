@@ -36,12 +36,10 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
         po.setHallName(name);
         po.setSeats(seat);
         hallMapper.insert(po);
-//        hallMapper.insertNewHall(name, stringBuilder.toString());
     }
 
     @Override
     public int getSeatsNum(Long hallId) {
-//        HallPO PO = hallMapper.getHallById(hallId);
         HallPO po = hallMapper.get(hallId);
         return countString(po.getSeats(), "1");
     }
@@ -107,20 +105,20 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
     }
 
     @Override
-    public boolean updateHall(String name, int[][] seats) {
-        HallPO po = hallMapper.getHallByName(name);
+    public void updateHall(Long id, String name, int[][] seats) {
+        HallPO po = hallMapper.get(id);
         boolean isUsed = sceneService4Hall.isOccupied(po.getHallId());
-        if(isUsed){
-            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED,"该影厅有排片未完成");
-        }
-        else{
+        if (isUsed) {
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, "该影厅有排片未完成");
+        } else {
+            po.setHallName(name);
             String seat = getSeatsInString(seats);
             po.setSeats(seat);
             hallMapper.update(po);
         }
-        return true;
     }
-    private String getSeatsInString(int[][] seats){
+
+    private String getSeatsInString(int[][] seats) {
         String seat = "";
         StringBuilder stringBuilder = new StringBuilder(seat);
         for (int i = 0; i < seats.length; i++) {

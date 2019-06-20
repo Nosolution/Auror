@@ -12,7 +12,7 @@ import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.ScenePO;
 import org.seec.muggle.auror.service.scene.SceneService;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.scene.Info.InfoVO;
 import org.seec.muggle.auror.vo.scene.movie.MovieSceneInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * @Version 1.0
  **/
 @Service
-public class SceneServiceImpl implements SceneService, SceneService4Order, SceneService4Statistics, SceneService4Movie, SceneService4Mark,SceneService4Hall {
+public class SceneServiceImpl implements SceneService, SceneService4Order, SceneService4Statistics, SceneService4Movie, SceneService4Mark, SceneService4Hall {
     @Autowired
     HallService4Scene hallService4Scene;
 
@@ -68,7 +68,7 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
 
 
         Integer length = movieService4Scene.getLengthById(movieId);
-        Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
+        Timestamp beginTime = DateConverterUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
         LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
@@ -90,10 +90,14 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
 
     @Override
     public void updateScene(Long sceneId, String hallName, Date date, LocalTime startTime, int price) {
+        int soldSeatsNum = orderService4Scene.getSoldSeatsNumBySceneId(sceneId);
+        if (soldSeatsNum > 0)
+            throw new BaseException(HttpStatus.METHOD_NOT_ALLOWED, "该场次已售出电影票");
+
         //删除movieId后只能通过sceneId获取MovieId进行片长计算了
         Long movieId = sceneMapper.get(sceneId).getMovieId();
         Integer length = movieService4Scene.getLengthById(movieId);
-        Timestamp beginTime = DateUtil.datesToTimestamp(date, startTime);
+        Timestamp beginTime = DateConverterUtil.datesToTimestamp(date, startTime);
         LocalDateTime start = beginTime.toLocalDateTime();
         LocalDateTime end = start.plusMinutes(length);
         Timestamp endTime = Timestamp.valueOf(end);
@@ -149,9 +153,6 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     public MovieSceneInfoVO[] getScenesInfoByMovieId(Long movieId) {
         List<MovieSceneInfoVO> vos = new ArrayList<>();
         List<ScenePO> pos = sceneMapper.getByMovieId(movieId);
-//        if(pos.size()==0){
-//            return new MovieSceneInfoVO[0];
-//        }
         pos.stream().sorted((o1, o2) -> {
                     //降序
                     if (o1.getDate().compareTo(o2.getDate()) == 0) {
@@ -187,9 +188,16 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
         return vos.toArray(new InfoVO[vos.size()]);
     }
 
+    /**
+     * 获取该排片的所有座位情况
+     *
+     * @param scene 排片记录
+     * @param hall  影厅情况
+     * @return
+     */
     private Integer[][] loadSeats(ScenePO scene, Hall hall) {
         Integer[][] seats = hall.getSeats();
-        List<Ticket4Scene> ticketPOS = orderService4Scene.getTicketsBySceneId(scene.getId());
+        List<Ticket4Scene> ticketPOS = orderService4Scene.getSoldTicketsBySceneId(scene.getId());
         for (Ticket4Scene ticketPO : ticketPOS) {
             seats[ticketPO.getRow()][ticketPO.getColumn()] = 2;
         }
@@ -199,19 +207,16 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
 
     @Override
     public boolean isOccupied(Long hallId) {
-        List<Timestamp> startTimes = sceneMapper.getSceneUnfinishedByHallId(hallId);
-        LocalDateTime ldt =  LocalDateTime.now();
-        if(startTimes.size() == 0){
-            return false;
-        }
-        else {
-            for(int i =0 ;i<startTimes.size();i++){
-                LocalDateTime start = startTimes.get(i).toLocalDateTime();
-                if(start.isAfter(ldt)){
+        List<Timestamp> endTimes = sceneMapper.getSceneUnfinishedByHallId(hallId);
+        LocalDateTime now = LocalDateTime.now();
+        if (endTimes.size() > 0) {
+            for (Timestamp endTime : endTimes) {
+                LocalDateTime end = endTime.toLocalDateTime();
+                if (end.isAfter(now)) {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
 }

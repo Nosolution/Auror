@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.vo.order.thirdparty;
 
 import lombok.Data;
-import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
+import org.seec.muggle.auror.vo.order.member.AcquiredCouponsVO;
 
 /**
  * @Description TODO
@@ -11,6 +11,6 @@ import org.seec.muggle.auror.vo.order.member.CouponsAcquirementVO;
  **/
 @Data
 public class ThirdPartyPaymentVO {
-    CouponsAcquirementVO[] couponsGot;
+    AcquiredCouponsVO[] couponsGot;
 
 }

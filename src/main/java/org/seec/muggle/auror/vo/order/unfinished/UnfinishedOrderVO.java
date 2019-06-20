@@ -4,7 +4,7 @@ import lombok.Data;
 import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.po.OrderPO;
 import org.seec.muggle.auror.po.TicketPO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
 
 import java.sql.Timestamp;
@@ -35,7 +35,7 @@ public class UnfinishedOrderVO {
         this.hallName = hallName;
         this.ticketNum = ticketPOS.size();
         this.cost = scene.getPrice() * ticketPOS.size();
-        this.date = DateUtil.dateToString(scene.getDate());
+        this.date = DateConverterUtil.dateToString(scene.getDate());
         this.interval = new IntervalVO(scene.getStartTime(), scene.getEndTime());
         this.selectedSeats = new UnfinishedOrderSeatsVO[ticketPOS.size()];
         for (int i = 0; i < selectedSeats.length; i++) {

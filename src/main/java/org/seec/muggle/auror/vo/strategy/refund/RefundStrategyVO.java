@@ -11,12 +11,12 @@ import org.seec.muggle.auror.po.RefundPO;
  **/
 @Data
 public class RefundStrategyVO {
-    Integer latestRefundTimeBeforePaying; //距离开场的时间
+    Integer latestRefundTimeBeforePlaying; //距离开场的时间
     Double refundRate;
 
 
     public RefundStrategyVO(RefundPO po) {
-        this.latestRefundTimeBeforePaying = po.getBeforeTime();
+        this.latestRefundTimeBeforePlaying = po.getBeforeTime();
         this.refundRate = po.getRate();
     }
 }

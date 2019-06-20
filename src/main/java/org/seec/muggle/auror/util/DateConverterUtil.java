@@ -8,12 +8,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * @Description TODO
+ * @Description 日期转化器
  * @Author 233loser
  * @Date 2019/6/11 17:34
  * @Version 1.0
  **/
-public class DateUtil {
+public class DateConverterUtil {
     public static String dateToString(Date input) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(input);

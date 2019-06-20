@@ -11,5 +11,13 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface OrderService4Scene {
-    List<Ticket4Scene> getTicketsBySceneId(Long sceneId);
+    /**
+     * 根据指定排片的所有售出电影票
+     *
+     * @param sceneId 排片id
+     * @return 所有已售出的电影票
+     */
+    List<Ticket4Scene> getSoldTicketsBySceneId(Long sceneId);
+
+    int getSoldSeatsNumBySceneId(Long sceneId);
 }

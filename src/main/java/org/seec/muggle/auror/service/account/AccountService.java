@@ -33,9 +33,9 @@ public interface AccountService {
     /**
      * 用户登出
      *
-     * @param token 包含用户编号的token TODO 替换为id
+     * @param id 用户id
      */
-    void logout(String token);
+    void logout(Long id);
 
     /**
      * 获取用户所有的优惠券

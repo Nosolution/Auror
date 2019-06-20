@@ -15,6 +15,7 @@ import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -74,6 +75,12 @@ public class ShiroConfig {
         filterRuleMap.put("/401", "anon");
 //        filterRuleMap.put("/logout", "logout");//据说shiro已经帮我们实现了, 然而好像效果并不尽如人意
         filterRuleMap.put("/exception", "anon");
+//        filterRuleMap.put("/api/movie/detail/**", "anon");
+//        filterRuleMap.put("/api/movie/popular", "anon");
+//        filterRuleMap.put("/api/movie/onshelf", "anon");
+//        filterRuleMap.put("/api/movie/comment", "anon");
+//        filterRuleMap.put("/api/movie", "jwtFilter");
+//        filterRuleMap.put("/api/personnel/**", "jwtFilter");
         filterRuleMap.put("/**", "anon");
 
 //        filterRuleMap.put("/anon_user/**", "anon");
@@ -106,5 +113,29 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;
+    }
+
+    private Map<String, String> getUrlPermsMap() {
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+
+        filterChainDefinitionMap.put("/favicon.ico", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/lib/**", "anon");
+        filterChainDefinitionMap.put("/login", "anon");
+
+//        List<Menu> menus = selectAll();
+//        for (Menu menu : menus) {
+//            String url = menu.getUrl();
+//            if (menu.getMethod() != null && !"".equals(menu.getMethod())) {
+//                url += ("==" + menu.getMethod());
+//            }
+//            String perms = "perms[" + menu.getPerms() + "]";
+//            filterChainDefinitionMap.put(url, perms);
+//        }
+        filterChainDefinitionMap.put("/**", "authc");
+        return filterChainDefinitionMap;
     }
 }

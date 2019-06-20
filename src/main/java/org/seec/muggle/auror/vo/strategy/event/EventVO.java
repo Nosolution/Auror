@@ -3,7 +3,7 @@ package org.seec.muggle.auror.vo.strategy.event;
 import lombok.Data;
 import org.seec.muggle.auror.po.CouponPO;
 import org.seec.muggle.auror.po.EventPO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 
 import java.util.List;
 
@@ -33,13 +33,13 @@ public class EventVO {
         this.eventName = eventPO.getEventName();
         this.eventDescription = eventPO.getDescription();
         this.moviesIncluded = movies.toArray(new Long[movies.size()]);
-        this.startTime = DateUtil.timestampToYear(eventPO.getStartTime());
-        this.endTime = DateUtil.timestampToYear(eventPO.getEndTime());
+        this.startTime = DateConverterUtil.timestampToYear(eventPO.getStartTime());
+        this.endTime = DateConverterUtil.timestampToYear(eventPO.getEndTime());
         this.couponName = couponPO.getCouponName();
         this.couponDescription = couponPO.getDescription();
         this.couponPictureUrl = couponPO.getUrl();
         this.couponDiscount = couponPO.getDiscount();
-        this.couponThreshold = couponPO.getThreshold();
+        this.couponThreshold = couponPO.getPrice();
         this.couponExpiration = eventPO.getExpiration();
 
     }

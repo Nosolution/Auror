@@ -57,6 +57,13 @@ public class AccountController {
         return ResponseEntity.ok(loginRes);
     }
 
+    @PutMapping(value = "/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        Long id = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
+        accountService.logout(id);
+        return ResponseEntity.ok(null);
+    }
+
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody RegisterForm form) {
         accountService.register(form.getUsername(), form.getPassword());
@@ -65,7 +72,7 @@ public class AccountController {
 
     @GetMapping(value = "/user/coupon")
     public ResponseEntity<?> getUserCoupons(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
         UserCouponsVO[] couponsVOS = accountService.getCoupons(userId);
         return ResponseEntity.ok(couponsVOS);
     }
@@ -78,14 +85,14 @@ public class AccountController {
 
     @GetMapping(value = "/user/mark")
     public ResponseEntity<?> getMarkList(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
         MovieMarkVO[] vos = movieMarkService.getFavorsByUserId(userId);
         return ResponseEntity.ok(vos);
     }
 
     @GetMapping(value = "/member/info")
     public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
         MemberVO vo = memberService.getPersonalMemberInfo(userId);
         if (vo != null) {
             return ResponseEntity.ok(vo);
@@ -97,13 +104,13 @@ public class AccountController {
 
     @GetMapping(value = "/user/message")
     public ResponseEntity<?> getMessage(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
         return ResponseEntity.ok(messageService.getMessages(userId));
     }
 
     @GetMapping(value = "/user/message/unread_num")
     public ResponseEntity<?> getUnreadNum(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
         UnreadNumVO vo = new UnreadNumVO();
         vo.setUnreadNum(messageService.getUnreadNum(userId));
         return ResponseEntity.ok(vo);
@@ -111,14 +118,9 @@ public class AccountController {
 
     @GetMapping(value = "/order/member/recharge/history")
     public ResponseEntity<?> getChargeHistory(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtTokenUtil.getIdFromRequest(request, tokenHeader);
         RechargeHistoryVO[] vos = accountService.getRechargeHistory(userId);
         return ResponseEntity.ok(vos);
-    }
-
-    private Long getIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader).substring(7);
-        return jwtTokenUtil.getIdFromToken(token);
     }
 
 

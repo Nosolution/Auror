@@ -45,18 +45,21 @@ public class StrategyController {
     }
 
     @PostMapping(value = "/event")
-    public ResponseEntity<?> addStrategyEvents(@RequestBody EventForm form) {
+//    @RequiresRoles("administrator")
+    public ResponseEntity<?> addStrategyEvent(@RequestBody EventForm form) {
         strategyService.createEvent(form);
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/event")
+//    @RequiresRoles("administrator")
     public ResponseEntity<?> deleteEvent(@RequestBody EventDeletionForm form) {
         strategyService.deleteEvent(form.getEventId());
         return ResponseEntity.ok(null);
     }
 
     @PostMapping(value = "/coupon_gift")
+//    @RequiresRoles("administrator")
     public ResponseEntity<?> givingCoupon(@RequestBody CouponGiftForm form) {
         strategyService.sendCoupon(form);
         return ResponseEntity.ok(null);
@@ -70,18 +73,21 @@ public class StrategyController {
     }
 
     @PostMapping(value = "/member")
+//    @RequiresRoles("administrator")
     public ResponseEntity<?> addVipCardVariety(@RequestBody MemberAddForm form) {
         strategyService.createMemberStrategy(form.getMemberStrategyName(), form.getMemberPictureUrl(), form.getPurchaseThreshold(), form.getMemberDiscountRate());
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(value = "/member")
+//    @RequiresRoles("administrator")
     public ResponseEntity<?> deleteVipVariety(@RequestBody MemberDeleteForm form) {
         strategyService.deleteMemberStrategy(form.getMemberStrategyId());
         return ResponseEntity.ok(null);
     }
 
     @PutMapping(value = "/member")
+//    @RequiresRoles("administrator")
     public ResponseEntity<?> varyVipVariety(@RequestBody MemberVaryForm form) {
         strategyService.updateMemberStrategy(form);
         return ResponseEntity.ok(null);

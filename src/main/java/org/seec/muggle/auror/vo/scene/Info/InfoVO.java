@@ -4,7 +4,7 @@ import lombok.Data;
 import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.entity.movie.Movie4Scene;
 import org.seec.muggle.auror.po.ScenePO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
 
 /**
@@ -30,7 +30,7 @@ public class InfoVO {
         this.sceneId = scenePO.getId();
         this.price = scenePO.getPrice();
         this.hallName = hall.getName();
-        this.date = DateUtil.dateToString(scenePO.getDate());
+        this.date = DateConverterUtil.dateToString(scenePO.getDate());
         this.interval = new IntervalVO(scenePO.getStartTime(), scenePO.getEndTime());
         this.seats = seats;
         this.movieName = movie.getMovieName();

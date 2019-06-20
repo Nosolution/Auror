@@ -5,7 +5,7 @@ import org.seec.muggle.auror.entity.movie.Movie4Order;
 import org.seec.muggle.auror.entity.scene.Scene;
 import org.seec.muggle.auror.po.OrderPO;
 import org.seec.muggle.auror.po.TicketPO;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.IntervalVO;
 import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 
@@ -39,7 +39,7 @@ public class TicketDetailVO {
         this.movieName = movie.getMovieName();
         this.moviePosterUrl = movie.getPosterUrl();
         this.hallName = hallName;
-        this.date = DateUtil.dateToString(scene.getDate());
+        this.date = DateConverterUtil.dateToString(scene.getDate());
         this.interval = new IntervalVO(scene.getStartTime(), scene.getEndTime());
         this.status = status;
         this.cost = order.getCost();

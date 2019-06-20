@@ -8,7 +8,7 @@ import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.MovieMarkPO;
 import org.seec.muggle.auror.service.mark.MovieMarkService;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.movie.statistics.FavorNumVO;
 import org.seec.muggle.auror.vo.user.mark.MovieMarkVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,8 +74,8 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
         List<MovieMarkPO> favors = new ArrayList<>();
         for (int i = 0; i < exactFavors.size(); i++) {
             MovieMarkPO movieMarkPO = exactFavors.get(i);
-            String currentDate = DateUtil.dateToString(movieMarkPO.getTime());
-            movieMarkPO.setTime(DateUtil.stringToDate(currentDate));
+            String currentDate = DateConverterUtil.dateToString(movieMarkPO.getTime());
+            movieMarkPO.setTime(DateConverterUtil.stringToDate(currentDate));
             favors.add(movieMarkPO);
         }
 
@@ -87,7 +87,7 @@ public class MovieMarkServiceImpl implements MovieMarkService, MovieMarkService4
         List<FavorNumVO> vos = new ArrayList<>();
         for (int i = 0; i < dates.size(); i++) {
             FavorNumVO current = new FavorNumVO();
-            String dayFormat = DateUtil.dateToString(dates.get(i));
+            String dayFormat = DateConverterUtil.dateToString(dates.get(i));
             current.setDate(dayFormat);
             current.setFavorNums(0);
             vos.add(current);

@@ -16,5 +16,5 @@ public interface MessageService4Scene {
      * @Date 19:59 2019/6/12
      * @Param [messagePO]
      **/
-    public void sendMovieOnSceneRemind(Message message);
+    void sendMovieOnSceneRemind(Message message);
 }

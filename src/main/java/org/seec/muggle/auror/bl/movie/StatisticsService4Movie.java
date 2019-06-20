@@ -9,5 +9,11 @@ package org.seec.muggle.auror.bl.movie;
  */
 public interface StatisticsService4Movie {
 
+    /**
+     * 获取电影但目前为止的票房
+     *
+     * @param movieId 电影id
+     * @return 电影票房
+     */
     Integer getBoxOffice(Long movieId);
 }

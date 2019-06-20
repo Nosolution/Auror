@@ -5,7 +5,7 @@ import org.seec.muggle.auror.entity.strategy.*;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;
 import org.seec.muggle.auror.service.strategy.StrategyService;
-import org.seec.muggle.auror.util.DateUtil;
+import org.seec.muggle.auror.util.DateConverterUtil;
 import org.seec.muggle.auror.vo.order.member.CouponsForm;
 import org.seec.muggle.auror.vo.order.unfinished.AvailableCouponsVO;
 import org.seec.muggle.auror.vo.strategy.coupongift.CouponGiftForm;
@@ -191,12 +191,12 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
                     CouponPO couponPO = strategyMapper.getCouponById(o.getCouponId());
                     coupon4Account.setCouponDescription(couponPO.getDescription());
                     coupon4Account.setCouponDiscount(couponPO.getDiscount());
-                    coupon4Account.setCouponEndTime(DateUtil.dateToString(o.getEnd()));
+                    coupon4Account.setCouponEndTime(DateConverterUtil.dateToString(o.getEnd()));
                     coupon4Account.setCouponId(o.getCouponId());
                     coupon4Account.setCouponName(couponPO.getCouponName());
                     coupon4Account.setCouponPictureUrl(couponPO.getUrl());
-                    coupon4Account.setCouponThreshold(couponPO.getThreshold());
-                    coupon4Account.setCouponStartTime(DateUtil.dateToString(o.getStart()));
+                    coupon4Account.setCouponThreshold(couponPO.getPrice());
+                    coupon4Account.setCouponStartTime(DateConverterUtil.dateToString(o.getStart()));
                     coupon4Account.setCouponExpiration("");
                     vos.add(coupon4Account);
                 });
@@ -208,7 +208,7 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
         CouponPO po = new CouponPO();
         po.setCouponName(form.getCouponName());
         po.setDiscount(form.getCouponDiscount());
-        po.setThreshold(form.getCouponThreshold());
+        po.setPrice(form.getCouponThreshold());
         po.setUrl(form.getCouponPictureUrl());
         po.setDescription(form.getCouponDescription());
         strategyMapper.insertCoupon(po);
@@ -235,8 +235,8 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     public List<MemberStrategy4Order> selectAllMemberStrategy() {
         List<MemberStrategyPO> pos = strategyMapper.selectAllMemberStrategies().stream().sorted(Comparator.comparing(MemberStrategyPO::getPrice)).collect(Collectors.toList());
         List<MemberStrategy4Order> memberStrategy4Orders = new ArrayList<>();
-        for (int i = 0; i < pos.size(); i++) {
-            MemberStrategy4Order order = new MemberStrategy4Order(pos.get(i));
+        for (MemberStrategyPO po : pos) {
+            MemberStrategy4Order order = new MemberStrategy4Order(po);
             memberStrategy4Orders.add(order);
         }
         return memberStrategy4Orders;
@@ -245,22 +245,15 @@ public class StrategyServiceImpl implements StrategyService, StrategyService4Ord
     @Override
     public Integer cutDownByCoupons(CouponsForm[] form, Long userId) {
         int cut = 0;
-        for (int i = 0; i < form.length; i++) {
-            CouponPO couponPO = strategyMapper.getCouponById(form[i].getCouponId());
+        for (CouponsForm couponsForm : form) {
+            CouponPO couponPO = strategyMapper.getCouponById(couponsForm.getCouponId());
             cut += couponPO.getDiscount();
             strategyMapper.deleteCouponUser(userId, couponPO.getId());
         }
-        ;
+
         return cut;
     }
 
-    /**
-     * @return java.util.List<org.seec.muggle.auror.po.CouponPO>
-     * @Author jyh
-     * @Description //
-     * @Date 8:53 2019/6/13
-     * @Param [movieId, userId]
-     **/
     @Override
     public List<Coupon4Order> sendCoupons(Long movieId, Long userId) {
         List<Long> events = strategyMapper.getEventIdsByMovieId(movieId);

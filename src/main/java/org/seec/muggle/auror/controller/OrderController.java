@@ -57,19 +57,16 @@ public class OrderController {
 
     @PostMapping(value = "/ticket/payment/third_party")
     public ResponseEntity<?> third_partyPayment(@RequestBody PaymentForm form) {
-        ThirdPartyPaymentVO vos = orderService.finishByThird_party(form);
+        ThirdPartyPaymentVO vos = orderService.finishByThirdParty(form);
         return ResponseEntity.ok(vos);
     }
 
     @GetMapping(value = "/ticket")
     public ResponseEntity<?> getAllTickets(HttpServletRequest request) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtUtil.getIdFromRequest(request, tokenHeader);
         TicketDetailVO[] ticketDetailVOS = orderService.getAllOrders(userId);
-//        if (ticketDetailVOS.length != 0) {
         return ResponseEntity.ok(ticketDetailVOS);
-//        } else {
-//            return ResponseEntity.status(405).body("没有订单");
-//        }
+
     }
 
     @PutMapping(value = "/ticket/cancellation")
@@ -88,21 +85,17 @@ public class OrderController {
 
     @PostMapping(value = "/member/purchase/payment")
     public ResponseEntity<?> purchaseVIPCard(HttpServletRequest request, @RequestBody VipPurchaseForm form) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtUtil.getIdFromRequest(request, tokenHeader);
         orderService.purchaseMember(userId, form.getCost(), form.getMemberStrategyId());
         return ResponseEntity.ok("");
     }
 
     @PostMapping(value = "/member/recharge/payment")
     public ResponseEntity<?> recharge(HttpServletRequest request, @RequestBody RechargeForm form) {
-        Long userId = getIdFromRequest(request);
+        Long userId = jwtUtil.getIdFromRequest(request, tokenHeader);
         RechargeVO vo = orderService.rechargeMember(form, userId);
         return ResponseEntity.ok(vo);
     }
 
-    private Long getIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader).substring(7);
-        return jwtUtil.getIdFromToken(token);
-    }
 
 }

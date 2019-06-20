@@ -80,7 +80,7 @@ public interface OrderService {
      * @Date 20:16 2019/6/7
      * @Param [form]
      **/
-    ThirdPartyPaymentVO finishByThird_party(PaymentForm form);
+    ThirdPartyPaymentVO finishByThirdParty(PaymentForm form);
 
     /**
      * @return org.seec.muggle.auror.vo.order.member.MemberPaymentVO
