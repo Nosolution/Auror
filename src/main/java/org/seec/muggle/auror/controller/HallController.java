@@ -35,12 +35,8 @@ public class HallController {
 
     @PutMapping()
     public ResponseEntity<?> updateHall(@RequestBody HallUpdateForm form) {
-        if(hallService.updateHall(form.getHallName(), form.getSeats())){
-            return ResponseEntity.ok(null);
-        }
-        else{
-            String msg = "有未完成排片";
-            return ResponseEntity.ok(msg);
-        }
+       hallService.updateHall(form.getHallName(), form.getSeats()) ;
+       return ResponseEntity.ok(null);
+
     }
 }
