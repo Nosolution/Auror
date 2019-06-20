@@ -1,5 +1,6 @@
 package org.seec.muggle.auror.bl.hall;
 
+import org.seec.muggle.auror.bl.scene.SceneService4Hall;
 import org.seec.muggle.auror.dao.hall.HallMapper;
 import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.po.HallPO;
@@ -22,24 +23,16 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
     @Autowired
     HallMapper hallMapper;
 
+    @Autowired
+    SceneService4Hall sceneService4Hall;
+
+
     @Override
     public void addHall(String name, int[][] seats) {
-        String seat = "";
-        StringBuilder stringBuilder = new StringBuilder(seat);
-        for (int i = 0; i < seats.length; i++) {
-            for (int j = 0; j < seats[i].length; j++) {
-                stringBuilder.append(seats[i][j]);
-                if (j != seats[i].length - 1) {
-                    stringBuilder.append(",");
-                }
-            }
-            if (i != seats.length - 1) {
-                stringBuilder.append(";");
-            }
-        }
+        String seat = getSeatsInString(seats);
         HallPO po = new HallPO();
         po.setHallName(name);
-        po.setSeats(stringBuilder.toString());
+        po.setSeats(seat);
         hallMapper.insert(po);
 //        hallMapper.insertNewHall(name, stringBuilder.toString());
     }
@@ -111,4 +104,34 @@ public class HallServiceImpl implements HallService, HallService4Statistics, Hal
         return po.getHallId();
     }
 
+    @Override
+    public boolean updateHall(String name, int[][] seats) {
+        HallPO po = hallMapper.getHallByName(name);
+        boolean isUsed = sceneService4Hall.isOccupied(po.getHallId());
+        if(isUsed){
+            return false;
+        }
+        else{
+            String seat = getSeatsInString(seats);
+            po.setSeats(seat);
+            hallMapper.update(po);
+        }
+        return true;
+    }
+    private String getSeatsInString(int[][] seats){
+        String seat = "";
+        StringBuilder stringBuilder = new StringBuilder(seat);
+        for (int i = 0; i < seats.length; i++) {
+            for (int j = 0; j < seats[i].length; j++) {
+                stringBuilder.append(seats[i][j]);
+                if (j != seats[i].length - 1) {
+                    stringBuilder.append(",");
+                }
+            }
+            if (i != seats.length - 1) {
+                stringBuilder.append(";");
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

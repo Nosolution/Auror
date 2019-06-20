@@ -48,6 +48,9 @@
           and `date` = #{date}
     </select>
 
+    <select id="getSceneUnfinishedByHallId" resultType="java.sql.Timestamp">
+        select start_time from tbl_scene where hall_id=#{hallId}
+    </select>
 
     <resultMap id="Scene" type="org.seec.muggle.auror.po.ScenePO">
         <id column="id" property="id"/>

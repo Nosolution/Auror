@@ -21,4 +21,6 @@ public interface HallService {
      * 获取所有影厅信息
      */
     SingleHallVO[] getAllHalls();
+
+    boolean updateHall(String name,int[][] seats);
 }

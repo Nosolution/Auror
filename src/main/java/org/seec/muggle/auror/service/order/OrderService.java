@@ -85,7 +85,7 @@ public interface OrderService {
     /**
      * @return org.seec.muggle.auror.vo.order.member.MemberPaymentVO
      * @Author jyh
-     * @Description //TODO
+     * @Description //使用会员卡完成购买
      * @Date 20:16 2019/6/17
      * @Param [form]
      **/

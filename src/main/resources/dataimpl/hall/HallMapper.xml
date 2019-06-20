@@ -26,6 +26,10 @@
         from tbl_hall
     </select>
 
+    <update id="update" parameterType="org.seec.muggle.auror.po.HallPO">
+        update tbl_hall set hall_seats = #{seats} where id = #{hallId}
+    </update>
+
 
     <resultMap id="Hall" type="org.seec.muggle.auror.po.HallPO">
         <id column="id" property="hallId"/>

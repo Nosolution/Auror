@@ -31,4 +31,5 @@ public interface SceneMapper extends BaseOperation<ScenePO> {
 
     List<ScenePO> getByHallIdAndDate(@Param("hallId") Long hallId, @Param("date") Date date);
 
+    List<Timestamp> getSceneUnfinishedByHallId(@Param("hallId")Long hallId);
 }

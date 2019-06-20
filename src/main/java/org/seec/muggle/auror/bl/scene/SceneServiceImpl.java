@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * @Version 1.0
  **/
 @Service
-public class SceneServiceImpl implements SceneService, SceneService4Order, SceneService4Statistics, SceneService4Movie, SceneService4Mark {
+public class SceneServiceImpl implements SceneService, SceneService4Order, SceneService4Statistics, SceneService4Movie, SceneService4Mark,SceneService4Hall {
     @Autowired
     HallService4Scene hallService4Scene;
 
@@ -197,4 +197,21 @@ public class SceneServiceImpl implements SceneService, SceneService4Order, Scene
     }
 
 
+    @Override
+    public boolean isOccupied(Long hallId) {
+        List<Timestamp> startTimes = sceneMapper.getSceneUnfinishedByHallId(hallId);
+        LocalDateTime ldt =  LocalDateTime.now();
+        if(startTimes.size() == 0){
+            return false;
+        }
+        else {
+            for(int i =0 ;i<startTimes.size();i++){
+                LocalDateTime start = startTimes.get(i).toLocalDateTime();
+                if(start.isAfter(ldt)){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

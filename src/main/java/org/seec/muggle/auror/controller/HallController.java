@@ -3,6 +3,7 @@ package org.seec.muggle.auror.controller;
 import org.seec.muggle.auror.service.hall.HallService;
 import org.seec.muggle.auror.vo.hall.all.SingleHallVO;
 import org.seec.muggle.auror.vo.hall.single.SingleHallForm;
+import org.seec.muggle.auror.vo.hall.update.HallUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,16 @@ public class HallController {
     public ResponseEntity<?> getAllHall() {
         SingleHallVO[] halls = hallService.getAllHalls();
         return ResponseEntity.ok(halls);
+    }
+
+    @PutMapping()
+    public ResponseEntity<?> updateHall(@RequestBody HallUpdateForm form) {
+        if(hallService.updateHall(form.getHallName(), form.getSeats())){
+            return ResponseEntity.ok(null);
+        }
+        else{
+            String msg = "有未完成排片";
+            return ResponseEntity.ok(msg);
+        }
     }
 }
