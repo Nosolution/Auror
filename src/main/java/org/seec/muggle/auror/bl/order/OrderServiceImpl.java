@@ -34,15 +34,13 @@ import org.seec.muggle.auror.vo.order.unfinished.UnfinishedOrderVO;
 import org.seec.muggle.auror.vo.seatselection.SeatsSelectionVO;
 import org.seec.muggle.auror.vo.seatselection.SelectionForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Description TODO
@@ -70,6 +68,9 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
 
     @Autowired
     MovieService4Order movieService4Order;
+
+    @Value("${order.expiration}")
+    long orderExpiration;
 
     @Override
     public SeatsSelectionVO selectSeats(Long sceneId, Long userId, SelectionForm[] selectedSeats) {
@@ -352,13 +353,19 @@ public class OrderServiceImpl implements OrderService, OrderService4Statistics, 
                     Refund4Order refundPO = strategyService4Order.getRefund();
                     String hallName = hallService4Order.getHallNameById(scene.getHallId());
                     int status = o.getStatus();
-                    if (status == 1) { // 已支付
+                    if (status == 1) {
+                        //若已支付并且已经超过可退票时间
                         LocalDateTime today = LocalDateTime.now();
                         LocalDateTime lastAvailableTime = scene.getStartTime().toLocalDateTime();
                         lastAvailableTime = lastAvailableTime.minusHours(refundPO.getBeforeTime());
                         if (today.isAfter(lastAvailableTime)) {
-                            status = 0;
+                            o.setStatus(0);
                         }
+                    }
+                    //判断订单是否还有效
+                    if (status == 2 && new Date().getTime() - o.getCreateTime().getTime() > orderExpiration) {
+                        o.setStatus(3);
+                        cancelOrder(o.getId());
                     }
                     TicketDetailVO vo = new TicketDetailVO(scene, movie, status, ticketPOS, o, hallName);
                     vos.add(vo);
