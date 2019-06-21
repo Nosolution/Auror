@@ -11,7 +11,7 @@
     <groupId>org.seec.muggle</groupId>
     <artifactId>auror</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <castName>auror</castName>
+    <name>auror</name>
     <description>nju seec project for Muggle group</description>
 
     <properties>
