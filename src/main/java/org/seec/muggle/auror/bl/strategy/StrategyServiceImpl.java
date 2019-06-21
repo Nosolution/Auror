@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.strategy;
 
-import org.seec.muggle.auror.dao.strategy.StrategyMapper;
+import org.seec.muggle.auror.dataservice.strategy.StrategyMapper;
 import org.seec.muggle.auror.entity.strategy.*;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.*;

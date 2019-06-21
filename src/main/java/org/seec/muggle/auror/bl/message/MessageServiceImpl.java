@@ -4,7 +4,7 @@ import org.seec.muggle.auror.bl.account.AccountService4Message;
 import org.seec.muggle.auror.bl.mark.MovieMarkService4Message;
 import org.seec.muggle.auror.bl.scene.MessageService4Scene;
 import org.seec.muggle.auror.bl.strategy.MessageService4Strategy;
-import org.seec.muggle.auror.dao.message.MessageMapper;
+import org.seec.muggle.auror.dataservice.message.MessageMapper;
 import org.seec.muggle.auror.entity.message.Message;
 import org.seec.muggle.auror.po.MessagePO;
 import org.seec.muggle.auror.service.message.MessageService;

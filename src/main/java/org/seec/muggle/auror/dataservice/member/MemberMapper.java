@@ -1,8 +1,8 @@
-package org.seec.muggle.auror.dao.member;
+package org.seec.muggle.auror.dataservice.member;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.dao.BaseOperation;
+import org.seec.muggle.auror.dataservice.BaseOperation;
 import org.seec.muggle.auror.po.MemberPO;
 
 /**

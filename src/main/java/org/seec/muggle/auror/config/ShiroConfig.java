@@ -7,8 +7,8 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.seec.muggle.auror.config.shiro.RestShiroFilterFactoryBean;
-import org.seec.muggle.auror.filter.JwtAuthTokenFilter;
 import org.seec.muggle.auror.security.CustomRealm;
+import org.seec.muggle.auror.security.JwtAuthTokenFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

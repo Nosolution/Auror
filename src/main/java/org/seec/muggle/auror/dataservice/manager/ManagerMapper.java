@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.dao.manager;
+package org.seec.muggle.auror.dataservice.manager;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
 import org.seec.muggle.auror.po.User;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.seec.muggle.auror.dao.scene.SceneMapper">
+<mapper namespace="org.seec.muggle.auror.dataservice.scene.SceneMapper">
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.seec.muggle.auror.po.ScenePO">
         insert into tbl_scene (movie_id, start_time, end_time, hall_id, price, date)
         values (#{movieId}, #{startTime}, #{endTime}, #{hallId}, #{price}, #{date})

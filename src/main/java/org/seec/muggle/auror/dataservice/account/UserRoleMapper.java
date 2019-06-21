@@ -1,8 +1,8 @@
-package org.seec.muggle.auror.dao.account;
+package org.seec.muggle.auror.dataservice.account;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.dao.BaseOperation;
+import org.seec.muggle.auror.dataservice.BaseOperation;
 import org.seec.muggle.auror.po.UserRole;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package org.seec.muggle.auror.bl.mark;
 import org.seec.muggle.auror.bl.movie.MovieService4Mark;
 import org.seec.muggle.auror.bl.order.OrderService4Mark;
 import org.seec.muggle.auror.bl.scene.SceneService4Mark;
-import org.seec.muggle.auror.dao.moviemark.MovieMarkMapper;
+import org.seec.muggle.auror.dataservice.moviemark.MovieMarkMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.MovieMarkPO;

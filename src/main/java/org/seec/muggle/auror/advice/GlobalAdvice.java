@@ -25,6 +25,7 @@ public class GlobalAdvice {
      */
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<?> handleBaseException(BaseException ex) {
+        ex.printStackTrace();
         return ResponseEntity.status(ex.getStatus()).body(new ErrorDetail("exception", ex.getMessage()));
     }
 

@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.dao;
+package org.seec.muggle.auror.dataservice;
 
 /**
  * 数据库增删改查基本接口

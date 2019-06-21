@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.bl.hall;
 
 import org.seec.muggle.auror.bl.scene.SceneService4Hall;
-import org.seec.muggle.auror.dao.hall.HallMapper;
+import org.seec.muggle.auror.dataservice.hall.HallMapper;
 import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.exception.BaseException;
 import org.seec.muggle.auror.po.HallPO;

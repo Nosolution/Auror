@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.dao.moviemark;
+package org.seec.muggle.auror.dataservice.moviemark;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;

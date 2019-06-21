@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.seec.muggle.auror.dao.moviemark.MovieMarkMapper">
+<mapper namespace="org.seec.muggle.auror.dataservice.moviemark.MovieMarkMapper">
     <select id="insertMark" resultType="java.lang.Integer">
         insert into tbl_movie_favor (movie_id, user_id, init_time)
         values (#{movieId}, #{userId}, #{time})

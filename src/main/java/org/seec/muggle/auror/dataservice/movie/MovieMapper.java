@@ -1,8 +1,8 @@
-package org.seec.muggle.auror.dao.movie;
+package org.seec.muggle.auror.dataservice.movie;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.dao.BaseOperation;
+import org.seec.muggle.auror.dataservice.BaseOperation;
 import org.seec.muggle.auror.po.CastPO;
 import org.seec.muggle.auror.po.CommentPO;
 import org.seec.muggle.auror.po.MoviePO;

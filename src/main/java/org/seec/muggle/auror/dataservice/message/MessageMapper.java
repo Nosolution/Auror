@@ -1,7 +1,7 @@
-package org.seec.muggle.auror.dao.message;
+package org.seec.muggle.auror.dataservice.message;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.dao.BaseOperation;
+import org.seec.muggle.auror.dataservice.BaseOperation;
 import org.seec.muggle.auror.po.MessagePO;
 
 import java.util.List;

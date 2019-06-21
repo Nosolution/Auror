@@ -6,7 +6,7 @@ import org.seec.muggle.auror.bl.movie.MovieService4Order;
 import org.seec.muggle.auror.bl.scene.OrderService4Scene;
 import org.seec.muggle.auror.bl.scene.SceneService4Order;
 import org.seec.muggle.auror.bl.strategy.StrategyService4Order;
-import org.seec.muggle.auror.dao.order.OrderMapper;
+import org.seec.muggle.auror.dataservice.order.OrderMapper;
 import org.seec.muggle.auror.entity.member.Member;
 import org.seec.muggle.auror.entity.movie.Movie4Order;
 import org.seec.muggle.auror.entity.order.Ticket4Scene;

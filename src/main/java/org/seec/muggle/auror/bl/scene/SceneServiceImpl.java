@@ -3,7 +3,7 @@ package org.seec.muggle.auror.bl.scene;
 import org.seec.muggle.auror.bl.hall.HallService4Scene;
 import org.seec.muggle.auror.bl.movie.MovieService4Scene;
 import org.seec.muggle.auror.bl.movie.SceneService4Movie;
-import org.seec.muggle.auror.dao.scene.SceneMapper;
+import org.seec.muggle.auror.dataservice.scene.SceneMapper;
 import org.seec.muggle.auror.entity.hall.Hall;
 import org.seec.muggle.auror.entity.message.Message;
 import org.seec.muggle.auror.entity.movie.Movie4Scene;

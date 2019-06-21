@@ -1,8 +1,8 @@
-package org.seec.muggle.auror.dao.scene;
+package org.seec.muggle.auror.dataservice.scene;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.dao.BaseOperation;
+import org.seec.muggle.auror.dataservice.BaseOperation;
 import org.seec.muggle.auror.po.ScenePO;
 
 import java.sql.Timestamp;

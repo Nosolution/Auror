@@ -1,6 +1,6 @@
 package org.seec.muggle.auror.bl.movie;
 
-import org.seec.muggle.auror.dao.movie.MovieMapper;
+import org.seec.muggle.auror.dataservice.movie.MovieMapper;
 import org.seec.muggle.auror.entity.movie.Movie4Mark;
 import org.seec.muggle.auror.entity.movie.Movie4Order;
 import org.seec.muggle.auror.entity.movie.Movie4Scene;

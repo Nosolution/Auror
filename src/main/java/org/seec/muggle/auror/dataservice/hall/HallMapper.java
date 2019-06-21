@@ -1,7 +1,7 @@
-package org.seec.muggle.auror.dao.hall;
+package org.seec.muggle.auror.dataservice.hall;
 
 import org.seec.muggle.auror.annotation.DaoMapper;
-import org.seec.muggle.auror.dao.BaseOperation;
+import org.seec.muggle.auror.dataservice.BaseOperation;
 import org.seec.muggle.auror.po.HallPO;
 
 import java.util.List;

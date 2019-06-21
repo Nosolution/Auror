@@ -1,10 +1,9 @@
-package org.seec.muggle.auror.filter;
+package org.seec.muggle.auror.security;
 
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.seec.muggle.auror.exception.BaseException;
-import org.seec.muggle.auror.security.JwtToken;
 import org.seec.muggle.auror.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

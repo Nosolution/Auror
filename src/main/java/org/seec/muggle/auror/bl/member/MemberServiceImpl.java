@@ -1,7 +1,7 @@
 package org.seec.muggle.auror.bl.member;
 
 import org.seec.muggle.auror.bl.strategy.StrategyService4Member;
-import org.seec.muggle.auror.dao.member.MemberMapper;
+import org.seec.muggle.auror.dataservice.member.MemberMapper;
 import org.seec.muggle.auror.entity.member.Member;
 import org.seec.muggle.auror.entity.member.MemberAccount;
 import org.seec.muggle.auror.entity.strategy.MemberStrategy4Member;

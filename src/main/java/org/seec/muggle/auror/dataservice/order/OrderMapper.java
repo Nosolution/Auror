@@ -1,4 +1,4 @@
-package org.seec.muggle.auror.dao.order;
+package org.seec.muggle.auror.dataservice.order;
 
 import org.apache.ibatis.annotations.Param;
 import org.seec.muggle.auror.annotation.DaoMapper;

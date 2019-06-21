@@ -1,9 +1,9 @@
 package org.seec.muggle.auror.bl.manager;
 
-import org.seec.muggle.auror.dao.account.RoleMapper;
-import org.seec.muggle.auror.dao.account.UserMapper;
-import org.seec.muggle.auror.dao.account.UserRoleMapper;
-import org.seec.muggle.auror.dao.manager.ManagerMapper;
+import org.seec.muggle.auror.dataservice.account.RoleMapper;
+import org.seec.muggle.auror.dataservice.account.UserMapper;
+import org.seec.muggle.auror.dataservice.account.UserRoleMapper;
+import org.seec.muggle.auror.dataservice.manager.ManagerMapper;
 import org.seec.muggle.auror.po.User;
 import org.seec.muggle.auror.service.manager.ManagerService;
 import org.seec.muggle.auror.vo.personnel.ManagerInfoVO;
